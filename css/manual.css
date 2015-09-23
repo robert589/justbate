@@ -1,0 +1,51 @@
+.full{
+	height:100%;
+	width:100%;
+	
+}
+
+.80width{
+	min-width:80%;
+	width: 80%;
+}
+
+.20width{
+	min-width:20%;
+	width: 80%;
+}
+
+.spacer-12{
+	margin-bottom: 12px;
+}
+#searchFormMP{
+	margin-top:8px;
+}
+
+#searchBoxMP{
+	margin-top:8px;
+
+}
+
+#btnSubmitMP{
+	padding-left: 0px;
+	margin-left:0px	;
+	margin-top:8px;
+}
+
+#loginDropdown{
+	text-align: right;
+	vertical-align: middle;
+	display:inline-block;
+}
+
+
+#sidebarMP{
+	padding-left: 0px;
+	border-right: 2px;
+    padding: 0px 0px 100% 0px;
+    background-color: #F5F5F0;
+}
+
+#navMP{
+	margin-bottom: 0px;
+}
