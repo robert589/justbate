@@ -14,6 +14,16 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 
 	if($valid){
 			//START THE SESSION
+		session_start();
+		$result = $logUser->retrieveUserData($email);
+
+		$SESSION['email'] = $result['email'];
+		$SESSION['first_name'] = $result['first_name'];
+		$SESSION['last_name'] = $result['last_name'];
+		//$SESSION['password'] = $result['email'];
+		//$SESSION['email'] = $result['email'];
+
+
 		header("location: /startUp/create_thread.html");
 		exit();
 	}
@@ -66,7 +76,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 				</div>
 
 				<input type="submit" value="Submit" class="btn btn-info spacer12">
-			</form>
+			</form>	
 		</div>
 	</div>
 	

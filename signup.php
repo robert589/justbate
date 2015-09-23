@@ -1,6 +1,6 @@
 <?php
 
-
+	
 	if(isset($_POST["userFirstName"]) && isset($_POST["userEmail"]) && isset($_POST["userPassword"])  && isset($_POST["userBirthday"])){
 		$userFirstName = $_POST["userFirstName"];
 		$userEmail  = $_POST["userEmail"];

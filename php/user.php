@@ -48,5 +48,18 @@
 					return false;
 				}
 		}
+
+		function retrieveUserData($email){
+				$sql = "SELECT * from user where email ='$email'";
+
+				$result = $this->con->query($sql) or die(mysqli_error($con));
+
+				if($result->num_rows > 0){
+					return $result;
+				}
+				else{
+					return false;
+				}
+		}
 	}
 ?>
