@@ -23,7 +23,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 		//$SESSION['password'] = $result['email'];
 		//$SESSION['email'] = $result['email'];
 
-///
+
 		header("location: /startUp/create_thread.html");
 		exit();
 	}
