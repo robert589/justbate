@@ -47,33 +47,65 @@
 
 		function login($email, $password){
 				//encode
-				$password = md5($password);
+				$mdpassword = md5($password);
 
-				$sql = "SELECT * from user where email = '$email' AND password = '$password'";
+				$sql = "SELECT * from user where email = '$email' AND password = '$mdpassword'";
 
 
 				$result = $this->con->query($sql) or die(mysqli_error($con));
 				if($result->num_rows > 0){
+
 					return true;
 				}
 				else{
-					return false;
+					//if it fails, check temporary password
+					$sql = "SELECT * from forgot_code where email = '$email' and temporary_password = '$password'";
+					$result = $this->con->query($sql);
+					if($result->num_rows > 0){
+						
+						return true;
+					}
+					else{
+						return false;
+					}
 				}
 		}
 
 		function retrieveUserData($email){
-				$sql = "SELECT * from user where email ='$email'";
+			$sql = "SELECT * from user where email ='$email'";
 
-				$result = $this->con->query($sql);
+			$result = $this->con->query($sql);
 
 				//	$email = $result['email'];
 				//echo "<script>alert($email)</script>";
-				if($result->num_rows > 0){
-					return $result->fetch_assoc();
+			if($result->num_rows > 0){
+				return $result->fetch_assoc();
+			}
+			else{
+				return false;
+			}
+		}
+
+		function changePassword($email, $oldPassword, $newPassword){
+			if($this->login($email, $oldPassword) === true){
+				$newPassword = md5($newPassword);
+				$sql = "UPDATE user set password = '$newPassword' where email = '$email'";
+				if($this->con->query($sql) === true){
+					$sql = "DELETE FROM forgot_code where email='$email' ";
+					if($this->con->query($sql) === true){
+						return true;
+					}
+					else{
+						return "FAILED update forgot_code " . mysqli_error($this->con);
+					}
 				}
 				else{
-					return false;
+					return "FAILED update user " . mysqli_error($this->con);
 				}
+			}
+			else{
+				return "Password does not match";
+			}
 		}
 	}
 ?>

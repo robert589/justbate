@@ -14,16 +14,17 @@
 
 		private $mailer;
 
-		function __construct($new_email, $connection){
+		private $body;
+
+		function __construct($new_email, $connection, $body){
 			$this->con  = $connection;
 			$this->email = $new_email;
 			$this->mailer = new PHPMailer;
+			$this->body = $body;
 
 		}
 
 		public function sendMail(){
-
-			$body = $this->createBody();
 
 			$this->mailer->isSMTP();
 			//$this->mailer->SMTPDebug = 2;
@@ -39,22 +40,22 @@
 			$this->mailer->isHTML(true);    
 
 			$this->mailer->SetFrom('terooka123@gmail.com');  
-			$this->mailer->Body = $body;
+			$this->mailer->Body = $this->body;
 			$this->mailer->Subject = 'Email Verifikasi';
 			$this->mailer->AddAddress($this->email);
 
 
 
 			if($this->mailer->Send()){
-					return $this->updateVerificationCode();
-				
+//					return $this->updateVerificationCode();
+				return true;
 			} 
 			else{
 				return "Message was not sent" ;
 			}
 
 		}
-
+		/*
 		private function createBody(){
 
 			$verificationCode = $this->createRandomString();
@@ -74,7 +75,8 @@
 
             return $htmlStr;
 		}
-
+		*/
+		/*
 		public function createRandomString(){
 			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     		$charactersLength = strlen($characters);
@@ -84,7 +86,8 @@
     		}
     		return $randomString;
 		}
-
+	*/
+		/*
 		public function updateVerificationCode(){
 			//Retrieve user_id by email
 					$sentEmail = $this->email;
@@ -96,6 +99,6 @@
 						return "Failed to update the verification code, Please resend the message";
 					}
 					
-		}
+		}*/
 	}
 ?>
