@@ -17,14 +17,14 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 		session_start();
 		$result = $logUser->retrieveUserData($email);
 
-		$SESSION['email'] = $result['email'];
-		$SESSION['first_name'] = $result['first_name'];
-		$SESSION['last_name'] = $result['last_name'];
+		$_SESSION['email'] = $result['email'];
+		$_SESSION['first_name'] = $result['first_name'];
+		$_SESSION['last_name'] = $result['last_name'];
 		//$SESSION['password'] = $result['email'];
 		//$SESSION['email'] = $result['email'];
 
 
-		header("location: /startUp/create_thread.html");
+		header("location: /startUp/create-thread.html");
 		exit();
 	}
 	else{
@@ -62,11 +62,12 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 
 
 	<div class="full">
-		<div class="col-xs-12">
+		<div class="col-md-offset-4 col-md-4">
+			<div align="center">
 			<h1>Login </h1>
+		</div>
 
 			<form role="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-
 				<div class="form-group">
 					<input type="text" placeholder="email" class="form-control" name="email">
 				</div>
@@ -75,7 +76,13 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 					<input type="password" placeholder="password" class="form-control" name="password">
 				</div>
 
-				<input type="submit" value="Submit" class="btn btn-info spacer12">
+				<div align="center">
+					<input type="submit" value="Submit" class="btn btn-info spacer12">
+				</div>
+
+				<div align="center">									
+					<a href="/startUp/forgot-password.php">Forgot password</a>
+				</div>
 			</form>	
 		</div>
 	</div>

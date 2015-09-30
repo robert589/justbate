@@ -24,10 +24,9 @@
 		}
 
 		if($valid === true){
-			echo "<script type='text/javascript'>alert('submitted');</script>";
+			header("location: /startUp/create-thread.html");
 		}
 		else{
-			echo "<script type='text/javascript'>alert('$valid');</script>";
 		}
 	}
 	
