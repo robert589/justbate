@@ -124,7 +124,7 @@ navSideCode += "						<\/a>";
 navSideCode += "					<\/li>";
 navSideCode += "				<\/ul>";
 
-document.getElementById("navBar").innerHTML = navBarCode;
+//document.getElementById("navBar").innerHTML = navBarCode;
 
 document.getElementById("navSide").innerHTML = navSideCode;
 

@@ -166,8 +166,6 @@
 
 			$verificationLink = "http://192.168.131.1/startUp/activate.php?code=". $this->encoded_code;	
 
-
-
 		    $htmlStr = "";
             $htmlStr .= "Hi " . $email . ",<br /><br />";
                  
