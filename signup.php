@@ -1,13 +1,12 @@
 <?php
+	require_once __DIR__.'/php/user.php';	
 
-	
 	if(isset($_POST["userFirstName"]) && isset($_POST["userEmail"]) && isset($_POST["userPassword"])  && isset($_POST["userBirthday"])){
 		$userFirstName = $_POST["userFirstName"];
 		$userEmail  = $_POST["userEmail"];
 		$userPassword = $_POST["userPassword"];
 		$userBirthday = $_POST["userBirthday"];
 
-		require_once __DIR__.'/php/user.php';	
 
 		//echo "<script type='text/javascript'>alert('dsds');</script>";
 		$regUser = new User();
@@ -20,7 +19,7 @@
 
 	    }
 		else{
-			$valid = $regUser->signUp($userEmail, $userFirstName, $userPassword, $userBirthday);
+			$valid = $regUser->signUp($userEmail, $userFirstName, $userLastName, $userPassword, $userBirthday);
 		}
 
 		if($valid === true){

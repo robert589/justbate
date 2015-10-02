@@ -75,6 +75,7 @@ class ForgotPassword{
 
 
 	//	$codeLink = $this->createTheLink();
+		
 
 		$htmlStr = "";
 		$htmlStr .= "Hi " . $this->email . ",<br /><br />";
