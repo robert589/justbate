@@ -51,6 +51,8 @@
 			</div>			
 			<!-- Search bar after login-->
 			<div class="col-xs-4">
+
+				<!--Notification-->
 				<div class="col-xs-2">	
 					<ul class="nav navbar-nav" align="center">		
 						<li class="dropdown">					
@@ -62,10 +64,27 @@
 						</li>
 					</ul>		
 				</div>	
-				<div class="col-xs-8" id="btnSubmitMP">	
-					<button  style="width:100%"class="btn btn-default" >Create Thread</button>				
+
+				<!--Create Thread-->
+				<div class="col-xs-6" 	>	
+					<a  style="width:100%"class="btn btn-primary btn-lg" type="button" href="create-thread.html" >Create Thread</a>				
 				</div>		
 
+				<!--Other-->
+				<div class="col-xs-2">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li> <a href="php/logout.php">Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+				<!--Forum Country-->
 				<div class="col-xs-2">
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
@@ -78,6 +97,7 @@
 						</li>
 					</ul>
 				</div>
+
 			</div>
 		</nav>
 
