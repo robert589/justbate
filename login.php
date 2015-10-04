@@ -59,13 +59,15 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 </head>
 <body>
 
-
+	<nav class="navbar navbar-default" id="navBar">
+	</nav>
 
 	<div class="full">
 		<div class="col-md-offset-4 col-md-4">
 			<div align="center">
 			<h1>Login </h1>
 		</div>
+
 
 			<form role="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 				<div class="form-group">
@@ -86,6 +88,8 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 			</form>	
 		</div>
 	</div>
+
+	<script src="js/navbarBeforeLogin.js"></script>
 	
 </body>
 </html>

@@ -59,8 +59,9 @@
 <body>
 
 	<nav class="navbar navbar-default" id="navBar">
-		
 	</nav>
+
+
 
 	<div class="full">
 		<div class="col-xs-12">
@@ -112,7 +113,7 @@
 	</div>
 
 
-	<script src="js/startup.js"></script>
+	<script src="js/navbarBeforeLogin.js"></script>
 	<script src="js/signup.js"></script>
 
 </body>

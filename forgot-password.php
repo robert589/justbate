@@ -44,6 +44,9 @@ if(isset($_POST['email'])){
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 </head>
 <body>	
+	<nav class="navbar navbar-default" id="navBar">
+	</nav>
+
 	<div class="full">
 		<div class="col-md-offset-4 col-md-4">
 			<div align="center">
@@ -67,6 +70,8 @@ if(isset($_POST['email'])){
 			</form>	
 		</div>
 	</div>
+
+	<script src="js/navbarBeforeLogin.js"></script>
 </body>
 
 </html>

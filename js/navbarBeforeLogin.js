@@ -44,7 +44,10 @@ navBarCode += "			<\/div>";
 navBarCode += "";
 navBarCode += "			<!-- Navigation Login-->";
 navBarCode += "			<div class=\"col-xs-4\">";
-navBarCode += "				<div class=\"col-xs-8\">";
+navBarCode += "             <div class=\"col-xs-4\">";
+navBarCode += "            		 <a class=\"btn btn-primary btn-lg\" align=\"center\" href=\"signup.php\">Daftar</a>";
+navBarCode += "             </div>"
+navBarCode += "				<div class=\"col-xs-4\">";
 navBarCode += "					<!-- The drop down menu -->";
 navBarCode += "					<ul class=\"nav navbar-nav pull-right\">";
 navBarCode += "";
@@ -84,48 +87,7 @@ navBarCode += "				<\/div>";
 navBarCode += "			<\/div>";
 navBarCode += "		<\/div>";
 
-var navSideCode="";
+document.getElementById("navBar").innerHTML = navBarCode;
 
-navSideCode += "";
-navSideCode += "				<ul class=\"nav nav-sidebar\">";
-navSideCode += "";
-navSideCode += "";
-navSideCode += "					<li class=\"dropdown\">";
-navSideCode += "";
-navSideCode += "						<a class=\"dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">";
-navSideCode += "							DEBAT ";
-navSideCode += "							<strong class=\"caret\"><\/strong>";
-navSideCode += "						<\/a>";
-navSideCode += "						";
-navSideCode += "						<!--DEBATE SUB-->";
-navSideCode += "						<ul class=\"dropdown-menu\">";
-navSideCode += "							<li><a href=\"#\"> Popular <\/a><\/li>";
-navSideCode += "							<li><a href=\"#\"> New <\/a><\/li>";
-navSideCode += "";
-navSideCode += "						<\/ul>";
-navSideCode += "";
-navSideCode += "						";
-navSideCode += "";
-navSideCode += "";
-navSideCode += "					<\/li>";
-navSideCode += "					";
-navSideCode += "";
-navSideCode += "";
-navSideCode += "					<li >";
-navSideCode += "						<a href=\"#\">";
-navSideCode += "							PERTANYAAN";
-navSideCode += "						<\/a>";
-navSideCode += "					<\/li>	";
-navSideCode += "";
-navSideCode += "					<li>";
-navSideCode += "						<a href=\"#\">";
-navSideCode += "							PETISI";
-navSideCode += "						<\/a>";
-navSideCode += "					<\/li>";
-navSideCode += "				<\/ul>";
-
-//document.getElementById("navBar").innerHTML = navBarCode;
-
-document.getElementById("navSide").innerHTML = navSideCode;
 
 /**Login in navigation jquery**/
