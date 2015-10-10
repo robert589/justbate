@@ -5,6 +5,6 @@
 	$con =	$db->connect();
 
 	//USER TABLE
-	$sql = "DROP TABLE forgot_code, validation_code, thread, user; ";
+	$sql = "DROP TABLE forgot_code, validation_code, childcomment, comment,thread, user; ";
 	$con->query($sql) or die(mysqli_error($con));
 ?>
