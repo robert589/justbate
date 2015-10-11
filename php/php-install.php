@@ -67,7 +67,7 @@
 		child_comment_id int not null,
 		primary key(parent_comment_id, child_comment_id),
 		foreign key(parent_comment_id) references comment(comment_id),
-		foreign key(child_comment_id) references comment(comment_id))";
+		foreign key(child_comment_id) references comment(comment_id))	";
 
 	$con->query($sql) or die(mysqli_error($con));
 
