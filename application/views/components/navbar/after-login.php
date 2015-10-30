@@ -48,7 +48,7 @@
  
  				<!--Create Thread-->
  				<div class="col-xs-6" 	>	
- 					<a  style="width:100%"class="btn btn-primary btn-lg" type="button" href="create-thread.html" >Create Thread</a>				
+ 					<a  style="width:100%"class="btn btn-primary btn-lg" type="button" href="create-thread.php" >Create Thread</a>				
  				</div>		
  
  				<!--Other-->

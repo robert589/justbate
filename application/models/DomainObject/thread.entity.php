@@ -12,6 +12,8 @@
 
 		private $user_email;
 
+		private $category;
+
 
 		function __construct(){
 
@@ -63,5 +65,13 @@
 
 		function getUserEmail(){
 			return $this->user_email;
+		}
+
+		function setCategory($category){
+			$this->category = $category;
+		}
+
+		function getCategory(){
+			return $this->category;
 		}
 	}

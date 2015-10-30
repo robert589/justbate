@@ -14,7 +14,7 @@
 
 		}
 
-		function retrieveNewestPage($index){
+		function retrieveNewestThread($index){
 			$sql = "SELECT name, photo, user_email, date_created 
 			from thread 
 			order by date_created asc

@@ -18,7 +18,7 @@
 
 		function retrieveNewestPage($index){		
 
-			$result = $this->mapper->retrieveNewestPage($index);
+			$result = $this->mapper->retrieveNewestThread($index);
 			$row = $result->num_rows;
 
 			$resultThread = array($row);
@@ -40,6 +40,46 @@
 			}
 
 			return $resultThread;
+		}
+
+		function addThread($name, $photo, $user_email){
+			
+
+			$newThread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
+
+
+			$newThread->setName($name);
+			$newThread->setPhoto($photo);
+			$newThread->setEmail($email);
+			
+
+			if($this->mapper->addThread($newThread)){				
+				$this->updateSession($email);
+				return true;
+			}
+			else{
+				return false;
+			}
+
+	}
+
+		function addThreadNoPhoto($name, $email){
+			$newThread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
+
+
+			$newThread->setName($name);
+			
+			$newThread->setEmail($email);
+			
+
+			if($this->mapper->addThread($newThread)){				
+				$this->updateSession($email);
+				return true;
+			}
+			else{
+				return false;
+			}
+
 		}
 
 
