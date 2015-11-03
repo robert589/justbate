@@ -25,9 +25,12 @@
 			$thread = new Thread();
 			$thread = $this->threadmodel->retrieveNewestPage($numpage);
 
+			$body = "";
 			for($i = 0; $i < count($thread); $i++){
-				$this->template($thread[$i]->getName());
+				$body .= $this->template($thread[$i]->getName());
 			}
+
+			echo  $body;
 		}
 
 

@@ -4,7 +4,9 @@
 		const BEFORE_LOGIN = 'before-login.php';
 
 		const AFTER_LOGIN = "after-login.php";
+
 		function __construct(){
+
 
 		}
 

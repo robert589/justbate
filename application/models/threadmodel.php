@@ -21,7 +21,8 @@
 			$result = $this->mapper->retrieveNewestThread($index);
 			$row = $result->num_rows;
 
-			$resultThread = array($row);
+			
+			$resultThread = array();
 			for($i = 0; $i < $row; $i++){
 				$thread  = new Thread();
 				$thread_result = mysqli_fetch_array($result);

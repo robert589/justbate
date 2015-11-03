@@ -20,6 +20,7 @@
 			order by date_created asc
 			LIMIT 1";
 			$result = $this->con->query($sql) or die (mysqli_error($this->con));
+			
 			if($result->num_rows > 0){
 				return $result;					
 			}
