@@ -25,4 +25,18 @@
 				return $result;					
 			}
 		}
+
+		function retrieveComment($thread_id){
+			$sql = "SELECT first_name, last_name, comment, date_created 
+			from comment inner join user 
+			on comment.email = user.email 
+			where thread_id = $thread_id";
+
+			$result = $this->con->query($sql) or die (mysqli_error($this->con));
+
+
+			if($result->num_rows > 0){
+				return $result;
+			}
+		}
 	}

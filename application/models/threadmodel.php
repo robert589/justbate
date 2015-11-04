@@ -84,5 +84,28 @@
 
 		}
 
+		function retrieveComment($thread_id){
+			$mapper = $this->dataMapper->getDataMapper(DataMapperFactory::THREAD_MAPPER);
+
+			$result = $mapper->retrieveComment($thread_id);
+
+			$commentArray = array();
+
+			for($i = 0 ; $i < $result->num_rows; $i++){
+				$comment = $this->domainObject->getDomainObject(DomainObjectFactory::COMMENT_ENTITY);
+				$comment_result =  mysqli_fetch_array($result);
+
+				$comment->setComment($comment_result['comment']);
+				$comment->setDateCreated($comment_result['date_created']);
+				$comment->setFirstname($comment_result['first_name']);
+				$comment->setLastname($comment_result['last_name']);
+
+				array_push($commentArray, $comment);
+			}
+
+
+			return $commentArray;
+		}
+
 
 	}

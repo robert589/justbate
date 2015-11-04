@@ -14,6 +14,15 @@
 
 		$controller->userVote($vote, $id);
 	}
+	if(isset($_GET['action'])){
+		$message = $_GET['action'];
+		if(strcmp($message, "comment") === 0 ){
+			if(isset($_GET['id'])){
+				$id = $_GET['id'];
+				$controller->retrieveComment($id);
+			}
+		}
+	}
 
 	class HomeController{
 
@@ -79,7 +88,7 @@
 						<div style="height:20px"></div>
 
 						<div class="col-xs-1">
-							<a href="#" class="btn btn-info btn-lg">
+							<a href="homecontroller.php?action=comment&id=' . $id. '" class="btn btn-info btn-lg">
 								<span class="glyphicon glyphicon-comment"></span> 
 							</a>
 						</div>
@@ -99,11 +108,39 @@
 
 
 						<div class=" col-md-1">
-							<a href="homeontroller.php?vote=0&id='.$id.'" class="btn btn-info btn-md">
+							<a href="homecontroller.php?vote=0&id='.$id.'" class="btn btn-info btn-md">
 								<label>No</label>
 							</a>
 						</div>
 					</div>
-				</div>';
+				</div>
+				'. $this->retrieveComment($id);
 		}
+
+		public function retrieveComment($id){
+
+			$commentArray = $this->threadmodel->retrieveComment($id);
+
+			$body = "";
+
+
+
+			for($i = 0 ; $i < count($commentArray); $i++){
+				$comment = $commentArray[$i];
+				$username = $comment->getFullname();
+				$comment = $comment->getComment();
+				$body .= '<div class="col-xs-12" style="background-color:white;  "> 
+					<div class="col-md-10 style="background-color:white; height:100px;">
+						<a href="">'. $username . '</a> ' . $comment .'
+
+					</div>
+					<div class="col-md-10 style="background-color:white;">
+						<a href="">Like</a> <a href="">Reply </a>
+					</div>
+					</div>' ;
+			}
+
+			return $body;
+		}
+
 	}
