@@ -6,10 +6,8 @@
 		
 		private $user; 
 
-		private $mapper;
 		function __construct(){
 			parent::__construct();
-			$this->mapper = $this->dataMapper->getDataMapper(DataMapperFactory::THREAD_MAPPER);
 		}
 
 		function __destruct(){
@@ -17,8 +15,9 @@
 		}
 
 		function retrieveNewestPage($index){		
+			$mapper = $this->dataMapper->getDataMapper(DataMapperFactory::THREAD_MAPPER);
 
-			$result = $this->mapper->retrieveNewestThread($index);
+			$result = $mapper->retrieveNewestThread($index);
 			$row = $result->num_rows;
 
 			
@@ -27,7 +26,7 @@
 				$thread  = new Thread();
 				$thread_result = mysqli_fetch_array($result);
 
-			//	$thread->setID($thread_result['thread_id']);
+				$thread->setID($thread_result['thread_id']);
 				$thread->setName($thread_result['name']);
 				$thread->setDateCreated($thread_result['date_created']);
 				if(isset($thread_result['photo'])){
@@ -42,6 +41,8 @@
 
 			return $resultThread;
 		}
+
+
 
 		function addThread($name, $photo, $user_email){
 			

@@ -8,6 +8,9 @@
 
 		protected $dataMapper;
 
+		protected $mapperfactory;
+
+
 		function __construct(){
 			$this->domainObject = new DomainObjectFactory();
 			$this->dataMapper = new DataMapperFactory();

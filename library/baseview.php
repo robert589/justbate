@@ -6,18 +6,7 @@
 		require_once(ROOT . DS. "application" . DS . "views" . DS . "components". DS . "navside" .  DS . "navside.class.php");
 
 
-		function checkLogin(){
-			session_start();
-			if(isset($_SESSION['email'])){
-				return 1;
-
-			}
-			else{
-				return 0;
-			}
-
-		}
-
+	
 
 		function addHeader($headerval){
 			$header= new Header();

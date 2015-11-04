@@ -58,7 +58,9 @@
  							<a class="dropdown-toggle" data-toggle="dropdown">
  								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
  							</a>
- 							<ul class="dropdown-menu">
+							<ul class="dropdown-menu">
+								 <li> <a  href="profile.php?user=self">Profile Page</a></li>
+
  								<li> <a  href="navbarcontroller.php?action=logout">Logout</a></li>
  							</ul>
  						</li>

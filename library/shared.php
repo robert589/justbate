@@ -2,7 +2,30 @@
 
 	//Variable that is accessible
 		
-	
+		function checkLogin(){
+			if (session_status() == PHP_SESSION_NONE) {
+    			session_start();
+			}
+			if(isset($_SESSION['email'])){
+				return 1;
+
+			}
+			else{
+				return 0;
+			}
+
+		}
+
+		function retrieveUserEmail(){
+		//	session_start();
+			if(checkLogin()){
+				return $_SESSION['email'];
+			}
+			else{
+				return null;
+			}
+		}
+
 	
 	function redirectPage(){
 		global $url;

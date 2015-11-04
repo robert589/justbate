@@ -15,7 +15,7 @@
 		}
 
 		function retrieveNewestThread($index){
-			$sql = "SELECT name, photo, user_email, date_created 
+			$sql = "SELECT name, photo, user_email, date_created, thread_id
 			from thread 
 			order by date_created asc
 			LIMIT 1";

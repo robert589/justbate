@@ -32,7 +32,7 @@
 		}
 
 
-		function setID($name){
+		function setID($thread_id){
 			$this->thread_id = $thread_id;
 		}
 

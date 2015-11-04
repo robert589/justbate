@@ -21,7 +21,7 @@ class LoginController{
 	}
 
 	function __destruct(){
-
+		
 	}
 
 	function login($email, $password){

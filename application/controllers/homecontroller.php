@@ -2,9 +2,18 @@
 
 	require_once(ROOT . DS. "application" . DS . "views" . DS . "components" .DS.  "home" . DS . "threadtemplate.php");
 	require_once (".." .  DS . "application" . DS . "models" . DS . "threadmodel.php" );
+	require_once (".." .  DS . "application" . DS . "models" . DS . "debatemodel.php" );
+
 	require_once (".." .  DS . "application" . DS . "models" . DS . "DomainObject" . DS . "thread.entity.php" );
 
+	$controller = new HomeController();
 
+	if(isset($_GET['vote']) && isset($_GET['id'])){
+		$vote = $_GET['vote'];
+		$id = $_GET['id'];
+
+		$controller->userVote($vote, $id);
+	}
 
 	class HomeController{
 
@@ -12,8 +21,11 @@
 
 		private $threadmodel;
 
+		private $debatemodel;
+
 		function __construct(){
 			$this->threadmodel = new ThreadModel();
+			$this->debatemodel = new DebateModel();
 			$this->pageRetrieved = 0;
 		}
 
@@ -27,18 +39,36 @@
 
 			$body = "";
 			for($i = 0; $i < count($thread); $i++){
-				$body .= $this->template($thread[$i]->getName());
+				$name = $thread[$i]->getName();
+				$id = $thread[$i]->getId();
+  				$body .= $this->template($name, $id);
 			}
 
 			echo  $body;
 		}
 
+		function userVote($vote, $id){
+			$result = checkLogin();
+			if($result == true){
+				$useremail = retrieveUserEmail();
+				$result = $this->debatemodel->addUserVote($vote, $id, $useremail);
+
+				if($result === true){
+					header("location: home.php");
+				}
+				else{
+					echo $result;
+				}
+			}
+			else{
+				header("location: home.php?message='Please Login First'");
+			}
+		}
 
 
 
 
-
-		private function template($name){
+		private function template($name, $id){
 			return '<div class="col-xs-12" style="background-color:silver;" >
 				<h4>' . $name . '</h4>
 
@@ -62,16 +92,16 @@
 						</div>
 
 						<div class="col-md-offset-8 col-md-1">
-							<a href="#" class="btn btn-info btn-md">
+							<a href="homecontroller.php?vote=1&id='.$id.'" class="btn btn-info btn-md">
 								<label>Yes</label>
 							</a>
 						</div>
 
 
 						<div class=" col-md-1">
-							<a href="#" class="btn btn-info btn-md">
+							<a href="homeontroller.php?vote=0&id='.$id.'" class="btn btn-info btn-md">
 								<label>No</label>
-							</a>*
+							</a>
 						</div>
 					</div>
 				</div>';
