@@ -1,4 +1,4 @@
-<?php
+	<?php
 	
 	require_once "/user.entity.php";
 	require_once "/thread.entity.php";

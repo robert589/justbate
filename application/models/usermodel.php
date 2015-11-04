@@ -70,7 +70,7 @@
 			$received_user = $this->mapperfactory->retrieveUser($email);
 			$this->setFirstNameSession($received_user['first_name']);
 			$this->setLastNameSession($received_user['last_name']);
-
+			$this->setUsernameSession($received_user['username']);
 			$this->setEmailSession($received_user['email']);
 
 
