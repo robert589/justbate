@@ -41,6 +41,13 @@
 						placeholder="Email">
 					</div>
 
+					<div class="form-group ">	
+					
+						<input type="text" class="form-control"
+						name="username"
+						placeholder="username">
+					</div>
+
 					<div class="form-group ">
 						<input type="password" class="form-control" name="userPassword" placeholder="Password">
 					</div>

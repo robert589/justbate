@@ -5,14 +5,15 @@
 
 	if(isset($_POST['register'])){
 		if(isset($_POST['userFirstName']) && isset($_POST['userLastName']) && isset($_POST['userEmail']) && isset($_POST['userPassword']) 
-			&& isset($_POST['userBirthday'])){
+			&& isset($_POST['userBirthday']) && isset($_POST['username'])){
 			$firstName = $_POST['userFirstName'];
 			$lastName = $_POST['userLastName'];
 			$email = $_POST['userEmail'];
 			$password = $_POST['userPassword'];
 			$birthdate = $_POST['userBirthday'];
+			$username = $_POST['username'];
 
-			$controller->register($firstName, $lastName, $email, $password, $birthdate);
+			$controller->register($firstName, $lastName, $email, $password, $birthdate,$username);
 
 		}
 		else{
@@ -40,9 +41,9 @@ class RegisterController{
 
 	}
 
-	function register($firstName, $lastName, $email, $password, $birthdate){
-		$success = $this->usermodel->register($firstName, $lastName, $email, $password, $birthdate);
-		echo $success;
+	function register($firstName, $lastName, $email, $password, $birthdate, $username){
+		$success = $this->usermodel->register($firstName, $lastName, $email, $password, $birthdate, $username);
+		//echo $success;
 		if($success === true){
 			header("Location: home.php");
 		}

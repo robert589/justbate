@@ -26,6 +26,16 @@
 			}
 		}
 
+		function retrieveUsername(){
+			//	session_start();
+			if(checkLogin()){
+				return $_SESSION['username'];
+			}
+			else{
+				return null;
+			}
+		}
+
 	
 	function redirectPage(){
 		global $url;

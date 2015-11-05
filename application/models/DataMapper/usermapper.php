@@ -42,12 +42,12 @@
 			$firstName = $user->getFirstName();
 			$lastName = $user->getLastName();
 			$birthdate = $user->getBirthdate();
-
+			$username = $user->getUsername();
 			$password = md5($password);
 
 
-			$sql = "INSERT INTO user(first_name, email, last_name, password, birthday)
-			VALUES ('$firstName', '$email', '$lastName', '$password', '$birthdate')";
+			$sql = "INSERT INTO user(username, first_name, email, last_name, password, birthday)
+			VALUES ('$username', '$firstName', '$email', '$lastName', '$password', '$birthdate')";
 
 			//echo $con;
 			if( $this->con->query($sql)){
@@ -67,8 +67,8 @@
 
 		}
 
- 		function retrieveUser($email){
-			$sql = "SELECT * from user where email = '$email'";
+ 		function retrieveUser($username){
+			$sql = "SELECT * from user where username = '$username'";
 
 			$result = $this->con->query($sql) or die(mysqli_error($this->con));
 
@@ -80,6 +80,19 @@
 			}
 		}
 
+
+ 		function retrieveUserWithEmail($email){
+			$sql = "SELECT * from user where email = '$email'";
+
+			$result = $this->con->query($sql) or die(mysqli_error($this->con));
+
+			if($result->num_rows > 0){
+				return mysqli_fetch_array($result);
+			}
+			else{
+				return false;
+			}
+		}
 		function verifyCode($code){
 			$sql = "SELECT * from validation_code where code = '$code'";
 
@@ -108,8 +121,6 @@
 			else{
 				header('location: ../Startupapp/home.php?message="Broken Verification Link"');
 			}
-
-
 		}
 
 		function changePassword($email, $oldPassword, $newPassword){

@@ -59,8 +59,10 @@
  								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
  							</a>
 							<ul class="dropdown-menu">
-								 <li> <a  href="profile.php?user=self">Profile Page</a></li>
 
+								<?php
+								echo '<li><a href="profile.php?user='. retrieveUsername() .'">Profile Page</a></li>';
+								?>
  								<li> <a  href="navbarcontroller.php?action=logout">Logout</a></li>
  							</ul>
  						</li>

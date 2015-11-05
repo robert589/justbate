@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 	require_once(ROOT . DS. "application" . DS . "views" . DS . "components" .DS.  "home" . DS . "threadtemplate.php");
 	require_once (".." .  DS . "application" . DS . "models" . DS . "threadmodel.php" );
@@ -14,6 +14,14 @@
 
 		$controller->userVote($vote, $id);
 	}
+
+	if(isset($_GET['liked']) && isset($_GET['id'])){
+		$liked = $_GET['liked'];
+		$id = $_GET['id'];
+
+		$controller->userCommentLikeDislike($liked, $id);
+	}
+
 	if(isset($_GET['action'])){
 		$message = $_GET['action'];
 		if(strcmp($message, "comment") === 0 ){
@@ -23,6 +31,8 @@
 			}
 		}
 	}
+
+
 
 	class HomeController{
 
@@ -56,6 +66,24 @@
 			echo  $body;
 		}
 
+		function userCommentLikeDislike($liked, $id){
+			$result = checkLogin();
+			if($result == true){
+				$username = retrieveUsername();
+				$result = $this->debatemodel->addUserCommentLikeDislike($liked, $id);
+
+				if($result === true){
+					header("location: home.php");
+				}
+				else{
+					echo $result;
+				}
+			}
+			else{
+				header("location: home.php?message='Please Login First'");
+			}
+		}
+
 		function userVote($vote, $id){
 			$result = checkLogin();
 			if($result == true){
@@ -73,6 +101,8 @@
 				header("location: home.php?message='Please Login First'");
 			}
 		}
+
+
 
 
 
@@ -117,25 +147,28 @@
 				'. $this->retrieveComment($id);
 		}
 
-		public function retrieveComment($id){
+		public function retrieveComment($thread_id){
 
-			$commentArray = $this->threadmodel->retrieveComment($id);
+			$commentArray = $this->threadmodel->retrieveComment($thread_id);
 
 			$body = "";
 
 
 
 			for($i = 0 ; $i < count($commentArray); $i++){
-				$comment = $commentArray[$i];
-				$username = $comment->getFullname();
-				$comment = $comment->getComment();
+				$comment_entity = $commentArray[$i];
+				$username = $comment_entity->getFullname();
+				$comment = $comment_entity->getComment();
+				$comment_id = $comment_entity->getID();
 				$body .= '<div class="col-xs-12" style="background-color:white;  "> 
 					<div class="col-md-10 style="background-color:white; height:100px;">
 						<a href="">'. $username . '</a> ' . $comment .'
 
 					</div>
 					<div class="col-md-10 style="background-color:white;">
-						<a href="">Like</a> <a href="">Reply </a>
+						<a href="homecontroller.php?liked=1&id=' . $comment_id . '">Like</a> 
+						<a href="homecontroller.php?liked=0&id=' . $comment_id . '">Dislike</a> 
+						<a href="">Reply </a>
 					</div>
 					</div>' ;
 			}

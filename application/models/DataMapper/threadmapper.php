@@ -27,7 +27,7 @@
 		}
 
 		function retrieveComment($thread_id){
-			$sql = "SELECT first_name, last_name, comment, date_created 
+			$sql = "SELECT comment_id, first_name, last_name, comment, date_created 
 			from comment inner join user 
 			on comment.email = user.email 
 			where thread_id = $thread_id";

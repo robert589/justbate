@@ -10,6 +10,7 @@ $homecontroller = new HomeController();
 ?>
 <nav class="navbar navbar-default" id="navBar">
 	<?php 
+	//echo $login;
 	if($login)
 		addNavbar(Navbar::AFTER_LOGIN);
 	else

@@ -21,7 +21,7 @@
 		}
 
 		function setEmailSession($email){
-			echo  '<script> console.log("hello")</script>';
+		//	echo  '<script> console.log("hello")</script>';
 			$_SESSION['email'] = $email;
 		}
 

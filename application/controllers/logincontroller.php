@@ -29,10 +29,11 @@ class LoginController{
 		//echo $success;
 
 		if($success === true){
+			//echo "success";
 			header("Location: home.php");
 		}
 		else{
-			header("ss");
+			header("Location: home.php?message='password incorrect'");
 		}
 	}
 	

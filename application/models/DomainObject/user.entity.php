@@ -20,6 +20,7 @@
 
 		private $red_card;
 		
+		private $username;
 	
 		function __construct(){
 
@@ -43,6 +44,18 @@
 
 		function getLastName(){
 			return $this->lastName;
+		}
+
+		function setUsername($username){
+			$this->username = $username;
+		}
+
+
+		function getFullName(){
+			return $this->firstName . ' ' . $this->lastName;
+		}
+		function getUsername(){
+			return $this->username;
 		}
 
 		function setEmail($email){
@@ -80,12 +93,26 @@
 		}
 
 		function setTotalLike($totalLike){
-			$this->totalDislike = $totalDislike;
+			$this->totalLike = $totalLike;
 		}
 
 		function getTotalLike(){
 			return $this->totalLike;
 		}
 
+		function setYellowCard($card){
+			return $this->yellow_card = $card;
+		}
 
+		function getYellowCard(){
+			return $this->yellow_card ;	
+		}
+
+		function setRedCard($card){
+			return $this->red_card = $card;
+		}
+
+		function getRedCard(){
+			return $this->red_card ;	
+		}
 	}

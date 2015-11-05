@@ -99,7 +99,7 @@
 				$comment->setDateCreated($comment_result['date_created']);
 				$comment->setFirstname($comment_result['first_name']);
 				$comment->setLastname($comment_result['last_name']);
-
+				$comment->setID($comment_result['comment_id']);
 				array_push($commentArray, $comment);
 			}
 

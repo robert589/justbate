@@ -5,8 +5,9 @@
 
 		const AFTER_LOGIN = "after-login.php";
 
+	//	private $navbarcontroller;
 		function __construct(){
-
+		//	$this->navbarcontroller = new NavbarController();
 
 		}
 

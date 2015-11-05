@@ -71,9 +71,10 @@
 			$this->comment_id = $comment_id;
 		}
 
+		
 		function getID(){
 			return $this->comment_id;
 		}
 
 
-	}
+	}	
