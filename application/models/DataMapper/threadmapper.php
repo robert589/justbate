@@ -39,4 +39,37 @@
 				return $result;
 			}
 		}
+
+		function insertNewThread(){
+			$email = $user->getEmail();
+			$password = $user->getPassword();
+			$firstName = $user->getFirstName();
+			$lastName = $user->getLastName();
+			$birthdate = $user->getBirthdate();
+			$username = $user->getUsername();
+			$password = md5($password);
+
+
+			$sql = "INSERT INTO user(username, first_name, email, last_name, password, birthday)
+			VALUES ('$username', '$firstName', '$email', '$lastName', '$password', '$birthdate')";
+
+			//echo $con;
+			if( $this->con->query($sql)){
+				
+				require_once __DIR__.'\support\mailer.support.php';
+
+				$body = $this->getVerificationBody($email);
+				$mailer = new Mailer($email, $this->con, $body);
+				$success = $mailer->sendMail();
+
+				return $success;
+			}
+			else{
+				return die("INVALID ERROR: ". mysqli_error($this->con));
+			}
+
+
+
+			$sql = "INSERT "
+		}
 	}

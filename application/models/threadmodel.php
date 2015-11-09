@@ -44,7 +44,7 @@
 
 
 
-		function addThread($name, $photo, $user_email){
+		function addThread($name, $photo, $user_email, $content, $category){
 			
 
 			$newThread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
@@ -53,7 +53,8 @@
 			$newThread->setName($name);
 			$newThread->setPhoto($photo);
 			$newThread->setEmail($email);
-			
+			$newThread->setContent($content);
+			$newThread->setCategory($category);
 
 			if($this->mapper->addThread($newThread)){				
 				$this->updateSession($email);
@@ -65,14 +66,14 @@
 
 	}
 
-		function addThreadNoPhoto($name, $email){
+		function addThreadNoPhoto($name, $email, $content, $category){
 			$newThread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
 
 
 			$newThread->setName($name);
-			
 			$newThread->setEmail($email);
-			
+			$newThread->setContent($content);
+			$newThread->setCategory($category);
 
 			if($this->mapper->addThread($newThread)){				
 				$this->updateSession($email);

@@ -31,7 +31,7 @@ $threadController = new ThreadController();
 
 				<label class="spacer-12">Jenis Topik</label>
 
-				<form class="form">
+				<form role = "form" class="form" id = "createThreadForm" action = "create-threadcontroller.php" method = "post">
 					<div class="form-group col-xs-12 form-inline">
 
 						<div class="col-xs-4">
@@ -63,9 +63,9 @@ $threadController = new ThreadController();
 
 					<div class="form-group inline-block">
 
-						<label> Nama Topik </label>
+						<label> Isi </label>
 
-						<input type="text" class="form-control"  name="topicName" placeholder="Place topic name here">
+						<input type="text" class="form-control"  name="content" placeholder="Place topic name here">
 
 					</div>
 
@@ -78,7 +78,7 @@ $threadController = new ThreadController();
 					</div>
                     
                     <hr>
-					<input type="submit" class="btn btn-info spacer-12" style="clear:both" >
+					<input type="submit" name = "addThread" class="btn btn-info spacer-12" style="clear:both" >
 
 					<!--form-group-->
 				</form>
