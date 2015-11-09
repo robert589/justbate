@@ -34,7 +34,7 @@ else{
 
 class ThreadController{
 
-	private $threadmodel 
+	private $threadmodel;
 
 	function __construct(){
 		$this->threadmodel = new ThreadModel();

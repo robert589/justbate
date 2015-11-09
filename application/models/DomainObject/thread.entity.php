@@ -14,6 +14,8 @@
 
 		private $category;
 
+		private $content;
+
 
 		function __construct(){
 
@@ -73,5 +75,13 @@
 
 		function getCategory(){
 			return $this->category;
+		}
+
+		function setContent(){
+			$this->content = $content;
+		}
+
+		function getContent(){
+			return $this->content;
 		}
 	}

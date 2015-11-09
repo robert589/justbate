@@ -70,6 +70,6 @@
 
 
 
-			$sql = "INSERT "
+			//$sql = "INSERT "
 		}
 	}
