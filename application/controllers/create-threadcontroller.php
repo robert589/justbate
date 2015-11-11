@@ -16,7 +16,7 @@ if(isset($_POST['addThread'])){
 			}
 			
 			else{
-				$controller->addThread($firstName, $email, $content, $category);
+				$controller->addThreadNoPhoto($firstName, $email, $content, $category);
 			}
 
 			
@@ -56,7 +56,7 @@ class ThreadController{
 	}
 
 	function addThreadNoPhoto($name, $user_email, $content, $category){
-		$success = $this->threadmodel->addThread($name, $user_email, $content, $category);
+		$success = $this->threadmodel->addThreadNoPhoto($name, $user_email, $content, $category);
 		echo $success;
 		if($success === true){
 			header("Location: create-thread.php");

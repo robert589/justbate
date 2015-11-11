@@ -77,7 +77,7 @@
 			return $this->category;
 		}
 
-		function setContent(){
+		function setContent($content){
 			$this->content = $content;
 		}
 

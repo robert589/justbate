@@ -9,6 +9,7 @@ addHeader(Header::GENERAL);
 
 $threadController = new ThreadController();
 ?>
+
 <nav class="navbar navbar-default" id="navBar">
 	<?php 
 	if($login)

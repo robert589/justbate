@@ -4,10 +4,11 @@
 
 	class ThreadModel extends Model{
 		
-		private $user; 
+		private $thread; 
 
 		function __construct(){
 			parent::__construct();
+			$this->mapperfactory = $this->dataMapper->getDataMapper(DataMapperFactory::THREAD_MAPPER);
 		}
 
 		function __destruct(){
@@ -47,17 +48,17 @@
 		function addThread($name, $photo, $user_email, $content, $category){
 			
 
-			$newThread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
+			$thread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
 
 
-			$newThread->setName($name);
-			$newThread->setPhoto($photo);
-			$newThread->setEmail($email);
-			$newThread->setContent($content);
-			$newThread->setCategory($category);
+			$thread->setName($name);
+			$thread->setPhoto($photo);
+			$thread->setUserEmail($user_email);
+			$thread->setContent($content);
+			$thread->setCategory($category);
 
-			if($this->mapper->addThread($newThread)){				
-				$this->updateSession($email);
+			if($this->mapperfactory->insertNewThread($thread)){				
+				echo "Thread successfully submitted";
 				return true;
 			}
 			else{
@@ -67,17 +68,17 @@
 	}
 
 		function addThreadNoPhoto($name, $email, $content, $category){
-			$newThread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
+			$thread = $this->domainObject->getDomainObject(DomainObjectFactory::THREAD_ENTITY);
 
 
-			$newThread->setName($name);
-			$newThread->setEmail($email);
-			$newThread->setContent($content);
-			$newThread->setCategory($category);
+			$thread->setName($name);
+			$thread->setUserEmail($email);
+			$thread->setContent($content);
+			$thread->setCategory($category);
 
-			if($this->mapper->addThread($newThread)){				
-				$this->updateSession($email);
-				return true;
+			if($this->mapperfactory->insertNewThreadnoPhoto($thread)){		
+				echo "Thread successfully submitted";
+				return ;
 			}
 			else{
 				return false;

@@ -40,25 +40,24 @@
 			}
 		}
 
-		function insertNewThread(){
-			$email = $user->getEmail();
-			$password = $user->getPassword();
-			$firstName = $user->getFirstName();
-			$lastName = $user->getLastName();
-			$birthdate = $user->getBirthdate();
-			$username = $user->getUsername();
-			$password = md5($password);
+		function insertNewThread($thread){
+			$email = $thread->getUserEmail();
+			$name = $thread->getName();
+			$photo = $thread->getPhoto();
+			$category = $thread->getCategory();
+			$content = $thread->getContent();
+			
 
 
-			$sql = "INSERT INTO user(username, first_name, email, last_name, password, birthday)
-			VALUES ('$username', '$firstName', '$email', '$lastName', '$password', '$birthdate')";
+			$sql = "INSERT INTO thread(name, photo, user_email, category, content)
+			VALUES ('$name', '$photo', '$email', '$category', '$content')";
 
 			//echo $con;
 			if( $this->con->query($sql)){
 				
 				require_once __DIR__.'\support\mailer.support.php';
 
-				$body = $this->getVerificationBody($email);
+				//$body = $this->getVerificationBody($email);
 				$mailer = new Mailer($email, $this->con, $body);
 				$success = $mailer->sendMail();
 
@@ -70,6 +69,37 @@
 
 
 
-			//$sql = "INSERT "
+		}
+
+		function insertNewThreadnoPhoto($thread){
+			$email = $thread->getUserEmail();
+			$name = $thread->getName();
+			$category = $thread->getCategory();
+			$content = $thread->getContent();
+			
+
+
+			$sql = "INSERT INTO thread(name, user_email, category, content)
+			VALUES ('$name', '$email', '$category', '$content')";
+
+			//echo $con;
+			if( $this->con->query($sql)){
+
+				echo "submission successful";
+				
+				//require_once __DIR__.'\support\mailer.support.php';
+
+				//$body = $this->getVerificationBody($email);
+				//$mailer = new Mailer($email, $this->con, $body);
+				//$success = $mailer->sendMail();
+
+				return true;
+			}
+			else{
+				return die("INVALID ERROR: ". mysqli_error($this->con));
+			}
+
+
+
 		}
 	}
