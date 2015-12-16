@@ -2,7 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -49,10 +49,53 @@ AppAsset::register($this);
             'linkOptions' => ['data-method' => 'post']
         ];
     }
+
+    $menuItemsLeft = [
+        [
+            'label' => 'Category',
+            'items' => [
+                ['label' => 'Critique', 'url' => '#'],
+                '<li class="divider"></li>',
+                ['label' => 'Solution', 'url' => '#'],
+                '<li class="divider"></li>',
+                ['label' => 'Proposal', 'url' => '#']
+            ]
+        ]
+
+
+    ];
+
+
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => $menuItemsLeft,
+    ]);
+
+
+
+
+    echo "<form class='navbar-form navbar-left' role='search'>
+       <div class='form-group has-feedback'>".
+                Select2::widget([
+                    'name' => 'state_2',
+                    'value' => '',    'size' => Select2::SMALL,
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '250%'
+
+                        ],
+                        'data' => ["Dita thread" , "Grace Thread", 'Robert Thread'], // put the data here
+                        'options' => ['multiple' => true, 'placeholder' => 'Select threads ...',
+                            'class' => 'navbar-form navbar-left form-control'
+                        ]
+                        ]). "        
+        </div>
+    </form>";
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);
+
     NavBar::end();
     ?>
 
