@@ -64,7 +64,19 @@
                                 <p>Grace Christina</p> <!--need to extract from database-->
                             </div>
                             <div id="displayDetails">
-                                <p>Write description about yourself</p> <!--can update here-->
+                                <script type="text/javascript">
+                                    function changeThis(){
+                                        var formInput = document.getElementById('userDescription').value;
+                                        document.getElementById('description').innerHTML = formInput;
+                                    }
+
+                                </script>
+                                
+
+                                <input type='text' id='userDescription' placeholder='Write here' />
+                                <input type='button' onclick='changeThis()' value='Submit' onclick=\"remove('" + userDescription + "');\"/> <br>
+                                <span id='description'></span>
+                                <br><br>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
                             </div>               
                         </div>
@@ -72,6 +84,10 @@
                 </div>
             </div>
         </div>
+
+        
+
+
         <!-- /#page-content-wrapper -->
         <div class="well well-sm">
             <h4>Basic Information</h4>      
