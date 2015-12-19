@@ -83,9 +83,6 @@
         <div class="well well-sm">
             <h4>Additional Information</h4>      
         </div>
-
-        <a href='#textboxid' onclick='document.getElementById("textboxid").focus();'>Click me</a>
-        
     </div>
     </div>
     <!-- /#wrapper -->
