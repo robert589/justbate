@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "37af50951d847e8f342fce9bbd233981",
-    "content-hash": "76743d3526b22835743b49764bbd6f69",
+    "hash": "8a10642c83c3a4f6c5ed0d7c7cf32578",
+    "content-hash": "fe7e550799fb7950cdeaccde596803e7",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -318,6 +318,47 @@
             "time": "2013-11-30 08:25:19"
         },
         {
+            "name": "kartik-v/bootstrap-star-rating",
+            "version": "v3.5.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/bootstrap-star-rating.git",
+                "reference": "0f729ea50a69224b643e2d9c955b9183e387f03a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/0f729ea50a69224b643e2d9c955b9183e387f03a",
+                "reference": "0f729ea50a69224b643e2d9c955b9183e387f03a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\plugins\\rating\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A simple yet powerful JQuery star rating plugin for Bootstrap.",
+            "homepage": "https://github.com/kartik-v/bootstrap-star-rating",
+            "keywords": [
+                "Rating",
+                "bootstrap",
+                "jquery",
+                "star"
+            ],
+            "time": "2015-11-22 17:08:34"
+        },
+        {
             "name": "kartik-v/yii2-krajee-base",
             "version": "v1.8.0",
             "source": {
@@ -362,6 +403,57 @@
                 "yii2"
             ],
             "time": "2015-12-11 19:01:49"
+        },
+        {
+            "name": "kartik-v/yii2-widget-rating",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-rating.git",
+                "reference": "902f73385e6ed42d65576b8fd6e97889c3c18e65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-rating/zipball/902f73385e6ed42d65576b8fd6e97889c3c18e65",
+                "reference": "902f73385e6ed42d65576b8fd6e97889c3c18e65",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/bootstrap-star-rating": "*",
+                "kartik-v/yii2-krajee-base": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\rating\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A Yii2 widget for the simple yet powerful bootstrap-star-rating plugin with fractional rating support (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-rating",
+            "keywords": [
+                "Rating",
+                "bootstrap",
+                "extension",
+                "form",
+                "input",
+                "jquery",
+                "plugin",
+                "star",
+                "widget",
+                "yii2"
+            ],
+            "time": "2014-11-08 19:30:37"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
