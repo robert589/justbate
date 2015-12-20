@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-    <title>Simple Sidebar - Start Bootstrap Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="web/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="web/css/simple-sidebar.css" rel="stylesheet">
-    <link href="frontend/web/css/style.css" rel="stylesheet">
-</head>
-
-
-
-<body>
     
     <div id="wrapper">
 
