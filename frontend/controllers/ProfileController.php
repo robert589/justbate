@@ -84,6 +84,7 @@ class ProfileController extends Controller
         ]);
 
         $users= $query->orderBy('username') -> offset($pagination->offset) ->limit($pagination->limit)->all();
+        $id=$query->orderBy('id')
         return $this->render('profile', [
             'users'=>$users,
             'pagination' =>$pagination,

@@ -90,7 +90,8 @@ use yii\helpers\Html;
             <h4>Additional Information</h4>      
         </div>
 
-        <?php foreach ($users as $user): ?>
+       <?php foreach ($users as $user): ?>
+           
     <li>
         <?= Html::encode("{$user->username}") ?>
     </li>
