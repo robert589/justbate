@@ -74,20 +74,8 @@ class ProfileController extends Controller
      */
     
 
-    public function actionProfile()
+    public function actionIndex()
     {
-        $query = User::find();
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $query->count(),
-        ]);
-
-        $users= $query->orderBy('username') -> offset($pagination->offset) ->limit($pagination->limit)->all();
-        $id=$query->orderBy('id')
-        return $this->render('profile', [
-            'users'=>$users,
-            'pagination' =>$pagination,
-            ]);
+        return $this->render('index');
     }
 }

@@ -104,7 +104,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('profile');
+            return $this->redirect('../profile/index');
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -227,8 +227,4 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionProfile()
-    {
-        return $this->render('profile');
-    }
 }
