@@ -81,9 +81,9 @@ class SiteController extends Controller
     public function actionHome(){
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Thread::find(),
+            'query' => Thread::retrieveAll(),            
             'pagination' => [
-                'pageSize' =>20,
+                'pageSize' =>5,
             ],
 
         ]);
