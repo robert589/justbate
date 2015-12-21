@@ -1,18 +1,9 @@
 <?php
 use yii\widgets\ListView;
 use kartik\select2\Select2;
-$data = [
-		    "red" => "red",
-		    "green" => "green",
-		    "blue" => "blue",
-		    "orange" => "orange",
-		    "white" => "white",
-		    "black" => "black",
-		    "purple" => "purple",
-		    "cyan" => "cyan",
-		    "teal" => "teal"
 
-];
+
+// \Yii::$app->end(print_r($topicData));
 ?>
 
 
@@ -24,13 +15,18 @@ $data = [
 		
 		<?= Select2::widget([
 		    'name' => 'color_1',
-		    'value' => ['red', 'green'], // initial value
-		    'data' => $data,
+		    'value' => [], // initial value
+		    'data' => $topicData,
 		    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
 		    'pluginOptions' => [
 		        'tags' => true,
 		        'maximumInputLength' => 10
 		    ],
+		    'pluginEvents' =>[
+		    	'select2:select' => "function(){
+		    							alert(\"Selected\")
+		    						}"
+		    ]
 		])?>
 	</div>
 	<div class="col-md-6">

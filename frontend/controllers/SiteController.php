@@ -7,6 +7,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\Thread;
+use frontend\models\ThreadTopic;
 
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
@@ -15,7 +16,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\SqlDataProvider;
-
+use yii\helpers\ArrayHelper;
 /**
  * Site controller
  */
@@ -90,7 +91,10 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider]);
+        $data = ThreadTopic::retrieveAll();
+        $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
+
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
     }
 
     /**
