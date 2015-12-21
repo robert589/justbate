@@ -1,3 +1,12 @@
+<?php
+
+/* @var $this yii\web\View */
+
+use yii\helpers\Html;
+
+
+?>
+
      <div id="wrapper">
 
         <!-- Sidebar -->
@@ -45,13 +54,13 @@
                                 <p>Grace Christina</p> <!--need to extract from database-->
                             </div>
                             <div id="displayDetails">
-                                <script type="text/javascript">
+                               <!-- <script type="text/javascript">
                                     function changeThis(){
                                         var formInput = document.getElementById('userDescription').value;
                                         document.getElementById('description').innerHTML = formInput;
                                     }
 
-                                </script>
+                                </script>-->
                         
                                 <span>Description about yourself: </span><br>
                                 <input type='text' id='userDescription' placeholder='Write here' />
@@ -80,6 +89,16 @@
         <div class="well well-sm">
             <h4>Additional Information</h4>      
         </div>
+
+        <?php foreach ($users as $user): ?>
+    <li>
+        <?= Html::encode("{$user->username}") ?>
+    </li>
+<?php endforeach; ?>
+</ul>
+
+
+
     </div>
     </div>
     <!-- /#wrapper -->
@@ -88,6 +107,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
