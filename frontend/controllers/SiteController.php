@@ -75,15 +75,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect('site/home');
+        return $this->redirect('home');
     }
 
     public function actionHome(){
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Thread::retrieveAll(),
+            'query' => Thread::find(),
             'pagination' => [
-                'pageSize' =>5,
+                'pageSize' =>20,
             ],
 
         ]);

@@ -83,12 +83,12 @@ AppAsset::register($this);
                         'allowClear' => true,
                         'width' => '250%'
 
-                    ],
-                    'data' => ["Dita thread" , "Grace Thread", 'Robert Thread'], // put the data here
-                    'options' => ['multiple' => true, 'placeholder' => 'Select threads ...',
+                        ],
+                        'data' => ["Dita thread" , "Grace Thread", 'Robert Thread'], // put the data here
+                        'options' => ['multiple' => true, 'placeholder' => 'Select threads ...',
                             'class' => 'navbar-form navbar-left form-control'
-                    ]
-                ]). "        
+                        ]
+                        ]). "        
         </div>
     </form>";
     echo Nav::widget([
