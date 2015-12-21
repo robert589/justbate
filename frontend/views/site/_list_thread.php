@@ -8,7 +8,7 @@
 
 	<hr>
 	<div style="border-width:1px solid">
-		<label> <?= $model->name ?> </label>
+		<label> <?= $model->title ?> </label>
 		<p> <?= $model->content ?> </p>	
 	</div>
 
