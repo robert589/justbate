@@ -14,7 +14,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
 
 /**
  * Site controller
@@ -80,8 +80,10 @@ class SiteController extends Controller
 
     public function actionHome(){
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Thread::retrieveAll(),            
+        $dataProvider = new SqlDataProvider([
+            'sql' => Thread::retrieveAllBySql(),  
+            'totalCount' => Thread::countAll(),
+          
             'pagination' => [
                 'pageSize' =>5,
             ],
