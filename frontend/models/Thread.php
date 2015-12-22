@@ -21,14 +21,40 @@ Select TU.*, avg(rating) as avg_rating from
 left join rate  on
  TU.thread_id = rate.thread_id
 ";
-  
   }
 
+
+  public static function retrieveFilterBySql($filterArray){
+      $sql = Self::retrieveAllBySql();
+
+      $sql .= " WHERE ";
+
+      $first = 1;
+      for($i = 0 ; $i < count($filterArray) ; $i++){
+        Yii::trace($filterArray[$i]);
+        if($first == 1){
+          $first = 0 ;
+        }
+        else{
+          $sql .= " && ";
+        }
+
+        $sql .= " TU.topic_id = $filterArray[$i] ";
+      }
+
+
+      return $sql;
+
+  }
 
   public static function countAll(){
         Yii::trace(\Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user where thread.thread_id = user.id) TU')->queryScalar());
         return 1;
 
+  }
+
+  public static function countFilter(){
+      return 1;
   }
 
   

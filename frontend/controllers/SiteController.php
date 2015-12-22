@@ -10,6 +10,8 @@ use frontend\models\Thread;
 use frontend\models\ThreadTopic;
 
 use frontend\models\ContactForm;
+use frontend\models\FilterHomeForm;
+
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -81,9 +83,37 @@ class SiteController extends Controller
 
     public function actionHome(){
 
+
+        //initial data without filter
+        $sql = Thread::retrieveAllBySql();
+        $totalCount = Thread::countAll();
+
+       
+        $data = ThreadTopic::retrieveAll();
+        $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
+
+        $filterHomeModel = new FilterHomeForm();
+        if($filterHomeModel->load(Yii::$app->request->post())){
+            //if filter found then use the filtered one
+
+            //var_dump($_POST);
+
+
+            $filterArrays = array();
+        // $filterArrays .=  $filterHomeModel->filterwords;
+            Yii::trace("item obtain"  . $filterHomeModel->filterwords);
+            // \Yii::$app->end(print_r($filterArrays));
+
+            Yii::trace("sql obtain in site".  Thread::retrieveFilterBySql($filterArrays));
+            //$sql = Thread::retrieveFilterBySql(array($filterHomeModel->filterwords));
+            //$totalCount = Thread::countFilter(array($filterHomeModel->filterwords));
+
+            Yii::trace($sql .  ' ' . $totalCount);
+        }
+
         $dataProvider = new SqlDataProvider([
-            'sql' => Thread::retrieveAllBySql(),  
-            'totalCount' => Thread::countAll(),
+            'sql' => $sql,  
+            'totalCount' => $totalCount,
           
             'pagination' => [
                 'pageSize' =>5,
@@ -91,10 +121,7 @@ class SiteController extends Controller
 
         ]);
 
-        $data = ThreadTopic::retrieveAll();
-        $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
-
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData, 'filterHomeModel' => $filterHomeModel]);
     }
 
     /**
