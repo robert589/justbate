@@ -16,22 +16,27 @@ class Thread extends ActiveRecord{
 
   public static function retrieveAllBySql(){
     return "
-Select TU.*, avg(rating) as avg_rating from 
-(Select * from thread inner join user where thread.thread_id = user.id ) TU
-left join rate  on
- TU.thread_id = rate.thread_id
-";
+      Select TU.*, avg(rating) as avg_rating from 
+      ((Select * from thread inner join user where thread.thread_id = user.id ) TU
+      left join rate  on
+       TU.thread_id = rate.thread_id)
+group by(thread_id)
+    ";
   }
 
 
   public static function retrieveFilterBySql($filterArray){
-      $sql = Self::retrieveAllBySql();
+      $sql = "
+      Select TU.*, avg(rating) as avg_rating from 
+      ((Select * from thread inner join user where thread.thread_id = user.id ) TU
+      left join rate  on
+       TU.thread_id = rate.thread_id)
+    ";
 
       $sql .= " WHERE ";
 
       $first = 1;
       for($i = 0 ; $i < count($filterArray) ; $i++){
-        Yii::trace($filterArray[$i]);
         if($first == 1){
           $first = 0 ;
         }
@@ -42,18 +47,23 @@ left join rate  on
         $sql .= " TU.topic_id = $filterArray[$i] ";
       }
 
-
+      $sql .= "group by(thread_id)";
       return $sql;
 
   }
 
   public static function countAll(){
-        Yii::trace(\Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user where thread.thread_id = user.id) TU')->queryScalar());
-        return 1;
+        $command =  \Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user where thread.thread_id = user.id) TU')->queryScalar();
+        Yii::trace((int) $command);
+        return (int)($command);
+        
 
   }
 
   public static function countFilter(){
+
+
+
       return 1;
   }
 

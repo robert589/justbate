@@ -47,7 +47,7 @@ use yii\helpers\Html;
 		<?php $form =ActiveForm::begin(['id' => 'refresh-form']) ?>
 
 		<!-- this hidden input will be filled by select2:select event -->
-   		<?= $form->field($filterHomeModel, 'filterwords')->hiddenInput(['id' => 'filter_tag'])->label(false) ?>
+<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
 
 
 

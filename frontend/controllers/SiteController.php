@@ -88,27 +88,22 @@ class SiteController extends Controller
         $sql = Thread::retrieveAllBySql();
         $totalCount = Thread::countAll();
 
-       
+           
         $data = ThreadTopic::retrieveAll();
         $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
 
         $filterHomeModel = new FilterHomeForm();
-        if($filterHomeModel->load(Yii::$app->request->post())){
-            //if filter found then use the filtered one
 
-            //var_dump($_POST);
+        var_dump($_POST);
 
-
+        if(!empty($_POST['filterwords'])){
             $filterArrays = array();
-        // $filterArrays .=  $filterHomeModel->filterwords;
-            Yii::trace("item obtain"  . $filterHomeModel->filterwords);
-            // \Yii::$app->end(print_r($filterArrays));
 
-            Yii::trace("sql obtain in site".  Thread::retrieveFilterBySql($filterArrays));
-            //$sql = Thread::retrieveFilterBySql(array($filterHomeModel->filterwords));
-            //$totalCount = Thread::countFilter(array($filterHomeModel->filterwords));
+            array_push($filterArrays, $_POST['filterwords']);
 
-            Yii::trace($sql .  ' ' . $totalCount);
+            $sql = Thread::retrieveFilterBySql($filterArrays);
+            $totalCount = Thread::countFilter($filterArrays);
+
         }
 
         $dataProvider = new SqlDataProvider([
