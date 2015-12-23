@@ -44,10 +44,10 @@ use yii\helpers\Html;
 		<?php Pjax::begin(); ?>
 
 		<!-- The form only be used as refresh page -->
-		<?php $form =ActiveForm::begin(['id' => 'refresh-form']) ?>
+		<?= Html::beginForm(['site/home'], 'post', ['id' => 'refresh-form', 'data-pjax' => '', 'class' => 'form-inline']); ?>
 
 		<!-- this hidden input will be filled by select2:select event -->
-<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
+		<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
 
 
 
@@ -73,7 +73,7 @@ use yii\helpers\Html;
     		],
 		]) ?>
 		
-		<?php ActiveForm::end()?>
+		<?= Html::endForm() ?>
 
 		<?php Pjax::end(); ?>
 	

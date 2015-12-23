@@ -88,13 +88,38 @@ class SiteController extends Controller
         $sql = Thread::retrieveAllBySql();
         $totalCount = Thread::countAll();
 
-           
+        //set up all topics from databaase for user to choose
         $data = ThreadTopic::retrieveAll();
         $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
 
-        $filterHomeModel = new FilterHomeForm();
+if(!empty($_POST['filterwords'])){
+            $filterArrays = array();
 
-        var_dump($_POST);
+            array_push($filterArrays, $_POST['filterwords']);
+
+            $sql = Thread::retrieveFilterBySql($filterArrays);
+            $totalCount = Thread::countFilter($filterArrays);
+
+        }
+       
+        $dataProvider = new SqlDataProvider([
+            'sql' => $sql,  
+            'totalCount' => $totalCount,
+          
+            'pagination' => [
+                'pageSize' =>5,
+            ],
+
+        ]);
+
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
+    }
+
+    public function actionFilteredpjax(){
+        Yii::trace("Filtered Pjax Cntroller");
+         $sql = Thread::retrieveAllBySql();
+        $totalCount = Thread::countAll();
+
 
         if(!empty($_POST['filterwords'])){
             $filterArrays = array();
@@ -116,7 +141,7 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData, 'filterHomeModel' => $filterHomeModel]);
+        return $this->render('home', ['listDataProvider' => $dataProvider]);
     }
 
     /**
