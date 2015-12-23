@@ -14,7 +14,7 @@ use yii\helpers\Url;
 
 			<div class="row">
 					<?= Html::a($model['title'], 
-					Url::to('../thread/index.php?id='. $model['thread_id']))?>
+					Url::to('../thread/index?id='. $model['thread_id']))?>
 			</div>
 			<div class="row">
 				<p> <?= $model['content'] ?> </p>	

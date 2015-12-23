@@ -44,4 +44,28 @@ class Comment extends ActiveRecord
         return (int)($command);
 
 	}
+
+	public static function retrieveCommentById($id){
+
+      $sql =	"SELECT  TUC.*, (SELECT count(*) 
+				                from comment_likes CL 
+				                where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 1 ) as total_like,
+								(SELECT count(*) 
+				                 from comment_likes CL 
+				                 where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 0 ) as total_dislike
+				from (Select *
+				     from (Select comment_likes.comment_id as comlikeid,
+				      	     	  comment_likes.user_id as comlikeuser,
+				      	     	  comment_likes.comment_likes, 
+            					  comment.* 
+                           from comment 
+                           left join comment_likes 
+                           on comment_likes.comment_id = comment.comment_id) TU 
+                     inner join user on user.id = TU.user_id) TUC 
+                where TUC.comment_id =$id
+               ";
+
+      return  (int)  \Yii::$app->db->createCommand($sql)->queryOne();
+
+  }
 }

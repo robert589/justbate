@@ -75,4 +75,8 @@ class ThreadController extends Controller
 
         return $this->render('index');
     }
+
+    public function actionSubmitVote(){
+        var_dump($_POST);
+    }
 }

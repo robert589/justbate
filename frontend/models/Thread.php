@@ -114,6 +114,8 @@ class Thread extends ActiveRecord{
       return $result;
   }
 
+  
+
   public  function getUser(){
     	     return $this->hasOne(User::className(), ['id' => 'user_id']);
 
