@@ -6,6 +6,7 @@ use yii\db\Query;
 
 use common\models\User;
 use Yii;
+
 class Thread extends ActiveRecord{
 
 	public static function tableName()

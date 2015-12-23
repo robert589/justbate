@@ -92,7 +92,7 @@ class SiteController extends Controller
         $data = ThreadTopic::retrieveAll();
         $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
 
-if(!empty($_POST['filterwords'])){
+        if(!empty($_POST['filterwords'])){
             $filterArrays = array();
 
             array_push($filterArrays, $_POST['filterwords']);
