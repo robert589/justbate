@@ -27,7 +27,7 @@ class ProfileController extends Controller
     		return $this->render('edit-confirm',['model'=>$model]);
 
     	} else{
-    		return $this->render('edit',['model'=>$model]);
+    		return $this->render('edit-profile',['model'=>$model]);
     	}
     }
 }
