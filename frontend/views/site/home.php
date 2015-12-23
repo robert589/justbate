@@ -49,9 +49,6 @@ use yii\helpers\Html;
 		<!-- this hidden input will be filled by select2:select event -->
 		<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
 
-
-
-
 		<?= ListView::widget([
    			'dataProvider' => $listDataProvider,
     		'options' => [

@@ -32,20 +32,25 @@ class ThreadController extends Controller
 
 
         if(!empty($_GET['id'])){
-            $id = $_GET['id'];
+            $thread_id = $_GET['id'];
             //thread data
-            $thread = Thread::retrieveThreadById($id);
+            $thread = Thread::retrieveThreadById($thread_id);
 
             //comment model
             $commentModel = new CommentForm();
-            if($commentModel->load(Yii::$app->request->post())) {
-                
+            $commentModel->thread_id = $thread_id;
+
+            if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate() ) {
+                if($commentModel->store()){
+                    $commentModel = new CommentForm();
+                    $commentModel->thread_id = $thread_id;
+                }
             }
 
             //retrieve yes data
             $yesCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlYesComment($id),  
-                'totalCount' => Comment::countYesComment($id),
+                'sql' => Comment::retrieveSqlYesComment($thread_id),  
+                'totalCount' => Comment::countYesComment($thread_id),
               
                 'pagination' => [
                     'pageSize' =>5,
@@ -55,8 +60,8 @@ class ThreadController extends Controller
 
             //retrieve no data
             $noCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlNoComment($id),  
-                'totalCount' => Comment::countNoComment($id),
+                'sql' => Comment::retrieveSqlNoComment($thread_id),  
+                'totalCount' => Comment::countNoComment($thread_id),
               
                 'pagination' => [
                     'pageSize' =>5,
