@@ -49,8 +49,8 @@ class ThreadController extends Controller
 
             //retrieve yes data
             $yesCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlYesComment($thread_id),  
-                'totalCount' => Comment::countYesComment($thread_id),
+                'sql' => Comment::retrieveSqlComment($thread_id, 1),  
+                'totalCount' => Comment::countComment($thread_id, 1),
               
                 'pagination' => [
                     'pageSize' =>5,
@@ -60,8 +60,8 @@ class ThreadController extends Controller
 
             //retrieve no data
             $noCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlNoComment($thread_id),  
-                'totalCount' => Comment::countNoComment($thread_id),
+                'sql' => Comment::retrieveSqlComment($thread_id, 0),  
+                'totalCount' => Comment::countComment($thread_id, 0),
               
                 'pagination' => [
                     'pageSize' =>5,
