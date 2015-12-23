@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-
+use app\models\User;
 
 ?>
 
@@ -77,7 +77,6 @@ use yii\helpers\Html;
             </div>
         </div>
 
-
         <!-- /#page-content-wrapper -->
         <div class="well well-sm">
             <h4>Basic Information</h4>      
@@ -89,8 +88,9 @@ use yii\helpers\Html;
         <div class="well well-sm">
             <h4>Additional Information</h4>      
         </div>
+        
+        <?php Yii::app()->user->name ?>
 
-    
 
 
     </div>
@@ -103,12 +103,5 @@ use yii\helpers\Html;
     <script src="js/bootstrap.min.js"></script>
     <script src="../js/script.js"></script>
 
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-
+    
 </body>

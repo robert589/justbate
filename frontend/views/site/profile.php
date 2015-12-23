@@ -82,6 +82,8 @@
         <div class="well well-sm">
             <h4>Additional Information</h4>      
         </div>
+        <?php
+        Yii::app()->user->name ?>
     </div>
     </div>
     <!-- /#wrapper -->
