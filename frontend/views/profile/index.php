@@ -54,13 +54,6 @@ use app\models\User;
                                     <p>Grace Christina</p> <!--need to extract from database-->
                                 </div>
                             <div id="displayDetails">
-                               <!-- <script type="text/javascript">
-                                    function changeThis(){
-                                        var formInput = document.getElementById('userDescription').value;
-                                        document.getElementById('description').innerHTML = formInput;
-                                    }
-
-                                </script>-->
                             <form>
                                 <span>Description about yourself: </span><br>
                                 <input type='text' id='userDescription' placeholder='Write here' />
@@ -70,6 +63,7 @@ use app\models\User;
                                 <br><br>
                             </form>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
+                                <a href="../profile/edit-profile">Edit Profile</a>
                             </div>               
                         </div>
                     </div>

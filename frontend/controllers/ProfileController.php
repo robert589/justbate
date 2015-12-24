@@ -23,11 +23,10 @@ class ProfileController extends Controller
     	$model = new EditProfileForm();
 
     	if($model ->load(Yii::$app->request->post()) && $model->validate()){
-    		if($user = $model->edit()){
+    		if($user = $model->save()){
     			if (Yii::$app->getUser()->login($user)) {
     		//add sth here
     		return $this->render('edit-confirm',['model'=>$model]);
-
     			}
     		}
     	} else{
