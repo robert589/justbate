@@ -5,6 +5,8 @@ use yii\db\ActiveRecord;
 use yii\db\Query;
 
 use common\models\User;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use Yii;
 
 class Thread extends ActiveRecord{
@@ -124,4 +126,26 @@ class Thread extends ActiveRecord{
   public function getRate(){
     	return $this->hasMany(Rate::className(), ['thread_id' =>'thread_id']);
   }
+
+   public static function getThreadID(){
+      return $this->thread_id;
+    }
+
+
+
+public function behaviors()
+{
+    return [
+        'timestamp' => [
+            'class' => TimestampBehavior::className(),
+            'attributes' => [
+                ActiveRecord::EVENT_BEFORE_INSERT => 'creation_time',
+                ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+            ],
+            'value' => function() { return date('U');  },
+        ],
+    ];
+}
+
+
 }
