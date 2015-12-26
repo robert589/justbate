@@ -3,7 +3,8 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use app\models\User;
+use common\models\User;
+
 
 ?>
 
@@ -52,6 +53,7 @@ use app\models\User;
                             <div class="col-lg-8">
                                 <div id="displayName">
                                     <p>Grace Christina</p> <!--need to extract from database-->
+                               
                                 </div>
                             <div id="displayDetails">
                             <form>
@@ -63,7 +65,7 @@ use app\models\User;
                                 <br><br>
                             </form>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
-                                <a href="../profile/edit-profile">Edit Profile</a>
+                                <a href="../profile/edit">Edit Profile</a>
                             </div>               
                         </div>
                     </div>

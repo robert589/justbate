@@ -4,7 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 use common\models\User;
-use frontend\models\EditProfileForm;
+use frontend\models\EditForm;
 
 /**
  * Profile controller
@@ -12,25 +12,29 @@ use frontend\models\EditProfileForm;
 class ProfileController extends Controller
 {
 
+
     public function actionIndex()
     {
-        
+        $user = \Yii::$app->user->identity;
         return $this->render('index');
     }
 
-    public function actionEditProfile()
-    {
-    	$model = new EditProfileForm();
 
-    	if($model ->load(Yii::$app->request->post()) && $model->validate()){
-    		if($user = $model->save()){
-    			if (Yii::$app->getUser()->login($user)) {
-    		//add sth here
-    		return $this->render('edit-confirm',['model'=>$model]);
-    			}
-    		}
-    	} else{
-    		return $this->render('edit-profile',['model'=>$model]);
-    	}
+	public function actionEdit()
+    {
+        $model = new EditForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->edit()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->render('edit-confirm', [
+            				'model' => $model,
+        ]);
+                }
+            }
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+        ]);
     }
 }

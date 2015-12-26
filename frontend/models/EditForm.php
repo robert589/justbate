@@ -5,10 +5,8 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use common\models\User;
-use yii\db\BaseActiveRecord;
 
-
-class EditProfileForm extends Model
+class EditForm extends Model
 {
 	public $first_name;
 	public $last_name;
@@ -26,12 +24,10 @@ class EditProfileForm extends Model
 	public function edit()
     {
         if ($this->validate()) {
-            $user = new User;
+            $user = new User();
             $user->first_name = $this->first_name;
             $user->last_name = $this->last_name;
-            $user->email = $this->email;
             $user->birthday = $this->birthday;
-            
             if ($user->save()) {
                 return $user;
             }
@@ -39,4 +35,6 @@ class EditProfileForm extends Model
 
         return null;
     }
+	
 }
+
