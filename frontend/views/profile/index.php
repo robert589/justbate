@@ -73,7 +73,10 @@ use common\models\User;
                             </form>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <a href="../profile/edit">Edit Profile</a>
+=======
+>>>>>>> parent of 64af895... Edit Profile not complete
 =======
 >>>>>>> parent of 64af895... Edit Profile not complete
                             </div>               
