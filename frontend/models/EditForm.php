@@ -39,10 +39,3 @@ class EditForm extends Model
 
 	
 }
-
-/* $user = new User();
-            $user->first_name = $this->first_name;
-            $user->last_name = $this->last_name;
-            $user->birthday = $this->birthday;
-            if ($user->save()) {
-                return $user;*/
