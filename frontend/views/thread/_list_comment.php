@@ -28,7 +28,7 @@ use yii\helpers\Url;
 
 						<div class="col-md-6">
 							<div class="col-md-3">
-								<button type="button" class="btn btn-default" style="border:0px solid transparent" onClick="upVote()">
+								<button type="button" class="btn btn-default" style="border:0px solid transparent" onclick="upVote()">
 									<span class="glyphicon glyphicon-arrow-up"></span>
 						        </button>
 							</div>
@@ -39,7 +39,7 @@ use yii\helpers\Url;
 						        -<?= $model['total_dislike'] ?>
 							</div>
 							<div class="col-md-3">
-								<button  type="button" class="btn btn-default" style="border:0px solid transparent" onClick="downVote()">
+								<button  type="button" class="btn btn-default" style="border:0px solid transparent" onclick="downVote()">
 									<span align="center"class="glyphicon glyphicon-arrow-down"></span>
 						        </button>
 							</div>

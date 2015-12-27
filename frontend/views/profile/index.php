@@ -56,6 +56,13 @@ use common\models\User;
                                
                                 </div>
                             <div id="displayDetails">
+                               <!-- <script type="text/javascript">
+                                    function changeThis(){
+                                        var formInput = document.getElementById('userDescription').value;
+                                        document.getElementById('description').innerHTML = formInput;
+                                    }
+
+                                </script>-->
                             <form>
                                 <span>Description about yourself: </span><br>
                                 <input type='text' id='userDescription' placeholder='Write here' />
@@ -65,7 +72,10 @@ use common\models\User;
                                 <br><br>
                             </form>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
+<<<<<<< HEAD
                                 <a href="../profile/edit">Edit Profile</a>
+=======
+>>>>>>> parent of 64af895... Edit Profile not complete
                             </div>               
                         </div>
                     </div>
