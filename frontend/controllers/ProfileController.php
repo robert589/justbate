@@ -15,6 +15,7 @@ class ProfileController extends Controller
 
     public function actionIndex()
     {
+    	
         $user = \Yii::$app->user->identity;
         return $this->render('index');
     }
@@ -32,7 +33,9 @@ class ProfileController extends Controller
                 }
             }
         }
-
+     }
+ }
+/*
 <<<<<<< HEAD
         return $this->render('edit', [
             'model' => $model,
@@ -52,3 +55,4 @@ class ProfileController extends Controller
 >>>>>>> parent of 64af895... Edit Profile not complete
     }
 }
+*/
