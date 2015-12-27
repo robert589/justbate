@@ -30,7 +30,6 @@ class ThreadController extends Controller
 
     public function actionIndex(){
 
-        var_dump($_POST);
 
         if(!empty($_GET['id'])){
             $thread_id = $_GET['id'];
