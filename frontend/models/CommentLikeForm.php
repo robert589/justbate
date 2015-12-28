@@ -36,11 +36,17 @@ class CommentLikeForm extends Model
             $comment->comment_likes = $this->comment_likes;
             $comment->user_id = \Yii::$app->user->getId();
 
-            if($comment->save()){
-                return true;
-            }
+            if(!CommentLikes::checkExistence($this->comment_id, $comment->user_id)){
+                if($comment->save()){
+                    return true;
+                 }
+                return null;
 
-            return null;
+             }
+             else{
+                return CommentLikes::updateExistence($comment);
+             }
+
         }
 
         return null;

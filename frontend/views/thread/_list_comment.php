@@ -19,18 +19,27 @@ use yii\widgets\Pjax;
 				</div>
 
 				<?php $comment_id = $model['comment_id'];
-						Pjax::begin(); ?>
+					$vote = null;
+					Pjax::begin([
+							        'clientOptions'=>[
+							        	'timeout' => 5000,
+							            'container'=>'submitvote-form-' . $comment_id,
+    								]
+    							]); ?>
 
 					<!-- The form only be used as refresh page -->
 					<?= Html::beginForm(["../../thread/index?id=" . $model['thread_id']  ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => '', 'class' => 'form-inline']); ?>
 
-						<?= Html::hiddenInput("vote", null, ['id' => "vote_result_$comment_id"])?>
+						<?= Html::hiddenInput("vote", $model['vote'], ['id' => "vote_result_$comment_id"])?>
 
-						<?= Html::hiddenInput("comment_id", $model['comment_id'], ['id' => 'comment_id']) ?>
+						<?= Html::hiddenInput("comment_id", $comment_id, ['id' => 'comment_id']) ?>
 
+						<?php $voteUp = ($model['vote'] == 1) ? 'disabled' : false;
+							$voteDown = ($model['vote'] == -1) ? 'disabled' : false;
+							?>
 						<div class="col-md-6">
 							<div class="col-md-3">
-								<button type="button" class="btn btn-default" style="border:0px solid transparent" onclick=" $('#vote_result_'+ <?=$comment_id?>).val(1);  
+								<button type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" onclick="$('#vote_result_'+ <?=$comment_id?>).val(1);  
 						     																								$('#submitvote-form-'+ <?=$comment_id?>	).submit();	">
 									<span class="glyphicon glyphicon-arrow-up"></span>
 						        </button>
@@ -42,7 +51,7 @@ use yii\widgets\Pjax;
 						        -<?= $model['total_dislike'] ?>
 							</div>
 							<div class="col-md-3">
-								<button  type="button" class="btn btn-default" style="border:0px solid transparent" onclick=" $('#vote_result_'+ <?=$comment_id?>).val(0);  
+								<button  type="button" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" onclick=" $('#vote_result_'+ <?=$comment_id?>).val(-1);  
 						     																								$('#submitvote-form-'+ <?=$comment_id?>	).submit();	">
 									<span align="center"class="glyphicon glyphicon-arrow-down"></span>
 						        </button>
