@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 // \Yii::$app->end(print_r($topicData));
+$this->title = "Home Page";
 ?>
 
 

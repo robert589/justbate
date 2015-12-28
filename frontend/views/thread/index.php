@@ -9,6 +9,7 @@
 
 	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 	//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.elastic.js');
+	$this->title = "Thread | " . $model['title'];
 ?>
 
 

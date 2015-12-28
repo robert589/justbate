@@ -35,7 +35,6 @@ class ProfileController extends Controller
         return $this->render('edit', [
             'model' => $model,
         ]);
-<<<<<<< HEAD
     	if($model ->load(Yii::$app->request->post()) && $model->validate()){
     		if($user = $model->edit()){
     			if (Yii::$app->getUser()->login($user)) {
@@ -47,8 +46,6 @@ class ProfileController extends Controller
     	} else{
     		return $this->render('edit-profile',['model'=>$model]);
     	}
-=======
->>>>>>> origin/master
     }
  }
     
