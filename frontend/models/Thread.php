@@ -96,8 +96,7 @@ class Thread extends ActiveRecord{
   
   public static function retrieveAll(){
     
-         return Self::select('AVG(rate.rating) as rating','*')->innerJoin('user', ['id' => 'user_id'])->innerJoin('rate',['thread_id' =>'thread_id'])->groupBy('rate.thread_id');    
-
+         return Self::find()->all();
      
   }
 

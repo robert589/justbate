@@ -10,6 +10,9 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+use frontend\models\Thread;
+use yii\helpers\ArrayHelper;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -71,25 +74,36 @@ AppAsset::register($this);
         'items' => $menuItemsLeft,
     ]);
 
+    //Not good practice putting it here
+    $data = Thread::retrieveAll();
+    $topicData = ArrayHelper::map($data, 'thread_id', 'title');
 
 
 
     echo "<form class='navbar-form navbar-left' role='search'>
        <div class='form-group has-feedback'>".
                 Select2::widget([
-                    'name' => 'state_2',
-                    'value' => '',    'size' => Select2::SMALL,
+                    'name' => 'searchThread',
+                    'id' => 'searchThread',
+                    'value' => '',    
+                    'size' => Select2::SMALL,
                     'pluginOptions' => [
                         'allowClear' => true,
                         'width' => '250%'
 
                         ],
-                        'data' => ["Dita thread" , "Grace Thread", 'Robert Thread'], // put the data here
-                        'options' => ['multiple' => true, 'placeholder' => 'Select threads ...',
-                            'class' => 'navbar-form navbar-left form-control'
-                        ]
-                        ]). "        
-        </div>
+                    'data' => $topicData, // put the data here
+                    'options' => ['multiple' => false, 'placeholder' => 'Select threads ...',
+                        'class' => 'navbar-form navbar-left form-control'
+                    ],
+                    'pluginEvents' =>[
+                        'select2:select' => "function(){
+                                                    var data = $('#searchThread option:selected').val();
+                                                    window.location = '" .  Yii::$app->homeUrl  .  "../../thread/index?id=' + data; 
+                                            }"
+                    ]
+                ]). 
+                "  </div>
     </form>";
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
@@ -110,7 +124,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
