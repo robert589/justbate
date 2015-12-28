@@ -15,6 +15,7 @@ class ProfileController extends Controller
 
     public function actionIndex()
     {
+    	
         $user = \Yii::$app->user->identity;
         return $this->render('index');
     }
@@ -26,9 +27,7 @@ class ProfileController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->edit()) {
                 if (Yii::$app->getUser()->login($user)) {
-                    return $this->render('edit-confirm', [
-            				'model' => $model,
-        ]);
+                    return $this->render('edit-confirm');
                 }
             }
         }
@@ -36,6 +35,7 @@ class ProfileController extends Controller
         return $this->render('edit', [
             'model' => $model,
         ]);
+<<<<<<< HEAD
     	if($model ->load(Yii::$app->request->post()) && $model->validate()){
     		if($user = $model->edit()){
     			if (Yii::$app->getUser()->login($user)) {
@@ -47,5 +47,8 @@ class ProfileController extends Controller
     	} else{
     		return $this->render('edit-profile',['model'=>$model]);
     	}
+=======
+>>>>>>> origin/master
     }
-}
+ }
+    

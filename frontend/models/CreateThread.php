@@ -23,7 +23,7 @@ class CreateThread extends Model
 	{
 		return [
 		[['title', 'type', 'topic_id', 'content'], 'required'],
-		//[['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+		[['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
 		];
 	}
 

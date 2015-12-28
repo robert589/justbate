@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 ?>
 
 <p> You have successfully entered the following information: </p>

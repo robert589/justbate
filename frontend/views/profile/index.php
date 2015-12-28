@@ -52,8 +52,8 @@ use common\models\User;
                             <img src="girl.jpg" alt="Profile Picture" style="width:180px;height:180px;"> </div>
                             <div class="col-lg-8">
                                 <div id="displayName">
-                                    <p>Grace Christina</p> <!--need to extract from database-->
-                               
+                                    <?php echo \Yii::$app->user->identity->first_name; ?>
+                                    <?php echo \Yii::$app->user->identity->last_name; ?>
                                 </div>
                             <div id="displayDetails">
                                <!-- <script type="text/javascript">
@@ -72,13 +72,8 @@ use common\models\User;
                                 <br><br>
                             </form>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 <a href="../profile/edit">Edit Profile</a>
-=======
->>>>>>> parent of 64af895... Edit Profile not complete
-=======
->>>>>>> parent of 64af895... Edit Profile not complete
+
                             </div>               
                         </div>
                     </div>
