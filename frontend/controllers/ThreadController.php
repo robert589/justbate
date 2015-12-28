@@ -7,7 +7,11 @@ use yii\data\Pagination;
 use app\models\User;
 use frontend\models\CommentForm;
 use frontend\models\Comment;
+use frontend\models\CommentLikeForm;
+use frontend\models\CommentLikes;
+
 use frontend\models\Thread;
+use frontend\models\DebugForm;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -30,46 +34,72 @@ class ThreadController extends Controller
 
     public function actionIndex(){
 
+        
 
+        
         if(!empty($_GET['id'])){
-            $thread_id = $_GET['id'];
-            //thread data
-            $thread = Thread::retrieveThreadById($thread_id);
 
-            //comment model
-            $commentModel = new CommentForm();
-            $commentModel->thread_id = $thread_id;
+            $id = $_GET['id'];
 
-            if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate() ) {
-                if($commentModel->store()){
-                    $commentModel = new CommentForm();
-                    $commentModel->thread_id = $thread_id;
+            if(!empty($_POST['vote']) && !empty($_POST['comment_id'])){
+                $commentlikesModel = new CommentLikeForm();
+                $commentlikesModel->comment_id = $_POST['comment_id'];
+                $commentlikesModel->comment_likes = $_POST['vote'];
+
+
+                if($commentlikesModel->store()){
+                       $model = CommentLikes::retrieveCommentLike($_POST['comment_id']);
+                   //debug
+                       \Yii::$app->end($model['total_like']);
+                       return $this->render('index', ['model' => $model]);
+
+
+                }
+                else{
+
                 }
             }
+            else{
+                $thread_id = $_GET['id'];
+                //thread data
+                $thread = Thread::retrieveThreadById($thread_id);
 
-            //retrieve yes data
-            $yesCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlComment($thread_id, 1),  
-                'totalCount' => Comment::countComment($thread_id, 1),
-              
-                'pagination' => [
-                    'pageSize' =>5,
-                ],
+                //comment model
+                $commentModel = new CommentForm();
+                $commentModel->thread_id = $thread_id;
 
-            ]);
+                if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate() ) {
+                    if($commentModel->store()){
+                        $commentModel = new CommentForm();
+                        $commentModel->thread_id = $thread_id;
+                    }
+                }
 
-            //retrieve no data
-            $noCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlComment($thread_id, 0),  
-                'totalCount' => Comment::countComment($thread_id, 0),
-              
-                'pagination' => [
-                    'pageSize' =>5,
-                ],
+                //retrieve yes data
+                $yesCommentData = new SqlDataProvider([
+                    'sql' => Comment::retrieveSqlComment($thread_id, 1),  
+                    'totalCount' => Comment::countComment($thread_id, 1),
+                  
+                    'pagination' => [
+                        'pageSize' =>5,
+                    ],
 
-            ]);
+                ]);
 
-            return $this->render('index', ['model' => $thread, 'yesCommentData' => $yesCommentData, 'noCommentData' => $noCommentData,  'commentModel' => $commentModel]);
+                //retrieve no data
+                $noCommentData = new SqlDataProvider([
+                    'sql' => Comment::retrieveSqlComment($thread_id, 0),  
+                    'totalCount' => Comment::countComment($thread_id, 0),
+                  
+                    'pagination' => [
+                        'pageSize' =>5,
+                    ],
+
+                ]);
+
+                return $this->render('index', ['model' => $thread, 'yesCommentData' => $yesCommentData, 'noCommentData' => $noCommentData,  'commentModel' => $commentModel]);
+            }
+            
         }
         
 

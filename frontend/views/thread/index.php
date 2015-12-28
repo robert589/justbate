@@ -103,7 +103,7 @@
 					'options' => [
 						'tag' => 'div',
 						'class' => 'list-wrapper',
-						'id' => 'list-wrapper',
+							'id' => 'list-wrapper',
 					],
 	    				'layout' => "\n{items}\n{pager}",
 

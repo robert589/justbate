@@ -1,12 +1,12 @@
-<?php
+	<?php
 
 use kartik\rating\StarRating;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
       //  Yii::$app->end(print_r($model));
-
-       // $model = $model[0];
+	       // $model = $model[0];
 ?>
 
 
@@ -18,17 +18,20 @@ use yii\helpers\Url;
 					<?= Html::a($model['first_name'] . ' ' . $model['last_name'], "#" )?>
 				</div>
 
+				<?php $comment_id = $model['comment_id'];
+						Pjax::begin(); ?>
 
 					<!-- The form only be used as refresh page -->
-					<?= Html::beginForm(['thread/index'], 'post', ['id' => 'submitvote-form', 'data-pjax' => '', 'class' => 'form-inline']); ?>
+					<?= Html::beginForm(["../../thread/index?id=" . $model['thread_id']  ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => '', 'class' => 'form-inline']); ?>
 
-						<?= Html::hiddenInput('vote', null, ['id' => 'vote_result'])?>
+						<?= Html::hiddenInput("vote", null, ['id' => "vote_result_$comment_id"])?>
 
-						<?= Html::hiddenInput('comment_id', $model['comment_id']) ?>
+						<?= Html::hiddenInput("comment_id", $model['comment_id'], ['id' => 'comment_id']) ?>
 
 						<div class="col-md-6">
 							<div class="col-md-3">
-								<button type="button" class="btn btn-default" style="border:0px solid transparent" onclick="upVote()">
+								<button type="button" class="btn btn-default" style="border:0px solid transparent" onclick=" $('#vote_result_'+ <?=$comment_id?>).val(1);  
+						     																								$('#submitvote-form-'+ <?=$comment_id?>	).submit();	">
 									<span class="glyphicon glyphicon-arrow-up"></span>
 						        </button>
 							</div>
@@ -39,12 +42,15 @@ use yii\helpers\Url;
 						        -<?= $model['total_dislike'] ?>
 							</div>
 							<div class="col-md-3">
-								<button  type="button" class="btn btn-default" style="border:0px solid transparent" onclick="downVote()">
+								<button  type="button" class="btn btn-default" style="border:0px solid transparent" onclick=" $('#vote_result_'+ <?=$comment_id?>).val(0);  
+						     																								$('#submitvote-form-'+ <?=$comment_id?>	).submit();	">
 									<span align="center"class="glyphicon glyphicon-arrow-down"></span>
 						        </button>
 							</div>
 						</div>
 					<?= Html::endForm() ?>
+
+				<?php Pjax::end(); ?>
 
 
 			</div>

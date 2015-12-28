@@ -33,11 +33,9 @@ class ProfileController extends Controller
             }
         }
 
-<<<<<<< HEAD
         return $this->render('edit', [
             'model' => $model,
         ]);
-=======
     	if($model ->load(Yii::$app->request->post()) && $model->validate()){
     		if($user = $model->edit()){
     			if (Yii::$app->getUser()->login($user)) {
@@ -49,6 +47,5 @@ class ProfileController extends Controller
     	} else{
     		return $this->render('edit-profile',['model'=>$model]);
     	}
->>>>>>> parent of 64af895... Edit Profile not complete
     }
 }
