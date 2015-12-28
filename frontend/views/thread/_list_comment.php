@@ -15,7 +15,7 @@ use yii\widgets\ListView;
 
 		<div class="row">
 			<div class="col-md-6">
-				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], "#" )?>
+				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->homeUrl . "../../profile/index?id=" . $model['user_id'] )?>
 			</div>
 
 			<?php $comment_id = $model['comment_id'];
