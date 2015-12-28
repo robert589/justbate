@@ -51,11 +51,29 @@ class ThreadController extends Controller
                 }
                
             }
+                else if(!empty($_GET['comment_id'])){
+                    $comment_id = $_GET['comment_id'];
+
+                    //retrieve yes data
+                    $retrieveChildData = new SqlDataProvider([
+                        'sql' => Comment::retrieveChildComment($comment_id),  
+                        'totalCount' => Comment::countChildComment($comment_id),
+                        'pagination' => [
+                            'pageSize' =>5,
+                            ],
+
+                    ]);
+                    //WARNING
+                    //HAVE TO FIND OUT NOT TO KEEP REFRESHING THE WHOLE PAGE
+                    $model = Comment::retrieveCommentById($_GET['id']);
+
+                    return $this->render('_list_comment.php', ['retrieveChildData' => $retrieveChildData, 'model' => $model]);
+
+                }
         
             $thread_id = $_GET['id'];
             //thread data
             $thread = Thread::retrieveThreadById($thread_id);
-
             //comment model
             $commentModel = new CommentForm();
             $commentModel->thread_id = $thread_id;
@@ -88,7 +106,8 @@ class ThreadController extends Controller
 
             ]);
 
-            return $this->render('index', ['model' => $thread, 'yesCommentData' => $yesCommentData, 'noCommentData' => $noCommentData,  'commentModel' => $commentModel]);
+            return $this->render('index', ['model' => $thread, 'yesCommentData' => $yesCommentData, 
+                        'noCommentData' => $noCommentData,  'commentModel' => $commentModel]);
             
             
         }
@@ -96,6 +115,27 @@ class ThreadController extends Controller
 
         return $this->render('index');
     }
+
+
+    public function actionRetrieveChildData(){
+        if(!empty($_GET['comment_id'])){
+                $comment_id = $_GET['comment_id'];
+
+                //retrieve yes data
+                $retrieveChildData = new SqlDataProvider([
+                    'sql' => Comment::retrieveChildComment($comment_id),  
+                    'totalCount' => Comment::countChildComment($comment_id),
+                    'pagination' => [
+                        'pageSize' =>5,
+                        ],
+
+                ]);
+
+                return $this->render('_list_comment.php', ['retrieveChildData' => $retrieveChildData]);
+
+           }
+    }
+
 
     public function actionSubmitVote(){
         var_dump($_POST);

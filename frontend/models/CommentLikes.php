@@ -34,8 +34,7 @@ class CommentLikes extends ActiveRecord
 	public static function updateExistence($comment){
 		$comment_like = Self::findOne(['comment_id' => $comment->comment_id,'user_id'=> $comment->user_id]);
 
-		$comment_like->comment_likes = $comment->comment_likes;
-		
+		$comment_like->comment_likes = $comment->comment_likes;	
 
 		return ($comment_like->update() !== false);
 	}

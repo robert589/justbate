@@ -6,7 +6,6 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 
-
 ?>
 
 
@@ -67,62 +66,11 @@ use yii\widgets\ListView;
 		<div class="row">	
 				<?= $model['comment']?>
 		</div>
-		<div class="row">
-			<div id="selector"align="right">
-				<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $model['thread_id'] . "&comment_id=" . $comment_id], 
-											['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
-											,'id' => 'retrieveComment' . $comment_id]) ?>
-			</div>
-			
-			<?php Pjax::begin([
-				'id' => 'childCommentData-'.$comment_id,
-				'clientOptions'=>[
-				    	'timeout' => 5000,
-	   					'registerClientScript' => "$.pjax.reload({container:'#childCommentData-$comment_id'});",
-				    	'linkSelector'=>'#retrieveComment'.$comment_id
-						]
-				]);?>
-			
-				<div  class="col-md-12">
-
-					<?php if(isset($retrieveChildData)){ ?>
-						<?= ListView::widget([
-
-								'dataProvider' => $retrieveChildData,
-								'options' => [
-									'tag' => 'div',
-									'class' => 'list-wrapper',
-										'id' => 'list-wrapper',
-								],
-				    				'layout' => "\n{items}\n{pager}",
-
-								'itemView' => function ($model, $key, $index, $widget) {
-									return $this->render('_list_child_comment',['model' => $model]);
-								}, 
-								'pager' => [
-					       	 		'firstPageLabel' => 'first',
-					        		'lastPageLabel' => 'last',
-					        		'nextPageLabel' => 'next',
-					        		'prevPageLabel' => 'previous',
-					        		'maxButtonCount' => 3,
-								],
-							]) ?>
-
-					<?php } ?>
-					
-
-				</div>
-			<?php Pjax::end();?>
-		</div>
-		
-	</div>
-	
 
 	<br><br><br>
 <br><br><br><br><br><br><br><br><br>
 </article>
 
 
-<?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
 
 ?>

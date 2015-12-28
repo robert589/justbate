@@ -73,4 +73,28 @@ class Comment extends ActiveRecord
       return  (int)  \Yii::$app->db->createCommand($sql)->queryOne();
 
   }
+
+  public static function retrieveChildComment($comment_id){
+  	 $sql = "SELECT * , 
+        (SELECT COUNT(*) from comment_likes CL where CL.comment_id = C.comment_id and CL.comment_likes = 1) as total_like,
+        (SELECT COUNT(*) from comment_likes CL where CL.comment_id = C.comment_id and CL.comment_likes = 0) as total_dislike
+
+        FROM (SELECT * from comment inner join user on comment.user_id = user.id) C 
+
+        WHERE parent_id = $comment_id
+";
+
+  	return $sql;
+  }
+
+  public static function countChildComment($comment_id){
+  	$sql = "SELECT count(*)
+  			from comment 
+  			where parent_id = $comment_id";
+
+     $command =  \Yii::$app->db->createCommand($sql)->queryScalar();
+
+    return (int)($command);
+	
+  }
 }
