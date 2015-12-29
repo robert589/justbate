@@ -64,10 +64,9 @@ class ThreadController extends Controller
 
                     ]);
                     //WARNING
-                    //HAVE TO FIND OUT NOT TO KEEP REFRESHING THE WHOLE PAGE
-                    $model = Comment::retrieveCommentById($_GET['id']);
-
-                    return $this->render('_list_comment.php', ['retrieveChildData' => $retrieveChildData, 'model' => $model]);
+                 //   Yii::$app->end(Yii::$app->request->isPjax);
+                  
+                    return $this->renderAjax('_list_comment.php', ['retrieveChildData' => $retrieveChildData]);
 
                 }
         

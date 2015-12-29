@@ -21,8 +21,10 @@ use yii\widgets\ListView;
 			<?php $comment_id = $model['comment_id'];
 				$vote = null;
 				Pjax::begin([
+								'id' => 'comment-main-' . $comment_id,
+						       	'timeout' => 5000,
+
 						        'clientOptions'=>[
-						        	'timeout' => 5000,
 						            'container'=>'w1' . $comment_id,
 								]
 							]); ?>
@@ -67,53 +69,56 @@ use yii\widgets\ListView;
 		<div class="row">	
 				<?= $model['comment']?>
 		</div>
-		<div class="row">
-			<div id="selector"align="right">
-				<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $model['thread_id'] . "&comment_id=" . $comment_id], 
-											['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
-											,'id' => 'retrieveComment' . $comment_id]) ?>
-			</div>
+			
 			
 			<?php Pjax::begin([
 				'id' => 'childCommentData-'.$comment_id,
+		    	'timeout' => false,
+		    	'enablePushState' => false,
 				'clientOptions'=>[
-				    	'timeout' => 5000,
-	   					'registerClientScript' => "$.pjax.reload({container:'#childCommentData-$comment_id'});",
+				    	'container' => '#childCommentData-' . $comment_id,
+
 				    	'linkSelector'=>'#retrieveComment'.$comment_id
 						]
 				]);?>
-			
-				<div  class="col-md-12">
+				<div id = "childCommentData-<?=$comment_id?>" class="row">
 
-					<?php if(isset($retrieveChildData)){ ?>
-						<?= ListView::widget([
+					<div id="selector"align="right">
+					<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $model['thread_id'] . "&comment_id=" . $comment_id], 
+												['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
+												,'id' => 'retrieveComment' . $comment_id]) ?>
+					</div>
+					<div  class="col-md-12">
 
-								'dataProvider' => $retrieveChildData,
-								'options' => [
-									'tag' => 'div',
-									'class' => 'list-wrapper',
-										'id' => 'list-wrapper',
-								],
-				    				'layout' => "\n{items}\n{pager}",
+						<?php if(isset($retrieveChildData)){ ?>
+							<?= ListView::widget([
 
-								'itemView' => function ($model, $key, $index, $widget) {
-									return $this->render('_list_child_comment',['model' => $model]);
-								}, 
-								'pager' => [
-					       	 		'firstPageLabel' => 'first',
-					        		'lastPageLabel' => 'last',
-					        		'nextPageLabel' => 'next',
-					        		'prevPageLabel' => 'previous',
-					        		'maxButtonCount' => 3,
-								],
-							]) ?>
+									'dataProvider' => $retrieveChildData,
+									'options' => [
+										'tag' => 'div',
+										'class' => 'list-wrapper',
+											'id' => 'list-wrapper',
+									],
+					    				'layout' => "\n{items}\n{pager}",
 
-					<?php } ?>
-					
+									'itemView' => function ($model, $key, $index, $widget) {
+										return $this->render('_list_child_comment',['model' => $model]);
+									}, 
+									'pager' => [
+						       	 		'firstPageLabel' => 'first',
+						        		'lastPageLabel' => 'last',
+						        		'nextPageLabel' => 'next',
+						        		'prevPageLabel' => 'previous',
+						        		'maxButtonCount' => 3,
+									],
+								]) ?>
 
-				</div>
+						<?php } ?>
+						
+
+					</div>
+			</div>
 			<?php Pjax::end();?>
-		</div>
 		
 	</div>
 	
@@ -122,7 +127,16 @@ use yii\widgets\ListView;
 <br><br><br><br><br><br><br><br><br>
 </article>
 
+		
 
 <?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
+	$script =<<< JS
+$(document).pjax('retrieveComment' + $comment_id, '#childCommentData-' + $comment_id, { fragment: '#childCommentData-' + $comment_id });
 
+$('#childCommentData-' + $comment_id ).on('pjax:error', function (event) {
+						    alert('Failed to load the page');
+						    event.preventDefault();
+						});
+JS;
+	$this->registerJs($script);
 ?>
