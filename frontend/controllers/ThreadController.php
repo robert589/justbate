@@ -53,24 +53,61 @@ class ThreadController extends Controller
                 }
                
             }
-                else if(Yii::$app->request->isPjax && !empty($_GET['comment_id'])){
-                    $comment_id = $_GET['comment_id'];
-
+    
+            else if(Yii::$app->request->isPjax && !empty($_GET['comment_id'])){
+                $comment_id = $_GET['comment_id'];
                     //retrieve yes data
-                    $retrieveChildData = new SqlDataProvider([
-                        'sql' => Comment::retrieveChildComment($comment_id),  
-                        'totalCount' => Comment::countChildComment($comment_id),
-                        'pagination' => [
-                            'pageSize' =>5,
-                            ],
+                $retrieveChildData = new SqlDataProvider([
+                    'sql' => Comment::retrieveChildComment($comment_id),  
+                    'totalCount' => Comment::countChildComment($comment_id),
+                    'pagination' => [
+                        'pageSize' =>5,
+                        ],
 
-                    ]);
+                ]);
                     //WARNING
                  //   Yii::$app->end(Yii::$app->request->isPjax);
                   
-                    return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
+                return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
 
+            }
+
+            else if(Yii::$app->request->isPjax && !empty($_POST['childComment'])){
+                $childCommentModel = new ChildCommentForm();
+
+                $childCommentModel->childComment = $_POST['childComment'];
+                $childCommentModel->thread_id = $_POST['thread_id'];
+                $childCommentModel->parent_id = $_POST['parent_id'];
+
+                if(!empty($_POST['commentRetrieved'])){
+                    $commentRetrieved = $_POST['commentRetrieved'];
                 }
+
+                $retrieveChildData = new SqlDataProvider([
+                    'sql' => Comment::retrieveChildComment($comment_id),  
+                    'totalCount' => Comment::countChildComment($comment_id),
+                    'pagination' => [
+                        'pageSize' =>5,
+                        ],
+
+                ]);
+
+                if($childCommentModel->save()){
+                    if($commentRetrieved){
+                        return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
+                    }
+                    else{
+                        return $this->renderAjax('_list_comment', ['comment_id' => $parent_id, 'thread_id' => $thread_id]);
+                    }
+                }
+
+               
+
+                
+
+            }
+
+
         
             //thread data
             $thread = Thread::retrieveThreadById($thread_id);
@@ -117,28 +154,4 @@ class ThreadController extends Controller
     }
 
 
-    public function actionRetrieveChildData(){
-        if(!empty($_GET['comment_id'])){
-                $comment_id = $_GET['comment_id'];
-
-                //retrieve yes data
-                $retrieveChildData = new SqlDataProvider([
-                    'sql' => Comment::retrieveChildComment($comment_id),  
-                    'totalCount' => Comment::countChildComment($comment_id),
-                    'pagination' => [
-                        'pageSize' =>5,
-                        ],
-
-                ]);
-
-
-                return $this->renderAjax('_list_comment.php', ['retrieveChildData' => $retrieveChildData]);
-
-           }
-    }
-
-
-    public function actionSubmitVote(){
-        var_dump($_POST);
-    }
 }

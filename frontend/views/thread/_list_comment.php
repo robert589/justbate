@@ -73,6 +73,35 @@ use yii\widgets\ListView;
 		</div>
 			
 		<?php } ?>
+
+		<?php Pjax::begin([
+			'id' => 'submitComment-' . $comment_id,
+			'timeout' => 5000,
+			'enablePushState' => false,
+			'clientOptions' => [
+				'container' => '#submitComment-' . $comment_id,
+			]
+		]); ?>
+
+		<div class="row">
+			<?= Html::beginForm('../thread/index', 'post', ['id'=>"childForm-$comment_id" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
+
+				<?= Html::hiddenInput('commentRetrieved', 0, ['id' => 'commentRetrieved-'.$comment_id]) ?>
+
+				<?= Html::hiddenInput('thread_id', $thread_id) ?>
+
+				<?= Html::hiddenInput('parent_id', $comment_id) ?>
+				<!--Comment box form here-->
+				<?= Html::textarea('childComment', null, ['class'=> 'form-control', 'id' => "child-comment-box-$comment_id", 
+														'placeholder' => 'add comment box...', 'rows' => 1, 'style' => 'min-width:100%;display:none' ]) ?>
+
+			<?= Html::endForm() ?>
+		</div>
+
+		<?php Pjax::end();?>
+
+
+		<br>
 		
 		<?php Pjax::begin([
 				'id' => 'childCommentData-'.$comment_id,
@@ -87,9 +116,10 @@ use yii\widgets\ListView;
 		<div  class="row">
 
 			<div align="right">
-					<?= Html::button('Reply', ['onclick' => "showChildCommentBox$comment_id()", 'class' => 'btn btn-default']) ?>
+					<?= Html::button('Reply', ['id' => "showChildCommentBox$comment_id", 'class' => 'btn btn-default']) ?>
+
 					<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $thread_id . "&comment_id=" . $comment_id], 
-										['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
+													['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
 										,'id' => 'retrieveComment' . $comment_id]) ?>
 			</div>
 			<div  class="col-md-12">
@@ -123,11 +153,8 @@ use yii\widgets\ListView;
 			</div>
 		</div>
 		<?php Pjax::end();?>
-		
-		<?= Html::beginForm('site/child-comment', 'post', ['data-pjax' => '', 'class' => 'form-inline']); ?>
-
-			<!--Comment box form here-->
-		<?= Html::endForm() ?>
+		<br>
+	
 		
 	</div>
 	
@@ -138,12 +165,27 @@ use yii\widgets\ListView;
 
 		
 
-		<?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
+<?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
 $script =<<< JS
 //For comment box
-function showChildCommentBox$comment_id(){
+$("#showChildCommentBox$comment_id").click(function(){
+	$("#child-comment-box-$comment_id").show();
+});
+$("#child-comment-box-$comment_id").keydown(function(event){
+    if (event.keyCode == 13) {
+        $("#childForm-$comment_id").submit()
+        return false;
+     }
+}).focus(function(){
+    if(this.value == "Write your comment here..."){
+         this.value = "";
+    }
 
-}
+}).blur(function(){
+    if(this.value==""){
+         this.value = "Write your comment here...";
+    }
+});
 
 $(document).pjax('retrieveComment' + $comment_id, '#childCommentData-' + $comment_id, { fragment: '#childCommentData-' + $comment_id });
 
@@ -152,7 +194,11 @@ $('#childCommentData-' + $comment_id ).on('pjax:error', function (event) {
 						//					    $.pjax.reload({container:'#childCommentData-' + $comment_id});
 
 					    event.preventDefault();
-					});
+					})
+					.on('pjax:success', function(event, data, status, xhr, options) {
+					      // run "custom_success" method passed to PJAX if it exists
+					      $("#commentRetrieved-$comment_id").val(1);
+					 });
 JS;
 $this->registerJs($script);
 ?>
