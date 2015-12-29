@@ -6,28 +6,30 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 
-
+	
 ?>
-
 
 <article>
 	<div class="box col-md-12">
+	<?php if(!empty($model)){  
+				$thread_id = $model['thread_id']
+		?>
 
 		<div class="row">
 			<div class="col-md-6">
 				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->homeUrl . "../../profile/index?id=" . $model['user_id'] )?>
-			</div>
+			</div>	
 
 			<?php $comment_id = $model['comment_id'];
 				$vote = null;
 				Pjax::begin([
 								'id' => 'comment-main-' . $comment_id,
 						       	'timeout' => 5000,
-
-						        'clientOptions'=>[
-						            'container'=>'w1' . $comment_id,
-								]
-							]); ?>
+			
+					        'clientOptions'=>[
+					            'container'=>'w1' . $comment_id,
+							]
+						]); ?>
 
 				<!-- The form only be used as refresh page -->
 				<?= Html::beginForm(["../../thread/index?id=" . $model['thread_id']  ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => 'w1' . $comment_id, 'class' => 'form-inline']); ?>
@@ -70,55 +72,62 @@ use yii\widgets\ListView;
 				<?= $model['comment']?>
 		</div>
 			
-			
-			<?php Pjax::begin([
+		<?php } ?>
+		
+		<?php Pjax::begin([
 				'id' => 'childCommentData-'.$comment_id,
 		    	'timeout' => false,
 		    	'enablePushState' => false,
-				'clientOptions'=>[
+		    	'clientOptions'=>[
 				    	'container' => '#childCommentData-' . $comment_id,
 
 				    	'linkSelector'=>'#retrieveComment'.$comment_id
 						]
 				]);?>
-				<div id = "childCommentData-<?=$comment_id?>" class="row">
+		<div  class="row">
 
-					<div id="selector"align="right">
-					<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $model['thread_id'] . "&comment_id=" . $comment_id], 
-												['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
-												,'id' => 'retrieveComment' . $comment_id]) ?>
-					</div>
-					<div  class="col-md-12">
-
-						<?php if(isset($retrieveChildData)){ ?>
-							<?= ListView::widget([
-
-									'dataProvider' => $retrieveChildData,
-									'options' => [
-										'tag' => 'div',
-										'class' => 'list-wrapper',
-											'id' => 'list-wrapper',
-									],
-					    				'layout' => "\n{items}\n{pager}",
-
-									'itemView' => function ($model, $key, $index, $widget) {
-										return $this->render('_list_child_comment',['model' => $model]);
-									}, 
-									'pager' => [
-						       	 		'firstPageLabel' => 'first',
-						        		'lastPageLabel' => 'last',
-						        		'nextPageLabel' => 'next',
-						        		'prevPageLabel' => 'previous',
-						        		'maxButtonCount' => 3,
-									],
-								]) ?>
-
-						<?php } ?>
-						
-
-					</div>
+			<div align="right">
+					<?= Html::button('Reply', ['onclick' => "showChildCommentBox$comment_id()", 'class' => 'btn btn-default']) ?>
+					<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $thread_id . "&comment_id=" . $comment_id], 
+										['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
+										,'id' => 'retrieveComment' . $comment_id]) ?>
 			</div>
-			<?php Pjax::end();?>
+			<div  class="col-md-12">
+
+				<?php if(isset($retrieveChildData)){ ?>
+					<?= ListView::widget([
+
+							'dataProvider' => $retrieveChildData,
+							'options' => [
+								'tag' => 'div',
+								'class' => 'list-wrapper',
+									'id' => 'list-wrapper',
+							],
+			    				'layout' => "\n{items}\n{pager}",
+
+							'itemView' => function ($model, $key, $index, $widget) {
+								return $this->render('_list_child_comment',['model' => $model]);
+							}, 
+							'pager' => [
+				       	 		'firstPageLabel' => 'first',
+				        		'lastPageLabel' => 'last',
+				        		'nextPageLabel' => 'next',
+				        		'prevPageLabel' => 'previous',
+				        		'maxButtonCount' => 3,
+							],
+						]) ?>
+
+				<?php } ?>
+				
+
+			</div>
+		</div>
+		<?php Pjax::end();?>
+		
+		<?= Html::beginForm('site/child-comment', 'post', ['data-pjax' => '', 'class' => 'form-inline']); ?>
+
+			<!--Comment box form here-->
+		<?= Html::endForm() ?>
 		
 	</div>
 	
@@ -129,14 +138,21 @@ use yii\widgets\ListView;
 
 		
 
-<?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
-	$script =<<< JS
+		<?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
+$script =<<< JS
+//For comment box
+function showChildCommentBox$comment_id(){
+
+}
+
 $(document).pjax('retrieveComment' + $comment_id, '#childCommentData-' + $comment_id, { fragment: '#childCommentData-' + $comment_id });
 
 $('#childCommentData-' + $comment_id ).on('pjax:error', function (event) {
-						    alert('Failed to load the page');
-						    event.preventDefault();
-						});
+					    alert('Failed to load the page');
+						//					    $.pjax.reload({container:'#childCommentData-' + $comment_id});
+
+					    event.preventDefault();
+					});
 JS;
-	$this->registerJs($script);
+$this->registerJs($script);
 ?>

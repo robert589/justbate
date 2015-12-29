@@ -39,6 +39,8 @@ class ThreadController extends Controller
         
         if(!empty($_GET['id'])){
 
+            $thread_id = $_GET['id'];
+
 
             if(!empty($_POST['vote']) && !empty($_POST['comment_id'])){
                 $commentlikesModel = new CommentLikeForm();
@@ -51,7 +53,7 @@ class ThreadController extends Controller
                 }
                
             }
-                else if(!empty($_GET['comment_id'])){
+                else if(Yii::$app->request->isPjax && !empty($_GET['comment_id'])){
                     $comment_id = $_GET['comment_id'];
 
                     //retrieve yes data
@@ -66,11 +68,10 @@ class ThreadController extends Controller
                     //WARNING
                  //   Yii::$app->end(Yii::$app->request->isPjax);
                   
-                    return $this->renderAjax('_list_comment.php', ['retrieveChildData' => $retrieveChildData]);
+                    return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
 
                 }
         
-            $thread_id = $_GET['id'];
             //thread data
             $thread = Thread::retrieveThreadById($thread_id);
             //comment model
@@ -130,7 +131,8 @@ class ThreadController extends Controller
 
                 ]);
 
-                return $this->render('_list_comment.php', ['retrieveChildData' => $retrieveChildData]);
+
+                return $this->renderAjax('_list_comment.php', ['retrieveChildData' => $retrieveChildData]);
 
            }
     }

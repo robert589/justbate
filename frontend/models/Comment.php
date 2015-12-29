@@ -77,7 +77,10 @@ class Comment extends ActiveRecord
   public static function retrieveChildComment($comment_id){
   	 $sql = "SELECT * , 
         (SELECT COUNT(*) from comment_likes CL where CL.comment_id = C.comment_id and CL.comment_likes = 1) as total_like,
-        (SELECT COUNT(*) from comment_likes CL where CL.comment_id = C.comment_id and CL.comment_likes = 0) as total_dislike
+        (SELECT COUNT(*) from comment_likes CL where CL.comment_id = C.comment_id and CL.comment_likes = 0) as total_dislike,
+        (SELECT CL1.comment_likes
+                                from comment_likes CL1
+                              where CL1.comment_id = C.comment_id and CL1.user_id = C.user_id ) as vote
 
         FROM (SELECT * from comment inner join user on comment.user_id = user.id) C 
 
