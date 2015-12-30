@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Dropdown;
 use yii\helpers\ArrayHelper;
 use yii\app\models\Thread;
-use yii\app\modles\ThreadTopic;
+use yii\app\models\ThreadTopic;
 ?>
 
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>

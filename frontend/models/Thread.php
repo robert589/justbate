@@ -3,6 +3,7 @@
 namespace frontend\models;
 use yii\db\ActiveRecord;
 use yii\db\Query;
+use yii\method\ActiveQuery;
 
 use common\models\User;
 use yii\behaviors\TimestampBehavior;
@@ -130,21 +131,32 @@ class Thread extends ActiveRecord{
       return $this->thread_id;
     }
 
-
-
 public function behaviors()
 {
     return [
-        'timestamp' => [
+        [
             'class' => TimestampBehavior::className(),
-            'attributes' => [
-                ActiveRecord::EVENT_BEFORE_INSERT => 'creation_time',
-                ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
-            ],
-            'value' => function() { return date('U');  },
+            'createdAtAttribute' => 'date_created',
+            'updatedAtAttribute' => 'last_edited',
+            'value' => new Expression('NOW()'),
         ],
     ];
 }
+
+public static function retrieveByUser(){
+    $thread = Thread::find();
+
+    $id = '1';
+
+    $dash_thread = $thread->select('title, content, date_created')
+              ->from('thread')
+              ->where(['user_id' => $id]);
+
+
+
+    return $dash_thread;
+
+  }
 
 
 }

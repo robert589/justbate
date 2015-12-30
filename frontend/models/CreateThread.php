@@ -17,13 +17,14 @@ class CreateThread extends Model
 	public $content;
 	public $photo;
 	public $date_created;
+	public $last_edited;
 
 
 	public function rules()
 	{
 		return [
 		[['title', 'type', 'topic_id', 'content'], 'required'],
-		[['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+		[['photo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
 		];
 	}
 
@@ -32,15 +33,17 @@ class CreateThread extends Model
 		$thread = new Thread();
 		$file = new Photos();
 
-		$thread->user_id = Yii::$app->user->id; 
-		$thread->date_created = $this->timestamp->touch('date_created');
+		$thread->user_id = '1'; 
+		$thread->date_created = time();
+		$thread->last_edited = time();
 		$thread->title = $this->title;
 		$thread->type = $this->type;
 		$thread->topic_id = $this->topic_id;
 		$thread->content = $this->content;
 		$thread->insert();
 
-		if($photo != NULL){
+		/*
+		if($this->photo != NULL){
 			foreach($this->photo as $image){
 				$image->saveAs('uploads/' . $image->baseName . '.' . $image->extension);
 				$file->thread_id = $thread->getThreadID();
@@ -48,9 +51,11 @@ class CreateThread extends Model
 				$file->insert();
 			}
 			
-		}
+		}*/
 
 		}
+
+		return true;
 		
 
 	}
