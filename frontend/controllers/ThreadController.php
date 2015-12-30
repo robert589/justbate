@@ -9,6 +9,7 @@ use frontend\models\CommentForm;
 use frontend\models\Comment;
 use frontend\models\CommentLikeForm;
 use frontend\models\CommentLikes;
+use frontend\models\ChildCommentForm;
 
 use frontend\models\Thread;
 use frontend\models\DebugForm;
@@ -34,7 +35,6 @@ class ThreadController extends Controller
 
     public function actionIndex(){
 
-        
 
         
         if(!empty($_GET['id'])){
@@ -73,32 +73,41 @@ class ThreadController extends Controller
             }
 
             else if(Yii::$app->request->isPjax && !empty($_POST['childComment'])){
-                $childCommentModel = new ChildCommentForm();
 
-                $childCommentModel->childComment = $_POST['childComment'];
-                $childCommentModel->thread_id = $_POST['thread_id'];
-                $childCommentModel->parent_id = $_POST['parent_id'];
-
+                $parent_id = $_POST['parent_id'];
+                $childComment = $_POST['childComment'];
+                $commentRetrieved = 0;
                 if(!empty($_POST['commentRetrieved'])){
                     $commentRetrieved = $_POST['commentRetrieved'];
                 }
 
-                $retrieveChildData = new SqlDataProvider([
-                    'sql' => Comment::retrieveChildComment($comment_id),  
-                    'totalCount' => Comment::countChildComment($comment_id),
-                    'pagination' => [
-                        'pageSize' =>5,
-                        ],
+                $childCommentModel = new ChildCommentForm();
 
-                ]);
+                $childCommentModel->childComment = $childComment;
+                $childCommentModel->thread_id = $thread_id;
+                $childCommentModel->parent_id = $parent_id;
 
-                if($childCommentModel->save()){
+                
+
+               
+                if($childCommentModel->store()){
                     if($commentRetrieved){
+                           $retrieveChildData = new SqlDataProvider([
+                            'sql' => Comment::retrieveChildComment($parent_id),  
+                           'totalCount' => Comment::countChildComment($parent_id),
+                            'pagination' => [
+                                'pageSize' =>5,
+                            ],
+
+                        ]);
                         return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
                     }
                     else{
                         return $this->renderAjax('_list_comment', ['comment_id' => $parent_id, 'thread_id' => $thread_id]);
                     }
+                }
+                else{
+                    Yii::$app->end();
                 }
 
                
@@ -108,7 +117,7 @@ class ThreadController extends Controller
             }
 
 
-        
+                  
             //thread data
             $thread = Thread::retrieveThreadById($thread_id);
             //comment model

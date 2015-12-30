@@ -9,8 +9,9 @@ use yii\widgets\ListView;
 	
 ?>
 
+
 <article>
-	<div class="box col-md-12">
+	<div class="box col-md-12" >
 	<?php if(!empty($model)){  
 				$thread_id = $model['thread_id']
 		?>
@@ -23,8 +24,8 @@ use yii\widgets\ListView;
 			<?php $comment_id = $model['comment_id'];
 				$vote = null;
 				Pjax::begin([
-								'id' => 'comment-main-' . $comment_id,
-						       	'timeout' => 5000,
+							'id' => 'comment-main-' . $comment_id,
+					       	'timeout' => 5000,
 			
 					        'clientOptions'=>[
 					            'container'=>'w1' . $comment_id,
@@ -41,6 +42,7 @@ use yii\widgets\ListView;
 					<?php $voteUp = ($model['vote'] == 1) ? 'disabled' : false;
 						$voteDown = ($model['vote'] == -1) ? 'disabled' : false;
 						?>
+
 					<div class="col-md-6">
 						<div class="col-md-3">
 							<button type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" onclick="$('#vote_result_'+ <?=$comment_id?>).val(1);  
@@ -62,6 +64,7 @@ use yii\widgets\ListView;
 						</div>
 
 					</div>
+
 				<?= Html::endForm() ?>
 
 			<?php Pjax::end(); ?>
@@ -84,11 +87,10 @@ use yii\widgets\ListView;
 		]); ?>
 
 		<div class="row">
-			<?= Html::beginForm('../thread/index', 'post', ['id'=>"childForm-$comment_id" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
+			<?= Html::beginForm('../thread/index?id=' . $thread_id, 'post', ['id'=>"childForm-$comment_id" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
 
 				<?= Html::hiddenInput('commentRetrieved', 0, ['id' => 'commentRetrieved-'.$comment_id]) ?>
 
-				<?= Html::hiddenInput('thread_id', $thread_id) ?>
 
 				<?= Html::hiddenInput('parent_id', $comment_id) ?>
 				<!--Comment box form here-->
@@ -97,9 +99,6 @@ use yii\widgets\ListView;
 
 			<?= Html::endForm() ?>
 		</div>
-
-		<?php Pjax::end();?>
-
 
 		<br>
 		
@@ -122,7 +121,7 @@ use yii\widgets\ListView;
 													['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
 										,'id' => 'retrieveComment' . $comment_id]) ?>
 			</div>
-			<div  class="col-md-12">
+			<div  class="col-md-12" style="border-left: solid #e0e0d1;">
 
 				<?php if(isset($retrieveChildData)){ ?>
 					<?= ListView::widget([
@@ -154,51 +153,57 @@ use yii\widgets\ListView;
 		</div>
 		<?php Pjax::end();?>
 		<br>
-	
-		
+		<hr>
+
+		<?php Pjax::end();?>
+
 	</div>
 	
 
 	<br><br><br>
 <br><br><br><br><br><br><br><br><br>
-</article>
 
+
+</article>
 		
 
 <?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
 $script =<<< JS
-//For comment box
-$("#showChildCommentBox$comment_id").click(function(){
-	$("#child-comment-box-$comment_id").show();
-});
-$("#child-comment-box-$comment_id").keydown(function(event){
+
+$( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
+    // Do click stuff here
+  	$("#child-comment-box-$comment_id").show();
+})
+.on('keydown', '#child-comment-box-$comment_id', function(event){
     if (event.keyCode == 13) {
         $("#childForm-$comment_id").submit()
         return false;
      }
-}).focus(function(){
+})
+.on('focus', '#child-comment-box-$comment_id', function(){
     if(this.value == "Write your comment here..."){
          this.value = "";
     }
-
-}).blur(function(){
+})
+.on('blur', '#child-comment-box-$comment_id', function(){
     if(this.value==""){
          this.value = "Write your comment here...";
     }
+})
+.on('pjax:error', '#childCommentData-' + $comment_id, function (event) {
+    alert('Failed to load the page');
+	//					    $.pjax.reload({container:'#childCommentData-' + $comment_id});
+
+    event.preventDefault();
+})
+.on('pjax:success', '#childCommentData-' + $comment_id, function(event, data, status, xhr, options) {
+  // run "custom_success" method passed to PJAX if it exists
+  $("#commentRetrieved-$comment_id").val(1);
 });
 
+
+
 $(document).pjax('retrieveComment' + $comment_id, '#childCommentData-' + $comment_id, { fragment: '#childCommentData-' + $comment_id });
-
-$('#childCommentData-' + $comment_id ).on('pjax:error', function (event) {
-					    alert('Failed to load the page');
-						//					    $.pjax.reload({container:'#childCommentData-' + $comment_id});
-
-					    event.preventDefault();
-					})
-					.on('pjax:success', function(event, data, status, xhr, options) {
-					      // run "custom_success" method passed to PJAX if it exists
-					      $("#commentRetrieved-$comment_id").val(1);
-					 });
 JS;
 $this->registerJs($script);
 ?>

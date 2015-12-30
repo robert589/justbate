@@ -1,4 +1,4 @@
- $('#comment-box').keydown(function(event) {
+$('#comment-box').keydown(function(event) {
     if (event.keyCode == 13) {
         $(this.form).submit()
         return false;

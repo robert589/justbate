@@ -34,9 +34,9 @@ class ChildCommentForm extends Model
         if ($this->validate()) {
 
             $comment = new Comment();
-            $comment->comment = $this->comment;
+            $comment->comment = $this->childComment;
+            $comment->parent_id = $this->parent_id;
             $comment->thread_id = $this->thread_id;
-            $comment->yes_or_no = $this->yes_or_no;
             $comment->user_id = \Yii::$app->user->getId();
 
             if($comment->save()){

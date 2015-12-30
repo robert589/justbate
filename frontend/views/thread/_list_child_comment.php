@@ -8,7 +8,7 @@ use yii\widgets\ListView;
 
 ?>
 
-
+<br>
 <article>
 	<div class="box col-md-12">
 
@@ -67,10 +67,9 @@ use yii\widgets\ListView;
 				<?= $model['comment']?>
 		</div>
 
-	<br><br><br>
-<br><br><br><br><br><br><br><br><br>
+		<hr>
+	<br><br><br><br>
 </article>
 
 
 
-?>
