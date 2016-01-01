@@ -5,14 +5,35 @@
 	use kartik\widgets\SwitchInput;
 	use yii\widgets\Pjax;
 	use yii\widgets\ListView;
+	use yii\bootstrap\Modal;
+	use common\models\LoginForm;
 
 
+	//Store this variable for javascript
+	if(!empty(\Yii::$app->user->isGuest)){
+		$guest = "1";
+	}
+	else{
+		$guest = "0";
+	}
 	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 	//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.elastic.js');
 	$this->title = "Thread | " . $model['title'];
 ?>
 
+<?php 
+	Modal::begin([
+			'header' => '<h4> Login </h4>',
+			'id' => 'loginModal',
+			'size' => 'modal-lg'
+		]);
 
+	
+	$loginModel = new LoginForm();
+	echo $this->render('../site/login', ['model' => $loginModel]);
+
+	Modal::end();
+?>
 <div class="col-md-offset-2 col-md-9">
 	<div class="row">
 		<div class="col-md-8">
@@ -121,4 +142,13 @@
 <?php
 	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-index.js');
 
+$script =<<< JS
+	function beginLoginModal(){
+		$("#loginModal").modal("show")
+			.find('#loginModal')
+			.load($(this).attr("value"));
+	}
+
+JS;
+$this->registerJs($script);
 ?>

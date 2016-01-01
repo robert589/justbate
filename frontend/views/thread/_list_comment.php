@@ -6,15 +6,22 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 
-	
+	//Store this variable for javascript
+	if(!empty(\Yii::$app->user->isGuest)){
+		$guest = "1";
+	}
+	else{
+		$guest = "0";
+	}
+
 ?>
 
 
 <article>
 	<div class="box col-md-12" >
 	<?php if(!empty($model)){  
-				$thread_id = $model['thread_id']
-		?>
+		$thread_id = $model['thread_id']
+	?>
 
 		<div class="row">
 			<div class="col-md-6">
@@ -45,8 +52,7 @@ use yii\widgets\ListView;
 
 					<div class="col-md-6">
 						<div class="col-md-3">
-							<button type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" onclick="$('#vote_result_'+ <?=$comment_id?>).val(1);  
-					     																								$('#submitvote-form-'+ <?=$comment_id?>	).submit();	">
+							<button id="btnVoteUp-<?=$comment_id?>" type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" >
 								<span class="glyphicon glyphicon-arrow-up"></span>
 					        </button>
 						</div>
@@ -57,8 +63,7 @@ use yii\widgets\ListView;
 					        -<?= $model['total_dislike'] ?>
 						</div>
 						<div class="col-md-3">
-							<button  type="button" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" onclick=" $('#vote_result_'+ <?=$comment_id?>).val(-1);  
-					     																								$('#submitvote-form-'+ <?=$comment_id?>	).submit();	">
+							<button  type="button" id="btnVoteDown-<?=$comment_id?>" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent">
 								<span align="center"class="glyphicon glyphicon-arrow-down"></span>
 					        </button>
 						</div>
@@ -68,11 +73,10 @@ use yii\widgets\ListView;
 				<?= Html::endForm() ?>
 
 			<?php Pjax::end(); ?>
-
-
 		</div>
+
 		<div class="row">	
-				<?= $model['comment']?>
+			<?= $model['comment']?>
 		</div>
 			
 		<?php } ?>
@@ -172,10 +176,34 @@ $script =<<< JS
 
 $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
     // Do click stuff here
+   	
+  	$("#child-comment-box-$comment_id").show();
+})
+.on( 'click', "#btnVoteUp-$comment_id", function () {
+    // Do click stuff here
+	$("#vote_result_$comment_id").val(1);
+	if($guest){
+		beginLoginModal();
+	}
+	$("#submitvote-form-$comment_id"	).submit();
+})
+.on( 'click', "#btnVoteDown-$comment_id", function () {
+    // Do click stuff here
+	$("#vote_result_$comment_id").val(-1);
+	if($guest){
+		beginLoginModal();
+	}
+	$("#submitvote-form-$comment_id"	).submit();
+})
+.on( 'click', "#comment_id", function () {
+    // Do click stuff here
   	$("#child-comment-box-$comment_id").show();
 })
 .on('keydown', '#child-comment-box-$comment_id', function(event){
     if (event.keyCode == 13) {
+    	if($guest){
+			beginLoginModal();
+		}
         $("#childForm-$comment_id").submit()
         return false;
      }
