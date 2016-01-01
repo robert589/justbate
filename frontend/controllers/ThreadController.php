@@ -116,7 +116,7 @@ class ThreadController extends Controller
 
             }
 
-
+            
                   
             //thread data
             $thread = Thread::retrieveThreadById($thread_id);

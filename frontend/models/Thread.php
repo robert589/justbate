@@ -45,20 +45,20 @@ class Thread extends ActiveRecord{
           $first = 0 ;
         }
         else{
-          $sql .= " || ";
+          $sql .= " or ";
         }
 
         $sql .= " TU.topic_id = $filterArray[$i] ";
       }
 
       $sql .= "group by(thread_id)";
+
       return $sql;
 
   }
 
   public static function countAll(){
         $command =  \Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id) TU')->queryScalar();
-        Yii::trace((int) $command);
         return (int)($command);
         
 
@@ -75,20 +75,25 @@ class Thread extends ActiveRecord{
       ";
       $first = 1;
 
+
+
       for($i = 0; $i < count($filterArray); $i++){
           if($first){
             $first= 0;
           }
           else{
+            Yii::$app->end();
             $sql .= " or ";
           }
-
           $sql .= " thread.topic_id = $filterArray[$i]";
       }
-
+     
+      
       $sql .= ") TU ";
-
       $command =  \Yii::$app->db->createCommand($sql)->queryScalar();
+      if($command == 2){
+        Yii::$app->end($command);
+      }
       return (int)($command);
 
 

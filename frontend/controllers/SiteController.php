@@ -19,6 +19,8 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\helpers\StringHelper;
+
 /**
  * Site controller
  */
@@ -92,11 +94,16 @@ class SiteController extends Controller
         $data = ThreadTopic::retrieveAll();
         $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
 
+        $filterArrays = array();
+
+
         if(!empty($_POST['filterwords'])){
-            $filterArrays = array();
 
-            array_push($filterArrays, $_POST['filterwords']);
+            $filterwords = $_POST['filterwords'];
 
+            //deserialize array but using explode, indeed it is a bad practice
+            $filterArrays = StringHelper::explode($filterwords, ",");
+        
             $sql = Thread::retrieveFilterBySql($filterArrays);
             $totalCount = Thread::countFilter($filterArrays);
 
@@ -112,7 +119,7 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData, 'filterArrays' => $filterArrays]);
     }
 
     public function actionFilteredpjax(){
@@ -155,7 +162,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        
+
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {

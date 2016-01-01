@@ -8,6 +8,8 @@ use yii\helpers\Html;
 
 // \Yii::$app->end(print_r($topicData));
 $this->title = "Home Page";
+
+
 ?>
 
 
@@ -21,7 +23,7 @@ $this->title = "Home Page";
 
 			'id' => 'selectTag',
 		    'name' => 'color_1',
-		    'value' => [], // initial value
+		    'value' => $filterArrays, // initial value
 		    'data' => $topicData,
 		    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
 		    'pluginOptions' => [
@@ -31,8 +33,9 @@ $this->title = "Home Page";
 		    'pluginEvents' =>[
 		    	'select2:select' => "function(){
 		    							//get the value
-		    							var data = $('#selectTag option:selected').val();
-		    							console.log(data);
+		    							var data = $('#selectTag').val();
+		    							data = data.toString();
+		    								
 		    						   	$('#filter_tag').val(data);
 		    						   	$('#refresh-form').submit();
 
@@ -42,7 +45,11 @@ $this->title = "Home Page";
 	</div>
 	<div class="col-md-6">
 
-		<?php Pjax::begin(); ?>
+		<?php Pjax::begin(['timeout' => false,
+							'id' => 'filterHomes',
+							'clientOptions' => [
+								'container' => '#filterHomes',
+							]]); ?>
 
 		<!-- The form only be used as refresh page -->
 		<?= Html::beginForm(['site/home'], 'post', ['id' => 'refresh-form', 'data-pjax' => '', 'class' => 'form-inline']); ?>
