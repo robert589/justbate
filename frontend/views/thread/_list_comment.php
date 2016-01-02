@@ -171,7 +171,7 @@ use yii\widgets\ListView;
 </article>
 		
 
-<?php  $this->registerJsFile(Yii::$app->request->baseUrl.'/js/list_comment.js');
+<?php  
 $script =<<< JS
 
 $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
@@ -204,7 +204,7 @@ $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
     	if($guest){
 			beginLoginModal();
 		}
-        $("#childForm-$comment_id").submit()
+        $("#childForm-$comment_id").submit();
         return false;
      }
 })

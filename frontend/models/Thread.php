@@ -28,6 +28,17 @@ class Thread extends ActiveRecord{
     ";
   }
 
+  public static function retrieveSqlByTopic($topic_name){
+     return "
+        Select TU.*, avg(rating) as avg_rating from 
+        ((Select * from thread inner join user where thread.thread_id = user.id ) TU
+        left join rate  on
+        TU.thread_id = rate.thread_id)
+        where topic_name = \"$topic_name\"
+        group by(thread_id)
+    ";
+  }
+
 
   public static function retrieveFilterBySql($filterArray){
       $sql = "
@@ -99,6 +110,10 @@ class Thread extends ActiveRecord{
 
   }
 
+  public static function countByTopic($topic_name){
+       $command =  \Yii::$app->db->createCommand("SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id where topic_name = \"$topic_name\") TU")->queryScalar();
+        return (int)($command);
+  }
   
   public static function retrieveAll(){
     
@@ -106,14 +121,22 @@ class Thread extends ActiveRecord{
      
   }
 
-  public static function retrieveThreadById($id){
+  public static function retrieveThreadById($id, $user_id){
 
-      $sql = "Select TU.*, avg(rating) as avg_rating from 
-        ((Select * from thread inner join user where thread.thread_id = user.id ) TU
-        left join rate  on
-        TU.thread_id = rate.thread_id)
-        where TU.thread_id = $id
-        group by(thread_id)";
+      if(empty($user_id)){
+        $user_id = 0;
+      }
+      $sql = "Select TU.*, 
+                    avg(rating) as avg_rating ,
+                    (SELECT COUNT(*) from rate where thread_id = $id) as total_voters,
+                    (SELECT COUNT(*) from rate where thread_id = $id and user_id = $user_id) as
+          hasVote
+              from 
+                    ((Select * from thread inner join user where thread.thread_id = user.id ) TU
+                    left join rate  on
+                    TU.thread_id = rate.thread_id)
+              where TU.thread_id = $id
+              group by(thread_id)";
 
       $result =  \Yii::$app->db->createCommand($sql)->queryOne();
 

@@ -13,6 +13,7 @@ use frontend\models\ChildCommentForm;
 
 use frontend\models\Thread;
 use frontend\models\DebugForm;
+use frontend\models\Rate;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -72,6 +73,20 @@ class ThreadController extends Controller
 
             }
 
+            else if(!empty($_POST['userThreadRate'])){
+                $userThreadRate = $_POST['userThreadRate'];
+
+                $rateModel = new Rate();
+                $rateModel->rating = $userThreadRate;
+                $rateModel->thread_id = $thread_id;
+                $rateModel->user_id = \Yii::$app->user->getId();
+
+                if(!$rateModel->insertRating()){
+
+                    return false;
+                }
+            }
+
             else if(Yii::$app->request->isPjax && !empty($_POST['childComment'])){
 
                 $parent_id = $_POST['parent_id'];
@@ -119,7 +134,8 @@ class ThreadController extends Controller
             
                   
             //thread data
-            $thread = Thread::retrieveThreadById($thread_id);
+            $thread = Thread::retrieveThreadById($thread_id, 
+                \Yii::$app->user->getId());
             //comment model
             $commentModel = new CommentForm();
             $commentModel->thread_id = $thread_id;

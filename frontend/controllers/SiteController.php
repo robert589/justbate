@@ -92,23 +92,22 @@ class SiteController extends Controller
 
         //set up all topics from databaase for user to choose
         $data = ThreadTopic::retrieveAll();
-        $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
+       // $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
+        $topicData = array();
 
-        $filterArrays = array();
-
-
-        if(!empty($_POST['filterwords'])){
-
-            $filterwords = $_POST['filterwords'];
-
-            //deserialize array but using explode, indeed it is a bad practice
-            $filterArrays = StringHelper::explode($filterwords, ",");
-        
-            $sql = Thread::retrieveFilterBySql($filterArrays);
-            $totalCount = Thread::countFilter($filterArrays);
-
+        foreach($data as $datum){
+            $temp['label'] = $datum['topic_name'];
+            $temp['url'] = Yii::$app->homeUrl . "../../site/home?topic=" . $datum['topic_name'];
+            array_push($topicData, $temp);
         }
-       
+
+
+        if(!empty($_GET['topic'])){
+            $sql = Thread::retrieveSqlByTopic($_GET['topic']);
+            $totalCount = Thread::countByTopic($_GET['topic']);
+        }
+
+        
         $dataProvider = new SqlDataProvider([
             'sql' => $sql,  
             'totalCount' => $totalCount,
@@ -119,7 +118,7 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData, 'filterArrays' => $filterArrays]);
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
     }
 
     public function actionFilteredpjax(){

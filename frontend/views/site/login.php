@@ -7,13 +7,15 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+if(empty($this->title)){
+    $this->title = 'Login';
+}
 
 //offset
 
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Login') ?></h1>
 
     <p>Please fill out the following fields to login:</p>
 

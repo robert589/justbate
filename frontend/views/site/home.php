@@ -3,6 +3,7 @@ use yii\widgets\ListView;
 use kartik\select2\Select2;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
+use kartik\sidenav\SideNav;
 
 use yii\helpers\Html;
 
@@ -17,31 +18,12 @@ $this->title = "Home Page";
 	<div class="col-md-offset-1 col-md-3">
 
  
-		<label class="control-label">Tag Filter</label>';
+		<label class="control-label">Top Tag</label>';
 		
-		<?= Select2::widget([
+		<?=
+		 SideNav::widget(['items' => $topicData, 'heading' => false])
+		 ?>
 
-			'id' => 'selectTag',
-		    'name' => 'color_1',
-		    'value' => $filterArrays, // initial value
-		    'data' => $topicData,
-		    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
-		    'pluginOptions' => [
-		        'tags' => true,
-		        'maximumInputLength' => 10
-		    ],
-		    'pluginEvents' =>[
-		    	'select2:select' => "function(){
-		    							//get the value
-		    							var data = $('#selectTag').val();
-		    							data = data.toString();
-		    								
-		    						   	$('#filter_tag').val(data);
-		    						   	$('#refresh-form').submit();
-
-		    						}"
-		    ]
-		])?>
 	</div>
 	<div class="col-md-6">
 
@@ -84,3 +66,6 @@ $this->title = "Home Page";
 	
 	</div>
 </div>
+
+
+<?php	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/home.js'); ?>
