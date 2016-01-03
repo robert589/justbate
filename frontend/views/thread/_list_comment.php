@@ -5,22 +5,58 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
+use yii\bootstrap\Modal;
+use frontend\models\EditCommentForm;
 
 	//Store this variable for javascript
+
+	//if the person is not guests
 	if(!empty(\Yii::$app->user->isGuest)){
 		$guest = "1";
+		$belongs = "0";
+
+		
 	}
 	else{
+		if(!empty(\Yii::$app->user->getId())){
+			$user_id = \Yii::$app->user->getId();
+
+			//the belongs variable will be used in javascript
+			//to set whether edit and delete button will be shown
+			if($user_id == $model['user_id']){
+				$belongs = "1";
+			} 
+			else{
+				$belongs = "0";
+			}
+		}
+
 		$guest = "0";
 	}
 
+	//Trigger this modal when edit pressed
+	Modal::begin([
+			'header' => '<h4> Edited Comment </h4>',
+			'id' => 'editModal',
+			'size' => 'modal-lg'
+		]);
+
+	$editCommentModel = new EditCommentForm();
+
+	if(!empty($model)){
+		$editCommentModel->parent_id = $model['comment_id'];
+		$editCommentModel->comment = $model['comment'];
+	}
+	echo $this->render('../thread/editModal', ['editCommentModel' => $editCommentModel]);
+
+	Modal::end();
 ?>
 
 
 <article>
 	<div class="box col-md-12" >
 	<?php if(!empty($model)){  
-		$thread_id = $model['thread_id']
+		$thread_id = $model['thread_id'];
 	?>
 
 		<div class="row">
@@ -119,6 +155,11 @@ use yii\widgets\ListView;
 		<div  class="row">
 
 			<div align="right">
+					
+					<?= Html::button('Delete', ['id' => "deleteComment$comment_id", 'class' => 'btn btn-default', 'style' => 'display:none']) ?>
+
+					<?= Html::button('Edit', ['id' => "editComment$comment_id", 'class' => 'btn btn-default', 'style' => 'display:none']) ?>					
+
 					<?= Html::button('Reply', ['id' => "showChildCommentBox$comment_id", 'class' => 'btn btn-default']) ?>
 
 					<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $thread_id . "&comment_id=" . $comment_id], 
@@ -174,10 +215,24 @@ use yii\widgets\ListView;
 <?php  
 $script =<<< JS
 
+if($belongs){
+	$("#deleteComment$comment_id").show();
+	$("#editComment$comment_id").show();
+}
+
+function beginEditModal(){
+	$("#editModal").modal("show")
+			.find('#editModal')
+			.load($(this).attr("value"));
+}
 $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
     // Do click stuff here
    	
   	$("#child-comment-box-$comment_id").show();
+})
+.on('click', "#editComment$comment_id", function(){
+	beginEditModal();
+	return false;
 })
 .on( 'click', "#btnVoteUp-$comment_id", function () {
     // Do click stuff here

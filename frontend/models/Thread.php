@@ -40,33 +40,7 @@ class Thread extends ActiveRecord{
   }
 
 
-  public static function retrieveFilterBySql($filterArray){
-      $sql = "
-        Select TU.*, avg(rating) as avg_rating from 
-        ((Select * from thread inner join user where thread.thread_id = user.id ) TU
-        left join rate  on
-        TU.thread_id = rate.thread_id)
-    ";
-
-      $sql .= " WHERE ";
-
-      $first = 1;
-      for($i = 0 ; $i < count($filterArray) ; $i++){
-        if($first == 1){
-          $first = 0 ;
-        }
-        else{
-          $sql .= " or ";
-        }
-
-        $sql .= " TU.topic_id = $filterArray[$i] ";
-      }
-
-      $sql .= "group by(thread_id)";
-
-      return $sql;
-
-  }
+  
 
   public static function countAll(){
         $command =  \Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id) TU')->queryScalar();
@@ -75,40 +49,6 @@ class Thread extends ActiveRecord{
 
   }
 
-  public static function countFilter($filterArray){
-
-      $sql = "
-        SELECT COUNT(*) 
-          FROM (Select * 
-                from thread 
-                inner join user 
-                on thread.user_id = user.id WHERE
-      ";
-      $first = 1;
-
-
-
-      for($i = 0; $i < count($filterArray); $i++){
-          if($first){
-            $first= 0;
-          }
-          else{
-            Yii::$app->end();
-            $sql .= " or ";
-          }
-          $sql .= " thread.topic_id = $filterArray[$i]";
-      }
-     
-      
-      $sql .= ") TU ";
-      $command =  \Yii::$app->db->createCommand($sql)->queryScalar();
-      if($command == 2){
-        Yii::$app->end($command);
-      }
-      return (int)($command);
-
-
-  }
 
   public static function countByTopic($topic_name){
        $command =  \Yii::$app->db->createCommand("SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id where topic_name = \"$topic_name\") TU")->queryScalar();

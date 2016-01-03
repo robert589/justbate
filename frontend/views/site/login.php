@@ -7,11 +7,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-if(empty($this->title)){
-    $this->title = 'Login';
-}
-
-//offset
 
 ?>
 <div class="site-login">
@@ -28,6 +23,8 @@ if(empty($this->title)){
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
+                <?= Html::hiddenInput('redirectFrom', $redirectFrom) ?>
 
                 <div style="color:#999;margin:1em 0">
                     If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.

@@ -11,6 +11,8 @@ class Comment extends ActiveRecord
 	}
 
 	public static function retrieveSqlComment($thread_id, $yes){
+
+
 		return "SELECT  TUC.*, (SELECT count(*) 
 				                from comment_likes CL 
 				                where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 1 ) as total_like,

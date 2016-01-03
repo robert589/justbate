@@ -2,7 +2,7 @@
 	use kartik\rating\StarRating;
 	use yii\widgets\ActiveForm;
 	use yii\helpers\Url;
-	use kartik\widgets\SwitchInput;
+	use kartik\widgets\Select2;
 	use yii\widgets\Pjax;
 	use yii\widgets\ListView;
 	use yii\bootstrap\Modal;
@@ -14,10 +14,15 @@
 	//Store this variable for javascript
 	if(!empty(\Yii::$app->user->isGuest)){
 		$guest = "1";
+		
 	}
 	else{
 		$guest = "0";
 	}
+
+	//check whether the comment belongs to the user
+
+
 	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 	//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.elastic.js');
 ?>
@@ -29,16 +34,16 @@
 			'size' => 'modal-lg'
 		]);
 
-	
+	$redirectFrom = \Yii::$app->homeUrl . '../../thread/index?id=' . $model['thread_id'];
 	$loginModel = new LoginForm();
-	echo $this->render('../site/login', ['model' => $loginModel]);
+	echo $this->render('../site/login', ['model' => $loginModel,  'redirectFrom' => $redirectFrom]);
 
 	Modal::end();
 ?>
 
 <div class="col-md-offset-2 col-md-9">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-8">	
 			<h2><?= $model['title'] ?> </h2>
 		</div>
 
@@ -79,7 +84,7 @@
 
 
 			<div align="center">
-			<label> <?= $model['total_voters'] ?> Voters </label>
+				<label> <?= $model['total_voters'] ?> Voters </label>
 			</div>
 			
 
@@ -108,7 +113,14 @@
 	   		<?= $form->field($commentModel, 'comment')->textArea(['id' => 'comment-box', 'placeholder' => 'add comment box...', 'rows' => 2 ]) ?>
 			</div>
 		<div class="col-md-4">
-			<?= $form->field($commentModel, 'yes_or_no')->widget(SwitchInput::classname(), ['tristate' => true, 'pluginOptions' => ['size' => 'md']])->label("Side: ") ?>
+			<label> Choose your side </side>
+			<?= $form->field($commentModel, 'yes_or_no')->widget(Select2::classname(), [
+				    'data' => [1 => 'Agree', 0 => 'Disagree'],
+				    'options' => ['placeholder' => 'Select a state ...'],
+				    'pluginOptions' => [
+				        'allowClear' => true
+				    ],
+			])->label(false) ?>
 		</div>
 
 	</div>
@@ -177,6 +189,9 @@
 <?php
 
 $script =<<< JS
+
+	
+
 	function beginLoginModal(){
 		$("#loginModal").modal("show")
 			.find('#loginModal')
