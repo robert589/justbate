@@ -1,4 +1,5 @@
 <?php
+use dosamigos\ckeditor\CKEditor;
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -11,26 +12,24 @@ use yii\app\models\ThreadTopic;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
 	<?= $form->field($thread, 'title') ?>
-	<?php 
+	
 
-	//$thread_category = thread_category::find()->all();
-	//$items = ArrayHelper::map($thread_category, 'category_name' '$thread->category');
-	echo $form->field($thread, 'type')->dropDownList(['Select'=>NULL, 
+	<?= $form->field($thread, 'content')->widget(CKEditor::className(), [
+        'options' => ['rows' => 15],
+        'preset' => 'full'
+    ]) ?>
+
+<?= $form->field($thread, 'type')->dropDownList(['Select'=>NULL, 
 																'Critique' => 'Kritik', 
 																'Petition' => 'Petisi', 
 																'Proposal' => 'Proposal']) ?>
-	<?php 
 
-	//$model = new ThreadTopic;
-	//$thread_topic = $model->retrieveAll();
-	//$list = ArrayHelper::map($thread_topic, 'topic_name', '$thread->topic');
- 	echo $form->field($thread, 'topic_id')->dropDownList(['Select'=>NULL, 
+  	<?= $form->field($thread, 'topic_id')->dropDownList(['Select'=>NULL, 
 															'1' =>'Pendidikan', 
 															'2' => 'Politik']) ?>
-	<?= $form->field($thread, 'content') ?>
-	<?= $form->field($thread, 'photo[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
 
-	<button>Create</button>
 
+
+	<?= Html::submitButton('Create', ['class' => 'btn btn-primary']) ?>
 <?php ActiveForm::end(); ?>
 

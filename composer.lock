@@ -4,9 +4,128 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1d6019763b86b076bae0abb5641cbb28",
-    "content-hash": "3c81e228fcf2aa71130e242c31d22140",
+    "hash": "a42d492f8d031581093ff0d1b15f1d1a",
+    "content-hash": "457814f5c318f7096c9c199945594aba",
     "packages": [
+        {
+            "name": "2amigos/yii2-ckeditor-widget",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-ckeditor-widget.git",
+                "reference": "023eb29fedfc3c3121c17688ed237e8688f5eb50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-ckeditor-widget/zipball/023eb29fedfc3c3121c17688ed237e8688f5eb50",
+                "reference": "023eb29fedfc3c3121c17688ed237e8688f5eb50",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\ckeditor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CKEditor widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/ckeditor-widget",
+            "keywords": [
+                "2amigos",
+                "CKEditor",
+                "extension",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2015-04-30 12:22:25"
+        },
+        {
+            "name": "2amigos/yii2-tinymce-widget",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-tinymce-widget.git",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-tinymce-widget/zipball/d58bad3ede450f86acd475fb4ecda982b980132b",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b",
+                "shasum": ""
+            },
+            "require": {
+                "tinymce/tinymce": ">=4",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\tinymce\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TinyMCE widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/tinymce-widget",
+            "keywords": [
+                "2amigos",
+                "extension",
+                "tinymce",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2015-03-28 21:53:43"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.5",
@@ -1136,7 +1255,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f8475c5b895726e082a1614993c1aff64f77e367",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/701bf8069a85fafbac1ced54dcd00e579e60471b",
                 "reference": "f8475c5b895726e082a1614993c1aff64f77e367",
                 "shasum": ""
             },
@@ -1582,6 +1701,43 @@
             "time": "2015-10-19 12:44:33"
         },
         {
+            "name": "letyii/yii2-tinymce",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/letyii/yii2-tinymce.git",
+                "reference": "861873f30d9e16f76239ae827f2848879f66f78f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/letyii/yii2-tinymce/zipball/861873f30d9e16f76239ae827f2848879f66f78f",
+                "reference": "861873f30d9e16f76239ae827f2848879f66f78f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "tinymce/tinymce": ">=4",
+                "yiisoft/yii2": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "letyii\\tinymce\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "TinyMce for yii2 textarea",
+            "homepage": "https://github.com/letyii/yii2-tinymce",
+            "keywords": [
+                "tinymce",
+                "yii2"
+            ],
+            "time": "2015-07-08 08:11:14"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.1",
             "source": {
@@ -1633,6 +1789,52 @@
                 "mailer"
             ],
             "time": "2015-06-06 14:19:39"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "4.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "6597b4bd83169d6f10887a8bc1e7d218a1453b0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/6597b4bd83169d6f10887a8bc1e7d218a1453b0e",
+                "reference": "6597b4bd83169d6f10887a8bc1e7d218a1453b0e",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "skins/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "http://www.tinymce.com",
+            "keywords": [
+                "editor",
+                "html",
+                "javascript",
+                "richtext",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "time": "2015-12-14 12:55:28"
         },
         {
             "name": "webcreate/jquery-ias",
@@ -2222,7 +2424,8 @@
     "stability-flags": {
         "kartik-v/yii2-widget-select2": 20,
         "kop/yii2-scroll-pager": 20,
-        "kartik-v/yii2-datecontrol": 20
+        "kartik-v/yii2-datecontrol": 20,
+        "letyii/yii2-tinymce": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
