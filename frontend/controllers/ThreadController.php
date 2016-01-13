@@ -10,6 +10,7 @@ use frontend\models\Comment;
 use frontend\models\CommentLikeForm;
 use frontend\models\CommentLikes;
 use frontend\models\ChildCommentForm;
+use frontend\models\EditCommentForm;
 
 use frontend\models\Thread;
 use frontend\models\DebugForm;
@@ -42,6 +43,7 @@ class ThreadController extends Controller
 
             $thread_id = $_GET['id'];
 
+            $editCommentModel  =new EditCommentForm();
 
             if(!empty($_POST['vote']) && !empty($_POST['comment_id'])){
                 $commentlikesModel = new CommentLikeForm();
@@ -66,10 +68,10 @@ class ThreadController extends Controller
                         ],
 
                 ]);
-                    //WARNING
-                 //   Yii::$app->end(Yii::$app->request->isPjax);
-                  
-                return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
+
+                
+                              
+                return $this->renderAjax('index', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
 
             }
 
@@ -123,12 +125,15 @@ class ThreadController extends Controller
                 }
                 else{
                     Yii::$app->end();
-                }
-
-               
+                }             
 
                 
 
+            }
+            else if($editCommentModel->load(Yii::$app->request->post()) && $editCommentModel->validate()){
+                if(!$editCommentModel->update()){
+
+                }
             }
 
             

@@ -7,6 +7,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+if(empty($redirectFrom)){
+    $redirectFrom = Yii::$app->request->baseUrl . '../../' ;   
+}
 
 ?>
 <div class="site-login">

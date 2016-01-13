@@ -7,9 +7,11 @@ use yii\widgets\Pjax;
 use yii\widgets\ListView;
 use yii\bootstrap\Modal;
 use frontend\models\EditCommentForm;
+use frontend\models\Comment;
 
 	//Store this variable for javascript
-
+	$comment_id = $model['comment_id'];
+	
 	//if the person is not guests
 	if(!empty(\Yii::$app->user->isGuest)){
 		$guest = "1";
@@ -34,37 +36,42 @@ use frontend\models\EditCommentForm;
 		$guest = "0";
 	}
 
-	//Trigger this modal when edit pressed
-	Modal::begin([
-			'header' => '<h4> Edited Comment </h4>',
-			'id' => 'editModal',
-			'size' => 'modal-lg'
-		]);
-
-	$editCommentModel = new EditCommentForm();
-
-	if(!empty($model)){
-		$editCommentModel->parent_id = $model['comment_id'];
-		$editCommentModel->comment = $model['comment'];
-	}
-	echo $this->render('../thread/editModal', ['editCommentModel' => $editCommentModel]);
-
-	Modal::end();
 ?>
 
 
+
+<?php 
+	Modal::begin([
+			'header' => '<h4> Edit Comment </h4>',
+			'id' => "editModal-$comment_id",
+			'size' => 'modal-lg'
+		]);
+
+
+		$redirectFrom = \Yii::$app->homeUrl . '../../thread/index?id=' . $model['thread_id'];
+		$editCommentModel = new EditCommentForm();
+		$editCommentModel->parent_id = $comment_id;
+		$editCommentModel->comment = Comment::getComment($comment_id);
+		echo $this->render('../thread/editModal', ['editCommentModel' => $editCommentModel]);
+
+	Modal::end();
+?>
 <article>
 	<div class="box col-md-12" >
 	<?php if(!empty($model)){  
 		$thread_id = $model['thread_id'];
 	?>
 
+
+		<!--First TOP -->
 		<div class="row">
+			<!--The name of the person that make the comments -->
 			<div class="col-md-6">
 				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->homeUrl . "../../profile/index?id=" . $model['user_id'] )?>
 			</div>	
 
-			<?php $comment_id = $model['comment_id'];
+			<!--The vote name-->
+			<?php 
 				$vote = null;
 				Pjax::begin([
 							'id' => 'comment-main-' . $comment_id,
@@ -73,40 +80,42 @@ use frontend\models\EditCommentForm;
 					        'clientOptions'=>[
 					            'container'=>'w1' . $comment_id,
 							]
-						]); ?>
+			]); ?>
 
-				<!-- The form only be used as refresh page -->
-				<?= Html::beginForm(["../../thread/index?id=" . $model['thread_id']  ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => 'w1' . $comment_id, 'class' => 'form-inline']); ?>
 
-					<?= Html::hiddenInput("vote", $model['vote'], ['id' => "vote_result_$comment_id"])?>
+			<!-- The vote -->
+			<!-- The form only be used as refresh page -->
+			<?= Html::beginForm(["../../thread/index?id=" . $model['thread_id']  ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => 'w1' . $comment_id, 'class' => 'form-inline']); ?>
 
-					<?= Html::hiddenInput("comment_id", $comment_id, ['id' => 'comment_id']) ?>
+				<?= Html::hiddenInput("vote", $model['vote'], ['id' => "vote_result_$comment_id"])?>
 
-					<?php $voteUp = ($model['vote'] == 1) ? 'disabled' : false;
-						$voteDown = ($model['vote'] == -1) ? 'disabled' : false;
-						?>
+				<?= Html::hiddenInput("comment_id", $comment_id, ['id' => 'comment_id']) ?>
 
-					<div class="col-md-6">
-						<div class="col-md-3">
-							<button id="btnVoteUp-<?=$comment_id?>" type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" >
-								<span class="glyphicon glyphicon-arrow-up"></span>
-					        </button>
-						</div>
-						<div class="col-md-3">
-					        +<?= $model['total_like'] ?>
-						</div>
-						<div class="col-md-3">
-					        -<?= $model['total_dislike'] ?>
-						</div>
-						<div class="col-md-3">
-							<button  type="button" id="btnVoteDown-<?=$comment_id?>" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent">
-								<span align="center"class="glyphicon glyphicon-arrow-down"></span>
-					        </button>
-						</div>
+				<?php $voteUp = ($model['vote'] == 1) ? 'disabled' : false;
+					$voteDown = ($model['vote'] == -1) ? 'disabled' : false;
+				?>
 
+				<div class="col-md-6">
+					<div class="col-md-3">
+						<button id="btnVoteUp-<?=$comment_id?>" type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" >
+							<span class="glyphicon glyphicon-arrow-up"></span>
+				        </button>
+					</div>
+					<div class="col-md-3">
+				        +<?= $model['total_like'] ?>
+					</div>
+					<div class="col-md-3">
+				        -<?= $model['total_dislike'] ?>
+					</div>
+					<div class="col-md-3">
+						<button  type="button" id="btnVoteDown-<?=$comment_id?>" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent">
+							<span align="center"class="glyphicon glyphicon-arrow-down"></span>
+				        </button>
 					</div>
 
-				<?= Html::endForm() ?>
+				</div>
+
+			<?= Html::endForm() ?>
 
 			<?php Pjax::end(); ?>
 		</div>
@@ -117,14 +126,19 @@ use frontend\models\EditCommentForm;
 			
 		<?php } ?>
 
-		<?php Pjax::begin([
+		<?php 
+		Pjax::begin([
 			'id' => 'submitComment-' . $comment_id,
-			'timeout' => 5000,
+			'timeout' => false,
 			'enablePushState' => false,
 			'clientOptions' => [
 				'container' => '#submitComment-' . $comment_id,
 			]
-		]); ?>
+		]); 
+		?>
+
+
+
 
 		<div class="row">
 			<?= Html::beginForm('../thread/index?id=' . $thread_id, 'post', ['id'=>"childForm-$comment_id" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
@@ -140,63 +154,67 @@ use frontend\models\EditCommentForm;
 			<?= Html::endForm() ?>
 		</div>
 
-		<br>
-		
-		<?php Pjax::begin([
+			<br>
+			
+			<?php 
+	
+				Pjax::begin([
 				'id' => 'childCommentData-'.$comment_id,
 		    	'timeout' => false,
 		    	'enablePushState' => false,
 		    	'clientOptions'=>[
 				    	'container' => '#childCommentData-' . $comment_id,
-
 				    	'linkSelector'=>'#retrieveComment'.$comment_id
 						]
-				]);?>
-		<div  class="row">
+				]);
+	
+			?>
+			
+			<div  class="row">
 
-			<div align="right">
+				<div align="right">
+						
+						<?= Html::button('Delete', ['id' => "deleteComment$comment_id", 'class' => 'btn btn-default', 'style' => 'display:none']) ?>
+
+						<?= Html::button('Edit', ['id' => "editComment$comment_id", 'class' => 'btn btn-default', 'style' => 'display:none']) ?>					
+
+						<?= Html::button('Reply', ['id' => "showChildCommentBox$comment_id", 'class' => 'btn btn-default']) ?>
+
+						<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $thread_id . "&comment_id=" . $comment_id], 
+														['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
+											,'id' => 'retrieveComment' . $comment_id]) ?>
+				</div>
+				<div  class="col-md-12" style="border-left: solid #e0e0d1;">
+
+					<?php if(isset($retrieveChildData)){ ?>
+						<?= ListView::widget([
+
+								'dataProvider' => $retrieveChildData,
+								'options' => [
+									'tag' => 'div',
+									'class' => 'list-wrapper',
+										'id' => 'list-wrapper',
+								],
+				    				'layout' => "\n{items}\n{pager}",
+
+								'itemView' => function ($model, $key, $index, $widget) {
+									return $this->render('_list_child_comment',['model' => $model]);
+								}, 
+								'pager' => [
+					       	 		'firstPageLabel' => 'first',
+					        		'lastPageLabel' => 'last',
+					        		'nextPageLabel' => 'next',
+					        		'prevPageLabel' => 'previous',
+					        		'maxButtonCount' => 3,
+									],
+							]) ?>
+
+					<?php } ?>
 					
-					<?= Html::button('Delete', ['id' => "deleteComment$comment_id", 'class' => 'btn btn-default', 'style' => 'display:none']) ?>
 
-					<?= Html::button('Edit', ['id' => "editComment$comment_id", 'class' => 'btn btn-default', 'style' => 'display:none']) ?>					
-
-					<?= Html::button('Reply', ['id' => "showChildCommentBox$comment_id", 'class' => 'btn btn-default']) ?>
-
-					<?= Html::a('Retrieve Comment', ["../../thread/index?id=" . $thread_id . "&comment_id=" . $comment_id], 
-													['data-pjax' => '#childCommentData-'.$comment_id, 'class' => 'btn btn-default'
-										,'id' => 'retrieveComment' . $comment_id]) ?>
+				</div>
 			</div>
-			<div  class="col-md-12" style="border-left: solid #e0e0d1;">
-
-				<?php if(isset($retrieveChildData)){ ?>
-					<?= ListView::widget([
-
-							'dataProvider' => $retrieveChildData,
-							'options' => [
-								'tag' => 'div',
-								'class' => 'list-wrapper',
-									'id' => 'list-wrapper',
-							],
-			    				'layout' => "\n{items}\n{pager}",
-
-							'itemView' => function ($model, $key, $index, $widget) {
-								return $this->render('_list_child_comment',['model' => $model]);
-							}, 
-							'pager' => [
-				       	 		'firstPageLabel' => 'first',
-				        		'lastPageLabel' => 'last',
-				        		'nextPageLabel' => 'next',
-				        		'prevPageLabel' => 'previous',
-				        		'maxButtonCount' => 3,
-							],
-						]) ?>
-
-				<?php } ?>
-				
-
-			</div>
-		</div>
-		<?php Pjax::end();?>
+			<?php Pjax::end();?>
 		<br>
 		<hr>
 
@@ -215,23 +233,28 @@ use frontend\models\EditCommentForm;
 <?php  
 $script =<<< JS
 
+//Initially both delete and edit will be empty
 if($belongs){
 	$("#deleteComment$comment_id").show();
 	$("#editComment$comment_id").show();
 }
 
-function beginEditModal(){
-	$("#editModal").modal("show")
-			.find('#editModal')
+//Begin edit modal
+function beginEditModal$comment_id(){
+	console.log($comment_id);
+	$("#editModal-$comment_id").modal("show")
+			.find('#editModal-$comment_id')
 			.load($(this).attr("value"));
 }
+
 $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
     // Do click stuff here
    	
   	$("#child-comment-box-$comment_id").show();
 })
 .on('click', "#editComment$comment_id", function(){
-	beginEditModal();
+	beginEditModal$comment_id();
+
 	return false;
 })
 .on( 'click', "#btnVoteUp-$comment_id", function () {

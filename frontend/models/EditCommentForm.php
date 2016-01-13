@@ -3,6 +3,8 @@ namespace frontend\models;
 
 use common\models\User;
 use yii\base\Model;
+use yii\db\Expression;
+
 use Yii;
 
 /**
@@ -31,12 +33,10 @@ class EditCommentForm extends Model
     {
         if ($this->validate()) {
 
-            $comment = new Comment();
+            $comment = Comment::findOne($this->parent_id);
+        
+            $comment->update_at = new Expression('NOW()');
             $comment->comment = $this->comment;
-            $comment->thread_id = $this->thread_id;
-            $comment->yes_or_no = $this->yes_or_no;
-            $comment->user_id = \Yii::$app->user->getId();
-
             if($comment->save()){
                 return true;
             }

@@ -76,6 +76,34 @@ class Comment extends ActiveRecord
 
   }
 
+  public static function retrieveCommentByUserId($comment_id, $user_id){
+
+      $sql =  "SELECT  TUC.*, 
+                (SELECT count(*) 
+                        from comment_likes CL 
+                        where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 1 ) as total_like,
+                (SELECT count(*) 
+                         from comment_likes CL 
+                         where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 0 ) as total_dislike,
+               (SELECT CL1.comment_likes
+                      from comment_likes CL1
+                    where CL1.user_id = $user_id and CL1.comment_id = $comment_id ) as vote
+        from (Select *
+             from (Select comment_likes.comment_id as comlikeid,
+                        comment_likes.user_id as comlikeuser,
+                        comment_likes.comment_likes, 
+                        comment.* 
+                           from comment 
+                           left join comment_likes 
+                           on comment_likes.comment_id = comment.comment_id) TU 
+                     inner join user on user.id = TU.user_id) TUC 
+                where TUC.comment_id =$comment_id
+               ";
+
+      return   \Yii::$app->db->createCommand($sql)->queryOne();
+
+  }
+
   public static function retrieveChildComment($comment_id){
   	 $sql = "SELECT * , 
         (SELECT COUNT(*) from comment_likes CL where CL.comment_id = C.comment_id and CL.comment_likes = 1) as total_like,
@@ -101,5 +129,13 @@ class Comment extends ActiveRecord
 
     return (int)($command);
 	
+  }
+
+  public static function getComment($comment_id){
+      $sql = "SELECT comment
+            from comment
+            where comment_id = $comment_id";
+      return  \Yii::$app->db->createCommand($sql)->queryOne()['comment'];
+
   }
 }
