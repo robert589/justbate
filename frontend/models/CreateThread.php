@@ -18,7 +18,7 @@ class CreateThread extends Model
 	public $photo;
 	public $date_created;
 	public $last_edited;
-
+	public $coordinate;
 
 	public function rules()
 	{

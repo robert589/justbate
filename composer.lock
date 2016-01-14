@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a42d492f8d031581093ff0d1b15f1d1a",
-    "content-hash": "457814f5c318f7096c9c199945594aba",
+    "hash": "7aebc5da0f32c95d06eaadf020199883",
+    "content-hash": "880f774987124814f1504c8c140c03e5",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -218,6 +218,22 @@
                 "jquery",
                 "library"
             ]
+        },
+        {
+            "name": "bower-asset/jquery-locationpicker-plugin",
+            "version": "0.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Logicify/jquery-locationpicker-plugin.git",
+                "reference": "9a79df79b7860d5efae5b94942e3e4444bf7b31f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Logicify/jquery-locationpicker-plugin/zipball/9a79df79b7860d5efae5b94942e3e4444bf7b31f",
+                "reference": "9a79df79b7860d5efae5b94942e3e4444bf7b31f",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/jquery.inputmask",
@@ -1736,6 +1752,48 @@
                 "yii2"
             ],
             "time": "2015-07-08 08:11:14"
+        },
+        {
+            "name": "pigochu/yii2-jquery-locationpicker",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pigochu/yii2-jquery-locationpicker.git",
+                "reference": "2cec76584f4f967855b2bcd86a817be5f56eb9e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pigochu/yii2-jquery-locationpicker/zipball/2cec76584f4f967855b2bcd86a817be5f56eb9e0",
+                "reference": "2cec76584f4f967855b2bcd86a817be5f56eb9e0",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery-locationpicker-plugin": ">=0.1.12"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "pigolab\\locationpicker\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pigo Chu",
+                    "email": "pigochu@gmail.com"
+                }
+            ],
+            "description": "jquery location picker widget for yii2",
+            "homepage": "https://github.com/pigochu/yii2-jquery-locationpicker",
+            "keywords": [
+                "extension",
+                "locationpicker",
+                "yii2"
+            ],
+            "time": "2015-12-28 11:37:16"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -31,7 +31,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Propose.com',
         'brandUrl' => Yii::$app->homeUrl . '../../',
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -39,13 +39,15 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['../../']],
-        ['label' => 'Dashboard', 'url' => ['../../dashboard/create']],
-        ['label' => 'Profile', 'url' => ['../../profile/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['../../site/login']];
     } else {
+           $menuItems[] =     ['label' => 'Dashboard', 'url' => ['../../dashboard/create']];
+
+        $menuItems[] = ['label' => 'Profile', 'url' => ['../../profile/index']];
+
         $menuItems[] = [
             'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
@@ -53,26 +55,6 @@ AppAsset::register($this);
         ];
     }
 
-    $menuItemsLeft = [
-        [
-            'label' => 'Category',
-            'items' => [
-                ['label' => 'Critique', 'url' => '#'],
-                '<li class="divider"></li>',
-                ['label' => 'Solution', 'url' => '#'],
-                '<li class="divider"></li>',
-                ['label' => 'Proposal', 'url' => '#']
-            ]
-        ]
-
-
-    ];
-
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-left'],
-        'items' => $menuItemsLeft,
-    ]);
 
     //Not good practice putting it here
     $data = Thread::retrieveAll();
@@ -81,7 +63,7 @@ AppAsset::register($this);
 
 
     echo "<form class='navbar-form navbar-left' role='search'>
-       <div class='form-group has-feedback'>".
+       <div class='form-group has-feedback' style='margin:2px'>".
                 Select2::widget([
                     'name' => 'searchThread',
                     'id' => 'searchThread',
@@ -89,7 +71,7 @@ AppAsset::register($this);
                     'size' => Select2::SMALL,
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '250%'
+                        'width' => '350%'
 
                         ],
                     'data' => $topicData, // put the data here

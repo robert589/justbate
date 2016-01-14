@@ -107,8 +107,9 @@ class ThreadController extends Controller
                 $childCommentModel->parent_id = $parent_id;
 
                 
+                $model = Comment::retrieveCommentByUserId($parent_id, \Yii::$app->user->identity->id);
 
-               
+                   
                 if($childCommentModel->store()){
                     if($commentRetrieved){
                            $retrieveChildData = new SqlDataProvider([
@@ -119,10 +120,10 @@ class ThreadController extends Controller
                             ],
 
                         ]);
-                        return $this->renderAjax('_list_comment', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
+                        return $this->renderAjax('_list_comment', ['model' => $model, 'retrieveChildData' => $retrieveChildData, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
                     }
                     else{
-                        return $this->renderAjax('_list_comment', ['comment_id' => $parent_id, 'thread_id' => $thread_id]);
+                        return $this->renderAjax('_list_comment', ['model' => $model, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
                     }
                 }
                 else{
