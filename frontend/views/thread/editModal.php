@@ -30,7 +30,7 @@ $parent_id = $editCommentModel['parent_id'];
 
             </div>
 
-            Press   Enter
+            Press  Enter
 
         <?php ActiveForm::end(); ?>
 

@@ -10,18 +10,23 @@ use yii\helpers\Html;
 // \Yii::$app->end(print_r($topicData));
 $this->title = "Home Page";
 
-
 ?>
 
 
 <div class="col-md-12">
-	<div class="col-md-offset-1 col-md-3">
+	<div class="col-md-offset-1 col-md-3" style="margin: 3px">
 
  
 		<label class="control-label">Top Tag</label>';
 		
 		<?=
 		 SideNav::widget(['items' => $topicData, 'heading' => false])
+		 ?>
+
+
+		 <label class="control-label">Trending Topic </label>
+		 <?=
+		 SideNav::widget(['items'=> $top10trending, 'heading' => false])
 		 ?>
 
 	</div>

@@ -21,7 +21,7 @@ class Thread extends ActiveRecord{
   public static function retrieveAllBySql(){
     return "
         Select TU.*, avg(rating) as avg_rating from 
-        ((Select * from thread inner join user where thread.thread_id = user.id ) TU
+        ((Select * from thread inner join user where thread.user_id = user.id ) TU
         left join rate  on
         TU.thread_id = rate.thread_id)
         group by(thread_id)
@@ -39,7 +39,25 @@ class Thread extends ActiveRecord{
     ";
   }
 
+  public static function retrieveTop10TrendingTopic(){
 
+    //Retrieve top 10 trending topic which counted from participants
+    $sql = "SELECT T.thread_id, TT.participants, title from thread T
+left join
+(SELECT thread_id, COUNT(user_id) as participants
+    from (SELECT distinct user_id, thread_id from rate
+          union
+         SELECT distinct user_id, thread_id from comment where thread_id is not null)  P
+    group by thread_id
+    order by participants desc
+    limit 10 ) TT 
+    on T.thread_id = TT.thread_id
+    limit 10
+    ";
+    return \Yii::$app->db->createCommand($sql)->queryAll();
+
+
+  }
   
 
   public static function countAll(){
@@ -72,7 +90,7 @@ class Thread extends ActiveRecord{
                     (SELECT COUNT(*) from rate where thread_id = $id and user_id = $user_id) as
           hasVote
               from 
-                    ((Select * from thread inner join user where thread.thread_id = user.id ) TU
+                    ((Select * from thread inner join user where thread.user_id = user.id ) TU
                     left join rate  on
                     TU.thread_id = rate.thread_id)
               where TU.thread_id = $id

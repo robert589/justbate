@@ -38,8 +38,6 @@ use frontend\models\Comment;
 
 ?>
 
-
-
 <?php 
 	Modal::begin([
 			'header' => '<h4> Edit Comment </h4>',
@@ -56,6 +54,10 @@ use frontend\models\Comment;
 
 	Modal::end();
 ?>
+
+
+
+
 <article>
 	<div class="box col-md-12" >
 	<?php if(!empty($model)){  

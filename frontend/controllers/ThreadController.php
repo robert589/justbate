@@ -37,6 +37,7 @@ class ThreadController extends Controller
 
     public function actionIndex(){
 
+        Yii::trace( Yii::$app->user->identity);
 
         
         if(!empty($_GET['id'])){
@@ -69,9 +70,10 @@ class ThreadController extends Controller
 
                 ]);
 
-                
+
+                $model = Comment::retrieveCommentByUserId($comment_id, \Yii::$app->user->identity->id);
                               
-                return $this->renderAjax('index', ['retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
+                return $this->renderAjax('_list_comment', ['model' => $model, 'retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
 
             }
 

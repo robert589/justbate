@@ -83,6 +83,9 @@ class SiteController extends Controller
         return $this->redirect('site/home');
     }
 
+    /**
+    * Generate Home page include Trending Tag, Trending Topic, and newest Topic
+    */
     public function actionHome(){
 
 
@@ -92,22 +95,19 @@ class SiteController extends Controller
 
         //set up all topics from databaase for user to choose
         $data = ThreadTopic::retrieveAll();
-       // $topicData = ArrayHelper::map($data, 'topic_id', 'topic_name');
         $topicData = array();
-
         foreach($data as $datum){
             $temp['label'] = $datum['topic_name'];
             $temp['url'] = Yii::$app->homeUrl . "../../site/home?topic=" . $datum['topic_name'];
             array_push($topicData, $temp);
         }
 
-
+        //Topic Newest
         if(!empty($_GET['topic'])){
             $sql = Thread::retrieveSqlByTopic($_GET['topic']);
             $totalCount = Thread::countByTopic($_GET['topic']);
         }
 
-        
         $dataProvider = new SqlDataProvider([
             'sql' => $sql,  
             'totalCount' => $totalCount,
@@ -118,7 +118,11 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
+        //Trending Topic
+        $top10trending = Thread::retrieveTop10TrendingTopic();
+        $top10trending = $this->mapTrendingTopic($top10trending);
+
+        return $this->render('home', ['top10trending' => $top10trending, 'listDataProvider' => $dataProvider, 'topicData' => $topicData]);
     }
 
     public function actionFilteredpjax(){
@@ -294,5 +298,16 @@ class SiteController extends Controller
         ]);
     }
 
+    private function mapTrendingTopic($data){
+        $trendingTopic = array();
+
+        foreach($data as $datum){
+             $temp['label'] = $datum['title'];
+            $temp['url'] = Yii::$app->homeUrl . "../../thread/index?id=" . $datum['thread_id'];
+            array_push($trendingTopic, $temp);
+        }
+
+        return $trendingTopic;
+    }
 
 }
