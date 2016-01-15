@@ -16,13 +16,10 @@ use frontend\models\Comment;
 	if(!empty(\Yii::$app->user->isGuest)){
 		$guest = "1";
 		$belongs = "0";
-
-		
 	}
 	else{
 		if(!empty(\Yii::$app->user->getId())){
 			$user_id = \Yii::$app->user->getId();
-
 			//the belongs variable will be used in javascript
 			//to set whether edit and delete button will be shown
 			if($user_id == $model['user_id']){
@@ -38,7 +35,7 @@ use frontend\models\Comment;
 
 ?>
 
-<?php 
+<?php
 	Modal::begin([
 			'header' => '<h4> Edit Comment </h4>',
 			'id' => "editModal-$comment_id",
@@ -317,14 +314,11 @@ $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
     }
 })
 .on('pjax:error', '#submitComment-' + $comment_id, function (event) {
-    alert('Failed to load the page');
-	//					    $.pjax.reload({container:'#childCommentData-' + $comment_id});
-
+   // alert('Failed to load the page');
     event.preventDefault();
 })
 .on('pjax:error', '#childCommentData-' + $comment_id, function (event) {
-    alert('Failed to load the page');
-	//					    $.pjax.reload({container:'#childCommentData-' + $comment_id});
+   // alert('Failed to load the page');
 
     event.preventDefault();
 })
@@ -335,8 +329,6 @@ $( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
 
   $("#commentShown-$comment_id").val(1);
 });
-
-
 
 $(document).pjax('retrieveComment' + $comment_id, '#childCommentData-' + $comment_id, { fragment: '#childCommentData-' + $comment_id });
 JS;

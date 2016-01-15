@@ -46,3 +46,5 @@ use yii\helpers\Url;
 		<br><br><br>
 	<br><br><br><br><br><br><br><br><br>
 	</article>
+
+	<hr>

@@ -189,9 +189,6 @@
 <?php
 
 $script =<<< JS
-
-	
-
 	function beginLoginModal(){
 		$("#loginModal").modal("show")
 			.find('#loginModal')

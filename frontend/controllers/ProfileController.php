@@ -39,7 +39,7 @@ class ProfileController extends Controller
     		if($user = $model->edit()){
     			if (Yii::$app->getUser()->login($user)) {
     		//add sth here
-    		return $this->render('edit-confirm',['model'=>$model]);
+    		          return $this->render('edit-confirm',['model'=>$model]);
 
     			}
     		}

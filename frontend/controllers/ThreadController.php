@@ -51,11 +51,23 @@ class ThreadController extends Controller
                 $commentlikesModel->comment_id = $_POST['comment_id'];
                 $commentlikesModel->comment_likes = $_POST['vote'];
 
-
                 if(!$commentlikesModel->store()){
                     return $this->render('../site/error');
                 }
-               
+
+            }
+            else if(!empty($_POST['child-vote']) && !empty($_POST['comment_id'])){
+                $commentlikesModel = new CommentLikeForm();
+                $commentlikesModel->comment_id = $_POST['comment_id'];
+                $commentlikesModel->comment_likes = $_POST['child-vote'];
+                if(!$commentlikesModel->store()){
+                    return $this->render('../site/error');
+                }
+                else{
+                    $model = Comment::retrieveCommentByUserId($commentlikesModel->comment_id, Yii::$app->user->identity->getId());
+                    return $this->renderPartial('_list_child_comment', ['model' => $model]);
+
+                }
             }
     
             else if(Yii::$app->request->isPjax && !empty($_GET['comment_id'])){
@@ -70,8 +82,15 @@ class ThreadController extends Controller
 
                 ]);
 
-
-                $model = Comment::retrieveCommentByUserId($comment_id, \Yii::$app->user->identity->id);
+                if(Yii::$app->user->isGuest){
+                     $model = Comment::retrieveCommentByUserId($comment_id, 0);
+                   
+                }
+                else{
+                     $model = Comment::retrieveCommentByUserId($comment_id, 
+                                                        \Yii::$app->user->identity->id);
+                   
+                }
                               
                 return $this->renderAjax('_list_comment', ['model' => $model, 'retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
 
@@ -138,6 +157,7 @@ class ThreadController extends Controller
 
                 }
             }
+
 
             
                   
