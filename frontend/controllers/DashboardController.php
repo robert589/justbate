@@ -4,47 +4,46 @@ namespace frontend\controllers;
 
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\data\SqlDataProvider;
 use yii\data\Pagination;
-use yii\method\ActiveQuery;
 
 use frontend\models\Dashboard;
-use frontend\models\Thread;
-use frontend\models\CreateThread;
-
+use frontend\models\ThreadTopic;
+use frontend\models\CreateThreadForm;
+use common\models\User;
 
 class DashboardController extends Controller{
 
-	 public function actionCreate(){
+    public function actionCreate(){
 
-        $thread = new CreateThread();
+        $thread = new CreateThreadForm();
+
+        //Retrieve all topics
+        $threadTopics = ThreadTopic::retrieveAll();
+        $threadTopics = ArrayHelper::map($threadTopics,'topic_name', 'topic_name');
+
+        //Retrieve all bsuiness people
+        $businessPeople = User::retrieveAllBusinessPeople();
+        $businessPeople = ArrayHelper::map($businessPeople, 'id', 'fullNameAndOccupation');
 
 
-        if (($thread->load(Yii::$app->request->post()))&&($thread->create())){
-            return $this->render('create-confirm', ['thread' => $thread]);
-        } else {
-            return $this->render('create', ['thread' => $thread]);
+        //Load data if exists
+        if ($thread->load(Yii::$app->request->post())){
+            if($thread->create()){
+                return $this->render('create-confirm', ['thread' => $thread]);
+            }
         }
 
+        if(isset($_POST['coordinate'])){
+            $thread->coordinate = $_POST['coordinate'];
+        }
+
+        return $this->render('create', ['thread' => $thread, 'threadTopics' => $threadTopics, 'businessPeople' => $businessPeople]);
+
+
     }
 
-    public function actionDash(){
-    	$dash = new Thread();
-
-        $thread = $dash->retrieveByUser();
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $thread->count(),
-            ]);
-
-        $rows = $thread->orderBy('date_created')
-                                      ->offset($pagination->offset)
-                                      ->limit($pagination->limit)
-                                      ->all();
-
-        return $this->render('dash', ['rows' => $rows, 'pagination' => $pagination]);
-    }
 }
 

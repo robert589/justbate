@@ -113,7 +113,7 @@
 	   		<?= $form->field($commentModel, 'comment')->textArea(['id' => 'comment-box', 'placeholder' => 'add comment box...', 'rows' => 2 ]) ?>
 			</div>
 		<div class="col-md-4">
-			<label> Choose your side </side>
+			<label> Choose your side </label>
 			<?= $form->field($commentModel, 'yes_or_no')->widget(Select2::classname(), [
 				    'data' => [1 => 'Agree', 0 => 'Disagree'],
 				    'options' => ['placeholder' => 'Select a state ...'],

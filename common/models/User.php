@@ -185,4 +185,21 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    /**
+     * Get fullname
+     */
+    public function getfullName(){
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getfullNameAndOccupation(){
+        return $this->getfullName() . ' - ' . $this->occupation;
+    }
+
+    public static function retrieveAllBusinessPeople(){
+
+        return Self::find()->where(['business' => 1])->all();
+
+    }
 }

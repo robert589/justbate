@@ -113,9 +113,6 @@ left join
     	return $this->hasMany(Rate::className(), ['thread_id' =>'thread_id']);
   }
 
-   public static function getThreadID(){
-      return $this->thread_id;
-    }
 
 public function behaviors()
 {
