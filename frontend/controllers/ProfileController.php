@@ -20,6 +20,12 @@ class ProfileController extends Controller
         return $this->render('index');
     }
 
+    public function actionProfile()
+    {
+        $id = \Yii::app()->user->getId();
+        return $this->redirect(array('/user/','id'=>Yii::app()->user->getId()));
+    }
+
 
 	public function actionEdit()
     {
