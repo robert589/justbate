@@ -17,7 +17,7 @@ use common\models\User;
 class DashboardController extends Controller{
 
     public function actionCreate(){
-
+      //  var_dump($_POST);
         $thread = new CreateThreadForm();
 
         //Retrieve all topics
@@ -29,16 +29,28 @@ class DashboardController extends Controller{
         $businessPeople = ArrayHelper::map($businessPeople, 'id', 'fullNameAndOccupation');
 
 
+        //Is there any relevant parties being tag
+        if(isset($_POST['relevant_parties'])){
+
+        }
+
+        //Is there any coordinate being tag
+        if(isset($_POST['coordinate'])){
+
+        }
+
         //Load data if exists
         if ($thread->load(Yii::$app->request->post())){
+
+
+
             if($thread->create()){
                 return $this->render('create-confirm', ['thread' => $thread]);
             }
         }
 
-        if(isset($_POST['coordinate'])){
-            $thread->coordinate = $_POST['coordinate'];
-        }
+
+
 
         return $this->render('create', ['thread' => $thread, 'threadTopics' => $threadTopics, 'businessPeople' => $businessPeople]);
 

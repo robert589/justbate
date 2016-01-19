@@ -136,6 +136,13 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
+    public static function getUsername($id){
+        return Self::find()->where(['id' => $id])->one()['username'];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
@@ -201,5 +208,14 @@ class User extends ActiveRecord implements IdentityInterface
 
         return Self::find()->where(['business' => 1])->all();
 
+    }
+
+    public function getUser(){
+        return $this->find()->where(['username' => $this->username])->one();
+    }
+
+
+    public function checkUsernameExist(){
+        return $this->find()->where(['username' => $this->username])->exists();
     }
 }

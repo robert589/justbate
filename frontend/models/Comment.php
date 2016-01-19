@@ -60,7 +60,7 @@ class Comment extends ActiveRecord
                         from comment_likes CL 
                         where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 1 ) as total_like,
                 (SELECT count(*) 
-                         from comment_likes CL 
+                     -    from comment_likes CL
                          where CL.comment_id =TUC.comlikeid and CL.comment_likes  = -1 ) as total_dislike,
                (SELECT CL1.comment_likes
                       from comment_likes CL1
@@ -115,4 +115,16 @@ class Comment extends ActiveRecord
       return  \Yii::$app->db->createCommand($sql)->queryOne()['comment'];
 
   }
+
+    public static function getRecentCommentActivity($username){
+       $sql = "SELECT *
+                from comment, user
+                where comment.user_id = user.id and user.username = :username
+                order by comment.date_created desc";
+        // DAO
+        return \Yii::$app->db
+            ->createCommand($sql)
+            ->bindValues([':username' => $username])
+            ->queryAll();
+    }
 }

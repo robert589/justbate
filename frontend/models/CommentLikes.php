@@ -38,4 +38,16 @@ class CommentLikes extends ActiveRecord
 
 		return ($comment_like->update() !== false);
 	}
+
+	public static function getRecentCommentLikes($username){
+		$sql = "select *
+				from comment_likes, user
+				where user.id = comment_likes.user_id and user.username= :username
+				order by date_created desc";
+		// DAO
+		return \Yii::$app->db
+			->createCommand($sql)
+			->bindValues([':username' => $username])
+			->queryAll();
+	}
 }

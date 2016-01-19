@@ -12,7 +12,7 @@ use common\widgets\Alert;
 
 use frontend\models\Thread;
 use yii\helpers\ArrayHelper;
-
+use common\models\User;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -46,7 +46,7 @@ AppAsset::register($this);
     } else {
            $menuItems[] =     ['label' => 'Dashboard', 'url' => ['../../dashboard/create']];
 
-        $menuItems[] = ['label' => 'Profile', 'url' => ['../../profile/index']];
+        $menuItems[] = ['label' => 'Profile', 'url' => ['../../profile/index?username=' . User::getUsername(\Yii::$app->user->identity->getId())]];
 
         $menuItems[] = [
             'label' => 'Logout (' . Yii::$app->user->identity->username . ')',

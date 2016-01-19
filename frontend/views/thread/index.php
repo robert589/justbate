@@ -23,7 +23,7 @@
 	//check whether the comment belongs to the user
 
 
-	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
+		$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 	//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.elastic.js');
 ?>
 

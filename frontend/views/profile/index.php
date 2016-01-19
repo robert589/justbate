@@ -52,53 +52,37 @@ use common\models\User;
                             <img src="girl.jpg" alt="Profile Picture" style="width:180px;height:180px;"> </div>
                             <div class="col-lg-8">
                                 <div id="displayName">
-                                    <?php echo \Yii::$app->user->identity->first_name; ?>
-                                    <?php echo \Yii::$app->user->identity->last_name; ?>
+                                    <?= $user->first_name ?>
+                                    <?= $user->last_name ?>
                                 </div>
-                            <div id="displayDetails">
-                               <!-- <script type="text/javascript">
-                                    function changeThis(){
-                                        var formInput = document.getElementById('userDescription').value;
-                                        document.getElementById('description').innerHTML = formInput;
-                                    }
-
-                                </script>-->
-                            <form>
-                                <span>Description about yourself: </span><br>
-                                <input type='text' id='userDescription' placeholder='Write here' />
-                                <input type='submit' onclick='changeThis()' value='Submit'/> 
-                                <input type='reset' value='Reset'/> <br>
-                                <span id='description'></span>
-                                <br><br>
-                            </form>
-                                <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
-                                <a href="../profile/edit">Edit Profile</a>
-
-                            </div>               
+                            </div>
+                            <div class="col-lg-8">
+                                Birthday: <?= $user->birthday ?>
+                             </div>
+                            <div class="col-lg-8">
+                                Occupation: <?= $user->occupation ?>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-        </div>
 
-        <!-- /#page-content-wrapper -->
-        <div class="well well-sm">
-            <h4>Basic Information</h4>      
+                <br>
+                <!-- /#page-content-wrapper -->
+                <div class="well well-sm">
+                    <h4>Recent Activity</h4>
+                </div>
+
         </div>
-       
-        <div class="well well-sm">
-            <h4>Contact Information</h4>      
         </div>
-        <div class="well well-sm">
-            <h4>Additional Information</h4>      
-        </div>
+     </div>
+
+
         
         
 
 
 
-    </div>
-    </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

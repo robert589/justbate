@@ -16,11 +16,13 @@ class CreateThreadForm extends Model
 	public $topic_id;
 	public $content;
 	public $coordinate;
+	public $anonymous;
 
 	public function rules()
 	{
 		return [
 			[['title', 'topic_id', 'content'], 'required'],
+
 		];
 	}
 
@@ -28,13 +30,14 @@ class CreateThreadForm extends Model
 		if($this->validate()){
             $thread = new Thread();
 
-            Yii::$app->end('hello'  . $this->relevant_parties);
+            //Yii::$app->end('hello'  . $this->relevant_parties);
 
-            $thread->id = \Yii::$app->user->identity->getId();
+            $thread->user_id = \Yii::$app->user->identity->getId();
             $thread->title = $this->title;
-            $thread->topic_id = $this->topic_id;
+            $thread->topic_name = $this->topic_id;
             $thread->content = $this->content;
             $thread->coordinate = $this->coordinate;
+			$thread->anonymous  = $this->anonymous;
             if($thread->save()){
                 return true;
             }

@@ -29,21 +29,26 @@ $this->title = "Create Proposal";
             ]
         ]) ?>
 
-        <?= $form->field($thread, 'relevant_parties')->widget(Select2::classname(), [
+        <?= Select2::widget([
+            'id' => 'select2relevant_parties',
+            'name' => 'relevant_parties',
             'data' => $businessPeople,
-            'id' => 'select2RelevantParties',
-            'options' => ['placeholder' => 'Select relevant parties ...', 'multiple' => true],
+            'options' => [
+                'label' => 'Relevant Parties',
+                'placeholder' => 'Select relevant parties ...',
+                'multiple' => true],
             'pluginOptions' => [
                 'tags' => true,
                 'maximumInputLength' => 6
             ],
             'pluginEvents' => [
                 "select2:select" => "function(){
-                                        console.log($('#select2RelevantParties').length);
-                                        alert('Selected value is: ' + $('#select2RelevantParties').select2('val'));
+                                        $('#create-thread-relevant_parties').val($('#select2relevant_parties').val());
                                     }"
             ]
         ]) ?>
+
+        <?= $form->field($thread, 'relevant_parties')->hiddenInput(['id' => 'create-thread-relevant_parties'])->label(false) ?>
 
         <?= $form->field($thread, 'topic_id')->widget(Select2::classname(), [
             'data' => $threadTopics,
@@ -88,7 +93,11 @@ $this->title = "Create Proposal";
 
         <?=  Html::hiddenInput('coordinate', null, ['id' => 'location_coordinate']); ?>
 
-        <?= Html::submitButton('Create', ['align' => 'center', 'class' => 'btn btn-lg btn-primary']) ?>
+        <div class="row">
+            <?= $form->field($thread, 'anonymous')->checkbox() ?>
+            <?= Html::submitButton('Create', ['align' => 'right', 'class' => 'btn btn-lg btn-primary']) ?>
+
+        </div>
 
     </div>
 </div>
