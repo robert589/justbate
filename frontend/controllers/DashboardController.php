@@ -29,20 +29,9 @@ class DashboardController extends Controller{
         $businessPeople = ArrayHelper::map($businessPeople, 'id', 'fullNameAndOccupation');
 
 
-        //Is there any relevant parties being tag
-        if(isset($_POST['relevant_parties'])){
-
-        }
-
-        //Is there any coordinate being tag
-        if(isset($_POST['coordinate'])){
-
-        }
 
         //Load data if exists
         if ($thread->load(Yii::$app->request->post())){
-
-
 
             if($thread->create()){
                 return $this->render('create-confirm', ['thread' => $thread]);

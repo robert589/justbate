@@ -22,7 +22,8 @@ class CreateThreadForm extends Model
 	{
 		return [
 			[['title', 'topic_id', 'content'], 'required'],
-
+			[['coordinate'], 'string'],
+			['relevant_parties', 'each', 'rule'=>['integer']]
 		];
 	}
 
@@ -30,14 +31,13 @@ class CreateThreadForm extends Model
 		if($this->validate()){
             $thread = new Thread();
 
-            //Yii::$app->end('hello'  . $this->relevant_parties);
-
             $thread->user_id = \Yii::$app->user->identity->getId();
             $thread->title = $this->title;
             $thread->topic_name = $this->topic_id;
             $thread->content = $this->content;
             $thread->coordinate = $this->coordinate;
 			$thread->anonymous  = $this->anonymous;
+
             if($thread->save()){
                 return true;
             }
