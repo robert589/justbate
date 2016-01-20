@@ -4,82 +4,57 @@
 
 use yii\helpers\Html;
 use common\models\User;
+use frontend\models\UploadForm;
+use yii\widgets\ListView;
+use kartik\select2\Select2;
+use yii\widgets\ActiveForm;
+use kartik\sidenav\SideNav;
+use yii\helpers\Url;
 
 
 ?>
 
-     <div id="wrapper">
+<div class="col-md-12">
+    <div class="col-md-offset-1 col-md-3" style="margin: 3px">
+        <?= SideNav::widget([
+            'type' => SideNav::TYPE_DEFAULT,
+            'heading' => 'Profile',
+            'items' => [
+                [
+                    'url' => '#',
+                    'label' => 'Home',
+                    'icon' => 'home'
+                ],
+                [
+                    'label' => 'Help',
+                    'icon' => 'question-sign',
+                ],
+                [
+                    'label' => 'About', 
+                    'icon'=>'info-sign', 
+                    'url'=>'#'
+                ],
+                [
+                    'label' => 'Contact', 
+                    'icon'=>'phone', 
+                    'url'=>'#'
+                ],
+            ],
+        ]);
+        ?>
+    
+    </div>
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Feeds
-                    </a>
-                </li>
-                <li> 
-                    <a href="#">All Activity</a>
-                </li>
-                <li>
-                    <a href="#">Critique</a>
-                </li>
-                <li>
-                    <a href="#">Solution</a>
-                </li>
-                <li>
-                    <a href="#">Proposal</a>
-                </li>
-                <li>
-                    <a href="#">Followers <span class="badge">5</span></a>
-                </li>
-                <li>
-                    <a href="#">Following <span class="badge">5</span></a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-        <div id="page-content">
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
-        </div>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="col-lg-3">
-                            <img src="girl.jpg" alt="Profile Picture" style="width:180px;height:180px;"> </div>
-                            <div class="col-lg-8">
-                                <div id="displayName">
-                                    <?= $user->first_name ?>
-                                    <?= $user->last_name ?>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                Birthday: <?= $user->birthday ?>
-                             </div>
-                            <div class="col-lg-8">
-                                Occupation: <?= $user->occupation ?>
-                            </div>
-                        </div>
-                    </div>
+    <button>Submit</button>
 
-                </div>
+    <?php ActiveForm::end() ?>
+    
+    
 
-                <br>
-                <!-- /#page-content-wrapper -->
-                <div class="well well-sm">
-                    <h4>Recent Activity</h4>
-                </div>
-
-        </div>
-        </div>
-     </div>
-
-
-        
-        
 
 
 

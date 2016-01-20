@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 use kartik\sidenav\SideNav;
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 
 // \Yii::$app->end(print_r($topicData));
 $this->title = "Home Page";
@@ -17,10 +19,10 @@ $this->title = "Home Page";
 	<div class="col-md-offset-1 col-md-3" style="margin: 3px">
 
  
-		<label class="control-label">Top Tag</label>';
+		<label class="control-label">Top Tag</label>
 		
 		<?=
-		 SideNav::widget(['items' => $topicData, 'heading' => false])
+		 SideNav::widget(['items' => $topicData, 'heading' => false, 'type' =>'default'])
 		 ?>
 
 
