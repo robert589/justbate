@@ -1,11 +1,13 @@
 <?php
 use dosamigos\ckeditor\CKEditor;
 use yii\web\JsExpression;
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Dropdown;
 use yii\helpers\ArrayHelper;
 use kartik\widgets\Select2;
+
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 
 $this->title = "Create Proposal";
@@ -27,7 +29,9 @@ $this->title = "Create Proposal";
             ]
         ]) ?>
 
-        <?= $form->field($thread, 'relevant_parties')->widget(Select2::className(),[
+        <?= Select2::widget([
+            'id' => 'select2relevant_parties',
+            'name' => 'relevant_parties',
             'data' => $businessPeople,
             'options' => [
                 'label' => 'Relevant Parties',
@@ -44,6 +48,7 @@ $this->title = "Create Proposal";
             ]
         ]) ?>
 
+        <?= $form->field($thread, 'relevant_parties')->hiddenInput(['id' => 'create-thread-relevant_parties'])->label(false) ?>
 
         <?= $form->field($thread, 'topic_id')->widget(Select2::classname(), [
             'data' => $threadTopics,
@@ -86,6 +91,7 @@ $this->title = "Create Proposal";
         ?>
 
 
+        <?=  Html::hiddenInput('coordinate', null, ['id' => 'location_coordinate']); ?>
 
         <div class="row">
             <?= $form->field($thread, 'anonymous')->checkbox() ?>
