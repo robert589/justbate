@@ -4,12 +4,22 @@
 
 use yii\helpers\Html;
 use common\models\User;
+<<<<<<< HEAD
 use yii\widgets\ListView;
+=======
+use frontend\models\UploadForm;
+use yii\widgets\ListView;
+use kartik\select2\Select2;
+use yii\widgets\ActiveForm;
+use kartik\sidenav\SideNav;
+use yii\helpers\Url;
+>>>>>>> origin/master
 
 //Set title for the page
 $this->title = $user->first_name . ' ' . $user->last_name;
 ?>
 
+<<<<<<< HEAD
      <div id="wrapper">
 
         <!-- Sidebar -->
@@ -66,9 +76,42 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                         </div>
                     </div>
                 </div>
+=======
+<div class="col-md-12">
+    <div class="col-md-offset-1 col-md-3" style="margin: 3px">
+        <?= SideNav::widget([
+            'type' => SideNav::TYPE_DEFAULT,
+            'heading' => 'Profile',
+            'items' => [
+                [
+                    'url' => '#',
+                    'label' => 'Home',
+                    'icon' => 'home'
+                ],
+                [
+                    'label' => 'Help',
+                    'icon' => 'question-sign',
+                ],
+                [
+                    'label' => 'About', 
+                    'icon'=>'info-sign', 
+                    'url'=>'#'
+                ],
+                [
+                    'label' => 'Contact', 
+                    'icon'=>'phone', 
+                    'url'=>'#'
+                ],
+            ],
+        ]);
+        ?>
+    
+    </div>
+>>>>>>> origin/master
 
-                </div>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
+<<<<<<< HEAD
                 <br>
                 <!-- /#page-content-wrapper -->
 
@@ -108,10 +151,16 @@ $this->title = $user->first_name . ' ' . $user->last_name;
         </div>
         </div>
      </div>
+=======
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
 
+    <button>Submit</button>
+>>>>>>> origin/master
 
-        
-        
+    <?php ActiveForm::end() ?>
+    
+    
+
 
 
     
