@@ -60,7 +60,7 @@ class Comment extends ActiveRecord
                         from comment_likes CL 
                         where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 1 ) as total_like,
                 (SELECT count(*) 
-                     -    from comment_likes CL
+                         from comment_likes CL
                          where CL.comment_id =TUC.comlikeid and CL.comment_likes  = -1 ) as total_dislike,
                (SELECT CL1.comment_likes
                       from comment_likes CL1

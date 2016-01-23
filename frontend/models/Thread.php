@@ -134,7 +134,7 @@ class Thread extends ActiveRecord{
     public static  function getRecentActivityCreateThread($username){
         $sql = "SELECT thread.*
         FROM thread, user
-        where thread.user_id = user.id and user.username = $username;
+        where thread.user_id = user.id and user.username = '$username'
         order by `date_created` desc";
 
         $result =  \Yii::$app->db->createCommand($sql)->queryAll();

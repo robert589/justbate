@@ -13,6 +13,9 @@ use common\widgets\Alert;
 use frontend\models\Thread;
 use yii\helpers\ArrayHelper;
 use common\models\User;
+use yii\widgets\Pjax;
+use yii\widgets\ListView;
+use kartik\widgets\Spinner;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -46,7 +49,6 @@ AppAsset::register($this);
     } else {
         $menuItems[] =     ['label' => 'Dashboard', 'url' => ['../../dashboard/create']];
 
-        $menuItems[] = ['label' => '<span class="glyphicon glyphicon-alert"></span>', 'url' => ['#']];
         $menuItems[] = ['label' => 'Profile', 'url' => ['../../profile/index?username=' . User::getUsername(\Yii::$app->user->identity->getId())]];
 
         $menuItems[] = [
@@ -92,6 +94,39 @@ AppAsset::register($this);
         'encodeLabels'=> false,
 
     ]);
+
+    Pjax::begin();
+
+    echo "<ul class='navbar-nav navbar-right nav'>
+            <li class='dropdown dropdown-large'>
+                <a class='dropdown-toggle' href='../notification/index' data-toggle='dropdown'>
+                    <span class='glyphicon glyphicon-alert'>
+                    </span>
+                    <b class='caret'></b>
+                </a>
+                <ul class='dropdown-menu dropdown-menu-large row'>
+                    <div class='col-md-12'>
+                        <label><div style='width:400px' align='center'> Notifications </div></label>
+                        <hr>";
+
+
+
+                if(isset($recent_notifications_provider)){
+                    echo $this->render('_notifications', ['recent_notifications_provider' => $recent_notifications_provider]);
+                }
+                else{
+                    echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']);
+
+                }
+
+    echo  "        </div>
+                </ul>
+            </li>
+          </ul>";
+
+    Pjax::end();
+
+
 
     NavBar::end();
     ?>
