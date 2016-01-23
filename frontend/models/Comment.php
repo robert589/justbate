@@ -117,9 +117,9 @@ class Comment extends ActiveRecord
   }
 
     public static function getRecentCommentActivity($username){
-       $sql = "SELECT *
-                from comment, user
-                where comment.user_id = user.id and user.username = :username
+       $sql = "SELECT user1.*, comment.*, thread.* , user2.first_name as parent_first_name , user2.last_name as parent_last_name         from comment, user user1, thread, user user2
+                where comment.user_id = user1.id and user1.username = :username and comment.thread_id = thread.thread_id and comment.parent_id = user2.id
+
                 order by comment.date_created desc";
         // DAO
         return \Yii::$app->db

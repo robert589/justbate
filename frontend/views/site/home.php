@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 use kartik\sidenav\SideNav;
 
 use yii\helpers\Html;
-
+//Yii::$app->end(Yii::getAlias('@base-url'));
 // \Yii::$app->end(print_r($topicData));
 $this->title = "Home Page";
 
