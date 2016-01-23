@@ -44,8 +44,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['../../site/login']];
     } else {
-           $menuItems[] =     ['label' => 'Dashboard', 'url' => ['../../dashboard/create']];
+        $menuItems[] =     ['label' => 'Dashboard', 'url' => ['../../dashboard/create']];
 
+        $menuItems[] = ['label' => '<span class="glyphicon glyphicon-alert"></span>', 'url' => ['#']];
         $menuItems[] = ['label' => 'Profile', 'url' => ['../../profile/index?username=' . User::getUsername(\Yii::$app->user->identity->getId())]];
 
         $menuItems[] = [
@@ -60,14 +61,12 @@ AppAsset::register($this);
     $data = Thread::retrieveAll();
     $topicData = ArrayHelper::map($data, 'thread_id', 'title');
 
-
-
     echo "<form class='navbar-form navbar-left' role='search'>
        <div class='form-group has-feedback' style='margin:2px'>".
                 Select2::widget([
                     'name' => 'searchThread',
                     'id' => 'searchThread',
-                    'value' => '',    
+                    'value' => '',
                     'size' => Select2::SMALL,
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -81,15 +80,17 @@ AppAsset::register($this);
                     'pluginEvents' =>[
                         'select2:select' => "function(){
                                                     var data = $('#searchThread option:selected').val();
-                                                    window.location = '" .  Yii::$app->homeUrl  .  "../../thread/index?id=' + data; 
+                                                    window.location = '" .  Yii::$app->homeUrl  .  "../../thread/index?id=' + data;
                                             }"
                     ]
-                ]). 
+                ]).
                 "  </div>
     </form>";
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
+        'encodeLabels'=> false,
+
     ]);
 
     NavBar::end();

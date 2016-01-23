@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\TagInThread;
 use Yii;
 use yii\web\Controller;
 use common\models\User;
@@ -36,8 +37,10 @@ class ProfileController extends Controller
                     ],
                 ]);
 
+                $recent_tags_provider = $this->getRecentTagsAsProvider($username);
 
-                return $this->render('index', ['user' => $user_info, 'recent_activity_provider' => $recent_activity_provider]);
+                return $this->render('index', ['user' => $user_info, 'recent_activity_provider' => $recent_activity_provider,
+                                            'recent_tags_provider' => $recent_tags_provider]);
             }
             else{
                 Yii::$app->end();
@@ -82,6 +85,23 @@ class ProfileController extends Controller
         $user_thread_activity = Thread::getRecentActivityCreateThread($username);
 
         return $this->mergeAllActivities($user_comment_recent_activity, $user_comment_likes_recent_activity, $user_thread_activity);
+    }
+
+    /**
+     * @param $username username of this user
+     * @return \yii\data\ArrayDataProvider
+     */
+    private function getRecentTagsAsProvider($username){
+
+        // build an ActiveDataProvider with an empty query and a pagination with 35 items for page
+        $recent_tag_provider = new \yii\data\ArrayDataProvider([
+            'allModels' => TagInThread::getRecentTags($username),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $recent_tag_provider;
     }
 
 
