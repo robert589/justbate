@@ -1,3 +1,5 @@
+---------------------------------------------------------------------------------------------------------------------------------
+
 Project Rules 
 
 Rules are not made to scare you but it is made so Each of us can contribute equally and rightfully to this group.
@@ -24,6 +26,8 @@ I saw how facebook actually divided their shares among the founder, cofounder an
 
  5. All projects, codes, assets are meant for this project only, you should not distribute the project codes, and assets outside this project
 
+
+--------------------------------------------------------------------------------------------------------------------------------
 You also can suggest rules
 
 Write your suggestion here..
