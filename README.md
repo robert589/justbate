@@ -1,5 +1,6 @@
-<h1> Project Rules <h1> 
- Rules are not made to scare you but it is made so Each of us can contribute equally and rightfully to this group.
+Project Rules 
+
+Rules are not made to scare you but it is made so Each of us can contribute equally and rightfully to this group.
 
 
  1. How do the project tasks are shared? 
