@@ -1,4 +1,4 @@
-<h1> Project Rules <h1> <br>
+<h1> Project Rules <h1> 
  Rules are not made to scare you but it is made so Each of us can contribute equally and rightfully to this group.
 
 
@@ -6,7 +6,7 @@
 
 Currently, You will be assigned the task by Robert Limanto. Further, the task for each of us will start to deviate and specialized.
 My current plan is: A.  Kelvin Chandra, Grace and Peter, Back End Developer <br>
-                    B. Vinsen Muliadi, Front End Developer
+                    B. Vinsen Muliadi, Front End Developer <br>
 But it can change depends on the task available.
 
 <b> 2. What can you do if you find errors that you cannot solve or problem that you cannot do? </b>
