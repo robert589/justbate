@@ -21,7 +21,9 @@ For this time, Project Manager can kick anyone that is not contributed equally a
 
 I saw how facebook actually divided their shares among the founder, cofounder and worker. the founder (Mark Zuckerberg) has 24 % of share in his company and the cofounder has aroung 5-7%. For now, I would divide 10% for each of you equally, but we will discuss this further after the app is launched since everything is clearer at that time. the 10% can be lesser since we also need to think how much the investor want from our share and how much you actually have contributed to the startup.
 
-<You also can suggest rule for this >
+<b> 5. All projects, codes, assets are meant for this project only, you should not distribute the project codes, and assets outside this project
+
+You also can suggest rules
 
 Write your suggestion here..
 Raise issue  https://github.com/robert589/startUp/issues, if you disagree with the rule
