@@ -1,12 +1,12 @@
-Project Rules <br>
-Rules are not made to scare you but it is made so Each of us can contribute equally and rightfully to this group.
+<h1> Project Rules <h1> <br>
+<h2> Rules are not made to scare you but it is made so Each of us can contribute equally and rightfully to this group. <h2>
 
 
-<b> 1. How does the project jobs are shared? </b>
+<b> 1. How do the project tasks are shared? </b>
 
 Currently, You will be assigned the task by Robert Limanto. Further, the task for each of us will start to deviate and specialized.
-My current plan is: Kelvin Chandra, Grace and Peter, Back End Developer
-                    Vinsen Muliadi, Front End Developer
+My current plan is: A.  Kelvin Chandra, Grace and Peter, Back End Developer <br>
+                    B. Vinsen Muliadi, Front End Developer
 But it can change depends on the task available.
 
 <b> 2. What can you do if you find errors that you cannot solve or problem that you cannot do? </b>
