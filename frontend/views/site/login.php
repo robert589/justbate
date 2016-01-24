@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 if(empty($redirectFrom)){
     $redirectFrom = Yii::getAlias('@base-url') ;
 }
-
+//df;sjklajdsljflsj
 $social = Yii::$app->getModule('social');
 // Render the Login button
 $url = Yii::$app->request->getAbsoluteUrl(); // or any absolute url you want to redirect
