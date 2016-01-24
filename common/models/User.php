@@ -200,18 +200,35 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->first_name . ' ' . $this->last_name;
     }
 
+    /**
+     * Get Fullname and Occupation
+     * @return string
+     */
     public function getfullNameAndOccupation(){
         return $this->getfullName() . ' - ' . $this->occupation;
     }
 
+    /**
+     * Get all business people
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function retrieveAllBusinessPeople(){
-
         return Self::find()->where(['business' => 1])->all();
-
     }
 
+    /**
+     * Get user based on id or username
+     * @return array|null|ActiveRecord
+     */
     public function getUser(){
-        return $this->find()->where(['username' => $this->username])->one();
+        if(isset($this->username)){
+            return $this->find()->where(['username' => $this->username])->one();
+
+        }
+        else if(isset($this->id)){
+            return $this->find()->where(['id' => $this->id])->one();
+
+        }
     }
 
 

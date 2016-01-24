@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\EditProfileForm;
 use frontend\models\TagInThread;
 use Yii;
 use yii\web\Controller;
@@ -52,6 +53,18 @@ class ProfileController extends Controller
             return $this->render('user-not-found', ['username' => $username]);
         }
 
+    }
+
+    public function actionEdit(){
+        $editForm = new EditProfileForm();
+        if($editForm->load(\Yii::$app->request->post()) && $editForm->validate()){
+            if($editForm->edit()){
+                return $this->redirect(Yii::getAlias('@base-url') . '/profile/index?username=' . User::getUsername(Yii::$app->user->identity->getId()) );
+            }
+        }
+        else{
+            return $this->render('edit', ['model' => $editForm]);
+        }
     }
 
     public function actionProfile()

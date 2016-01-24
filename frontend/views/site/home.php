@@ -11,7 +11,7 @@ use yii\helpers\Url;
 
 
 // \Yii::$app->end(print_r($topicData));
-$this->title = "Home Page";
+$this->title = "Home | Propose";
 
 ?>
 

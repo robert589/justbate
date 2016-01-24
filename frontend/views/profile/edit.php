@@ -16,7 +16,7 @@ use kartik\widgets\DatePicker;
 
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-edit']); ?>
+            <?php $form = ActiveForm::begin(['action' => 'edit', 'method' => 'post', 'id' => 'form-edit']); ?>
 
                 <?= $form->field($model, 'first_name') ?>
 
@@ -28,6 +28,8 @@ use kartik\widgets\DatePicker;
                         'autoclose'=>true
                     ]
                 ]) ?>
+
+                <?= $form->field($model, 'occupation') ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'edit-button']) ?>

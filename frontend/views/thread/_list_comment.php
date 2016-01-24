@@ -66,7 +66,7 @@ use frontend\models\Comment;
 		<div class="row">
 			<!--The name of the person that make the comments -->
 			<div class="col-md-6">
-				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->homeUrl . "../../profile/index?id=" . $model['user_id'] )?>
+				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->homeUrl . "../../profile/index?username=" . $model['username'] )?>
 			</div>	
 
 			<!--The vote name-->

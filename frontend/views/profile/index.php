@@ -8,7 +8,14 @@ use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
+use common\models\User;
 
+if($user['id'] == \Yii::$app->user->identity->getId() ){
+    $belongs = 1;
+}
+else{
+    $belongs = 0;
+}
 
 //Set title for the page
 $this->title = $user->first_name . ' ' . $user->last_name;
@@ -20,8 +27,17 @@ $this->title = $user->first_name . ' ' . $user->last_name;
         'size' => 'modal-lg'
     ]);
 
-    $loginModel = new \frontend\models\EditProfileForm();
-    echo $this->render('edit', ['model' => $loginModel]);
+    $editProfileModel = new \frontend\models\EditProfileForm();
+    $editUser = new User();
+    $editUser->id = \Yii::$app->user->identity->getId();
+    $user_data = $editUser->getUser();
+
+    //pass data
+    $editProfileModel->occupation = $user_data['occupation'];
+    $editProfileModel->birthday = $user_data['birthday'];
+    $editProfileModel->first_name = $user_data['first_name'];
+    $editProfileModel->last_name = $user_data['last_name'];
+    echo $this->render('edit', ['model' => $editProfileModel]);
 
     Modal::end();
 ?>
@@ -38,13 +54,10 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                 <li> 
                     <a href="#">All Activity</a>
                 </li>
+                <li>
+                    <a href="#">All tags</a>
+                </li>
 
-                <li>
-                    <a href="#">Followers <span class="badge">5</span></a>
-                </li>
-                <li>
-                    <a href="#">Following <span class="badge">5</span></a>
-                </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -75,15 +88,21 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                             </div>
                             <hr>
                             <div >
+
                                 <?php if($user->business == 1){ ?>
                                     <label> Business Side</label>
                                 <?php }else{ ?>
-                                    <?= Html::a('Upgrade to business', ['profile/business'], ['class' => 'btn btn-primary'])?>
-                                <?php } ?>
+                                    <?php if($belongs == 1){ ?>
+                                        <?= Html::a('Upgrade to business', ['profile/business'], ['class' => 'btn btn-primary'])?>
+                                    <?php } ?>
+                                        Personal Side
+                                    <?php } ?>
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <button onclick="beginEditModal()" class="btn btn-default"> <span class="glyphicon glyphicon-pencil	"></span> Edit Profile </button>
+                            <?php if($belongs == 1) { ?>
+                                <button onclick="beginEditModal()" class="btn btn-default"> <span class="glyphicon glyphicon-pencil	"></span> Edit Profile </button>
+                            <?php }?>
 
                         </div>
 

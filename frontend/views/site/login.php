@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 if(empty($redirectFrom)){
-    $redirectFrom = Yii::$app->request->baseUrl . '../../' ;   
+    $redirectFrom = Yii::getAlias('@base-url') ;
 }
 
 $social = Yii::$app->getModule('social');

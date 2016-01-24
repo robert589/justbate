@@ -96,8 +96,8 @@ AppAsset::register($this);
     ]);
 
     Pjax::begin();
-
-    echo "<ul class='navbar-nav navbar-right nav'>
+    if(!\Yii::$app->user->isGuest){
+        echo "<ul class='navbar-nav navbar-right nav'>
             <li class='dropdown dropdown-large'>
                 <a class='dropdown-toggle' href='../notification/index' data-toggle='dropdown'>
                     <span class='glyphicon glyphicon-alert'>
@@ -111,18 +111,20 @@ AppAsset::register($this);
 
 
 
-                if(isset($recent_notifications_provider)){
-                    echo $this->render('_notifications', ['recent_notifications_provider' => $recent_notifications_provider]);
-                }
-                else{
-                    echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']);
+        if(isset($recent_notifications_provider)){
+            echo $this->render('_notifications', ['recent_notifications_provider' => $recent_notifications_provider]);
+        }
+        else{
+            echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']);
 
-                }
+        }
 
-    echo  "        </div>
+        echo  "        </div>
                 </ul>
             </li>
           </ul>";
+
+    }
 
     Pjax::end();
 
