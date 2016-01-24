@@ -6,12 +6,11 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use kartik\widgets\DatePicker;
 
-$this->title = 'Edit';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="profile-edit">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Edit Profile') ?></h1>
 
     <p>Please fill out the following fields to complete profile:</p>
 
@@ -23,7 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'last_name') ?>
 
-                <?= $form->field($model, 'birthday') ?>
+                <?= $form->field($model, 'birthday')->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter birth date ...'],
+                    'pluginOptions' => [
+                        'autoclose'=>true
+                    ]
+                ]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'edit-button']) ?>
@@ -33,3 +37,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+

@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use common\models\User;
 
-class EditForm extends Model
+class EditProfileForm extends Model
 {
 	public $first_name;
 	public $last_name;
@@ -15,8 +15,8 @@ class EditForm extends Model
 	public function rules()
 	{
 		return[
-			[['first_name','last_name','birthday'], 'required']
-			
+			[['first_name','last_name','birthday'], 'required'],
+			['birthday', 'date']
 		];
 	}
 

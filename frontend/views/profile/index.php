@@ -3,17 +3,28 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use common\models\User;
 use yii\widgets\ListView;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
-use kartik\sidenav\SideNav;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
+
 
 //Set title for the page
 $this->title = $user->first_name . ' ' . $user->last_name;
 ?>
 
+<?php
+    Modal::begin([
+        'id' => 'editModal',
+        'size' => 'modal-lg'
+    ]);
+
+    $loginModel = new \frontend\models\EditProfileForm();
+    echo $this->render('edit', ['model' => $loginModel]);
+
+    Modal::end();
+?>
      <div id="wrapper">
 
         <!-- Sidebar -->
@@ -56,18 +67,26 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                             </div>
                             <div >
                                 Birthday: <?= $user->birthday ?>
+
                             </div>
                             <div >
                                 Occupation: <?= $user->occupation ?>
+
+                            </div>
+                            <hr>
+                            <div >
+                                <?php if($user->business == 1){ ?>
+                                    <label> Business Side</label>
+                                <?php }else{ ?>
+                                    <?= Html::a('Upgrade to business', ['profile/business'], ['class' => 'btn btn-primary'])?>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <?php if($user->business == 1){ ?>
-                               <label> Business Side</label>
-                            <?php }else{ ?>
-                                <?= Html::a('Upgrade to business', ['profile/business'], ['class' => 'btn btn-primary'])?>
-                            <?php } ?>
+                            <button onclick="beginEditModal()" class="btn btn-default"> <span class="glyphicon glyphicon-pencil	"></span> Edit Profile </button>
+
                         </div>
+
                     </div>
                 </div>
 <div class="col-md-12">
@@ -141,10 +160,10 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 
 </div>
     <?php ActiveForm::end() ?>
-    
-    
+
+<?php	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-edit.js'); ?>
 
 
 
+
     
-</body>

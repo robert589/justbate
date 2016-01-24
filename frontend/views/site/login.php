@@ -11,6 +11,12 @@ if(empty($redirectFrom)){
     $redirectFrom = Yii::$app->request->baseUrl . '../../' ;   
 }
 
+$social = Yii::$app->getModule('social');
+// Render the Login button
+$url = Yii::$app->request->getAbsoluteUrl(); // or any absolute url you want to redirect
+$helper = $social->getFbLoginHelper($url);
+$loginUrl = $helper->getLoginUrl();
+
 ?>
 <div class="site-login">
     <h1><?= Html::encode('Login') ?></h1>
@@ -38,6 +44,12 @@ if(empty($redirectFrom)){
                 </div>
 
             <?php ActiveForm::end(); ?>
+
+            or
+
+            <?= Html::a('Facebook Login', $loginUrl, ['class'=>'btn btn-primary']) ?>
+
+
         </div>
     </div>
 </div>
