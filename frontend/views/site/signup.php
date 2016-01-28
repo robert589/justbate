@@ -6,6 +6,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use dektrium\user\widgets\Connect;
+
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,6 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+                <?= Connect::widget([
+                    'baseAuthUrl' => ['/user/security/auth']
+                ]) ?>
 
                 <?= $form->field($model, 'username') ?>
 

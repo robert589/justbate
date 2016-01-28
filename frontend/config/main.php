@@ -16,6 +16,13 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views' => '@app/views/user'
+                ],
+            ],
+        ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
@@ -24,6 +31,14 @@ return [
                     'clientId' => '1681620248755767',
                     'clientSecret' => '19c1e888bf719334726be35d58cff0f0',
                 ],
+                'twitter' => [
+                    'class' => 'yii\authclient\clients\Twitter',
+                    'consumerKey' => '6KF1Bq5PNY2xd3Pwpc2DaGUz4 ',
+                    'consumerSecret' => 'LpdUmMftiF3eIcONAHzM0WiWEYdQ9jhid42EDTO1j3BeE9xc7r'
+                ],
+                'google' => [
+                    'class' => 'yii\authclient\clients\GoogleOpenId'
+                ]
             ],
         ],
         'urlManager' => [

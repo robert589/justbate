@@ -105,7 +105,6 @@ class ThreadController extends Controller
                 $rateModel->user_id = \Yii::$app->user->getId();
 
                 if(!$rateModel->insertRating()){
-
                     return false;
                 }
             }

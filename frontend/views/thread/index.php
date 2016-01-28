@@ -48,13 +48,14 @@
 		</div>
 
 		<?php Pjax::begin([
-				'id' => 'submitRating',
-		    	'timeout' => false,
-		    	'enablePushState' => false,
-		    	'clientOptions'=>[
-				    	'container' => '#submitRating',
-						]
+					'id' => 'submitRating',
+					'timeout' => false,
+					'enablePushState' => false,
+					'clientOptions'=>[
+							'container' => '#submitRating',
+					]
 				]);?>
+
 		<!--Rating Part-->
 		<div class="col-md-4">
 
@@ -227,6 +228,5 @@ $script =<<< JS
 	});
 
 JS;
-
 $this->registerJs($script);
 ?>

@@ -95,40 +95,7 @@ AppAsset::register($this);
 
     ]);
 
-    Pjax::begin();
-    if(!\Yii::$app->user->isGuest){
-        echo "<ul class='navbar-nav navbar-right nav'>
-            <li class='dropdown dropdown-large'>
-                <a class='dropdown-toggle' href='../notification/index' data-toggle='dropdown'>
-                    <span class='glyphicon glyphicon-alert'>
-                    </span>
-                    <b class='caret'></b>
-                </a>
-                <ul class='dropdown-menu dropdown-menu-large row'>
-                    <div class='col-md-12'>
-                        <label><div style='width:400px' align='center'> Notifications </div></label>
-                        <hr>";
-
-
-
-        if(isset($recent_notifications_provider)){
-            echo $this->render('_notifications', ['recent_notifications_provider' => $recent_notifications_provider]);
-        }
-        else{
-            echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']);
-
-        }
-
-        echo  "        </div>
-                </ul>
-            </li>
-          </ul>";
-
-    }
-
-    Pjax::end();
-
-
+    echo $this->render('../notification/index');
 
     NavBar::end();
     ?>
@@ -149,8 +116,9 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
-
-<?php $this->endBody() ?>
+<?php
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
+$this->endBody(); ?>
 </body>
 </html>
 <?php $this->endPage() ?>
