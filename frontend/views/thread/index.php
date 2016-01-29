@@ -8,7 +8,7 @@
 	use yii\bootstrap\Modal;
 	use common\models\LoginForm;
 	use yii\helpers\Html;
-
+	use kartik\widgets\SwitchInput;
 	$this->title = "Thread | " . $model['title'];
 
 	//Store this variable for javascript
@@ -43,6 +43,7 @@
 
 <div class="col-md-offset-2 col-md-9">
 	<div class="row">
+		<!-- Title of the thread -->
 		<div class="col-md-8">	
 			<h2><?= $model['title'] ?> </h2>
 		</div>
@@ -66,6 +67,7 @@
 
 			<?= Html::endForm() ?>
 
+			<!-- Current Rating -->
 			<?= StarRating::widget([
 	    			'name' => 'rating_2',
 	    			'id' => 'thread_rating',
@@ -73,7 +75,7 @@
 	    			'readonly' => false,
 	    			'pluginOptions' => [
 	    				'showCaption' => true,
-	        			'min' => 0,
+	       	 			'min' => 0,
 	        			'max' => 5,
 	        			'step' => 1,
 	       	 			'size' => 'xs',
@@ -82,19 +84,24 @@
 	       			] 			
 			])?>
 
-
-
+			<!-- Total rater -->
 			<div align="center">
 				<label> <?= $model['total_voters'] ?> Voters </label>
 			</div>
-			
-
-
 		</div>
 
 		<?php Pjax::end();?>
 
 	</div>
+
+	<hr>
+
+	<?= $this->render('_submit_vote_pjax', ['thread_id' => $model['thread_id']]) ?>
+
+
+	<hr>
+
+	<!-- Content -->
 	<div class="row" style="margin:1px">
 		<?= $model['content']?>
 	</div>
@@ -104,7 +111,7 @@
 	<br><br>
 
 
-	<!--Comment Part-->
+	<!--Comment Input Part-->
 
 	<?php $form =ActiveForm::begin(['id' => 'comment-form']) ?>
 
@@ -114,7 +121,7 @@
 	   		<?= $form->field($commentModel, 'comment')->textArea(['id' => 'comment-box', 'placeholder' => 'add comment box...', 'rows' => 2 ]) ?>
 			</div>
 		<div class="col-md-4">
-			<label> Choose your side </label>
+			<label> Choose your Comment Side </label>
 			<?= $form->field($commentModel, 'yes_or_no')->widget(Select2::classname(), [
 				    'data' => [1 => 'Agree', 0 => 'Disagree'],
 				    'options' => ['placeholder' => 'Select a state ...'],
@@ -131,6 +138,8 @@
 	<br><br>
 
 	<div class="row" style="margin:2px">
+		<!-- Yes Comment -->
+
 		<div class="col-md-6">
 			<h1 align="center"> YES </h1>
 			<?= ListView::widget([
@@ -155,6 +164,8 @@
 			]) ?>
 
 		</div>
+
+		<!-- No Comment-->
 		<div class="col-md-6">
 			<h1 align="center"> NO </h1>
 			<?= ListView::widget([

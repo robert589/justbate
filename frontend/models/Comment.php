@@ -6,7 +6,10 @@ use yii\db\ActiveRecord;
 
 class Comment extends ActiveRecord
 {
-	public function getTable(){
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
+
+    public function getTable(){
 		return 'comment';
 	}
 

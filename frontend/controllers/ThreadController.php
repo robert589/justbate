@@ -1,10 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\SubmitThreadVoteForm;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
-use app\models\User;
+use common\models\User;
 use frontend\models\CommentForm;
 use frontend\models\Comment;
 use frontend\models\CommentLikeForm;
@@ -13,7 +14,6 @@ use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
 
 use frontend\models\Thread;
-use frontend\models\DebugForm;
 use frontend\models\Rate;
 
 use yii\base\InvalidParamException;
@@ -21,7 +21,7 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\SqlDataProvider;
-
+use frontend\models\ThreadVote;
 
 /**
  * Profile controller
@@ -205,5 +205,21 @@ class ThreadController extends Controller
         return $this->render('index');
     }
 
+    public function actionSubmitVote(){
 
+        if(isset($_POST['voteThread']) && isset($_POST['thread_id'])){
+            $voteThread = $_POST['voteThread'];
+            $thread_id = $_POST['thread_id'];
+            $thread_vote_form = new SubmitThreadVoteForm($thread_id, $voteThread);
+
+            if($thread_vote_form->submitVote()){
+                return $this->renderPartial('_submit_vote_pjax', ['thread_id' => $thread_id]);
+
+            }
+            else{
+
+            }
+
+        }
+    }
 }

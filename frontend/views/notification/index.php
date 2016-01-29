@@ -5,9 +5,9 @@
 
 
     Pjax::begin([
+
         'id' => 'notifbar',
         'timeout' => false,
-        'enablePushState' => false,
         'clientOptions' => [
             'container' => '#notifbar',
         ]

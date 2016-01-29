@@ -10,6 +10,7 @@ class Rate extends ActiveRecord
 		return 'rate';
 	}
 
+	//bad practice, change it
 	public function insertRating(){
 
 		if(Self::exists()){
