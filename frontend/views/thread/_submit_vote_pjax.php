@@ -24,11 +24,21 @@
                 <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
                 <div class="col-md-6">
-                    <?= Html::button('Disagree', ['onclick' => 'disagreeButton()', 'class' => 'btn btn-primary']) ?>
+                    <?php if($model['current_user_vote'] == 1){ ?>
+                        <?= Html::button('Disagree', ['onclick' => 'disagreeButton()', 'class' => 'btn btn-primary']) ?>
+                    <?php }else{ ?>
+                        <?= Html::button('Disagree', ['onclick' => 'disagreeButton()', 'class' => 'btn btn-primary', 'disabled' => true]) ?>
+
+                    <?php } ?>
                 </div>
 
                 <div class="col-md-6">
-                    <?= Html::button('Agree', ['onclick' => 'agreeButton()', 'class' => 'btn btn-default']) ?>
+                    <?php if($model['current_user_vote'] == 1){ ?>
+                        <?= Html::button('Agree', ['onclick' => 'agreeButton()', 'class' => 'btn btn-default', 'disabled' => true]) ?>
+                    <?php }else{ ?>
+                        <?= Html::button('Agree', ['onclick' => 'agreeButton()', 'class' => 'btn btn-default']) ?>
+
+                    <?php } ?>
 
                 </div>
 
@@ -41,12 +51,12 @@
         <div class="col-md-3">
             <label>Total Yes</label>
             <br>
-            0
+            <?= $model['total_agree'] ?>
         </div>
         <div class="col-md-3">
             <label>Total No</label>
             <br>
-            0
+            <?= $model['total_disagree']?>
         </div>
     </div>
 

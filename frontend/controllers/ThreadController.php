@@ -5,11 +5,9 @@ use frontend\models\SubmitThreadVoteForm;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
-use common\models\User;
 use frontend\models\CommentForm;
 use frontend\models\Comment;
 use frontend\models\CommentLikeForm;
-use frontend\models\CommentLikes;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
 
@@ -213,7 +211,8 @@ class ThreadController extends Controller
             $thread_vote_form = new SubmitThreadVoteForm($thread_id, $voteThread);
 
             if($thread_vote_form->submitVote()){
-                return $this->renderPartial('_submit_vote_pjax', ['thread_id' => $thread_id]);
+                $model = ThreadVote::getTotalLikeDislikeBelongs($thread_id, Yii::$app->user->getId());
+                return $this->renderPartial('_submit_vote_pjax', ['thread_id' => $thread_id, 'model' => $model]);
 
             }
             else{

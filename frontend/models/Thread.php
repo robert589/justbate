@@ -79,24 +79,29 @@ class Thread extends ActiveRecord{
 
       }
 
-      public static function retrieveThreadById($id, $user_id){
+      public static function retrieveThreadById($thread_id, $user_id){
 
           if(empty($user_id)){
             $user_id = 0;
           }
           $sql = "Select TU.*,
                         avg(rating) as avg_rating ,
-                        (SELECT COUNT(*) from rate where thread_id = $id) as total_voters,
-                        (SELECT COUNT(*) from rate where thread_id = $id and user_id = $user_id) as
-              hasVote
-                  from
-                        ((Select * from thread inner join user where thread.user_id = user.id ) TU
-                        left join rate  on
-                        TU.thread_id = rate.thread_id)
-                  where TU.thread_id = $id
-                  group by(thread_id)";
+                        (SELECT COUNT(*) from rate where thread_id = :thread_id) as total_raters,
+                        (SELECT COUNT(*) from rate where thread_id = :thread_id and user_id = :user_id) as  hasRate,
+                        (SELECT COUNT(*) from thread_vote where thread_id = :thread_id and agree  = 1) as total_agree,
+                        (SELECT COUNT(*) from thread_vote where thread_id = :thread_id and agree  = -1) as total_disagree,
+                        (SELECT agree from thread_vote where thread_id = :thread_id and user_id = :user_id) as current_user_vote
+                        from
+                         ((Select * from thread inner join user where thread.user_id = user.id ) TU
+                          left join rate  on
+                          TU.thread_id = rate.thread_id)
+                        where TU.thread_id = :thread_id
+                          group by(thread_id)";
 
-          $result =  \Yii::$app->db->createCommand($sql)->queryOne();
+          $result =  \Yii::$app->db->createCommand($sql)->
+                        bindParam(':thread_id', $thread_id)->
+                        bindParam(':user_id', $user_id)->
+                        queryOne();
 
 
           return $result    ;

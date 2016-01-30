@@ -86,7 +86,7 @@
 
 			<!-- Total rater -->
 			<div align="center">
-				<label> <?= $model['total_voters'] ?> Voters </label>
+				<label> <?= $model['total_raters'] ?> Voters </label>
 			</div>
 		</div>
 
@@ -96,7 +96,7 @@
 
 	<hr>
 
-	<?= $this->render('_submit_vote_pjax', ['thread_id' => $model['thread_id']]) ?>
+	<?= $this->render('_submit_vote_pjax', ['thread_id' => $model['thread_id'], 'model' => $model]) ?>
 
 
 	<hr>
