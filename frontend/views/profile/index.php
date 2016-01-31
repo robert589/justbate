@@ -88,7 +88,7 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-3">
-                            <img src="girl.jpg" alt="Profile Picture" style="width:180px;height:180px;">
+                            <img src="<?= Yii::getAlias('@image_dir') . '/' . $user->photo_path ?>" alt="Profile Picture" style="width:180px;height:180px;">
                             <?= Html::button('Upload Photo', ['onclick' => 'beginProfilePicModal()', 'class' => 'btn btn-primary']) ?>
                         </div>
                         <div class="col-lg-6">

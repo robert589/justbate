@@ -67,11 +67,6 @@ class ProfileController extends Controller
         }
     }
 
-    public function actionProfile()
-    {
-        $id = \Yii::app()->user->getId();
-        return $this->redirect(array('/user/','id'=>Yii::app()->user->getId()));
-    }
 
 
      public function actionUpload()
@@ -85,7 +80,7 @@ class ProfileController extends Controller
 
                 if ($model->upload()) {
                     // file is uploaded successfully
-                    return $this->redirect(Yii::getAlias('@base-url') . '/profile/index.php?username=' . User::getUsername(Yii::$app->user->getId()));
+                    return $this->redirect(Yii::getAlias('@base-url') . '/profile/index?username=' . User::getUsername(Yii::$app->user->getId()));
                 }
             }
 
