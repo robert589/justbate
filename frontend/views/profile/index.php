@@ -20,7 +20,7 @@ else{
 //Set title for the page
 $this->title = $user->first_name . ' ' . $user->last_name;
 ?>
-
+<!-- Edit Profile Modal-->
 <?php
     Modal::begin([
         'id' => 'editModal',
@@ -41,6 +41,26 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 
     Modal::end();
 ?>
+
+
+<!-- Upload photo modal -->
+<?php
+    Modal::begin([
+        'id' => 'uploadProfilePicModal',
+        'size' => 'modal-lg'
+    ]);
+
+    $uploadFormModel = new \frontend\models\UploadProfilePicForm();
+
+    echo $this->render('_upload_photo_modal', ['model' => $uploadFormModel]);
+
+
+    Modal::end();
+
+
+?>
+
+
      <div id="wrapper">
 
         <!-- Sidebar -->
@@ -60,10 +80,7 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 
             </ul>
         </div>
-        <!-- /#sidebar-wrapper -->
-        <div id="page-content">
 
-        </div>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
@@ -72,6 +89,7 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                     <div class="col-lg-12">
                         <div class="col-lg-3">
                             <img src="girl.jpg" alt="Profile Picture" style="width:180px;height:180px;">
+                            <?= Html::button('Upload Photo', ['onclick' => 'beginProfilePicModal()', 'class' => 'btn btn-primary']) ?>
                         </div>
                         <div class="col-lg-6">
                             <div id="displayName">
@@ -180,7 +198,7 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 </div>
     <?php ActiveForm::end() ?>
 
-<?php	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-edit.js'); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-index.js'); ?>
 
 
 

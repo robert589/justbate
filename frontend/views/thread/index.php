@@ -27,6 +27,7 @@
 	//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.elastic.js');
 ?>
 
+<!-- Login Modal-->
 <?php 
 	Modal::begin([
 			'header' => '<h4> Login </h4>',
@@ -40,6 +41,8 @@
 
 	Modal::end();
 ?>
+
+
 
 <div class="col-md-offset-2 col-md-9">
 	<div class="row">
