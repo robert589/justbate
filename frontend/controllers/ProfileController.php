@@ -20,6 +20,10 @@ class ProfileController extends Controller
 {
 
 
+    public function actionBusiness(){
+
+    }
+    
     public function actionIndex()
     {
     	if(isset($_GET['username'])){

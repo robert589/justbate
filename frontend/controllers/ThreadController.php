@@ -125,7 +125,7 @@ class ThreadController extends Controller
                 
                 $model = Comment::retrieveCommentByUserId($parent_id, \Yii::$app->user->identity->id);
 
-                   
+
                 if($childCommentModel->store()){
                     if($commentRetrieved){
                            $retrieveChildData = new SqlDataProvider([

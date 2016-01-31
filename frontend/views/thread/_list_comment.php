@@ -129,7 +129,6 @@ use frontend\models\Comment;
 		Pjax::begin([
 			'id' => 'submitComment-' . $comment_id,
 			'timeout' => false,
-			'enablePushState' => false,
 			'clientOptions' => [
 				'container' => '#submitComment-' . $comment_id,
 			]
