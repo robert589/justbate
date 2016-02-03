@@ -18,7 +18,32 @@ class Thread extends ActiveRecord{
     }
 
 
-      public static function retrieveAllBySql(){
+    public static function countAll(){
+        $command =  \Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id) TU')->queryScalar();
+        return (int)($command);
+
+
+    }
+
+
+    public static function countByTopic($topic_name){
+        $command =  \Yii::$app->db->createCommand("SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id where topic_name = \"$topic_name\") TU")->queryScalar();
+        return (int)($command);
+    }
+
+    public static  function getRecentActivityCreateThread($username){
+        $sql = "SELECT thread.*
+        FROM thread, user
+        where thread.user_id = user.id and user.username = '$username'
+        order by `date_created` desc";
+
+        $result =  \Yii::$app->db->createCommand($sql)->queryAll();
+
+        return $result;
+
+    }
+
+    public static function retrieveAllBySql(){
         return "
             Select TU.*, avg(rating) as avg_rating from
             ((Select * from thread inner join user where thread.user_id = user.id ) TU
@@ -26,9 +51,9 @@ class Thread extends ActiveRecord{
             TU.thread_id = rate.thread_id)
             group by(thread_id)
         ";
-      }
+    }
 
-      public static function retrieveSqlByTopic($topic_name){
+    public static function retrieveSqlByTopic($topic_name){
          return "
             Select TU.*, avg(rating) as avg_rating from
             ((Select * from thread inner join user where thread.thread_id = user.id ) TU
@@ -37,7 +62,7 @@ class Thread extends ActiveRecord{
             where topic_name = \"$topic_name\"
             group by(thread_id)
         ";
-      }
+    }
 
       public static function retrieveTop10TrendingTopic(){
 
@@ -59,19 +84,6 @@ class Thread extends ActiveRecord{
 
       }
 
-
-      public static function countAll(){
-            $command =  \Yii::$app->db->createCommand('SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id) TU')->queryScalar();
-            return (int)($command);
-
-
-      }
-
-
-      public static function countByTopic($topic_name){
-           $command =  \Yii::$app->db->createCommand("SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id where topic_name = \"$topic_name\") TU")->queryScalar();
-            return (int)($command);
-      }
 
       public static function retrieveAll(){
 
@@ -108,44 +120,5 @@ class Thread extends ActiveRecord{
       }
 
 
-
-      public  function getUser(){
-                 return $this->hasOne(User::className(), ['id' => 'user_id']);
-
-      }
-
-      public function getRate(){
-            return $this->hasMany(Rate::className(), ['thread_id' =>'thread_id']);
-      }
-
-
-
-    public static function retrieveByUser(){
-        $thread = Thread::find();
-
-        $id = '1';
-
-        $dash_thread = $thread->select('title, content, date_created')
-                  ->from('thread')
-                  ->where(['user_id' => $id]);
-
-
-
-        return $dash_thread;
-
-    }
-
-
-    public static  function getRecentActivityCreateThread($username){
-        $sql = "SELECT thread.*
-        FROM thread, user
-        where thread.user_id = user.id and user.username = '$username'
-        order by `date_created` desc";
-
-        $result =  \Yii::$app->db->createCommand($sql)->queryAll();
-
-        return $result;
-
-    }
 
 }

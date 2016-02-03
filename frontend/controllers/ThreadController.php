@@ -203,22 +203,47 @@ class ThreadController extends Controller
         return $this->render('index');
     }
 
-    public function actionSubmitVote(){
-
-        if(isset($_POST['voteThread']) && isset($_POST['thread_id'])){
-            $voteThread = $_POST['voteThread'];
+    public function actionSubmitRating(){
+        if(!empty($_POST['userThreadRate']) && !empty($_POST['thread_id'])){
+            $userThreadRate = $_POST['userThreadRate'];
             $thread_id = $_POST['thread_id'];
-            $thread_vote_form = new SubmitThreadVoteForm($thread_id, $voteThread);
 
-            if($thread_vote_form->submitVote()){
-                $model = ThreadVote::getTotalLikeDislikeBelongs($thread_id, Yii::$app->user->getId());
-                return $this->renderPartial('_submit_vote_pjax', ['thread_id' => $thread_id, 'model' => $model]);
+            $rateModel = new Rate();
+            $rateModel->rating = $userThreadRate;
+            $rateModel->thread_id = $thread_id;
+            $rateModel->user_id = \Yii::$app->user->getId();
 
+            if(!$rateModel->insertRating()){
+                return false;
             }
             else{
+                $avg_rating = Rate::getAverageRate($thread_id);
+                $total_raters = Rate::getAverageRate($thread_id);
+                 return $this->renderPartial('_submit_rate_pjax', ['thread_id' => $thread_id,'total_raters' => $total_raters, 'avg_rating' => $avg_rating ]);
+            }
+        }
+    }
+
+    public function actionSubmitVote(){
+
+        if(!Yii::$app->user->isGuest){
+            if(isset($_POST['voteThread']) && isset($_POST['thread_id'])){
+                $voteThread = $_POST['voteThread'];
+                $thread_id = $_POST['thread_id'];
+                $thread_vote_form = new SubmitThreadVoteForm($thread_id, $voteThread);
+
+                if($thread_vote_form->submitVote()){
+                    $model = ThreadVote::getTotalLikeDislikeBelongs($thread_id, Yii::$app->user->getId());
+                    return $this->renderPartial('_submit_vote_pjax', ['thread_id' => $thread_id, 'model' => $model]);
+                }
+                else{
+
+                }
 
             }
-
+        }
+        else{
+            return $this->redirect(Yii::getAlias('@base-url'. '/site/login'));
         }
     }
 }

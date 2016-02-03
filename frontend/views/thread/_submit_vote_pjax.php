@@ -2,6 +2,16 @@
     use kartik\widgets\SwitchInput;
     use yii\helpers\Html;
 	use yii\widgets\Pjax;
+
+    //Store this variable for javascript
+    if(!empty(\Yii::$app->user->isGuest)){
+        $guest = "1";
+
+    }
+    else{
+        $guest = "0";
+    }
+
 ?>
 
 <?php Pjax::begin([
@@ -23,6 +33,7 @@
                 <?= Html::hiddenInput('voteThread', null, ['id' => 'hiddenInputVoteThread']) ?>
                 <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
+            <?php if($guest == "0"){ ?>
                 <div class="col-md-6">
                     <?php if($model['current_user_vote'] == 1){ ?>
                         <?= Html::button('Disagree', ['onclick' => 'disagreeButton()', 'class' => 'btn btn-primary']) ?>
@@ -41,7 +52,18 @@
                     <?php } ?>
 
                 </div>
+            <?php }else{  ?>
+                <div class="col-md-6">
+                        <?= Html::button('Disagree', ['onclick' => 'beginLoginModal()', 'class' => 'btn btn-primary']) ?>
 
+                </div>
+
+                <div class="col-md-6">
+                        <?= Html::button('Agree', ['onclick' => 'beginLoginModal()', 'class' => 'btn btn-default']) ?>
+
+
+                </div>
+            <?php } ?>
 
 
 

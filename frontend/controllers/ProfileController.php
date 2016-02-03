@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
 
     public function actionBusiness(){
-
+                
     }
     
     public function actionIndex()

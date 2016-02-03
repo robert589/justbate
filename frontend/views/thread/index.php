@@ -51,50 +51,7 @@
 			<h2><?= $model['title'] ?> </h2>
 		</div>
 
-		<?php Pjax::begin([
-					'id' => 'submitRating',
-					'timeout' => false,
-					'enablePushState' => false,
-					'clientOptions'=>[
-							'container' => '#submitRating',
-					]
-				]);?>
-
-		<!--Rating Part-->
-		<div class="col-md-4">
-
-			<!--Rating form part-->
-			<?= Html::beginForm('../thread/index?id=' . $model['thread_id'], 'post', ['id'=>"ratingForm" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
-
-						<?= Html::hiddenInput('userThreadRate', null, ['id' => 'userThreadRate']) ?>
-
-			<?= Html::endForm() ?>
-
-			<!-- Current Rating -->
-			<?= StarRating::widget([
-	    			'name' => 'rating_2',
-	    			'id' => 'thread_rating',
-	    			'value' => $model['avg_rating'],
-	    			'readonly' => false,
-	    			'pluginOptions' => [
-	    				'showCaption' => true,
-	       	 			'min' => 0,
-	        			'max' => 5,
-	        			'step' => 1,
-	       	 			'size' => 'xs',
-	       			],
-	       			'pluginEvents' => [
-	       			] 			
-			])?>
-
-			<!-- Total rater -->
-			<div align="center">
-				<label> <?= $model['total_raters'] ?> Voters </label>
-			</div>
-		</div>
-
-		<?php Pjax::end();?>
-
+		<?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?>
 	</div>
 
 	<hr>

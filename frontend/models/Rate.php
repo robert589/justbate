@@ -10,6 +10,23 @@ class Rate extends ActiveRecord
 		return 'rate';
 	}
 
+	public static function getAverageRate($thread_id){
+		$sql  = "SELECT avg(rating) from rating where thread_id = :thread_id";
+
+		return  \Yii::$app->db->createCommand($sql)->
+		bindParam(':thread_id', $thread_id)->
+		queryOne();
+	}
+
+	public static function getTotalRaters($thread_id){
+		$sql = "SELECT count(*) from rate where thread_id = :thread_id";
+
+		return \Yii::$app->db->createCommand($sql)->
+		bindParam(':thread_id', $thread_id)->
+		queryOne();
+	}
+
+
 	//bad practice, change it
 	public function insertRating(){
 
