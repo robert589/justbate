@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bfe56ed7187fec59ec980017e7c797c6",
-    "content-hash": "06bdcbca3c7bb42e98324b1845abf060",
+    "hash": "e1c39e75cf8aabde5fb448913e28ac03",
+    "content-hash": "34355a55656d43a5ac16548ae9e4e503",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -199,40 +199,6 @@
                 "javascript",
                 "jquery",
                 "library"
-            ]
-        },
-        {
-            "name": "bower-asset/jquery-infinite-scroll",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infinite-scroll/infinite-scroll.git",
-                "reference": "f0d9eecb55a428b2fd4027964a22b84633ba6e3e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infinite-scroll/infinite-scroll/zipball/f0d9eecb55a428b2fd4027964a22b84633ba6e3e",
-                "reference": "f0d9eecb55a428b2fd4027964a22b84633ba6e3e",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "jquery.infinitescroll.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "jQuery Infinite Scroll Plugin",
-            "keywords": [
-                "infinitescroll",
-                "jquery"
             ]
         },
         {
@@ -2070,55 +2036,6 @@
             "time": "2015-10-06 02:49:00"
         },
         {
-            "name": "nirvana-msu/yii2-infinite-scroll",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nirvana-msu/yii2-infinite-scroll.git",
-                "reference": "9ce11932c97bf2794eb2dc74f84a1c185324deb2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nirvana-msu/yii2-infinite-scroll/zipball/9ce11932c97bf2794eb2dc74f84a1c185324deb2",
-                "reference": "9ce11932c97bf2794eb2dc74f84a1c185324deb2",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery-infinite-scroll": "*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "nirvana\\infinitescroll\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alexander Stepanov",
-                    "email": "student_vmk@mail.ru"
-                }
-            ],
-            "description": "Yii2 extension for infinite-scroll jQuery plugin",
-            "keywords": [
-                "infinite-scroll",
-                "jquery",
-                "plugin",
-                "widget",
-                "yii2"
-            ],
-            "time": "2015-02-08 23:13:08"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.1",
             "source": {
@@ -2856,8 +2773,7 @@
         "kartik-v/yii2-widget-select2": 20,
         "kop/yii2-scroll-pager": 20,
         "kartik-v/yii2-datecontrol": 20,
-        "kartik-v/yii2-social": 20,
-        "nirvana-msu/yii2-infinite-scroll": 20
+        "kartik-v/yii2-social": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
