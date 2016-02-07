@@ -8,47 +8,57 @@ use yii\web\UploadedFile;
 use yii\web\User;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use common\models\Thread;
 
 class CreateThreadForm extends Model
 {
 	public $title;
-	public $relevant_parties;
-	public $topic_id;
-	public $content;
-	public $coordinate;
+	public $user_id;
+	public $topic_name;
 	public $anonymous;
+	public $topic_description;
+	public $user_opinion;
+	public $relevant_parties;
+	public $choice;
 
 	public function rules()
 	{
 		return [
-			[['title', 'topic_id', 'content'], 'required'],
-
+			[['user_id', 'title', 'topic_description', 'user_opinion'], 'required'],
+			['anonymous', 'boolean'],
+			[['user_id'] , 'integer'],
+			['topic_name', 'string'],
+			['relevant_parties','each', 'rule' => ['integer']],
+			['choice', 'each', 'rule' => ['string']]
 		];
 	}
 
 	public function create(){
 		if($this->validate()){
-            $thread = new Thread();
+			$thread = new Thread();
 
-            //Yii::$app->end('hello'  . $this->relevant_parties);
+			//key in data
+			$thread->title = $this->title;
+			$thread->user_id = $this->user_id;
+			$thread->anonymous = $this->anonymous;
+			$thread->topic_description = $this->topic_description;
+			$thread->user_opinion = $this->user_opinion;
+			$thread->topic_name = $this->topic_name;
 
-            $thread->user_id = \Yii::$app->user->identity->getId();
-            $thread->title = $this->title;
-            $thread->topic_name = $this->topic_id;
-            $thread->content = $this->content;
-            $thread->coordinate = $this->coordinate;
-			$thread->anonymous  = $this->anonymous;
-            if($thread->save()){
-                return true;
-            }
+			//save it
+			if($thread->save()){
+				return $thread;
+			}
 
-            return null;
+			//save relevant_parties
+
+			return null;
 
 
 		}
 
 		return true;
-		
+
 
 	}
 

@@ -6,7 +6,7 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\Thread;
+use common\models\Thread;
 use frontend\models\ThreadTopic;
 
 use frontend\models\ContactForm;
@@ -113,16 +113,12 @@ class SiteController extends Controller
             'totalCount' => $totalCount,
           
             'pagination' => [
-                'pageSize' =>5,
+                'pageSize' =>10,
             ],
 
         ]);
 
-        //Trending Topic
-        $top10trending = Thread::retrieveTop10TrendingTopic();
-        $top10trending = $this->mapTrendingTopic($top10trending);
-
-        return $this->render('home', ['top10trending' => $top10trending, 'listDataProvider' => $dataProvider, 'topicData' => $topicData]);
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
     }
 
     public function actionFilteredpjax(){

@@ -141,6 +141,20 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @param $q query
+     */
+    public static function getUserList($q){
+        $sql = "SELECT id, concat(first_name, ' ', last_name) as text
+                   from user
+                   where first_name like concat('%', :q,'%') or last_name like concat('%', :q, '%')
+                   limit 10";
+
+        return Yii::$app->db->createCommand($sql)->
+                bindParam(":q", $q)->
+                queryAll();
+    }
+
+    /**
      * @inheritdoc
      */
     public function validateAuthKey($authKey)

@@ -16,9 +16,7 @@ use yii\helpers\Url;
 					<?= Html::a($model['title'], 
 					Url::to('../thread/index?id='. $model['thread_id']))?>
 			</div>
-			<div class="row">
-				<p> <?= $model['content'] ?> </p>	
-			</div>
+
 			
 			<div class="row">
 
@@ -42,9 +40,7 @@ use yii\helpers\Url;
 			</div>
 			</div>
 			
-
-		<br><br><br>
-	<br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
 	</article>
 
 	<hr>

@@ -11,7 +11,7 @@ use frontend\models\CommentLikeForm;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
 
-use frontend\models\Thread;
+use common\models\Thread;
 use frontend\models\Rate;
 
 use yii\base\InvalidParamException;
@@ -26,12 +26,6 @@ use frontend\models\ThreadVote;
  */
 class ThreadController extends Controller
 {
-    /**
-     * Displays thread.
-     *
-     * @return mixed
-     */
-    
 
     public function actionIndex(){
 
@@ -201,6 +195,10 @@ class ThreadController extends Controller
         
 
         return $this->render('index');
+    }
+
+    public function actionSubmitComment(){
+
     }
 
     public function actionSubmitRating(){

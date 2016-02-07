@@ -9,7 +9,7 @@
 	use common\models\LoginForm;
 	use yii\helpers\Html;
 	use kartik\widgets\SwitchInput;
-	$this->title = "Thread | " . $model['title'];
+	$this->title =  $model['title'];
 
 	//Store this variable for javascript
 	if(!empty(\Yii::$app->user->isGuest)){
@@ -20,11 +20,7 @@
 		$guest = "0";
 	}
 
-	//check whether the comment belongs to the user
-
-
-		$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
-	//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.elastic.js');
+	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 ?>
 
 <!-- Login Modal-->

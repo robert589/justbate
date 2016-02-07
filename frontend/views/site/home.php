@@ -8,8 +8,8 @@ use kartik\sidenav\SideNav;
 use yii\helpers\Html;
 //Yii::$app->end(Yii::getAlias('@base-url'));
 use yii\helpers\Url;
-
-
+use nirvana\infinitescroll\InfiniteScrollPager;
+use kop\y2sp\ScrollPager;
 // \Yii::$app->end(print_r($topicData));
 $this->title = "Home | Propose";
 
@@ -27,10 +27,6 @@ $this->title = "Home | Propose";
 		 ?>
 
 
-		 <label class="control-label">Trending Topic </label>
-		 <?=
-		 SideNav::widget(['items'=> $top10trending, 'heading' => false])
-		 ?>
 
 	</div>
 	<div class="col-md-6">
@@ -48,26 +44,22 @@ $this->title = "Home | Propose";
 		<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
 
 		<?= ListView::widget([
+			'id' => 'threadList',
    			'dataProvider' => $listDataProvider,
-    		'options' => [
-        		'tag' => 'div',
-        		'class' => 'list-wrapper',
-        		'id' => 'list-wrapper',
-    		],
-  		    'layout' => "{summary}\n{items}\n{pager}",
+
+			'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+
+			'summary' => false,
+			'itemOptions' => ['class' => 'item'],
+
+			'layout' => "{summary}\n{items}\n{pager}",
 
     		'itemView' => function ($model, $key, $index, $widget) {
         		return $this->render('_list_thread',['model' => $model]);
-        	}, 
-        	'pager' => [
-       	 		'firstPageLabel' => 'first',
-        		'lastPageLabel' => 'last',
-        		'nextPageLabel' => 'next',
-        		'prevPageLabel' => 'previous',
-        		'maxButtonCount' => 3,
-    		],
+        	}
+
 		]) ?>
-		
+
 		<?= Html::endForm() ?>
 
 		<?php Pjax::end(); ?>
