@@ -10,5 +10,23 @@ class Choice extends ActiveRecord
         return 'choice';
     }
 
+    public static function getChoiceAndItsVoters($thread_id){
+        $sql = "select thread_choice.choice_text,
+                      concat(thread_choice.choice_text, ' (', count(user_id), ' voters) ') as choice_text_and_total_voters
+                from (select choice_text from choice where thread_id = 19) thread_choice
+      		    left join
+                    (select user_id, choice_text
+                       from thread_vote
+                       where thread_id = 19) current_thread_vote
+
+      		    on thread_choice.choice_text = current_thread_vote.choice_text
+                group by(thread_choice.choice_text)
+                    ";
+        $result =  \Yii::$app->db->createCommand($sql)->
+                    bindParam(':thread_id', $thread_id)->
+                    queryAll();
+
+        return $result;
+    }
 
 }

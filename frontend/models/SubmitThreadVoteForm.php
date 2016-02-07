@@ -13,22 +13,15 @@ class SubmitThreadVoteForm extends Model
 
     public $thread_id;
 
-    public $agree;
+    public $choice_text;
 
-    function __construct($thread_id, $agree, $config = null){
-        parent::__construct($config);
-
-        $this->user_id = Yii::$app->user->getId();
-        $this->thread_id = $thread_id;
-        $this->agree = $agree;
-    }
 
     public function rules()
     {
         return [
-            [['user_id', 'thread_id', 'agree'], 'integer'],
-            [['user_id', 'thread_id', 'agree'], 'required']
-
+            [['thread_id', 'choice_text'], 'required'],
+            [['user_id', 'thread_id'], 'integer'],
+            ['choice_text', 'string']
         ];
     }
 

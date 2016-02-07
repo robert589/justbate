@@ -96,11 +96,12 @@ class Thread extends ActiveRecord{
             $user_id = 0;
           }
           $sql = "SELECT (SELECT avg(rate) from thread_rate where thread_id = 19) as avg_rating,
-                        
-                    TU.*,
-
-                    FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
-                    where thread_id = 19";
+                        (SELECT count(*) from thread_rate where thread_id = 19) as total_raters,
+                        TU.*,
+                        (SELECT choice_text from thread_vote where thread_id = 19 and user_id = 1) as user_vote,
+                        (SELECT count(*) from thread_rate where thread_id = 19 and user_id = 1) as has_rate
+                FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
+                where thread_id = 19";
 
           $result =  \Yii::$app->db->createCommand($sql)->
                         bindParam(':thread_id', $thread_id)->

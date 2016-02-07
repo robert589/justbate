@@ -3,16 +3,19 @@ namespace frontend\controllers;
 
 use frontend\models\SubmitThreadVoteForm;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\data\Pagination;
+
 use frontend\models\CommentForm;
-use common\models\Comment;
 use frontend\models\CommentLikeForm;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
 
+use common\models\Comment;
 use common\models\Thread;
-use frontend\models\Rate;
+use common\models\Rate;
+use common\models\Choice;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -161,29 +164,12 @@ class ThreadController extends Controller
                 }
             }
 
-            /*
-            //retrieve yes data
-            $yesCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlComment($thread_id, 1),  
-                'totalCount' => Comment::countComment($thread_id, 1),
-                'pagination' => [
-                    'pageSize' =>5,
-                ],
+            $thread_choice = $this->getChoiceAndItsVoters($thread_id);
 
-            ]);
-
-            //retrieve no data
-            $noCommentData = new SqlDataProvider([
-                'sql' => Comment::retrieveSqlComment($thread_id, 0),  
-                'totalCount' => Comment::countComment($thread_id, 0),
-              
-                'pagination' => [
-                    'pageSize' =>5,
-                ],
-
-            ]);
-            */
-            return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel]);
+            //
+            $submitVoteModel = new SubmitThreadVoteForm();
+            return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
+                                        ,'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]);
             
             
         }
@@ -238,5 +224,13 @@ class ThreadController extends Controller
         else{
             return $this->redirect(Yii::getAlias('@base-url'. '/site/login'));
         }
+    }
+
+    /**Thread Choice */
+    private function getChoiceAndItsVoters($thread_id){
+        $thread_choice = Choice::getChoiceAndItsVoters($thread_id);
+
+        //Map it in proper way
+        return ArrayHelper::map($thread_choice, 'choice_text', 'choice_text_and_total_voters');
     }
 }

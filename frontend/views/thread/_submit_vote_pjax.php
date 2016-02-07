@@ -1,5 +1,5 @@
 <?php
-    use kartik\widgets\SwitchInput;
+    use kartik\widgets\ActiveForm;
     use yii\helpers\Html;
 	use yii\widgets\Pjax;
 
@@ -27,59 +27,22 @@
     <div class="row">
         <div class="col-md-3 col-md-offset-2">
             <label class="control-label">Give your vote</label>
-            <?= Html::beginForm('../thread/submit-vote', 'post', ['id'=>"submitThreadVoteForm" ,
-                                                                'data-pjax' => '#submitThreadVote', 'class' => 'form-inline']); ?>
+            <?php $form = ActiveForm::begin(['action' =>   ['thread/submit-vote'],
+                                            'method' => 'post',
+                                            'options' =>['data-pjax' => true]
+                                            ]); ?>
 
                 <?= Html::hiddenInput('voteThread', null, ['id' => 'hiddenInputVoteThread']) ?>
-                <?= Html::hiddenInput('thread_id', $thread_id) ?>
-
-            <?php if($guest == "0"){ ?>
-                <div class="col-md-6">
-                    <?php if($model['current_user_vote'] == 1){ ?>
-                        <?= Html::button('Disagree', ['onclick' => 'disagreeButton()', 'class' => 'btn btn-primary']) ?>
-                    <?php }else{ ?>
-                        <?= Html::button('Disagree', ['onclick' => 'disagreeButton()', 'class' => 'btn btn-primary', 'disabled' => true]) ?>
-
-                    <?php } ?>
-                </div>
-
-                <div class="col-md-6">
-                    <?php if($model['current_user_vote'] == 1){ ?>
-                        <?= Html::button('Agree', ['onclick' => 'agreeButton()', 'class' => 'btn btn-default', 'disabled' => true]) ?>
-                    <?php }else{ ?>
-                        <?= Html::button('Agree', ['onclick' => 'agreeButton()', 'class' => 'btn btn-default']) ?>
-
-                    <?php } ?>
-
-                </div>
-            <?php }else{  ?>
-                <div class="col-md-6">
-                        <?= Html::button('Disagree', ['onclick' => 'beginLoginModal()', 'class' => 'btn btn-primary']) ?>
-
-                </div>
-
-                <div class="col-md-6">
-                        <?= Html::button('Agree', ['onclick' => 'beginLoginModal()', 'class' => 'btn btn-default']) ?>
+                <?= Html::hiddenInput('thread_id', $model['thread_id']) ?>
 
 
-                </div>
-            <?php } ?>
+                <!-- User Option -->
+                <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choice, ['selector'=>'radio']) ?>
 
-
-
-            <?= Html::endForm() ?>
+            <?php ActiveForm::end(); ?>
 
         </div>
-        <div class="col-md-3">
-            <label>Total Yes</label>
-            <br>
-            <?= $model['total_agree'] ?>
-        </div>
-        <div class="col-md-3">
-            <label>Total No</label>
-            <br>
-            <?= $model['total_disagree']?>
-        </div>
+
     </div>
 
 <?php Pjax::end(); ?>
