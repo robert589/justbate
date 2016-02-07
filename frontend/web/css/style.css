@@ -1,0 +1,202 @@
+/* Web Content */
+body {
+    background: #fff !important;
+    color: #000 !important;
+    font-family: Open Sans !important;
+    line-height: 2em !important;
+}
+
+div#main-body {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Menubar */
+nav#menubar {
+    border: 0;
+    padding: 1%;
+    font-size: 1em;
+    text-transform: uppercase;
+    background: #AA3939;
+}
+
+nav#menubar li:hover {
+    background: #000 !important;
+    text-transform: uppercase;
+    color: white;
+}
+
+/* Post */
+div#advertisement,
+div#post {
+    /* margin-left: 3%; */
+    text-align: justify;
+    line-height: 2em;
+}
+
+div#post-full {
+    border-left: 1px solid rgba(18,18,18,.25);
+    border-right: 1px solid rgba(18,18,18,.25);
+}
+
+div#post div#post-title div#post-title-value {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+div#post div#post-title span {
+    font-size: 1em;
+    margin: 2%;
+    margin-left: 0;
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+div#post div#post-content {
+    font-size: 1em;
+    margin: 2%;
+    margin-left: 0;
+    line-height: 2em !important;
+    font-weight: normal;
+    text-align: justify;
+}
+
+/* Additional Content */
+div#additional-menu {
+    margin-right: 3%;
+    width: 100%;
+    text-align: center;
+    line-height: 2em;
+}
+
+div#additional-menu table {
+    width: 100%;
+    text-align: center;
+}
+
+div#additional-menu table thead {
+    background: #393939;
+    text-transform: uppercase;
+    color: white;
+}
+
+div#additional-menu table tbody {
+    background: none;
+}
+
+div#additional-menu table tbody tr#content:nth-child(2) {
+    background: #F0F0F0;
+}
+
+/* Ratebar */
+div#ratebar {
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 100% !important;
+    background: red;
+}
+
+div#ratebar span#upvote {
+    background: #00FF00;
+    position: relative;
+    text-align: center;
+    float: left;
+    width: 70%;
+}
+
+div#ratebar span#downvote {
+    background: red;
+    position: relative;
+    text-align: center;
+    float: left;
+    width: 30%;
+}
+
+
+/* Advertisement */
+div#advertisement div#advertisement-poster {
+    text-align: center;
+    background: green;
+    color: white;
+    padding: 5%;
+}
+
+div#advertisement div#advertisement-poster img {
+    position: relative;
+    max-width: 175px;
+    padding: 5%;
+}
+
+div#advertisement tr#advertisement-header {
+    color: white;
+    text-align: center;
+    padding: 1%;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #AA3939;
+    width: 100%;
+}
+
+div#advertisement tr#advertisement-content {
+    color: white;
+    text-align: center;
+    padding: 1%;
+    background: #39AA39;
+    width: 100%;
+}
+
+/* Login Form */
+div.modal {
+    background: #FF5E5E !important;
+}
+
+div.modal-content div.modal-header {
+    background: #286090;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    font-family: Open Sans;
+}
+
+div.modal-content div.modal-body {
+    width: 100%;
+    text-align: center;
+}
+
+div.modal-body input[type="text"],
+div.modal-body input[type="password"] {
+    font-family: Agency FB;
+    text-align: center;
+    font-size: 2em;
+    width: 100%;
+    border: 0;
+}
+
+div.modal-body button#sign-up {
+    border: 0;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    font-size: 2em;
+    font-family: Agency FB;
+}
+
+/* Footer */
+.navbar-fixed-bottom {
+    color: white;
+    text-align: center;
+    border: 0;
+    padding: 1%;
+    font-size: 2em;
+    text-transform: uppercase;
+    background: #AA3939;
+}
+
+/* Et Cetera */
+hr {
+    opacity: .25;
+}

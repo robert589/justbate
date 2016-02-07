@@ -25,7 +25,6 @@ class Thread extends ActiveRecord{
 
     }
 
-
     public static function countByTopic($topic_name){
         $command =  \Yii::$app->db->createCommand("SELECT COUNT(*) FROM (Select * from thread inner join user on thread.user_id = user.id where topic_name = \"$topic_name\") TU")->queryScalar();
         return (int)($command);
@@ -96,15 +95,12 @@ class Thread extends ActiveRecord{
           if(empty($user_id)){
             $user_id = 0;
           }
-          $sql = "Select TU.*,
-                        avg(rate) as avg_rating ,
-                        (SELECT COUNT(*) from thread_rate where thread_id = :thread_id) as total_raters
-                        from
-                         ((Select * from thread inner join user where thread.user_id = user.id ) TU
-                          left join thread_rate  on
-                          TU.thread_id = thread_rate.thread_id)
-                        where TU.thread_id = :thread_id
-                          group by(thread_id)";
+          $sql = "SELECT (SELECT avg(rate) from thread_rate where thread_id = 19) as avg_rating,
+                        
+                    TU.*,
+
+                    FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
+                    where thread_id = 19";
 
           $result =  \Yii::$app->db->createCommand($sql)->
                         bindParam(':thread_id', $thread_id)->

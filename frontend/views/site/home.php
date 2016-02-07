@@ -8,7 +8,6 @@ use kartik\sidenav\SideNav;
 use yii\helpers\Html;
 //Yii::$app->end(Yii::getAlias('@base-url'));
 use yii\helpers\Url;
-use nirvana\infinitescroll\InfiniteScrollPager;
 use kop\y2sp\ScrollPager;
 // \Yii::$app->end(print_r($topicData));
 $this->title = "Home | Propose";
@@ -22,11 +21,10 @@ $this->title = "Home | Propose";
  
 		<label class="control-label">Top Tag</label>
 		
-		<?=
-		 SideNav::widget(['items' => $topicData, 'heading' => false, 'type' =>'default'])
-		 ?>
+		<?php
+//		 SideNav::widget(['items' => $topicData, 'heading' => false, 'type' =>'default'])
 
-
+		?>
 
 	</div>
 	<div class="col-md-6">

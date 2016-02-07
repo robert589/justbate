@@ -1,9 +1,21 @@
-function changeThis(){
-    var formInput = document.getElementById('userDescription').value;
-    document.getElementById('description').innerHTML = formInput;
-}
-
-$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
+$(document).ready(function() {
+    $("img#avatar").mouseenter(function() {
+        $("img#avatar").css("opacity",".5");
+        $("div#upload-image").css("opacity","1");
     });
+
+    $("div#upload-image").mouseenter(function() {
+        $("img#avatar").css("opacity",".5");
+        $("div#upload-image").css("opacity","1");
+    });
+
+    $("div#upload-image").mouseout(function() {
+        $("img#avatar").css("opacity","1");
+        $("div#upload-image").css("opacity","0");
+    });
+
+    $("img#avatar").mouseout(function() {
+        $("img#avatar").css("opacity","1");
+        $("div#upload-image").css("opacity","0");
+    });
+})

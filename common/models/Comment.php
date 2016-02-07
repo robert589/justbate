@@ -46,10 +46,15 @@ class Comment extends ActiveRecord
 	public static function countComment($thread_id, $yes){
 		$sql = "
         SELECT COUNT(*) 
-          FROM (SELECT * from comment inner join user on user.id = comment.user_id where thread_id = $thread_id and yes_or_no  = $yes) TU
+          FROM (SELECT *
+              from comment inner join user on user.id = comment.user_id
+              where thread_id = :thread_id and yes_or_no  = :yes) TU
       	";
 
-        $command =  \Yii::$app->db->createCommand($sql)->queryScalar();
+        $command =  \Yii::$app->db->createCommand($sql)
+                    ->bindParam(':thread_id', $thread_id)
+                    ->bindParam(":yes", $yes)
+                    ->queryScalar();
       
         return (int)($command);
 

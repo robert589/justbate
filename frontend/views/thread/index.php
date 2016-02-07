@@ -14,13 +14,11 @@
 	//Store this variable for javascript
 	if(!empty(\Yii::$app->user->isGuest)){
 		$guest = "1";
-		
 	}
 	else{
 		$guest = "0";
 	}
 
-	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 ?>
 
 <!-- Login Modal-->
@@ -51,10 +49,7 @@
 	</div>
 
 	<hr>
-
 	<?= $this->render('_submit_vote_pjax', ['thread_id' => $model['thread_id'], 'model' => $model]) ?>
-
-
 	<hr>
 
 	<!-- Content -->
@@ -62,95 +57,31 @@
 		<?= $model['content']?>
 	</div>
 
-
-
-	<br><br>
-
+	<br>
 
 	<!--Comment Input Part-->
-
 	<?php $form =ActiveForm::begin(['id' => 'comment-form']) ?>
 
-
-	<div class="row">
-		<div class="col-md-offset-2	col-md-5">
-	   		<?= $form->field($commentModel, 'comment')->textArea(['id' => 'comment-box', 'placeholder' => 'add comment box...', 'rows' => 2 ]) ?>
+		<div class="row">
+			<div class="col-md-offset-2	col-md-5">
+				<?= $form->field($commentModel, 'comment')->textArea(['id' => 'comment-box', 'placeholder' => 'add comment box...', 'rows' => 2 ]) ?>
+				</div>
+			<div class="col-md-4">
+				<label> Choose your Comment Side </label>
+				<?= $form->field($commentModel, 'yes_or_no')->widget(Select2::classname(), [
+						'data' => [1 => 'Agree', 0 => 'Disagree'],
+						'options' => ['placeholder' => 'Select a state ...'],
+						'pluginOptions' => [
+							'allowClear' => true
+						],
+				])->label(false) ?>
 			</div>
-		<div class="col-md-4">
-			<label> Choose your Comment Side </label>
-			<?= $form->field($commentModel, 'yes_or_no')->widget(Select2::classname(), [
-				    'data' => [1 => 'Agree', 0 => 'Disagree'],
-				    'options' => ['placeholder' => 'Select a state ...'],
-				    'pluginOptions' => [
-				        'allowClear' => true
-				    ],
-			])->label(false) ?>
-		</div>
 
-	</div>
+		</div>
 
 	<?php ActiveForm::end(); ?>
 
 	<br><br>
-
-	<div class="row" style="margin:2px">
-		<!-- Yes Comment -->
-
-		<div class="col-md-6">
-			<h1 align="center"> YES </h1>
-			<?= ListView::widget([
-				'dataProvider' => $yesCommentData,
-				'options' => [
-					'tag' => 'div',
-					'class' => 'list-wrapper',
-					'id' => 'list-wrapper',
-				],
-    				'layout' => "\n{items}\n{pager}",
-
-				'itemView' => function ($model, $key, $index, $widget) {
-					return $this->render('_list_comment',['model' => $model]);
-				}, 
-				'pager' => [
-	       	 		'firstPageLabel' => 'first',
-	        		'lastPageLabel' => 'last',
-	        		'nextPageLabel' => 'next',
-	        		'prevPageLabel' => 'previous',
-	        		'maxButtonCount' => 3,
-				],
-			]) ?>
-
-		</div>
-
-		<!-- No Comment-->
-		<div class="col-md-6">
-			<h1 align="center"> NO </h1>
-			<?= ListView::widget([
-				'dataProvider' => $noCommentData,
-				'options' => [
-					'tag' => 'div',
-					'class' => 'list-wrapper',
-						'id' => 'list-wrapper',
-				],
-    				'layout' => "\n{items}\n{pager}",
-
-				'itemView' => function ($model, $key, $index, $widget) {
-					return $this->render('_list_comment',['model' => $model]);
-				}, 
-				'pager' => [
-	       	 		'firstPageLabel' => 'first',
-	        		'lastPageLabel' => 'last',
-	        		'nextPageLabel' => 'next',
-	        		'prevPageLabel' => 'previous',
-	        		'maxButtonCount' => 3,
-				],
-			]) ?>
-		
-		</div>
-	</div>
-
-
-
-
 </div>
 
 

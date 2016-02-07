@@ -7,7 +7,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use common\models\Thread;
-use frontend\models\ThreadTopic;
+use common\models\ThreadTopic;
 
 use frontend\models\ContactForm;
 use frontend\models\FilterHomeForm;
@@ -93,14 +93,6 @@ class SiteController extends Controller
         $sql = Thread::retrieveAllBySql();
         $totalCount = Thread::countAll();
 
-        //set up all topics from databaase for user to choose
-        $data = ThreadTopic::retrieveAll();
-        $topicData = array();
-        foreach($data as $datum){
-            $temp['label'] = $datum['topic_name'];
-            $temp['url'] = Yii::$app->homeUrl . "../../site/home?topic=" . $datum['topic_name'];
-            array_push($topicData, $temp);
-        }
 
         //Topic Newest
         if(!empty($_GET['topic'])){
@@ -118,7 +110,7 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'topicData' => $topicData]);
+        return $this->render('home', ['listDataProvider' => $dataProvider]);
     }
 
     public function actionFilteredpjax(){

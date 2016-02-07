@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
 use frontend\models\CommentForm;
-use frontend\models\Comment;
+use common\models\Comment;
 use frontend\models\CommentLikeForm;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
@@ -140,21 +140,16 @@ class ThreadController extends Controller
                     Yii::$app->end();
                 }             
 
-                
 
             }
             else if($editCommentModel->load(Yii::$app->request->post()) && $editCommentModel->validate()){
                 if(!$editCommentModel->update()){
-
                 }
             }
 
 
-            
-                  
             //thread data
-            $thread = Thread::retrieveThreadById($thread_id, 
-                \Yii::$app->user->getId());
+            $thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
             //comment model
             $commentModel = new CommentForm();
             $commentModel->thread_id = $thread_id;
@@ -166,6 +161,7 @@ class ThreadController extends Controller
                 }
             }
 
+            /*
             //retrieve yes data
             $yesCommentData = new SqlDataProvider([
                 'sql' => Comment::retrieveSqlComment($thread_id, 1),  
@@ -186,9 +182,8 @@ class ThreadController extends Controller
                 ],
 
             ]);
-
-            return $this->render('index', ['model' => $thread, 'yesCommentData' => $yesCommentData, 
-                        'noCommentData' => $noCommentData,  'commentModel' => $commentModel]);
+            */
+            return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel]);
             
             
         }
