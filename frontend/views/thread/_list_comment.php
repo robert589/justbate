@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 use yii\widgets\ListView;
 use yii\bootstrap\Modal;
 use frontend\models\EditCommentForm;
-use frontend\models\Comment;
+use common\models\Comment;
 
 	//Store this variable for javascript
 	$comment_id = $model['comment_id'];

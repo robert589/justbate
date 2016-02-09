@@ -13,47 +13,42 @@ class Comment extends ActiveRecord
 		return 'comment';
 	}
 
-	public static function retrieveSqlComment($thread_id, $yes){
+	public static function getSqlComment(){
 
 
-		return "SELECT  TUC.*, (SELECT count(*) 
-				                from comment_likes CL 
-				                where CL.comment_id =TUC.comlikeid and CL.comment_likes  = 1 ) as total_like,
-								(SELECT count(*) 
-				                 from comment_likes CL 
-				                 where CL.comment_id =TUC.comlikeid and CL.comment_likes  = -1 ) as total_dislike,
-                            (SELECT CL1.comment_likes
-                                from comment_likes CL1
-                             	where CL1.comment_id = TUC.comlikeid and CL1.user_id = TUC.comlikeuser ) as vote
-                                
-                            
-				from (Select *
-				     from (Select comment_likes.comment_id as comlikeid,
-				      	     	  comment_likes.user_id as comlikeuser,
-				      	     	  comment_likes.comment_likes, 
-            					  comment.* 
-                           from comment 
-                           left join comment_likes 
-                           on comment_likes.comment_id = comment.comment_id) TU 
-                     inner join user on user.id = TU.user_id) TUC 
-                where thread_id = $thread_id and yes_or_no = $yes
-                group by(TUC.comment_id)
+		return "SELECT  comment.* , thread_comment.*, user.*, user_vote.vote,
+                COALESCE (total_like,0) as total_like, COALESCE (total_dislike,0) as total_dislike
+                from thread_comment
+                inner join comment
+                on thread_comment.comment_id = comment.comment_id
+                inner join user
+                on user.id = comment.user_id
+                left join (select * from comment_votes where user_id = :user_id) user_vote
+                on user_vote.comment_id = thread_comment.comment_id
+                left join (select COALESCE(count(*),0) as total_like,comment_id from comment_votes where vote = 1) total_like
+                on total_like.comment_id = thread_comment.comment_id
+                left join (select COALESCE(count(*), 0)as total_dislike, comment_id from comment_votes where vote = -1) total_dislike
+                on total_dislike.comment_id = thread_comment.comment_id
+                where thread_id = :thread_id and thread_comment.choice_text= :choice_text
+
                ";
 	}
 
 
 
-	public static function countComment($thread_id, $yes){
+	public static function countComment($thread_id, $choice_text){
 		$sql = "
-        SELECT COUNT(*) 
-          FROM (SELECT *
-              from comment inner join user on user.id = comment.user_id
-              where thread_id = :thread_id and yes_or_no  = :yes) TU
+              SELECT COUNT(*)
+              FROM (SELECT thread_comment.*
+                   from thread_comment
+                  inner join comment
+                  on thread_comment.comment_id = comment.comment_id
+                  where thread_id = :thread_id and thread_comment.choice_text= :choice_text) TU
       	";
 
         $command =  \Yii::$app->db->createCommand($sql)
                     ->bindParam(':thread_id', $thread_id)
-                    ->bindParam(":yes", $yes)
+                    ->bindParam(":choice_text", $choice_text)
                     ->queryScalar();
       
         return (int)($command);

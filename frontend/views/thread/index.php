@@ -47,9 +47,16 @@
 
 		<?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3><?= $model['topic_description'] ?></h3>
 
+		</div>
+	</div>
 	<hr>
+
 	<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+
 	<hr>
 
 	<!-- Content -->
@@ -59,6 +66,27 @@
 
 	<br>
 
+	<div class="row">
+		<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
+
+			<div class="col-md-6">
+				<label><?= $thread_choice?></label>
+				<?= ListView::widget([
+					'dataProvider' => $comment_provider,
+					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+					'summary' => false,
+					'itemOptions' => ['class' => 'item'],
+					'layout' => "{summary}\n{items}\n{pager}",
+					'itemView' => function ($model, $key, $index, $widget) {
+						return $this->render('_list_comment',['model' => $model]);
+					}
+
+				]) ?>
+			</div>
+
+		<?php } ?>
+	</div>
+
 
 
 	<br><br>
@@ -67,6 +95,7 @@
 
 <?php
 
+//Inline script, not really good
 $script =<<< JS
 	function beginLoginModal(){
 		$("#loginModal").modal("show")

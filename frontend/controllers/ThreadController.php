@@ -22,7 +22,7 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\SqlDataProvider;
-use frontend\models\ThreadVote;
+use common\models\ThreadVote;
 
 /**
  * Profile controller
@@ -164,12 +164,18 @@ class ThreadController extends Controller
                 }
             }
 
+            //get all thread_choices
             $thread_choice = $this->getChoiceAndItsVoters($thread_id);
 
-            //
+            //get all comment providers
+            $commentProviders = $this->getAllCommentProviders($thread_id, $thread_choice);
+
+            // get vote mdoels
             $submitVoteModel = new SubmitThreadVoteForm();
+
             return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
-                                        ,'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]);
+                                        ,'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel,
+                                            'comment_providers' => $commentProviders]);
             
             
         }
@@ -233,4 +239,33 @@ class ThreadController extends Controller
         //Map it in proper way
         return ArrayHelper::map($thread_choice, 'choice_text', 'choice_text_and_total_voters');
     }
+
+
+    private function getAllCommentProviders($thread_id, $thread_choices){
+
+        //the prev $thread_choice is an associative array, convert to normal array
+        //the prev $thread_chocie: e.g  ("agree" : "agree ( 0 voters), " disagree": "disagree (1 voters) " )
+        $thread_choices = array_keys($thread_choices);
+
+        //initialize array
+        $all_providers = array();
+
+        foreach($thread_choices as $thread_choice){
+            //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
+            $dataProvider =new SqlDataProvider([
+                                'sql' => Comment::getSqlComment(),
+                                'params' => [':thread_id' => $thread_id, ':choice_text' => $thread_choice, ':user_id' => \Yii::$app->user->getId()],
+                                'totalCount' => Comment::countComment($thread_id, $thread_choice),
+                                'pagination' => [
+                                    'pageSize' =>10,
+                                ],
+
+                            ]);
+            $all_providers[$thread_choice] = $dataProvider;
+        }
+
+        return $all_providers;
+    }
+
+
 }

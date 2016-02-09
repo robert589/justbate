@@ -25,24 +25,19 @@
 
     <!--Give Votes Part-->
     <div class="row">
-        <div class="col-md-3 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2">
             <label class="control-label">Give your vote</label>
             <?php $form = ActiveForm::begin(['action' =>   ['thread/submit-vote'],
                                             'method' => 'post',
                                             'options' =>['data-pjax' => true]
                                             ]); ?>
-
                 <?= Html::hiddenInput('voteThread', null, ['id' => 'hiddenInputVoteThread']) ?>
                 <?= Html::hiddenInput('thread_id', $model['thread_id']) ?>
-
-
                 <!-- User Option -->
                 <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choice, ['selector'=>'radio']) ?>
-
+                <?= Html::submitButton('Submit', ['class'=> 'btn btn-primary']) ?>
             <?php ActiveForm::end(); ?>
-
         </div>
-
     </div>
 
 <?php Pjax::end(); ?>
