@@ -20,7 +20,8 @@ class ChildCommentForm extends Model
     public function rules()
     {
         return [
-            [['childComment', 'thread_id', 'parent_id'] , 'required'],
+            [['childComment'] , 'required'],
+            [['thread_id','user_id','parent_id'], 'integer']
         ];
     }
 

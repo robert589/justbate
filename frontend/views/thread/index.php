@@ -22,7 +22,7 @@
 ?>
 
 <!-- Login Modal-->
-<?php 
+<?php
 	Modal::begin([
 			'header' => '<h4> Login </h4>',
 			'id' => 'loginModal',
@@ -38,7 +38,7 @@
 
 
 
-<div class="col-md-offset-2 col-md-9">
+<div class="col-md-offset-1 col-md-10">
 	<div class="row">
 		<!-- Title of the thread -->
 		<div class="col-md-8">	
@@ -55,7 +55,16 @@
 	</div>
 	<hr>
 
-	<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+	<div class="row" style="border:1px solid ">
+		<div class="col-md-5">
+			<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+
+		</div>
+		<div class="col-md-7">
+			<?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?>
+
+		</div>
+	</div>
 
 	<hr>
 
@@ -66,11 +75,14 @@
 
 	<br>
 
+	<!-- Comment Part-->
 	<div class="row">
 		<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
 
 			<div class="col-md-6">
-				<label><?= $thread_choice?></label>
+				<div align="center">
+					<h3><?= $thread_choice?></h3>
+				</div>
 				<?= ListView::widget([
 					'dataProvider' => $comment_provider,
 					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
@@ -78,7 +90,7 @@
 					'itemOptions' => ['class' => 'item'],
 					'layout' => "{summary}\n{items}\n{pager}",
 					'itemView' => function ($model, $key, $index, $widget) {
-						return $this->render('_list_comment',['model' => $model]);
+						return $this->render('_listview_comment',['model' => $model]);
 					}
 
 				]) ?>

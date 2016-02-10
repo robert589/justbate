@@ -34,8 +34,10 @@
     <!--Give Votes Part-->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <label class="control-label">Give your vote</label>
+            <div align="center">
+                <h3>Give your vote</h3>
 
+            </div>
             <?php $form = ActiveForm::begin(['action' =>   ['thread/submit-vote'],
                                             'method' => 'post',
                                             'options' =>['data-pjax' => true]
@@ -57,7 +59,10 @@
 
             <?php } ?>
             <?php ActiveForm::end(); ?>
+            <hr>
         </div>
+
+
     </div>
 
 <?php Pjax::end(); ?>

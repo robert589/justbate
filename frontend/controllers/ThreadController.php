@@ -154,16 +154,8 @@ class ThreadController extends Controller
 
             //thread data
             $thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
-            //comment model
-            $commentModel = new CommentForm();
-            $commentModel->thread_id = $thread_id;
 
-            if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate() ) {
-                if($commentModel->store()){
-                    $commentModel = new CommentForm();
-                    $commentModel->thread_id = $thread_id;
-                }
-            }
+            $commentModel = new CommentForm();
 
             //get all thread_choices
             $thread_choice = $this->getChoiceAndItsVoters($thread_id);
@@ -185,10 +177,37 @@ class ThreadController extends Controller
         return $this->render('index');
     }
 
-    public function actionSubmitComment(){
+
+    public function actionSubmitChildComment(){
 
     }
 
+    /**
+     * WEAKNESS: If server validation error occur, no solution other than saying error
+     * POST DATA: Comment Model;
+     */
+    public function actionSubmitComment(){
+        if(!Yii::$app->user->isGuest){
+            $commentModel = new CommentForm();
+            if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate() && isset($_POST['thread_id']) ) {
+                $thread_id = $_POST['thread_id'];
+                $commentModel->thread_id =  $thread_id;
+                $commentModel->user_id = \Yii::$app->user->getId();
+                if($commentModel->store()){
+                    return  $this->redirect(Yii::getAlias('@base-url') . '/thread/index?id=' . $thread_id );
+                }
+                else{
+
+                }
+            }
+        }
+    }
+
+    /**
+     * POST DATA: $_POST['userThreadRate'] and $_POST['thread_id']
+     * OTHER DATA: user_id
+     * @return bool|string
+     */
     public function actionSubmitRate(){
         if(!empty($_POST['userThreadRate']) && !empty($_POST['thread_id'])){
             $userThreadRate = $_POST['userThreadRate'];
