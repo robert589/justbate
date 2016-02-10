@@ -8,6 +8,7 @@ class Choice extends ActiveRecord
 {
     public function getTable(){
         return 'choice';
+
     }
 
     public static function getChoiceAndItsVoters($thread_id){

@@ -15,6 +15,22 @@ use common\models\User;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 
+
+$home_link = Yii::getAlias('@base-url') . '/site/home';
+
+
+//all links
+if(Yii::$app->user->isGuest){
+    //all links
+    $register_link = Yii::getAlias('@base-url') . '/site/register';
+    $login_link = Yii::getAlias('@base-url') . '/site/link';
+}
+else{
+    $logout_link = Yii::getAlias('@base-url') . '/site/logout';
+    $profile_link = Yii::getAlias('@base-url') . '/profile/index.php?username=' . User::getUsername(Yii::$app->getUser()->id);
+}
+
+
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/bootstrap-social.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/style.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/superhero-bootstrap.min.css');
@@ -79,8 +95,14 @@ AppAsset::register($this);
                             </span>
                         </form>
                     </li>
-                    <li style="border-left: 1px solid rgba(18,18,18,.25);" id="login" class="item" data-toggle="modal" data-target="#login-box"><a>Login</a></li>
-                    <li id="register" class="item"><a href="#">Register</a></li>
+                     <?php if(Yii::$app->user->isGuest){ ?>
+                        <li style="border-left: 1px solid rgba(18,18,18,.25);" id="login" class="item" data-toggle="modal" data-target="#login-box"><a>Login</a></li>
+                        <li id="register" class="item"><a href="<?= $register_link?>">Register</a></li>
+                    <?php }else{ ?>
+                         <li id="profile-page" class="item"><a href="<?= $profile_link ?>"> <?= User::getUsername(Yii::$app->getUser()->id) ?> </a></li>
+                         <li id="settings" class="item"><a href="#">Settings</a></li>
+                         <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>

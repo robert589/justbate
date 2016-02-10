@@ -1,4 +1,4 @@
-<?php
+    <?php
     use yii\helpers\Html;
     use yii\widgets\Pjax;
     use kartik\widgets\StarRating;
@@ -15,9 +15,8 @@
 
 <!--Rating Part-->
 <div class="col-md-4">
-
     <!--Rating form part-->
-    <?= Html::beginForm('thread/submit-vote', 'post', ['id'=>"ratingForm" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
+    <?= Html::beginForm('submit-vote', 'post', ['id'=>"ratingForm" ,'data-pjax' => '', 'class' => 'form-inline']); ?>
 
         <?= Html::hiddenInput('thread_id', $thread_id) ?>
         <?= Html::hiddenInput('userThreadRate', null, ['id' => 'userThreadRate']) ?>

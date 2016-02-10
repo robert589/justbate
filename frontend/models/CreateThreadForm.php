@@ -26,7 +26,7 @@ class CreateThreadForm extends Model
 		return [
 			[['user_id', 'title', 'topic_description', 'user_opinion'], 'required'],
 			['anonymous', 'boolean'],
-			[['user_id'] , 'integer'],
+			['user_id' , 'integer'],
 			['topic_name', 'string'],
 			['relevant_parties','each', 'rule' => ['integer']],
 			['choice', 'each', 'rule' => ['string']]
