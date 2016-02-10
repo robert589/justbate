@@ -5,7 +5,7 @@ use yii\base\Model;
 use Yii;
 use yii\web\UploadedFile;
 use yii\validators\ImageValidator;
-use frontend\models\ThreadVote;
+use common\models\ThreadVote;
 
 class SubmitThreadVoteForm extends Model
 {
@@ -19,7 +19,7 @@ class SubmitThreadVoteForm extends Model
     public function rules()
     {
         return [
-            [['thread_id', 'choice_text'], 'required'],
+            [['choice_text'], 'required'],
             [['user_id', 'thread_id'], 'integer'],
             ['choice_text', 'string']
         ];
@@ -46,16 +46,13 @@ class SubmitThreadVoteForm extends Model
         $thread_vote = ThreadVote::find()->where(['user_id' => $this->user_id])
             ->andWhere(['thread_id' => $this->thread_id])
             ->one();
-        /*
-        $thread_vote = self::findOne(['user_id' => $this->user_id,
-                                    'thread_id' => $this->thread_id]);
-           */
-        if($thread_vote->agree == $this->agree){
+
+        if($thread_vote->choice_text == $this->choice_text){
             return true;
         }
         else{
 
-            $thread_vote->agree = $this->agree;
+            $thread_vote->choice_text = $this->choice_text;
             if($thread_vote->update()){
                 return true;
             }
@@ -70,7 +67,8 @@ class SubmitThreadVoteForm extends Model
         $thread_vote = new ThreadVote();
         $thread_vote->user_id = $this->user_id;
         $thread_vote->thread_id = $this->thread_id;
-        $thread_vote->agree = $this->agree;
+        $thread_vote->choice_text = $this->choice_text;
+
         if($thread_vote->save()){
             return true;
         }

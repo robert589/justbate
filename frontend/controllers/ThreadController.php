@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\SubmitRateThreadForm;
 use frontend\models\SubmitThreadVoteForm;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -14,7 +15,7 @@ use frontend\models\EditCommentForm;
 
 use common\models\Comment;
 use common\models\Thread;
-use common\models\Rate;
+use common\models\ThreadRate;
 use common\models\Choice;
 
 use yii\base\InvalidParamException;
@@ -94,7 +95,7 @@ class ThreadController extends Controller
             else if(!empty($_POST['userThreadRate'])){
                 $userThreadRate = $_POST['userThreadRate'];
 
-                $rateModel = new Rate();
+                $rateModel = new ThreadRate();
                 $rateModel->rating = $userThreadRate;
                 $rateModel->thread_id = $thread_id;
                 $rateModel->user_id = \Yii::$app->user->getId();
@@ -179,7 +180,7 @@ class ThreadController extends Controller
             
             
         }
-        
+
 
         return $this->render('index');
     }
@@ -188,13 +189,12 @@ class ThreadController extends Controller
 
     }
 
-    public function actionSubmitRating(){
+    public function actionSubmitRate(){
         if(!empty($_POST['userThreadRate']) && !empty($_POST['thread_id'])){
             $userThreadRate = $_POST['userThreadRate'];
             $thread_id = $_POST['thread_id'];
-
-            $rateModel = new Rate();
-            $rateModel->rating = $userThreadRate;
+            $rateModel = new SubmitRateThreadForm();
+            $rateModel->rate = $userThreadRate;
             $rateModel->thread_id = $thread_id;
             $rateModel->user_id = \Yii::$app->user->getId();
 
@@ -202,27 +202,43 @@ class ThreadController extends Controller
                 return false;
             }
             else{
-                $avg_rating = Rate::getAverageRate($thread_id);
-                $total_raters = Rate::getAverageRate($thread_id);
+                $avg_rating = ThreadRate::getAverageRate($thread_id);
+
+                $total_raters = ThreadRate::getTotalRaters($thread_id);
                  return $this->renderPartial('_submit_rate_pjax', ['thread_id' => $thread_id,'total_raters' => $total_raters, 'avg_rating' => $avg_rating ]);
             }
         }
     }
 
+    /**
+     * POST DATA: SubmitThreadVoteForm['choice_text'], thread_id (inserted to submitthreadvoteform)
+     * OTHER DATA: user_id (retrieved in controller)
+     * WEAKNESS: Query needs to be two times for choice, and user_vote
+     * @return string|\yii\web\Response
+     */
     public function actionSubmitVote(){
 
+        //only person that is looged in can submit vote
         if(!Yii::$app->user->isGuest){
-            if(isset($_POST['voteThread']) && isset($_POST['thread_id'])){
-                $voteThread = $_POST['voteThread'];
-                $thread_id = $_POST['thread_id'];
-                $thread_vote_form = new SubmitThreadVoteForm($thread_id, $voteThread);
+            $thread_vote_form = new SubmitThreadVoteForm();
 
+            //loading thread_vote_form
+            if( (isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())){
+                $thread_id = $_POST['thread_id'];
+                $thread_vote_form->thread_id = $thread_id;
+                //user id retrieved in controller
+                $thread_vote_form->user_id = \Yii::$app->user->getId();
                 if($thread_vote_form->submitVote()){
-                    $model = ThreadVote::getTotalLikeDislikeBelongs($thread_id, Yii::$app->user->getId());
-                    return $this->renderPartial('_submit_vote_pjax', ['thread_id' => $thread_id, 'model' => $model]);
+                    //get all thread_choices
+                    $thread_choice = $this->getChoiceAndItsVoters($thread_id);
+                    $user_choice = $thread_vote_form->choice_text;
+                    $submitVoteModel = new SubmitThreadVoteForm();
+                    return $this->renderPartial('_submit_vote_pjax', ['user_choice' => $thread_vote_form->choice_text ,
+                                                'submitVoteModel' => $submitVoteModel,
+                                                'thread_choice' => $thread_choice,'thread_id' => $thread_id]);
                 }
                 else{
-
+                    //if the submission fail
                 }
 
             }

@@ -95,11 +95,11 @@ class Thread extends ActiveRecord{
           if(empty($user_id)){
             $user_id = 0;
           }
-          $sql = "SELECT (SELECT avg(rate) from thread_rate where thread_id = 19) as avg_rating,
-                        (SELECT count(*) from thread_rate where thread_id = 19) as total_raters,
+          $sql = "SELECT (SELECT avg(rate) from thread_rate where thread_id = :thread_id) as avg_rating,
+                        (SELECT count(*) from thread_rate where thread_id = :thread_id) as total_raters,
                         TU.*,
-                        (SELECT choice_text from thread_vote where thread_id = 19 and user_id = 1) as user_vote,
-                        (SELECT count(*) from thread_rate where thread_id = 19 and user_id = 1) as has_rate
+                        (SELECT choice_text from thread_vote where thread_id = :thread_id and user_id = :user_id) as user_choice,
+                        (SELECT count(*) from thread_rate where thread_id = :thread_id and user_id = :user_id) as has_rate
                 FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
                 where thread_id = 19";
 
