@@ -17,6 +17,7 @@ use common\models\Comment;
 use common\models\Thread;
 use common\models\ThreadRate;
 use common\models\Choice;
+use common\models\ChildComment;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -39,118 +40,6 @@ class ThreadController extends Controller
         if(!empty($_GET['id'])){
 
             $thread_id = $_GET['id'];
-
-            $editCommentModel  =new EditCommentForm();
-
-            if(!empty($_POST['vote']) && !empty($_POST['comment_id'])){
-                $commentlikesModel = new CommentLikeForm();
-                $commentlikesModel->comment_id = $_POST['comment_id'];
-                $commentlikesModel->comment_likes = $_POST['vote'];
-
-                if(!$commentlikesModel->store()){
-                    return $this->render('../site/error');
-                }
-
-            }
-            else if(!empty($_POST['child-vote']) && !empty($_POST['comment_id'])){
-                $commentlikesModel = new CommentLikeForm();
-                $commentlikesModel->comment_id = $_POST['comment_id'];
-                $commentlikesModel->comment_likes = $_POST['child-vote'];
-                if(!$commentlikesModel->store()){
-                    return $this->render('../site/error');
-                }
-                else{
-                    $model = Comment::retrieveCommentByUserId($commentlikesModel->comment_id, Yii::$app->user->identity->getId());
-                    return $this->renderPartial('_list_child_comment', ['model' => $model]);
-
-                }
-            }
-    
-            else if(Yii::$app->request->isPjax && !empty($_GET['comment_id'])){
-                $comment_id = $_GET['comment_id'];
-                    //retrieve yes data
-                $retrieveChildData = new SqlDataProvider([
-                    'sql' => Comment::retrieveChildComment($comment_id),  
-                    'totalCount' => Comment::countChildComment($comment_id),
-                    'pagination' => [
-                        'pageSize' =>5,
-                        ],
-
-                ]);
-
-                if(Yii::$app->user->isGuest){
-                     $model = Comment::retrieveCommentByUserId($comment_id, 0);
-                   
-                }
-                else{
-                     $model = Comment::retrieveCommentByUserId($comment_id, 
-                                                        \Yii::$app->user->identity->id);
-                   
-                }
-                              
-                return $this->renderAjax('_list_comment', ['model' => $model, 'retrieveChildData' => $retrieveChildData, 'comment_id' => $comment_id, 'thread_id' => $thread_id]);
-
-            }
-
-            else if(!empty($_POST['userThreadRate'])){
-                $userThreadRate = $_POST['userThreadRate'];
-
-                $rateModel = new ThreadRate();
-                $rateModel->rating = $userThreadRate;
-                $rateModel->thread_id = $thread_id;
-                $rateModel->user_id = \Yii::$app->user->getId();
-
-                if(!$rateModel->insertRating()){
-                    return false;
-                }
-            }
-
-            else if(Yii::$app->request->isPjax && !empty($_POST['childComment'])){
-
-                $parent_id = $_POST['parent_id'];
-                $childComment = $_POST['childComment'];
-                $commentRetrieved = 0;
-                if(!empty($_POST['commentRetrieved'])){
-                    $commentRetrieved = $_POST['commentRetrieved'];
-                }
-
-                $childCommentModel = new ChildCommentForm();
-
-                $childCommentModel->childComment = $childComment;
-                $childCommentModel->thread_id = $thread_id;
-                $childCommentModel->parent_id = $parent_id;
-
-                
-                $model = Comment::retrieveCommentByUserId($parent_id, \Yii::$app->user->identity->id);
-
-
-                if($childCommentModel->store()){
-                    if($commentRetrieved){
-                           $retrieveChildData = new SqlDataProvider([
-                            'sql' => Comment::retrieveChildComment($parent_id),  
-                           'totalCount' => Comment::countChildComment($parent_id),
-                            'pagination' => [
-                                'pageSize' =>5,
-                            ],
-
-                        ]);
-                        return $this->renderAjax('_list_comment', ['model' => $model, 'retrieveChildData' => $retrieveChildData, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
-                    }
-                    else{
-                        return $this->renderAjax('_list_comment', ['model' => $model, 'comment_id' => $parent_id, 'thread_id' => $thread_id]);
-                    }
-                }
-                else{
-                    Yii::$app->end();
-                }             
-
-
-            }
-            else if($editCommentModel->load(Yii::$app->request->post()) && $editCommentModel->validate()){
-                if(!$editCommentModel->update()){
-                }
-            }
-
 
             //thread data
             $thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
@@ -178,8 +67,27 @@ class ThreadController extends Controller
     }
 
 
-    public function actionSubmitChildComment(){
+    public function actionGetChildComment(){
+        if(isset($_POST['comment_id'])){
+            $comment_id = $_POST['comment_id'];
+            $result =  ChildCOmment::getAllChildComments($comment_id);
 
+            $child_comment_provider = new \yii\data\ArrayDataProvider([
+                'allModels' => $result,
+                'pagination' => [
+                    'pageSize' => 10,
+                ]
+
+            ]);
+
+            $child_comment_form = new ChildCommentForm();
+
+            $this->renderAjax('_child_comment', ['child_comment_provider' => $child_comment_provider, 'comment_id' => $comment_id,
+                                                'retrieved' => true, 'child_comment_form' => $child_comment_form]);
+        }
+        else{
+            Yii::$app->end('comment_id not poster');
+        }
     }
 
     /**
@@ -250,7 +158,6 @@ class ThreadController extends Controller
                 if($thread_vote_form->submitVote()){
                     //get all thread_choices
                     $thread_choice = $this->getChoiceAndItsVoters($thread_id);
-                    $user_choice = $thread_vote_form->choice_text;
                     $submitVoteModel = new SubmitThreadVoteForm();
                     return $this->renderPartial('_submit_vote_pjax', ['user_choice' => $thread_vote_form->choice_text ,
                                                 'submitVoteModel' => $submitVoteModel,

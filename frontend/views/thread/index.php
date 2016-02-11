@@ -90,7 +90,8 @@
 					'itemOptions' => ['class' => 'item'],
 					'layout' => "{summary}\n{items}\n{pager}",
 					'itemView' => function ($model, $key, $index, $widget) {
-						return $this->render('_listview_comment',['model' => $model]);
+						$childCommentForm = new \frontend\models\ChildCommentForm();
+						return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm]);
 					}
 
 				]) ?>

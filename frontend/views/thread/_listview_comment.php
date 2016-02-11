@@ -112,7 +112,7 @@ use common\models\Comment;
 
 		<?= $this->render('_child_comment', ['guest' => $guest, 'belongs' => $belongs,
 											'comment_id' => $model['comment_id'], 'thread_id' => $model['thread_id'],
-											'user_id' => $model['user_id']]) ?>
+											'user_id' => $model['user_id'],'child_comment_form' => $child_comment_form ]) ?>
 
 	</div>
 	
@@ -124,95 +124,3 @@ use common\models\Comment;
 </article>
 		
 
-<?php  
-$script =<<< JS
-
-//Begin edit modal
-function beginEditModal$comment_id(){
-	console.log($comment_id);
-	$("#editModal-$comment_id").modal("show")
-			.find('#editModal-$comment_id')
-			.load($(this).attr("value"));
-}
-
-$( document ).on( 'click', "#showChildCommentBox$comment_id", function () {
-    // Do click stuff here
-   	
-  	$("#child-comment-box-$comment_id").show();
-})
-.on('click', "#editComment$comment_id", function(){
-	beginEditModal$comment_id();
-
-	return false;
-})
-.on( 'click', "#btnVoteUp-$comment_id", function () {
-    // Do click stuff here
-	$("#vote_result_$comment_id").val(1);
-	if($guest){
-		beginLoginModal();
-	}
-	$("#submitvote-form-$comment_id"	).submit();
-})
-.on( 'click', "#btnVoteDown-$comment_id", function () {
-    // Do click stuff here
-	$("#vote_result_$comment_id").val(-1);
-	if($guest){
-		beginLoginModal();
-	}
-	$("#submitvote-form-$comment_id"	).submit();
-})
-.on( 'click', "#comment_id", function () {
-    // Do click stuff here
-  	$("#child-comment-box-$comment_id").show();
-})
-.on( 'click', "#hideButton$comment_id", function () {
-    if($("#hideButton$comment_id").text() == 'Hide'){
-  		$("#listviewChild$comment_id").hide();
-  		$("#hideButton$comment_id").text('Show');
-  	}else{
-  		$("#listviewChild$comment_id").show();
-  		$("#hideButton$comment_id").text('Hide');
-  	}
-})
-.on('keydown', '#child-comment-box-$comment_id', function(event){
-    if (event.keyCode == 13) {
-    	if($guest){
-			beginLoginModal();
-		}
-		else{
-        	$("#childForm-$comment_id").submit();
-    	}
-        return false;
-     }
-})
-.on('focus', '#child-comment-box-$comment_id', function(){
-    if(this.value == "Write your comment here..."){
-         this.value = "";
-    }
-})
-.on('blur', '#child-comment-box-$comment_id', function(){
-    if(this.value==""){
-         this.value = "Write your comment here...";
-    }
-})
-.on('pjax:error', '#submitComment-' + $comment_id, function (event) {
-   // alert('Failed to load the page');
-    event.preventDefault();
-})
-.on('pjax:error', '#childCommentData-' + $comment_id, function (event) {
-   // alert('Failed to load the page');
-
-    event.preventDefault();
-})
-
-.on('pjax:success', '#childCommentData-' + $comment_id, function(event, data, status, xhr, options) {
-  // run "custom_success" method passed to PJAX if it exists
-  $("#commentRetrieved-$comment_id").val(1);
-
-  $("#commentShown-$comment_id").val(1);
-});
-
-$(document).pjax('retrieveComment' + $comment_id, '#childCommentData-' + $comment_id, { fragment: '#childCommentData-' + $comment_id });
-JS;
-$this->registerJs($script);
-?>

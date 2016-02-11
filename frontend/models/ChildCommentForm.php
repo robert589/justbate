@@ -10,7 +10,7 @@ use Yii;
  */
 class ChildCommentForm extends Model
 {
-    public $childComment;
+    public $child_comment;
     public $thread_id;
     public $user_id;
     public $parent_id;
@@ -20,7 +20,7 @@ class ChildCommentForm extends Model
     public function rules()
     {
         return [
-            [['childComment'] , 'required'],
+            [['child_comment'] , 'required'],
             [['thread_id','user_id','parent_id'], 'integer']
         ];
     }
@@ -35,7 +35,7 @@ class ChildCommentForm extends Model
         if ($this->validate()) {
 
             $comment = new Comment();
-            $comment->comment = $this->childComment;
+            $comment->comment = $this->child_comment;
             $comment->parent_id = $this->parent_id;
             $comment->thread_id = $this->thread_id;
             $comment->user_id = \Yii::$app->user->getId();

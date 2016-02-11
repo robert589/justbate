@@ -45,15 +45,15 @@ else{
                 ?>
 
                 <!-- The form only be used as refresh page -->
-                <?= Html::beginForm(["../../thread/index?id=" . $model['thread_id']  ], 'post', ['id' => 'submitvote-form-child-' . $comment_id, 'data-pjax' => 'w1child' . $comment_id, 'class' => 'form-inline']); ?>
+                <?= Html::beginForm(["../../thread/index?id="   ], 'post', ['id' => 'submitvote-form-child-' . $comment_id, 'data-pjax' => 'w1child' . $comment_id, 'class' => 'form-inline']); ?>
 
-                <?= Html::hiddenInput("child-vote", $model['vote'], ['id' => "vote_result_child_$comment_id"])?>
+                <?= Html::hiddenInput("child-vote", 1, ['id' => "vote_result_child_$comment_id"])?>
 
                 <?= Html::hiddenInput("comment_id", $comment_id, ['id' => 'comment_id']) ?>
 
                 <?php
-                $voteUp = ($model['vote'] == 1) ? 'disabled' : false;
-                $voteDown = ($model['vote'] == -1) ? 'disabled' : false;
+                $voteUp = (1 == 1) ? 'disabled' : false;
+                $voteDown = (1 == -1) ? 'disabled' : false;
                 ?>
                 <div class="col-md-6">
                     <div class="col-md-3">
@@ -62,10 +62,10 @@ else{
                         </button>
                     </div>
                     <div class="col-md-3">
-                        +<?= $model['total_like'] ?>
+                        +1
                     </div>
                     <div class="col-md-3">
-                        -<?= $model['total_dislike'] ?>
+                        -1
                     </div>
                     <div class="col-md-3">
                         <button  type="button" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" id="btnVoteDown-child-<?=$comment_id?>">
