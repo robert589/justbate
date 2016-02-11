@@ -40,26 +40,19 @@ class ThreadController extends Controller
         if(!empty($_GET['id'])){
 
             $thread_id = $_GET['id'];
-
             //thread data
             $thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
-
             $commentModel = new CommentForm();
-
             //get all thread_choices
             $thread_choice = $this->getChoiceAndItsVoters($thread_id);
-
             //get all comment providers
             $commentProviders = $this->getAllCommentProviders($thread_id, $thread_choice);
-
             // get vote mdoels
             $submitVoteModel = new SubmitThreadVoteForm();
-
             return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
                                         ,'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel,
                                             'comment_providers' => $commentProviders]);
-            
-            
+
         }
 
 
@@ -75,7 +68,7 @@ class ThreadController extends Controller
             $child_comment_provider = new \yii\data\ArrayDataProvider([
                 'allModels' => $result,
                 'pagination' => [
-                    'pageSize' => 10,
+                    'pageSize' => 5,
                 ]
 
             ]);
@@ -89,6 +82,41 @@ class ThreadController extends Controller
             Yii::$app->end('comment_id not poster');
         }
     }
+
+    /**
+     * POST DATA: user_id, parent_id, ChildCommentForm
+     * return: render
+     */
+    public function actionSubmitChildComment(){
+        $child_comment_form = new ChildCommentForm();
+        if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
+            $user_id = $_POST['user_id'];
+            $parent_id = $_POST['parent_id'];
+
+            $child_comment_form->user_id = $user_id;
+            $child_comment_form->parent_id = $parent_id;
+
+            if($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate()){
+                if($child_comment_form->store()){
+                    $child_comment_form = new ChildCommentForm();
+
+                    $result =  ChildCOmment::getAllChildComments($parent_id);
+
+                    $child_comment_provider = new \yii\data\ArrayDataProvider([
+                        'allModels' => $result,
+                        'pagination' => [
+                            'pageSize' => 5,
+                        ]
+
+                    ]);
+
+                    return $this->render('_child_comment', ['comment_id' => $parent_id,
+                                'retrieved' => true, 'child_comment_provider' => $child_comment_provider, 'child_comment_form' => $child_comment_form]);
+                }
+            }
+        }
+    }
+
 
     /**
      * WEAKNESS: If server validation error occur, no solution other than saying error
@@ -109,6 +137,13 @@ class ThreadController extends Controller
                 }
             }
         }
+    }
+
+    /**
+     *
+     */
+    public function actionCommentVote(){
+
     }
 
     /**
@@ -173,6 +208,7 @@ class ThreadController extends Controller
             return $this->redirect(Yii::getAlias('@base-url'. '/site/login'));
         }
     }
+
 
     /**Thread Choice */
     private function getChoiceAndItsVoters($thread_id){

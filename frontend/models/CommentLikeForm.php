@@ -10,15 +10,17 @@ use Yii;
  */
 class CommentLikeForm extends Model
 {
+    public $user_id;
     public $comment_id;
-    public $comment_likes;
+    public $vote;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['comment_likes', 'comment_id'] , 'required'],
+            [['vote', 'comment_id'] , 'required'],
+            ['user_id', 'integer']
        ];
     }
 

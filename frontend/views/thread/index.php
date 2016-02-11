@@ -85,7 +85,7 @@
 				</div>
 				<?= ListView::widget([
 					'dataProvider' => $comment_provider,
-					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+				//	'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
 					'layout' => "{summary}\n{items}\n{pager}",

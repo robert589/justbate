@@ -93,7 +93,6 @@ class SiteController extends Controller
         $sql = Thread::retrieveAllBySql();
         $totalCount = Thread::countAll();
 
-
         //Topic Newest
         if(!empty($_GET['topic'])){
             $sql = Thread::retrieveSqlByTopic($_GET['topic']);
