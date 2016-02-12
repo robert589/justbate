@@ -1,19 +1,44 @@
-<!--Comment Input Part-->
-<?php $form =ActiveForm::begin(['id' => 'comment-form']) ?>
+<?php
+    use yii\widgets\ActiveForm;
+    use kartik\widgets\Select2;
+    use yii\helpers\Html;
+?>
 
-<div class="row">
-    <div class="col-md-offset-2	col-md-5">
-        <?= $form->field($commentModel, 'comment')->textArea(['id' => 'comment-box', 'placeholder' => 'add comment box...', 'rows' => 2 ]) ?>
+
+<!--Comment Input Part-->
+<?php $form =ActiveForm::begin(['action' => ['thread/submit-comment'], 'id' => 'comment-form']) ?>
+
+<div align="center">
+    <h3>Give your comment</h3>
+</div>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <?= $form->field($commentModel, 'comment')->textArea([ 'placeholder' => 'add comment box...', 'rows' => 4 ])
+                ->label(false)?>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <label> Choose your Comment Side </label>
-        <?= $form->field($commentModel, 'yes_or_no')->widget(Select2::classname(), [
-            'data' => [1 => 'Agree', 0 => 'Disagree'],
-            'options' => ['placeholder' => 'Select a state ...'],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label(false) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($commentModel, 'choice_text')->widget(Select2::classname(), [
+                'data' => $thread_choice,
+                'hideSearch' => true,
+                'options' => ['placeholder' => 'Choose your side ...'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ])->label(false) ?>
+        </div>
+
+        <div align="right" class="col-md-6">
+
+            <?= Html::hiddenInput('thread_id', $thread_id) ?>
+            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary'])?>
+        </div>
+
+
     </div>
 
 </div>

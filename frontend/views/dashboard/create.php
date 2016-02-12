@@ -22,7 +22,6 @@ $this->title = "Create Proposal";
     <div class="col-md-9 col-md-offset-2">
         <div class="row">
             <?= $form->field($thread, 'title') ?>
-
         </div>
 
         <div class="row">

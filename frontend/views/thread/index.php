@@ -9,6 +9,7 @@
 	use common\models\LoginForm;
 	use yii\helpers\Html;
 	use kartik\widgets\SwitchInput;
+	use common\models\CommonVote;
 	$this->title =  $model['title'];
 
 	//Store this variable for javascript
@@ -22,7 +23,7 @@
 ?>
 
 <!-- Login Modal-->
-<?php 
+<?php
 	Modal::begin([
 			'header' => '<h4> Login </h4>',
 			'id' => 'loginModal',
@@ -38,16 +39,18 @@
 
 
 
-<div class="col-md-offset-2 col-md-9">
+<div class="col-md-offset-1 col-md-10">
 	<div class="row">
 		<!-- Title of the thread -->
 		<div class="col-md-8">	
 			<h2><?= $model['title'] ?> </h2>
 		</div>
 
+		<!-- Submit Rate-->
 		<?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?>
 	</div>
 	<div class="row">
+		<!-- Topic Description -->
 		<div class="col-md-12">
 			<h3><?= $model['topic_description'] ?></h3>
 
@@ -55,7 +58,18 @@
 	</div>
 	<hr>
 
-	<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+	<div class="row" style="border:1px solid ">
+		<div class="col-md-5">
+			<!-- Submit vote-->
+			<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+
+		</div>
+		<div class="col-md-7">
+			<!-- Comment Input-->
+			<?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?>
+
+		</div>
+	</div>
 
 	<hr>
 
@@ -66,19 +80,26 @@
 
 	<br>
 
+	<!-- Comment Part-->
 	<div class="row">
 		<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
 
 			<div class="col-md-6">
-				<label><?= $thread_choice?></label>
+				<div align="center">
+					<h3><?= $thread_choice?></h3>
+				</div>
 				<?= ListView::widget([
 					'dataProvider' => $comment_provider,
-					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+				//	'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
 					'layout' => "{summary}\n{items}\n{pager}",
 					'itemView' => function ($model, $key, $index, $widget) {
-						return $this->render('_list_comment',['model' => $model]);
+						$childCommentForm = new \frontend\models\ChildCommentForm();
+						$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+						return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
+												'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
+												'vote' => $comment_vote_comment['vote']]);
 					}
 
 				]) ?>

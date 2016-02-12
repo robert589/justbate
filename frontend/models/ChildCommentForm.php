@@ -1,7 +1,10 @@
 <?php
 namespace frontend\models;
 
+use common\models\ChildComment;
 use common\models\User;
+use common\models\Comment;
+
 use yii\base\Model;
 use Yii;
 
@@ -10,7 +13,7 @@ use Yii;
  */
 class ChildCommentForm extends Model
 {
-    public $childComment;
+    public $child_comment;
     public $thread_id;
     public $user_id;
     public $parent_id;
@@ -20,7 +23,8 @@ class ChildCommentForm extends Model
     public function rules()
     {
         return [
-            [['childComment', 'thread_id', 'parent_id'] , 'required'],
+            [['child_comment'] , 'required'],
+            [['thread_id','user_id','parent_id'], 'integer']
         ];
     }
 
@@ -32,17 +36,17 @@ class ChildCommentForm extends Model
     public function store()
     {
         if ($this->validate()) {
-
             $comment = new Comment();
-            $comment->comment = $this->childComment;
-            $comment->parent_id = $this->parent_id;
-            $comment->thread_id = $this->thread_id;
-            $comment->user_id = \Yii::$app->user->getId();
-
+            $comment->user_id = $this->user_id;
+            $comment->comment = $this->child_comment;
             if($comment->save()){
-                return true;
+                $child_comment = new ChildComment();
+                $child_comment->comment_id = $comment->comment_id;
+                $child_comment->parent_id = $this->parent_id;
+                if($child_comment->save()){
+                    return true;
+                }
             }
-
             return null;
         }
 
