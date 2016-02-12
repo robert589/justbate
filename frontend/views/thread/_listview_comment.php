@@ -58,10 +58,10 @@ use common\models\Comment;
 
 			<!-- Votes part-->
 			<?= $this->render('_comment_votes', [  'comment_id' => $model['comment_id'],
-													'vote' => $model['vote'],
+													'vote' => $vote,
 													'thread_id' => $model['thread_id'],
-													'total_like' => $model['total_like'] ,
-														'total_dislike' => $model['total_dislike']]) ?>
+													'total_like' => $total_like ,
+														'total_dislike' => $total_dislike]) ?>
 		</div>
 
 		<div class="row">	

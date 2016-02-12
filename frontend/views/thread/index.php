@@ -9,6 +9,7 @@
 	use common\models\LoginForm;
 	use yii\helpers\Html;
 	use kartik\widgets\SwitchInput;
+	use common\models\CommonVote;
 	$this->title =  $model['title'];
 
 	//Store this variable for javascript
@@ -45,9 +46,11 @@
 			<h2><?= $model['title'] ?> </h2>
 		</div>
 
+		<!-- Submit Rate-->
 		<?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?>
 	</div>
 	<div class="row">
+		<!-- Topic Description -->
 		<div class="col-md-12">
 			<h3><?= $model['topic_description'] ?></h3>
 
@@ -57,10 +60,12 @@
 
 	<div class="row" style="border:1px solid ">
 		<div class="col-md-5">
+			<!-- Submit vote-->
 			<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
 
 		</div>
 		<div class="col-md-7">
+			<!-- Comment Input-->
 			<?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?>
 
 		</div>
@@ -91,7 +96,10 @@
 					'layout' => "{summary}\n{items}\n{pager}",
 					'itemView' => function ($model, $key, $index, $widget) {
 						$childCommentForm = new \frontend\models\ChildCommentForm();
-						return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm]);
+						$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+						return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
+												'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
+												'vote' => $comment_vote_comment['vote']]);
 					}
 
 				]) ?>

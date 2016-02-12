@@ -4,7 +4,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
-
+use common\models\CommentVote;
 
 $this->registerJsFile(Yii::$app->request->baseUrl    . '/js/jquery.js');
 ?>
@@ -68,7 +68,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl    . '/js/jquery.js');
                         'layout' => "{summary}\n{items}\n{pager}",
 
                         'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('_listview_child_comment',['model' => $model]);
+                            $comment_vote_form = CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+                            return $this->render('_listview_child_comment',['model' => $model, 'total_like' => $comment_vote_form['total_like'],
+                                            'total_dislike' => $comment_vote_form['total_dislike'], 'vote' => $comment_vote_form['vote']]);
                         }
 
                     ]) ?>

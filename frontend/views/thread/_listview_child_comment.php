@@ -33,50 +33,10 @@ else{
                     <?= Html::a($model['first_name'] . ' ' . $model['last_name'], "#" )?>
                 </div>
 
-                <?php
-                $vote = null;
-                Pjax::begin([
-                    'id' => 'comment-child-main-' . $comment_id,
-                    'timeout' => false,
-                    'clientOptions'=>[
-                        'container'=>'w1child' . $comment_id,
-                    ]
-                ]);
-                ?>
+                <!-- Vote -->
 
-                <!-- The form only be used as refresh page -->
-                <?= Html::beginForm(["../../thread/index?id="   ], 'post', ['id' => 'submitvote-form-child-' . $comment_id, 'data-pjax' => 'w1child' . $comment_id, 'class' => 'form-inline']); ?>
-
-                <?= Html::hiddenInput("child-vote", 1, ['id' => "vote_result_child_$comment_id"])?>
-
-                <?= Html::hiddenInput("comment_id", $comment_id, ['id' => 'comment_id']) ?>
-
-                <?php
-                $voteUp = (1 == 1) ? 'disabled' : false;
-                $voteDown = (1 == -1) ? 'disabled' : false;
-                ?>
-                <div class="col-md-6">
-                    <div class="col-md-3">
-                        <button type="button" <?php if($voteUp) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" id="btnVoteUp-child-<?=$comment_id?>">
-                            <span class="glyphicon glyphicon-arrow-up"></span>
-                        </button>
-                    </div>
-                    <div class="col-md-3">
-                        +1
-                    </div>
-                    <div class="col-md-3">
-                        -1
-                    </div>
-                    <div class="col-md-3">
-                        <button  type="button" <?php if($voteDown) echo 'disabled' ?> class="btn btn-default" style="border:0px solid transparent" id="btnVoteDown-child-<?=$comment_id?>">
-                            <span align="center"class="glyphicon glyphicon-arrow-down"></span>
-                        </button>
-                    </div>
-
-                </div>
-                <?= Html::endForm() ?>
-
-                <?php Pjax::end(); ?>
+                <?= $this->render('_comment_votes', ['comment_id' => $comment_id, 'total_like' => $total_like,
+                                'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
 
 
             </div>

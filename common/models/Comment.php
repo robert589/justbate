@@ -13,25 +13,31 @@ class Comment extends ActiveRecord
 		return 'comment';
 	}
 
-	public static function getSqlComment(){
+    /**
+     * WEAKNESS: THE total_like, total_dislike, and vote is not working, it causes us need to put it into two queries
+     * PERFORMANCE PROBLEM
+     * @return string
+     */
+	public static function getCommentByChoiceText($thread_id, $choice_text){
 
 
-		return "SELECT  comment.* , thread_comment.*, user.*, user_vote.vote,
-                COALESCE (total_like,0) as total_like, COALESCE (total_dislike,0) as total_dislike
+		$sql=  "SELECT  comment.* , thread_comment.*, user.*
                 from thread_comment
                 inner join comment
                 on thread_comment.comment_id = comment.comment_id
                 inner join user
                 on user.id = comment.user_id
-                left join (select * from comment_votes where user_id = :user_id) user_vote
-                on user_vote.comment_id = thread_comment.comment_id
-                left join (select COALESCE(count(*),0) as total_like,comment_id from comment_votes where vote = 1) total_like
-                on total_like.comment_id = thread_comment.comment_id
-                left join (select COALESCE(count(*), 0)as total_dislike, comment_id from comment_votes where vote = -1) total_dislike
-                on total_dislike.comment_id = thread_comment.comment_id
                 where thread_id = :thread_id and thread_comment.choice_text= :choice_text
-
                ";
+
+
+
+                return \Yii::$app->db
+                    ->createCommand($sql)
+                    ->bindValues([':thread_id' => $thread_id])
+                    ->bindValues([':choice_text' => $choice_text] )
+                    ->queryAll();
+
 	}
 
 

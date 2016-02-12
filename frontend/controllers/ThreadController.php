@@ -1,9 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\CommentVoteForm;
 use frontend\models\SubmitRateThreadForm;
 use frontend\models\SubmitThreadVoteForm;
 use Yii;
+use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -18,6 +20,7 @@ use common\models\Thread;
 use common\models\ThreadRate;
 use common\models\Choice;
 use common\models\ChildComment;
+use common\models\CommentVote;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -143,7 +146,35 @@ class ThreadController extends Controller
      *
      */
     public function actionCommentVote(){
+        if(isset($_POST['comment_id']) && isset($_POST['user_id']) && isset($_POST['vote'])){
+            $comment_id = $_POST['comment_id'];
+            $user_id = $_POST['user_id'];
+            $vote = $_POST['vote'];
 
+
+            $comment_vote_form = new CommentVoteForm();
+            $comment_vote_form->user_id = $user_id;
+            $comment_vote_form->vote = $vote;
+            $comment_vote_form->comment_id =  $comment_id;
+
+            if($comment_vote_form->validate()){
+
+                if($comment_vote_form->store() == true){
+                    $comment_votes_comment  = CommentVote::getCommentVotesOfComment($comment_id, $user_id);
+                    $total_like  = $comment_votes_comment['total_like'];
+                    $total_dislike = $comment_votes_comment['total_dislike'];
+                    $vote = $comment_votes_comment['vote'];
+                    return $this->renderPartial('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
+                                                        'vote' => $vote, 'comment_id' => $comment_id]);
+                }
+                else{
+                    //error if store fail
+                }
+            }
+            else{
+                //error if something is wrong
+            }
+        }
     }
 
     /**
@@ -230,11 +261,9 @@ class ThreadController extends Controller
 
         foreach($thread_choices as $thread_choice){
             //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
-            $dataProvider =new SqlDataProvider([
-                                'sql' => Comment::getSqlComment(),
-                                'params' => [':thread_id' => $thread_id, ':choice_text' => $thread_choice, ':user_id' => \Yii::$app->user->getId()],
-                                'totalCount' => Comment::countComment($thread_id, $thread_choice),
-                                'pagination' => [
+            $dataProvider =new ArrayDataProvider([
+                                'allModels' => Comment::getCommentByChoiceText($thread_id, $thread_choice),
+                                    'pagination' => [
                                     'pageSize' =>10,
                                 ],
 
