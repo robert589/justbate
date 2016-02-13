@@ -101,7 +101,7 @@ class Thread extends ActiveRecord{
                         (SELECT choice_text from thread_vote where thread_id = :thread_id and user_id = :user_id) as user_choice,
                         (SELECT count(*) from thread_rate where thread_id = :thread_id and user_id = :user_id) as has_rate
                 FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
-                where thread_id = 19";
+                where thread_id = :thread_id";
 
           $result =  \Yii::$app->db->createCommand($sql)->
                         bindParam(':thread_id', $thread_id)->

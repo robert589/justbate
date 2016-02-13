@@ -2,14 +2,12 @@
 namespace frontend\controllers;
 
 use frontend\models\EditProfileForm;
-use frontend\models\TagInThread;
 use frontend\models\UploadProfilePicForm;
 use Yii;
 use yii\web\Controller;
 use common\models\User;
-use frontend\models\Comment;
-use frontend\models\CommentLikes;
-use frontend\models\Thread;
+use common\models\Comment;
+use common\models\Thread;
 use yii\web\UploadedFile;
 
 
@@ -32,20 +30,21 @@ class ProfileController extends Controller
             $user->username = $_GET['username'];
             if($user->checkUsernameExist()){
                 $user_info =  $user->getUser();
-                $user_recent_activity = $this->getRecentActivity($username);
+//                $user_recent_activity = $this->getRecentActivity($username);
 
+                /*
                 // build an ActiveDataProvider with an empty query and a pagination with 35 items for page
                 $recent_activity_provider = new \yii\data\ArrayDataProvider([
                     'allModels' => $user_recent_activity,
                     'pagination' => [
                         'pageSize' => 35,
                     ],
-                ]);
+                ]);*/
 
-                $recent_tags_provider = $this->getRecentTagsAsProvider($username);
+                //$recent_tags_provider = $this->getRecentTagsAsProvider($username);
 
-                return $this->render('index', ['user' => $user_info, 'recent_activity_provider' => $recent_activity_provider,
-                                            'recent_tags_provider' => $recent_tags_provider]);
+                return $this->render('index', ['user' => $user_info
+                                            ]);
             }
             else{
                 Yii::$app->end();

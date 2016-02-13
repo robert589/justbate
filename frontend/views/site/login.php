@@ -46,7 +46,6 @@ $loginUrl = $helper->getLoginUrl();
             <?php ActiveForm::end(); ?>
 
             or
-
             <?= Html::a('Facebook Login', $loginUrl, ['class'=>'btn btn-primary']) ?>
 
 
