@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\CreateThreadForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -109,7 +110,9 @@ class SiteController extends Controller
 
         ]);
 
-        return $this->render('home', ['listDataProvider' => $dataProvider]);
+        $create_thread_form  = new CreateThreadForm();
+
+        return $this->render('home', ['listDataProvider' => $dataProvider, 'create_thread_form' => $create_thread_form]);
     }
 
     public function actionFilteredpjax(){

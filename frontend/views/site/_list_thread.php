@@ -31,7 +31,7 @@ use yii\helpers\Url;
 	        			'max' => 5,
 	        			'step' => 1,
 	       	 			'size' => 'xs',
-	       	 			
+
 					]])?>
 			</div class="col-md-7" align="center center-vertical">
 				<p align="right" style="font-size:8px">Created by   <?= $model['first_name']?>  <?=$model['last_name']?> at <?= $model['date_created'] ?></p>

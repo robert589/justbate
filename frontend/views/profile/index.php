@@ -10,13 +10,14 @@ use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use common\models\User;
 
+/*
 if($user['id'] == \Yii::$app->user->identity->getId() ){
     $belongs = 1;
 }
 else{
     $belongs = 0;
 }
-
+*/
 //Set title for the page
 $this->title = $user->first_name . ' ' . $user->last_name;
 ?>
@@ -29,7 +30,7 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 
     $editProfileModel = new \frontend\models\EditProfileForm();
     $editUser = new User();
-    $editUser->id = \Yii::$app->user->identity->getId();
+  //  $editUser->id = \Yii::$app->user->identity->getId();
     $user_data = $editUser->getUser();
 
     //pass data
@@ -105,22 +106,10 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 
                             </div>
                             <hr>
-                            <div >
 
-                                <?php if($user->business == 1){ ?>
-                                    <label> Business Side</label>
-                                <?php }else{ ?>
-                                    <?php if($belongs == 1){ ?>
-                                        <?= Html::a('Upgrade to business', ['profile/business'], ['class' => 'btn btn-primary'])?>
-                                    <?php } ?>
-                                        Personal Side
-                                    <?php } ?>
-                            </div>
                         </div>
                         <div class="col-lg-3">
-                            <?php if($belongs == 1) { ?>
-                                <button onclick="beginEditModal()" class="btn btn-default"> <span class="glyphicon glyphicon-pencil	"></span> Edit Profile </button>
-                            <?php }?>
+
 
                         </div>
 
@@ -128,75 +117,6 @@ $this->title = $user->first_name . ' ' . $user->last_name;
                 </div>
 <div class="col-md-12">
 
-
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
-
-                <br>
-                <!-- /#page-content-wrapper -->
-
-                <!-- Recent Activity-->
-                <div class="well well-sm">
-                    <h4>Recent Activity</h4>
-                </div>
-
-                <div>
-                    <?= ListView::widget([
-                        'dataProvider' => $recent_activity_provider,
-                        'options' => [
-                            'tag' => 'div',
-                            'class' => 'list-wrapper',
-                            'id' => 'list-wrapper',
-                        ],
-                        'layout' => "{summary}\n{items}\n{pager}",
-
-                        'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('_list_activity',['model' => $model]);
-                        },
-                        'pager' => [
-                            'firstPageLabel' => 'first',
-                            'lastPageLabel' => 'last',
-                            'nextPageLabel' => 'next',
-                            'prevPageLabel' => 'previous',
-                            'maxButtonCount' => 3,
-                        ],
-                    ]) ?>
-                </div>
-
-                <br>
-                <!-- Recent Tag-->
-                <div class="well well-sm">
-                    <h4>Recent Tag</h4>
-                </div>
-
-                <div>
-                    <?= ListView::widget([
-                        'dataProvider' => $recent_tags_provider,
-                        'options' => [
-                            'tag' => 'div',
-                            'class' => 'list-wrapper',
-                            'id' => 'list-wrapper',
-                        ],
-                        'layout' => "\n{items}\n{pager}",
-
-                        'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('_list_tag',['model' => $model]);
-                        },
-                        'pager' => [
-                            'firstPageLabel' => 'first',
-                            'lastPageLabel' => 'last',
-                            'nextPageLabel' => 'next',
-                            'prevPageLabel' => 'previous',
-                            'maxButtonCount' => 3,
-                        ],
-                    ]) ?>
-                </div>
-
-        </div>
-        </div>
-     </div>
-
-</div>
-    <?php ActiveForm::end() ?>
 
 <?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-index.js'); ?>
 
