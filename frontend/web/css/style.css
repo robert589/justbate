@@ -18,13 +18,51 @@ nav#menubar {
     padding: 1%;
     font-size: 1em;
     text-transform: uppercase;
-    background: #AA3939;
+    background: white !important;
+    border-bottom: 3px solid black;
 }
 
-nav#menubar li:hover {
-    background: #000 !important;
-    text-transform: uppercase;
+div.navbar-header a,
+li.item a,
+.navbar-collapse {
+    color: black !important;
+}
+
+input[type="text"]#search {
+    border: 1px solid black;
+    color: black;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+ul.dropdown {
+    background: none;
+}
+
+table#left-menu {
+    background: #4e5d6c;
+    height: inherit;
     color: white;
+}
+
+table#left-menu tr td button {
+    background: none;
+    text-transform: uppercase;
+    text-align: left;
+    width: 100% !important;
+}
+
+table#left-menu tr td span.badge {
+    float: right;
+}
+
+/* Page Header */
+div#page-header {
+    margin-bottom: 1%;
+}
+
+#button-badge {
+    width: 100%;
 }
 
 /* Post */
@@ -148,8 +186,8 @@ div#advertisement tr#advertisement-content {
 }
 
 /* Login Form */
-div.modal {
-    background: #FF5E5E !important;
+div#login-box.fade.in {
+    opacity: 1 !important;
 }
 
 div.modal-content div.modal-header {
