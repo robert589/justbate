@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\widgets\ActiveForm;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use common\models\Thread;
@@ -90,101 +91,113 @@ AppAsset::register($this);
                                     <?php } ?>
                                 </ul>
                             </li>
-                            </div>
                         </div>
-                    </nav>
+                    </div>
+                </nav>
 
-                    <div class="container" id="page-header">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <table class="table table-bordered table-responsive" id="left-menu">
-                                    <tr><td><button type="button" class="btn btn-default">World<span class="badge">&times;</span></button></td></tr>
-                                    <tr><td><button type="button" class="btn btn-default">World<span class="badge">&times;</span></button></td></tr>
-                                    <tr><td><button type="button" class="btn btn-default">World<span class="badge">&times;</span></button></td></tr>
+                <div class="container" id="page-header">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            <table class="table table-bordered table-responsive" id="left-menu">
+                                <thead><td></td></thead>
+                                <tr><td><button type="button" class="btn">Your Friend<span class="badge">&times;</span></button></td></tr>
+                                <tr><td><button type="button" class="btn">Popular Thread<span class="badge">&times;</span></button></td></tr>
+                                <tr><td><button type="button" class="btn">Interesting Thread<span class="badge">&times;</span></button></td></tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <form method="POST" action="<?php $form =ActiveForm::begin(['action'=>'site/create-thread', 'method' => 'post']); ?>"><?php ActiveForm::end() ?>
+                                <div class="col-xs-8" style="border-top: 1px solid black; border-left: 1px solid black;">
+                                    <input type="text" style="text-align: center;" placeholder="Topic title" class="form-control" />
+                                </div>
+                                <div class="col-xs-4" style="text-align: center; border-left: 1px solid black; border-top: 1px solid black; border-right: 1px solid black;">
+                                    <!-- <input type="text" style="text-align: center;" placeholder="Your choice" class="form-control" /> -->
+                                    <select class="form-control" style="text-align: center;">
+                                        <option>-- Choice --</option>
+                                        <option>Agree</option>
+                                        <option>Disagree</option>
+                                        <option>Neutral</option>
+                                        <option disabled role="separator" style=""></option>
+                                        <option>Custom</option>
+                                    </select>
+                                </div>
+                                <textarea class="form-control" style="border: 1px solid black; height: 175px; width: 100%;"></textarea>
+                                <div class="col-xs-6" style="border: 1px solid black; border-top: 0;">
+                                    <!-- <input type="text" class="form-control" placeholder="Post Category" /> -->
+                                    <?php
+                                    $category = Thread::findOne($model['thread_id']);
+                                    
+                                    ?>
+
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group"><div class="checkbox"><label><input name="anonymous" type="checkbox"> Anonymous</label></div></div>
+                                </div>
+                                <div style="margin-top: 1%; text-align: center; float: right;">
+                                    <button type="submit" id="create-button" class="btn btn-primary">
+                                        <span id="create-button-label">CREATE</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><hr />
+
+                <div class="container">
+                    <?= Breadcrumbs::widget([
+                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]) ?>
+                        <?= Alert::widget() ?>
+                        <?= $content ?>
+                    </div>
+                </div>
+
+                <!-- modal for login box -->
+                <div id="login-box" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div style="text-align: center;">LOGIN FORM
+                                    <span data-dismiss="modal" data-target="#login-box" style="float: right; cursor: pointer;">&times;</span>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-responsive table-bordered" align="center" id="login-form">
+                                    <tr><td><input id="username" type="text" placeholder="Your Username" /></td></tr>
+                                    <tr><td><input id="password" type="password" placeholder="Your Password" /></td></tr>
                                 </table>
-                            </div>
-                            <div class="col-xs-6">
-                                <form method="POST" action="">
-                                    <div class="col-xs-8" style="border-top: 1px solid black; border-left: 1px solid black;">
-                                        <input type="text" style="text-align: center;" placeholder="Topic title" class="form-control" />
+                                <button id="sign-up" class="btn btn-primary">Sign Up</button><hr />
+                                <div class="row">
+                                    <div id="social-icon">
+                                        <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-twitter" id="socmed-login"><span class="fa fa-twitter"></span> Sign in with Twitter</a></div>
+                                        <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-facebook" id="socmed-login"><span class="fa fa-facebook"></span> Sign in with Facebook</a></div>
+                                        <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-google" id="socmed-login"><span class="fa fa-google"></span> Sign in with Google</a></div>
                                     </div>
-                                    <div class="col-xs-4" style="text-align: center; border-left: 1px solid black; border-top: 1px solid black; border-right: 1px solid black;">
-                                        <!-- <input type="text" style="text-align: center;" placeholder="Your choice" class="form-control" /> -->
-                                        <select class="form-control">
-                                            <option>-- Choice --</option>
-                                            <option>Agree</option>
-                                            <option>Disagree</option>
-                                            <option>Neutral</option>
-                                            <option disabled role="separator" style=""></option>
-                                            <option>Custom</option>
-                                        </select>
-                                    </div>
-                                    <textarea class="form-control" style="border: 1px solid black; height: 175px; width: 100%;"></textarea>
-                                    <div style="margin-top: 1%; text-align: center; float: right;">
-                                        <button type="button" id="create-button" class="btn btn-primary">
-                                            <span id="create-button-label">CREATE</span>
-                                        </button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div><hr />
+                    </div>
+                </div>
 
+                <footer class="footer">
                     <div class="container">
-                        <?= Breadcrumbs::widget([
-                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                            ]) ?>
-                            <?= Alert::widget() ?>
-                            <?= $content ?>
-                        </div>
+                        <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
+                        <p class="pull-right"><?= Yii::powered() ?></p>
                     </div>
+                </footer>
+                <?php
+                $this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
+                $this->endBody(); ?>
+            </body>
 
-                    <!-- modal for login box -->
-                    <div id="login-box" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div style="text-align: center;">LOGIN FORM
-                                        <span data-dismiss="modal" data-target="#login-box" style="float: right; cursor: pointer;">&times;</span>
-                                    </div>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table table-responsive table-bordered" align="center" id="login-form">
-                                        <tr><td><input id="username" type="text" placeholder="Your Username" /></td></tr>
-                                        <tr><td><input id="password" type="password" placeholder="Your Password" /></td></tr>
-                                    </table>
-                                    <button id="sign-up" class="btn btn-primary">Sign Up</button><hr />
-                                    <div class="row">
-                                        <div id="social-icon">
-                                            <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-twitter" id="socmed-login"><span class="fa fa-twitter"></span> Sign in with Twitter</a></div>
-                                            <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-facebook" id="socmed-login"><span class="fa fa-facebook"></span> Sign in with Facebook</a></div>
-                                            <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-google" id="socmed-login"><span class="fa fa-google"></span> Sign in with Google</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <script type="text/javascript">
+            $("button#create-button").mouseenter(function(){
+                $('span#create-button-label').css("text-decoration","underline");
+            });
 
-                    <footer class="footer">
-                        <div class="container">
-                            <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
-                            <p class="pull-right"><?= Yii::powered() ?></p>
-                        </div>
-                    </footer>
-                    <?php
-                    $this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
-                    $this->endBody(); ?>
-                </body>
-
-                <script type="text/javascript">
-                $("button#create-button").mouseenter(function(){
-                    $('span#create-button-label').css("text-decoration","underline");
-                });
-
-                $("button#create-button").mouseleave(function(){
-                    $('span#create-button-label').css("text-decoration","none");
-                });
-                </script>
-                </html>
-                <?php $this->endPage() ?>
+            $("button#create-button").mouseleave(function(){
+                $('span#create-button-label').css("text-decoration","none");
+            });
+            </script>
+            </html>
+            <?php $this->endPage() ?>
