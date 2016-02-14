@@ -96,51 +96,7 @@ AppAsset::register($this);
                 </nav>
 
                 <div class="container" id="page-header">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-3">
-                            <table class="table table-bordered table-responsive" id="left-menu">
-                                <thead><td></td></thead>
-                                <tr><td><button type="button" class="btn">Your Friend<span class="badge">&times;</span></button></td></tr>
-                                <tr><td><button type="button" class="btn">Popular Thread<span class="badge">&times;</span></button></td></tr>
-                                <tr><td><button type="button" class="btn">Interesting Thread<span class="badge">&times;</span></button></td></tr>
-                            </table>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <form method="POST" action="<?php $form =ActiveForm::begin(['action'=>'site/create-thread', 'method' => 'post']); ?>"><?php ActiveForm::end() ?>
-                                <div class="col-xs-8" style="border-top: 1px solid black; border-left: 1px solid black;">
-                                    <input type="text" style="text-align: center;" placeholder="Topic title" class="form-control" />
-                                </div>
-                                <div class="col-xs-4" style="text-align: center; border-left: 1px solid black; border-top: 1px solid black; border-right: 1px solid black;">
-                                    <!-- <input type="text" style="text-align: center;" placeholder="Your choice" class="form-control" /> -->
-                                    <select class="form-control" style="text-align: center;">
-                                        <option>-- Choice --</option>
-                                        <option>Agree</option>
-                                        <option>Disagree</option>
-                                        <option>Neutral</option>
-                                        <option disabled role="separator" style=""></option>
-                                        <option>Custom</option>
-                                    </select>
-                                </div>
-                                <textarea class="form-control" style="border: 1px solid black; height: 175px; width: 100%;"></textarea>
-                                <div class="col-xs-6" style="border: 1px solid black; border-top: 0;">
-                                    <!-- <input type="text" class="form-control" placeholder="Post Category" /> -->
-                                    <?php
-                                    $category = Thread::findOne($model['thread_id']);
-                                    
-                                    ?>
 
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="form-group"><div class="checkbox"><label><input name="anonymous" type="checkbox"> Anonymous</label></div></div>
-                                </div>
-                                <div style="margin-top: 1%; text-align: center; float: right;">
-                                    <button type="submit" id="create-button" class="btn btn-primary">
-                                        <span id="create-button-label">CREATE</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div><hr />
 
                 <div class="container">

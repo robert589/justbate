@@ -16,19 +16,17 @@ class CreateThreadForm extends Model
 	public $user_id;
 	public $topic_name;
 	public $anonymous;
-	public $topic_description;
-	public $user_opinion;
-	public $relevant_parties;
+	public $description;
 	public $choice;
+	public $user_choice;
 
 	public function rules()
 	{
 		return [
-			[['user_id', 'title', 'topic_description', 'user_opinion'], 'required'],
+			[['user_id', 'title', 'description','user_choice'], 'required'],
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
 			['topic_name', 'string'],
-			['relevant_parties','each', 'rule' => ['integer']],
 			['choice', 'each', 'rule' => ['string']]
 		];
 	}
@@ -41,8 +39,7 @@ class CreateThreadForm extends Model
 			$thread->title = $this->title;
 			$thread->user_id = $this->user_id;
 			$thread->anonymous = $this->anonymous;
-			$thread->topic_description = $this->topic_description;
-			$thread->user_opinion = $this->user_opinion;
+			$thread->description = $this->description;
 			$thread->topic_name = $this->topic_name;
 
 			//save it
