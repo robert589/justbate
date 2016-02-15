@@ -33,84 +33,63 @@
 	$redirectFrom = \Yii::$app->homeUrl . '../../thread/index?id=' . $model['thread_id'];
 	$loginModel = new LoginForm();
 	echo $this->render('../site/login', ['model' => $loginModel,  'redirectFrom' => $redirectFrom]);
-
 	Modal::end();
 ?>
 
 
 
-<div class="col-md-offset-1 col-md-10">
-	<div class="row">
-		<!-- Title of the thread -->
-		<div class="col-md-8">	
-			<h2><?= $model['title'] ?> </h2>
+<div class="container">
+	<div class="col-md-10" style="line-height: 2em !important;">
+		<div class="row">
+			<div class="col-md-12" style=""><?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?></div>
+			<div class="col-md-12"><h2><?= $model['title'] ?> </h2></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12"><h3><?= $model['topic_description'] ?></h3></div>
+		</div>
+		<hr>
+
+		<div class="row" style="border:1px solid ">
+			<div class="col-md-5"><?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?></div>
+			<div class="col-md-7"><?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?></div>
 		</div>
 
-		<!-- Submit Rate-->
-		<?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?>
-	</div>
-	<div class="row">
-		<!-- Topic Description -->
-		<div class="col-md-12">
-			<h3><?= $model['topic_description'] ?></h3>
+		<hr>
 
+		<!-- Content -->
+		<div class="row" style="margin:1px">
+			<?= $model['user_opinion']?>
 		</div>
-	</div>
-	<hr>
 
-	<div class="row" style="border:1px solid ">
-		<div class="col-md-5">
-			<!-- Submit vote-->
-			<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+		<br>
 
-		</div>
-		<div class="col-md-7">
-			<!-- Comment Input-->
-			<?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?>
+		<!-- Comment Part-->
+		<div class="row">
+			<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
 
-		</div>
-	</div>
+				<div class="col-md-6">
+					<div align="center">
+						<h3><?= $thread_choice?></h3>
+					</div>
+					<?= ListView::widget([
+						'dataProvider' => $comment_provider,
+						'summary' => false,
+						'itemOptions' => ['class' => 'item'],
+						'layout' => "{summary}\n{items}\n{pager}",
+						'itemView' => function ($model, $key, $index, $widget) {
+							$childCommentForm = new \frontend\models\ChildCommentForm();
+							$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+							return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
+													'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
+													'vote' => $comment_vote_comment['vote']]);
+						}
 
-	<hr>
-
-	<!-- Content -->
-	<div class="row" style="margin:1px">
-		<?= $model['user_opinion']?>
-	</div>
-
-	<br>
-
-	<!-- Comment Part-->
-	<div class="row">
-		<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
-
-			<div class="col-md-6">
-				<div align="center">
-					<h3><?= $thread_choice?></h3>
+					]) ?>
 				</div>
-				<?= ListView::widget([
-					'dataProvider' => $comment_provider,
-				//	'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
-					'summary' => false,
-					'itemOptions' => ['class' => 'item'],
-					'layout' => "{summary}\n{items}\n{pager}",
-					'itemView' => function ($model, $key, $index, $widget) {
-						$childCommentForm = new \frontend\models\ChildCommentForm();
-						$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
-						return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
-												'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
-												'vote' => $comment_vote_comment['vote']]);
-					}
 
-				]) ?>
-			</div>
-
-		<?php } ?>
+			<?php } ?>
+		</div>
 	</div>
-
-
-
-	<br><br>
 </div>
 
 
@@ -130,7 +109,7 @@ $script =<<< JS
 	      	if($guest){
 	      		beginLoginModal();
 	      		return false;
-	      	}  
+	      	}
 	        $("#comment-form").submit()
 	        return false;
 	     }
@@ -148,9 +127,9 @@ $script =<<< JS
 
 			beginLoginModal();
 			return false;
-		} 
+		}
 		$("#userThreadRate").val(value);
-   	
+
 		$("#ratingForm").submit();
 		return false;
 	});

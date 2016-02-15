@@ -1,46 +1,30 @@
 <?php
-
 	use kartik\rating\StarRating;
-
-use yii\helpers\Html;
-use yii\helpers\Url;
-      //  Yii::$app->end(print_r($model));
-
-       // $model = $model[0];
+	use yii\helpers\Html;
+	use yii\helpers\Url;
 ?>
-	<article>
-		<div class="box col-md-12">
 
-
-			<div class="row">
-					<?= Html::a($model['title'], 
-					Url::to('../thread/index?id='. $model['thread_id']))?>
-			</div>
-
-			
-			<div class="row">
-
-			<div class="col-md-5">
+<article>
+	<div class="box col-md-12">
+		<div class="row" style="margin: 0;"><hr />
+			<div class="col-xs-12" style="font-size: 2em; line-height: 40px !important;"><?= Html::a($model['title'], Url::to('../thread/index?id='. $model['thread_id']))?></div><br />
+			<div class="col-xs-12 col-md-5" style="margin: 0;">
 				<?= StarRating::widget([
-	    			'name' => 'rating_2',
-	    			'value' => $model['avg_rating'],
-	    			'readonly' => true,
-	    			'pluginOptions' => [
-	    				'showCaption' => false,
-	        			'min' => 0,
-	        			'max' => 5,
-	        			'step' => 1,
-	       	 			'size' => 'xs',
-
-					]])?>
-			</div class="col-md-7" align="center center-vertical">
-				<p align="right" style="font-size:8px">Created by   <?= $model['first_name']?>  <?=$model['last_name']?> at <?= $model['date_created'] ?></p>
-
-
+					'name' => 'rating_2',
+					'value' => $model['avg_rating'],
+					'readonly' => true,
+					'pluginOptions' => [
+						'showCaption' => false,
+						'min' => 0,
+						'max' => 5,
+						'step' => 1,
+						'size' => 'xs',
+						]])
+				?>
 			</div>
+			<div class="col-xs-12 col-md-7" style="margin: 0;">
+				<p style="font-size:10pt; float: right;"><span class="glyphicon glyphicon-user"></span> <?= $model['first_name']?>  <?=$model['last_name']?> <span style="margin-left: 16px;" id="post-created"><span class="glyphicon glyphicon-time"></span> <?= $model['date_created'] ?></span></p>
 			</div>
-			
-<br><br><br><br>
-	</article>
-
-	<hr>
+		</div>
+	</div>
+</article>
