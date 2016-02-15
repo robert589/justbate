@@ -1,4 +1,5 @@
 /* Web Content */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 body {
     background: #fff !important;
     color: #000 !important;
@@ -17,6 +18,7 @@ nav#menubar {
     border: 0;
     padding: 1%;
     font-size: 1em;
+    font-family: Open Sans;
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
@@ -51,10 +53,6 @@ table#left-menu tr td button {
     width: 100% !important;
 }
 
-table#left-menu tr td span.badge {
-    float: right;
-}
-
 /* Page Header */
 div#page-header {
     margin-bottom: 1%;
@@ -64,66 +62,10 @@ div#page-header {
     width: 100%;
 }
 
-/* Post */
-div#advertisement,
-div#post {
-    /* margin-left: 3%; */
+div#main-post {
     text-align: justify;
-    line-height: 2em;
-}
-
-div#post-full {
-    border-left: 1px solid rgba(18,18,18,.25);
-    border-right: 1px solid rgba(18,18,18,.25);
-}
-
-div#post div#post-title div#post-title-value {
-    font-size: 2em;
-    font-weight: bold;
-}
-
-div#post div#post-title span {
-    font-size: 1em;
-    margin: 2%;
-    margin-left: 0;
-    margin-bottom: 0;
-    font-weight: normal;
-}
-
-div#post div#post-content {
-    font-size: 1em;
-    margin: 2%;
-    margin-left: 0;
-    line-height: 2em !important;
-    font-weight: normal;
-    text-align: justify;
-}
-
-/* Additional Content */
-div#additional-menu {
-    margin-right: 3%;
-    width: 100%;
-    text-align: center;
-    line-height: 2em;
-}
-
-div#additional-menu table {
-    width: 100%;
-    text-align: center;
-}
-
-div#additional-menu table thead {
-    background: #393939;
-    text-transform: uppercase;
-    color: white;
-}
-
-div#additional-menu table tbody {
-    background: none;
-}
-
-div#additional-menu table tbody tr#content:nth-child(2) {
-    background: #F0F0F0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 /* Ratebar */
@@ -149,39 +91,6 @@ div#ratebar span#downvote {
     text-align: center;
     float: left;
     width: 30%;
-}
-
-
-/* Advertisement */
-div#advertisement div#advertisement-poster {
-    text-align: center;
-    background: green;
-    color: white;
-    padding: 5%;
-}
-
-div#advertisement div#advertisement-poster img {
-    position: relative;
-    max-width: 175px;
-    padding: 5%;
-}
-
-div#advertisement tr#advertisement-header {
-    color: white;
-    text-align: center;
-    padding: 1%;
-    text-transform: uppercase;
-    font-weight: bold;
-    background: #AA3939;
-    width: 100%;
-}
-
-div#advertisement tr#advertisement-content {
-    color: white;
-    text-align: center;
-    padding: 1%;
-    background: #39AA39;
-    width: 100%;
 }
 
 /* Login Form */
@@ -231,9 +140,4 @@ div.modal-body button#sign-up {
     font-size: 2em;
     text-transform: uppercase;
     background: #AA3939;
-}
-
-/* Et Cetera */
-hr {
-    opacity: .25;
 }
