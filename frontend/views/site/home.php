@@ -134,7 +134,7 @@ $this->title = "Home | Propose";
 			<?= Html::endForm() ?>
 		<?php Pjax::end(); ?>
 	</div>
-
-	<?php
-	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/home.js');
-	?>
+</div>
+<?php
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/home.js');
+?>
