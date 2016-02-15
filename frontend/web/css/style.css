@@ -40,8 +40,8 @@ ul.dropdown {
 }
 
 table#left-menu {
-    background: #4e5d6c;
-    color: white;
+    background: white;
+    color: black;
 }
 
 table#left-menu tr td button {

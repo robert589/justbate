@@ -103,17 +103,29 @@ class SiteController extends Controller
         $dataProvider = new SqlDataProvider([
             'sql' => $sql,  
             'totalCount' => $totalCount,
-          
             'pagination' => [
                 'pageSize' =>10,
             ],
 
         ]);
 
-        $create_thread_form  = new CreateThreadForm();
 
-        return $this->render('home', ['listDataProvider' => $dataProvider, 'create_thread_form' => $create_thread_form]);
+        $create_thread_form  = new CreateThreadForm();
+        $user_choice = $this->getDefaultChoice();
+
+        //retrieve trending topic
+        $trending_topic_list = $this->getTredingTopicList();
+
+        //get popular category
+        $category_list = $this->getPopularCategory();
+
+        return $this->render('home', ['category_list' => $category_list,
+                                    'trending_topic_list' => $trending_topic_list,
+                                    'listDataProvider' => $dataProvider,
+                                    'user_choice' => $user_choice,
+                                    'create_thread_form' => $create_thread_form]);
     }
+
 
     public function actionFilteredpjax(){
         Yii::trace("Filtered Pjax Cntroller");
@@ -183,6 +195,24 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+
+    public function actionCreateThread(){
+        $create_thread_form = new CreateThreadForm();
+        $user_choice = $this->getDefaultChoice();
+        $create_thread_form->user_id = Yii::$app->user->getId();
+        if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
+
+            if($create_thread_form->create()){
+                return $this->redirect(Yii::getAlias('@base-url') . '/site/home');
+            }
+        }
+        else{
+            Yii::$app->end(print_r($create_thread_form->getErrors()));
+        }
+
+        return $this->renderAjax('home', ['create_thread_form' => $create_thread_form, 'user_choice' => $user_choice]);
     }
 
     /**
@@ -300,4 +330,54 @@ class SiteController extends Controller
         return $trendingTopic;
     }
 
+    public function actionTopicList(){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!empty($_GET['q'])) {
+            $q = $_GET['q'];
+            $topicList = \common\models\ThreadTopic::getTopicList($q);
+            $out['results'] = array_values($topicList);
+        }
+
+        return $out;
+    }
+
+    private function getDefaultChoice(){
+        $defaultChoice = array();
+        $defaultChoice['Agree'] = 'Agree';
+        $defaultChoice['Disagree'] = 'Disagree';
+        $defaultChoice['Neutral'] = 'Neutral';
+
+        return $defaultChoice;
+    }
+
+    private function getTredingTopicList(){
+        $trending_topic_list = Thread::getTop10TrendingTopic();
+
+        $mapped_trending_topic_list = array();
+
+        foreach($trending_topic_list as $trending_topic){
+            $mapped_trending_topic['label'] = $trending_topic['title'];
+            $mapped_trending_topic['url'] = Yii::getAlias('@base-url') . '/thread/index?id=' . $trending_topic['thread_id'];
+
+            $mapped_trending_topic_list[] = $mapped_trending_topic;
+
+        }
+        return $mapped_trending_topic_list;
+    }
+
+    private function getPopularCategory(){
+        $category_list = ThreadTopic::getPopularCategory();
+
+        $mapped_category_list = array();
+        foreach($category_list as $category){
+            $mapped_category['label'] = $category['topic_name'];
+            $mapped_category['url']  = Yii::getAlias('@base-url') . '/site/home?category=' . $category['topic_name'];
+
+            $mapped_category_list[] = $mapped_category;
+        }
+
+
+        return $mapped_category_list;
+    }
 }

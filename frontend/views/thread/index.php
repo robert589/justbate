@@ -44,9 +44,7 @@
 			<div class="col-md-12" style=""><?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?></div>
 			<div class="col-md-12"><h2><?= $model['title'] ?> </h2></div>
 		</div>
-		<div class="row">
-			<div class="col-md-12"><h3><?= $model['topic_description'] ?></h3></div>
-		</div>
+
 		<hr>
 
 		<div class="row" style="border:1px solid ">
@@ -58,7 +56,7 @@
 
 		<!-- Content -->
 		<div class="row" style="margin:1px">
-			<?= $model['user_opinion']?>
+			<?= $model['description']?>
 		</div>
 
 		<br>

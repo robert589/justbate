@@ -14,7 +14,7 @@ class CreateThreadForm extends Model
 {
 	public $title;
 	public $user_id;
-	public $topic_name;
+	public $category;
 	public $anonymous;
 	public $description;
 	public $choice;
@@ -26,7 +26,7 @@ class CreateThreadForm extends Model
 			[['user_id', 'title', 'description','user_choice'], 'required'],
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
-			['topic_name', 'string'],
+			['category', 'string'],
 			['choice', 'each', 'rule' => ['string']]
 		];
 	}
@@ -40,8 +40,8 @@ class CreateThreadForm extends Model
 			$thread->user_id = $this->user_id;
 			$thread->anonymous = $this->anonymous;
 			$thread->description = $this->description;
-			$thread->topic_name = $this->topic_name;
-
+			$thread->topic_name = $this->category;
+			$thread->poster_choice = $this->user_choice;
 			//save it
 			if($thread->save()){
 				return $thread;

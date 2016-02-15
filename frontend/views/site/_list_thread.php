@@ -7,7 +7,10 @@
 <article>
 	<div class="box col-md-12">
 		<div class="row" style="margin: 0;"><hr />
-			<div class="col-xs-12" style="font-size: 2em; line-height: 40px !important;"><?= Html::a($model['title'], Url::to('../thread/index?id='. $model['thread_id']))?></div><br />
+			<div class="col-xs-12" style="font-size: 20px; line-height: 40px !important;"><?= Html::a($model['title'], Url::to('../thread/index?id='. $model['thread_id']))?></div><br />
+			<div class="col-xs-12">
+				<?= $model['description'] ?>
+			</div>
 			<div class="col-xs-12 col-md-5" style="margin: 0;">
 				<?= StarRating::widget([
 					'name' => 'rating_2',
