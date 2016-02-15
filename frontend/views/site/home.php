@@ -4,16 +4,11 @@ use kartik\select2\Select2;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\sidenav\SideNav;
-
 use yii\helpers\Html;
-//Yii::$app->end(Yii::getAlias('@base-url'));
 use yii\helpers\Url;
 use kop\y2sp\ScrollPager;
-// \Yii::$app->end(print_r($topicData));
 $this->title = "Home | Propose";
-
 ?>
-
 
 <div class="col-md-12">
 	<div class="col-md-3">
@@ -26,18 +21,20 @@ $this->title = "Home | Propose";
 		</div>
 		<!-- <label class="control-label">Top Tag</label> -->
 	</div>
-	<div class="col-md-6">
-		<div class="row">
+	<div class="row">
+		<div class="col-offset-md-3 col-md-6">
 			<?php $form = ActiveForm::begin(['action' => 'site/create-thread', 'method' => 'post']) ?>
 			<div class="col-xs-6" style="padding: 0;"><?= $form->field($create_thread_form, 'title')->textInput(['placeholder' => 'Post Title', 'class' => 'form-control', 'style' => "text-align: center;" ])->label(false) ?></div>
 			<div class="col-xs-6" style="padding-right: 0;"><?= $form->field($create_thread_form, 'user_choice')->textInput(['placeholder' => 'User Choice', 'class' => 'form-control', 'style' => "text-align: center;" ])->label(false) ?></div>
 			<?= $form->field($create_thread_form, 'description')->textarea(['placeholder' => 'What are you thinking about it?', 'class' => 'form-control', 'style' => ' height: 175px; width: 100%;'])->label(false) ?>
 			<div style="vertical-align: middle;" class="col-xs-6"><div class="form-group"><div class="checkbox"><label><input name="anonymous" type="checkbox"> Post as Anonymous?</label></div></div></div>
-			<div style="vertical-align: middle;" class="col-xs-6"><div style="text-align: center; float: right;">
-				<button type="submit" id="create-button" class="btn btn-primary">
-					<span id="create-button-label">CREATE</span>
-				</button>
-			</div></div>
+			<div style="vertical-align: middle;" class="col-xs-6">
+				<div style="text-align: center; float: right;">
+					<button type="submit" id="create-button" class="btn btn-primary">
+						<span id="create-button-label">CREATE</span>
+					</button>
+				</div>
+			</div>
 			<?php ActiveForm::end() ?>
 		</div>
 		<?php Pjax::begin(['timeout' => false,
@@ -47,7 +44,7 @@ $this->title = "Home | Propose";
 			]]); ?>
 			<!-- The form only be used as refresh page -->
 			<?= Html::beginForm(['site/home'], 'post', ['id' => 'refresh-form', 'data-pjax' => '', 'class' => 'form-inline']); ?>
-			<!-- this hidden input will be filled by select2:select event -->
+			<!-- this hidden input will be filled by select2:select event --><br />
 			<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
 			<?= ListView::widget([
 				'id' => 'threadList',
@@ -59,13 +56,14 @@ $this->title = "Home | Propose";
 				'itemView' => function ($model, $key, $index, $widget) {
 					return $this->render('_list_thread',['model' => $model]);
 				}
-				])
+			])
 			?>
 			<?= Html::endForm() ?>
 			<?php Pjax::end(); ?>
-	</div>
-</div>
+		</div>
 
-<?php
+	</div>
+
+	<?php
 	$this->registerJsFile(Yii::$app->request->baseUrl.'/js/home.js');
-?>
+	?>
