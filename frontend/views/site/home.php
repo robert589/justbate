@@ -23,26 +23,25 @@ $this->title = "Home | Propose";
 		<!-- <label class="control-label">Top Tag</label> -->
 
 		<div class="col-xs-12">
-			<label>Popular Category</label>
 
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
-				'heading' => 'Options',
+				'heading' => 'Popular Category',
 				'items' => $category_list,
 			]) ?>
 		</div>
 
 		<div class="col-xs-12">
-			<label>Trending Topic</label>
 
 			<?= SideNav::widget([
 					'type' => SideNav::TYPE_DEFAULT,
-					'heading' => 'Options',
+					'heading' => 'Trending Topic',
 					'items' => $trending_topic_list,
 			]) ?>
 		</div>
 	</div>
 	<div class="col-md-7">
+		<div class="col-md-12">
 		<?php Pjax::begin([
 			'id' => 'createThread',
 			'timeout' => false,
@@ -105,9 +104,9 @@ $this->title = "Home | Propose";
 			<?php ActiveForm::end() ?>
 
 		<?php Pjax::end() ?>
+		</div>
 
-
-
+		<div class="col-md-12">
 
 		<?php Pjax::begin(['timeout' => false,
 		'id' => 'filterHomes',
@@ -133,6 +132,8 @@ $this->title = "Home | Propose";
 				?>
 			<?= Html::endForm() ?>
 		<?php Pjax::end(); ?>
+
+		</div>
 	</div>
 </div>
 <?php
