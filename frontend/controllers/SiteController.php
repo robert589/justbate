@@ -109,7 +109,7 @@ class SiteController extends Controller
 
         ]);
 
-
+        //Create form
         $create_thread_form  = new CreateThreadForm();
         $user_choice = $this->getDefaultChoice();
 
@@ -318,17 +318,6 @@ class SiteController extends Controller
         ]);
     }
 
-    private function mapTrendingTopic($data){
-        $trendingTopic = array();
-
-        foreach($data as $datum){
-             $temp['label'] = $datum['title'];
-            $temp['url'] = Yii::$app->homeUrl . "../../thread/index?id=" . $datum['thread_id'];
-            array_push($trendingTopic, $temp);
-        }
-
-        return $trendingTopic;
-    }
 
     public function actionTopicList(){
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
