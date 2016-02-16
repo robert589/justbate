@@ -1,33 +1,17 @@
 
-    
+
     <div id="wrapper">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Feeds
-                    </a>
-                </li>
-                <li> 
-                    <a href="#">All Activity</a>
-                </li>
-                <li>
-                    <a href="#">Critique</a>
-                </li>
-                <li>
-                    <a href="#">Solution</a>
-                </li>
-                <li>
-                    <a href="#">Proposal</a>
-                </li>
-                <li>
-                    <a href="#">Followers <span class="badge">5</span></a>
-                </li>
-                <li>
-                    <a href="#">Following <span class="badge">5</span></a>
-                </li>
+                <li class="sidebar-brand"><a href="#">Feeds</a></li>
+                <li> <a href="#">All Activity</a></li>
+                <li><a href="#">Critique</a></li>
+                <li><a href="#">Solution</a></li>
+                <li><a href="#">Proposal</a></li>
+                <li><a href="#">Followers <span class="badge">5</span></a></li>
+                <li><a href="#">Following <span class="badge">5</span></a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -54,33 +38,33 @@
                                     }
 
                                 </script>
-                                
+
 
                                 <input type='text' id='userDescription' placeholder='Write here' />
                                 <input type='button' onclick='changeThis()' value='Submit' onclick=\"remove('" + userDescription + "');\"/> <br>
                                 <span id='description'></span>
                                 <br><br>
                                 <button type="button" class="btn btn-primary">Followers <span class="badge">100</span></button>
-                            </div>               
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        
+
 
 
         <!-- /#page-content-wrapper -->
         <div class="well well-sm">
-            <h4>Basic Information</h4>      
+            <h4>Basic Information</h4>
         </div>
-       
+
         <div class="well well-sm">
-            <h4>Contact Information</h4>      
+            <h4>Contact Information</h4>
         </div>
         <div class="well well-sm">
-            <h4>Additional Information</h4>      
+            <h4>Additional Information</h4>
         </div>
         <?php
         Yii::app()->user->name ?>

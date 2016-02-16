@@ -141,3 +141,33 @@ div.modal-body button#sign-up {
     text-transform: uppercase;
     background: #AA3939;
 }
+
+div#submitThreadVote div#form-control input[type="radio"] {
+    margin-right: 1%;
+}
+
+div.field-submitthreadvoteform-choice_text label.control-label {
+    display: none;
+    margin: 0;
+}
+
+div#vote button[type="submit"].btn-primary {
+    width: 100% !important;
+}
+
+div.field-submitthreadvoteform-choice_text {
+    margin: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+div.input-multiselect {
+    height: auto !important;
+    vertical-align: middle;
+    text-align: justify;
+}
+
+h3#user-choice {
+    font-weight: bold;
+    text-transform: uppercase;
+}

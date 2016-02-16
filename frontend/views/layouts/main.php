@@ -94,10 +94,6 @@ AppAsset::register($this);
                     </div>
                 </nav>
 
-                <div class="container" id="page-header">
-
-                </div><hr />
-
                 <div class="container">
                     <?= Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -121,7 +117,14 @@ AppAsset::register($this);
                                     <tr><td><input id="username" type="text" placeholder="Your Username" /></td></tr>
                                     <tr><td><input id="password" type="password" placeholder="Your Password" /></td></tr>
                                 </table>
-                                <button id="sign-up" class="btn btn-primary">Sign Up</button><hr />
+                                <div class="row">
+                                    <div class="col-xs-12"><button id="sign-up" class="btn btn-primary">Sign Up</button></div>
+                                    <div class="col-xs-12">
+                                        <div class="input-group" style="width: 100%; border: 0;">
+                                            <span class="input-group-addon"><input type="checkbox"> Remember Me</span>
+                                        </div>
+                                    </div>
+                                </div><hr />
                                 <div class="row">
                                     <div id="social-icon">
                                         <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-twitter" id="socmed-login"><span class="fa fa-twitter"></span> Sign in with Twitter</a></div>

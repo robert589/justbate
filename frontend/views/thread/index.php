@@ -39,58 +39,53 @@
 
 
 <div class="container">
-	<div class="col-md-10" style="line-height: 2em !important;">
-		<div class="row">
-			<div class="col-md-12" style=""><?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?></div>
+	<div class="row">
+		<div style="float: left;" class="col-xs-12"><?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?></div>
+	</div>
+		<div class="row" style="text-align: center;">
 			<div class="col-md-12"><h2><?= $model['title'] ?> </h2></div>
 		</div>
 		<div class="row">
-			<div class="col-md-12"><h3><?= $model['topic_description'] ?></h3></div>
+			<div class="col-md-12" style="text-align: center;"><h3><?= $model['topic_description'] ?></h3></div>
 		</div>
 		<hr>
 
-		<div class="row" style="border:1px solid ">
-			<div class="col-md-5"><?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?></div>
-			<div class="col-md-7"><?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?></div>
+		<div class="row" style="border:1px solid; padding-bottom: 15px;">
+			<div class="col-xs-6" align="center" style="height: 143px;">
+				<?= $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]) ?>
+			</div>
+			<div class="col-xs-6">
+				<?= $this->render('_comment_input_box.php', [ 'thread_id' => $model['thread_id'], 'commentModel' => $commentModel, 'thread_choice' => $thread_choice]) ?>
+			</div>
 		</div>
 
-		<hr>
+		<hr />
 
 		<!-- Content -->
-		<div class="row" style="margin:1px">
-			<?= $model['user_opinion']?>
-		</div>
-
-		<br>
+		<div style="text-align: center;" class="row"><sup style="margin-right: 16px;" class="fa fa-quote-left"></sup><?= $model['user_opinion']?><sup style="margin-left: 16px;" class="fa fa-quote-right"></sup></div><hr />
 
 		<!-- Comment Part-->
 		<div class="row">
 			<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
-
-				<div class="col-md-6">
-					<div align="center">
-						<h3><?= $thread_choice?></h3>
-					</div>
+				<div class="col-xs-12 col-md-4">
+						<h3 id="user-choice" style="text-align: center;"><?= $thread_choice?></h3>
 					<?= ListView::widget([
 						'dataProvider' => $comment_provider,
 						'summary' => false,
 						'itemOptions' => ['class' => 'item'],
 						'layout' => "{summary}\n{items}\n{pager}",
-						'itemView' => function ($model, $key, $index, $widget) {
+							'itemView' => function ($model, $key, $index, $widget) {
 							$childCommentForm = new \frontend\models\ChildCommentForm();
 							$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
 							return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
 													'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
 													'vote' => $comment_vote_comment['vote']]);
 						}
-
-					]) ?>
+					]) ?><hr />
 				</div>
-
 			<?php } ?>
 		</div>
 	</div>
-</div>
 
 
 <?php

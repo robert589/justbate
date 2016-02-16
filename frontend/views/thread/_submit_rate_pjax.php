@@ -1,9 +1,9 @@
-    <?php
-    use yii\helpers\Html;
-    use yii\widgets\Pjax;
-    use kartik\widgets\StarRating;
+<?php
+use yii\helpers\Html;
+use yii\widgets\Pjax;
+use kartik\widgets\StarRating;
 
-    ?>
+?>
 
 <?php Pjax::begin([
     'id' => 'submitRating',
@@ -15,12 +15,11 @@
 ]);?>
 
 <!--Rating Part-->
-<div class="col-md-4">
-    <!--Rating form part-->
-    <?= Html::beginForm('submit-rate', 'post', ['id'=>"ratingForm" ,'data-pjax' => '#submitRating', 'class' => 'form-inline']); ?>
-
+<div class="row">
+    <div class="col-xs-6" style="text-align: right;">
+        <!--Rating form part-->
+        <?= Html::beginForm('submit-rate', 'post', ['id'=>"ratingForm" ,'data-pjax' => '#submitRating', 'class' => 'form-inline']); ?>
         <?= Html::hiddenInput('thread_id', $thread_id) ?>
-
         <!-- Current Rating -->
         <?= StarRating::widget([
             'name' => 'userThreadRate',
@@ -36,14 +35,12 @@
             ],
             'pluginEvents' => [
             ]
-        ])?>
-    <?= Html::endForm() ?>
-
-
-    <!-- Total rater -->
-    <div align="center">
-        <label> <?= $total_raters ?> Voters </label>
-    </div>
-</div>
-
-<?php Pjax::end();?>
+            ])?>
+        </div>
+        <div class="col-xs-6" style="text-align: left; height: 100%;">
+            <span class="label label-primary"><?= $total_raters ?> Voter(s)</label>
+        </div>
+                <?= Html::endForm() ?>
+            </div>
+        </div>
+        <?php Pjax::end();?>
