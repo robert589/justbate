@@ -63,7 +63,12 @@ class Thread extends ActiveRecord{
         ";
     }
 
-      public static function retrieveTop10TrendingTopic(){
+
+    /**
+     * WEAKNESS: it is not right, it is wrong
+     * @return array
+     */
+      public static function getTop10TrendingTopic(){
 
         //Retrieve top 10 trending topic which counted from participants
         $sql = "SELECT T.thread_id, TT.participants, title from thread T
@@ -71,13 +76,13 @@ class Thread extends ActiveRecord{
     (SELECT thread_id, COUNT(user_id) as participants
         from (SELECT distinct user_id, thread_id from thread_rate
               union
-             SELECT distinct user_id, thread_id from comment where thread_id is not null)  P
+             SELECT distinct user_id, thread_id from thread_comment inner join comment on thread_comment.comment_id = comment.comment_id where thread_id is not null)  P
         group by thread_id
         order by participants desc
         limit 10 ) TT
         on T.thread_id = TT.thread_id
         limit 10
-        ";
+";
         return \Yii::$app->db->createCommand($sql)->queryAll();
 
 

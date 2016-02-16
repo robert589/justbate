@@ -22,4 +22,17 @@ class ThreadTopic extends ActiveRecord{
         bindParam(":q", $q)->
         queryAll();
     }
+
+    /**
+     * WRONGGGG, MOTHERFUCKER WRONG, CHANGE PLEASE
+     */
+    public static function getPopularCategory(){
+        $sql = "SELECT topic_name
+                from thread_topic
+                ";
+
+        return Yii::$app->db->createCommand($sql)->
+        queryAll();
+
+    }
 }
