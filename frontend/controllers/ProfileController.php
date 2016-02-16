@@ -30,21 +30,11 @@ class ProfileController extends Controller
             $user->username = $_GET['username'];
             if($user->checkUsernameExist()){
                 $user_info =  $user->getUser();
-//                $user_recent_activity = $this->getRecentActivity($username);
 
-                /*
-                // build an ActiveDataProvider with an empty query and a pagination with 35 items for page
-                $recent_activity_provider = new \yii\data\ArrayDataProvider([
-                    'allModels' => $user_recent_activity,
-                    'pagination' => [
-                        'pageSize' => 35,
-                    ],
-                ]);*/
+                //retrieven follower
+                //retrieve following
 
-                //$recent_tags_provider = $this->getRecentTagsAsProvider($username);
-
-                return $this->render('index', ['user' => $user_info
-                                            ]);
+                return $this->render('index', ['user' => $user_info]);
             }
             else{
                 Yii::$app->end();
