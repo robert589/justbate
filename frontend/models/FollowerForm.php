@@ -11,7 +11,7 @@ class FollowerForm extends Model
 	public function rules()
 	{
 		return [
-			[['follower', 'followee'], 'required']
+			[['follower_id', 'followee_id'], 'required']
 		];
 	}
 }
