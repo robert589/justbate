@@ -171,3 +171,16 @@ h3#user-choice {
     font-weight: bold;
     text-transform: uppercase;
 }
+
+table#bio-table tbody tr td {
+    border: 0;
+}
+
+button#upload-image {
+    width: 148px;
+    bottom: 0;
+    position: absolute;
+    left: 15px;
+    border-radius: 0;
+    opacity: 0;
+}
