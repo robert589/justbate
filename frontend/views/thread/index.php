@@ -52,7 +52,7 @@
 		<div class="row">
 			<?php foreach($comment_providers as $thread_choice => $comment_provider){ ?>
 				<div class="col-xs-12 col-md-4">
-						<h3 id="user-choice" style="text-align: center;"><?= $thread_choice?></h3>
+					<h3 id="user-choice" style="text-align: center;"><?= $thread_choice?></h3>
 					<?= ListView::widget([
 						'dataProvider' => $comment_provider,
 						'summary' => false,
@@ -76,11 +76,6 @@
 
 //Inline script, not really good
 $script =<<< JS
-	function beginLoginModal(){
-		$("#loginModal").modal("show")
-			.find('#loginModal')
-			.load($(this).attr("value"));
-	}
 
 	$(document).on('keydown', '#comment-box', function(event) {
 	    if (event.keyCode == 13) {
