@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\Choice;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -17,7 +18,7 @@ class CreateThreadForm extends Model
 	public $category;
 	public $anonymous;
 	public $description;
-	public $choice;
+	public $choices;
 	public $user_choice;
 
 	public function rules()
@@ -27,7 +28,7 @@ class CreateThreadForm extends Model
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
 			['category', 'string'],
-			['choice', 'each', 'rule' => ['string']]
+			['choices', 'each', 'rule' => ['string']]
 		];
 	}
 
@@ -44,7 +45,17 @@ class CreateThreadForm extends Model
 			$thread->poster_choice = $this->user_choice;
 			//save it
 			if($thread->save()){
-				return $thread;
+				//For prototyping only, please remove it
+				if($this->choices == null){
+					$this->choices = ['Agree', 'Disagree', 'Neutral'];
+				}
+
+
+				if($this->saveChoice($this->choices, $thread->thread_id)){
+
+					return $thread->thread_id;
+
+				}
 			}
 
 			//save relevant_parties
@@ -57,6 +68,19 @@ class CreateThreadForm extends Model
 		return true;
 
 
+	}
+
+	private function saveChoice($choices, $thread_id){
+		foreach($choices as $choice_item){
+			$choice = new Choice();
+			$choice->thread_id = $thread_id;
+			$choice->choice_text = $choice_item;
+			if(!$choice->save()){
+				return null;
+			}
+		}
+
+		return true;
 	}
 
 

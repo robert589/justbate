@@ -11,6 +11,7 @@ use yii\web\JsExpression;
 $this->title = "Home | Propose";
 ?>
 
+
 <div class="col-md-12">
 	<div class="col-md-3">
 		<div class="col-xs-12">

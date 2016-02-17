@@ -22,19 +22,6 @@
 
 ?>
 
-<!-- Login Modal-->
-<?php
-	Modal::begin([
-			'header' => '<h4> Login </h4>',
-			'id' => 'loginModal',
-			'size' => 'modal-lg'
-		]);
-
-	$redirectFrom = \Yii::$app->homeUrl . '../../thread/index?id=' . $model['thread_id'];
-	$loginModel = new LoginForm();
-	echo $this->render('../site/login', ['model' => $loginModel,  'redirectFrom' => $redirectFrom]);
-	Modal::end();
-?>
 
 
 
@@ -46,7 +33,7 @@
 			<div class="col-md-12"><h2><?= $model['title'] ?> </h2></div>
 		</div>
 		<div class="row">
-			<div class="col-md-12" style="text-align: center;"><h3><?= $model['topic_description'] ?></h3></div>
+			<div class="col-md-12" style="text-align: center;"><h3><?= $model['description'] ?></h3></div>
 		</div>
 		<hr>
 
@@ -60,9 +47,6 @@
 		</div>
 
 		<hr />
-
-		<!-- Content -->
-		<div style="text-align: center;" class="row"><sup style="margin-right: 16px;" class="fa fa-quote-left"></sup><?= $model['user_opinion']?><sup style="margin-left: 16px;" class="fa fa-quote-right"></sup></div><hr />
 
 		<!-- Comment Part-->
 		<div class="row">

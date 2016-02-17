@@ -7,34 +7,40 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-if(empty($redirectFrom)){
-    $redirectFrom = Yii::getAlias('@base-url') ;
+if(empty($redirect_from)){
+    $redirect_from = Yii::getAlias('@base-url') ;
 }
-//df;sjklajdsljflsj
-$social = Yii::$app->getModule('social');
-// Render the Login button
-$url = Yii::$app->request->getAbsoluteUrl(); // or any absolute url you want to redirect
-$helper = $social->getFbLoginHelper($url);
-$loginUrl = $helper->getLoginUrl();
 
 ?>
 <div class="site-login">
     <h1><?= Html::encode('Login') ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'post']) ?>
+        <table class="table table-responsive table-bordered" align="center" id="login-form">
+            <?= $form->field($login_form, 'username')->textInput(['placeholder' => 'Your Username']) ?>
+            <?= $form->field($login_form, 'password')->passwordInput(['placeholder' => 'Your Password']) ?>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['action' => '../site/login', 'method' => 'post', 'id' => 'login-form']); ?>
-            <?= $form->field($model, 'username') ?>
-            <?= $form->field($model, 'password')->passwordInput() ?>
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            <?= Html::hiddenInput('redirectFrom', $redirectFrom) ?>
-            <div style="color:#999;margin:1em 0">If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.</div>
-            <div class="form-group"><?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?></div>
-            <?php ActiveForm::end(); ?>
-            or
-            <?= Html::a('Facebook Login', $loginUrl, ['class'=>'btn btn-primary']) ?>
+        </table>
+        <div class="row">
+            <div class="col-xs-12">
+                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary', 'id' => 'sign-up']) ?>
+
+            </div>
+            <div class="col-xs-12">
+                <div class="input-group" style="width: 100%; border: 0;">
+
+                    <span class="input-group-addon"><?= $form->field($login_form,'rememberMe')->checkbox() ?></span>
+                </div>
+            </div>
+        </div><hr />
+        <div class="row">
+            <div id="social-icon">
+                <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-twitter" id="socmed-login"><span class="fa fa-twitter"></span> Sign in with Twitter</a></div>
+                <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-facebook" id="socmed-login"><span class="fa fa-facebook"></span> Sign in with Facebook</a></div>
+                <div class="col-xs-4"><a class="btn btn-md btn-block btn-social btn-google" id="socmed-login"><span class="fa fa-google"></span> Sign in with Google</a></div>
+            </div>
         </div>
-    </div>
+
+        <?= Html::hiddenInput('redirect_from', $redirect_from) ?>
+    <?php ActiveForm::end() ?>
 </div>

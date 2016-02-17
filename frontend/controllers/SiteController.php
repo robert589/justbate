@@ -128,8 +128,7 @@ class SiteController extends Controller
 
 
     public function actionFilteredpjax(){
-        Yii::trace("Filtered Pjax Cntroller");
-         $sql = Thread::retrieveAllBySql();
+        $sql = Thread::retrieveAllBySql();
         $totalCount = Thread::countAll();
 
 
@@ -171,16 +170,16 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            if(!empty($_POST['redirectFrom'])){
-               $redirectFrom = $_POST['redirectFrom'];
-               return $this->redirect($redirectFrom);
+            if(!empty($_POST['redirect_from'])){
+               $redirect_from = $_POST['redirect_from'];
+               return $this->redirect($redirect_from);
             }
             else{
-                return $this->goHome(); 
+                return $this->redirect(Yii::getAlias('@base-url'));
             }
         } else {
             return $this->render('login', [
-                'model' => $model,
+                'login_form' => $model,
             ]);
         }
     }
@@ -203,9 +202,8 @@ class SiteController extends Controller
         $user_choice = $this->getDefaultChoice();
         $create_thread_form->user_id = Yii::$app->user->getId();
         if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
-
-            if($create_thread_form->create()){
-                return $this->redirect(Yii::getAlias('@base-url') . '/site/home');
+            if($thread_id = $create_thread_form->create()){
+                return $this->redirect(Yii::getAlias('@base-url') . '/thread/index?id=' . $thread_id);
             }
         }
         else{
