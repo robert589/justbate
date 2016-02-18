@@ -64,7 +64,7 @@ AppAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Yii::getAlias('@base-url')?>">Website Name</a>
+                <a class="navbar-brand" href="<?= Yii::getAlias('@base-url')?>">Opinion.com</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
@@ -85,7 +85,7 @@ AppAsset::register($this);
                         <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
                         <li class="item dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                            <ul class="dropdown-menu">
+                                   <ul class="dropdown-menu">
                                 <li class="item"><a href="#">Settings</a></li>
                                 <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
                             </ul>
@@ -113,9 +113,6 @@ AppAsset::register($this);
             <?= Alert::widget() ?>
             <?= $content ?>
     </div>
-
-
-
     <footer class="footer">
         <div class="container">
             <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
@@ -126,16 +123,5 @@ AppAsset::register($this);
     $this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
     $this->endBody();
 ?>
-
-
-<script type="text/javascript">
-$("button#create-button").mouseenter(function(){
-    $('span#create-button-label').css("text-decoration","underline");
-});
-
-$("button#create-button").mouseleave(function(){
-    $('span#create-button-label').css("text-decoration","none");
-});
-</script>
 </html>
 <?php $this->endPage() ?>

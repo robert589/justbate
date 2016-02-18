@@ -51,12 +51,11 @@ else{
         <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choice, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
         <div class="col-xs-12">
             <?php if(isset($user_choice)){ ?>
-                <?= Html::submitButton('Vote Again', ['class'=> 'btn btn-primary'])?>
-                <label>You voted for <?= $user_choice?></label>
+                <?= Html::submitButton('Vote Again', ['class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>
                 <?php } else{ ?>
                     <?= Html::submitButton('Vote', ['class'=> 'btn btn-primary']) ?>
-                    <?php } ?>
-                    <?php ActiveForm::end(); ?><br />
+                <?php } ?>
+                <?php ActiveForm::end(); ?><br />
         </div>
             </div>
         </div>
