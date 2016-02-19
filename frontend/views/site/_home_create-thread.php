@@ -11,18 +11,28 @@
 
 <?php $form = ActiveForm::begin(['action' => 'create-thread' ,'method' => 'post']) ?>
     <!-- Title input box -->
-    <div class="col-xs-8" style="padding: 0;">
+    <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'title')->textInput(['placeholder' => 'Post Title',
             'class' => 'form-control',
             'style' => "text-align: center;" ])->label(false) ?>
     </div>
 
-    <!-- Choice part-->
-    <?= $this->render('_create-thread_choice', ['user_choice' => $user_choice, 'create_thread_form' => $create_thread_form, 'form'=>$form]) ?>
-
-
     <!-- Description -->
     <?= $form->field($create_thread_form, 'description')->textarea(['placeholder' => 'What are you thinking about it?', 'class' => 'form-control', 'style' => ' height: 175px; width: 100%;'])->label(false) ?>
+
+    <!-- Choice -->
+    <div class="col-xs-12" style="padding: 0;">
+        <?= $form->field($create_thread_form, 'choices')->widget(Select2::className(), [
+            'initValueText' => $create_thread_form->category,
+            'maintainOrder' => true,
+            'options' => ['placeholder' => 'Add Choices ...', 'multiple' => true],
+            'pluginOptions' => [
+                'tags' => true,
+                'maximumInputLength' => 10
+            ]
+        ])->label(false) ?>
+    </div>
+
     <div class="col-xs-5">
         <!-- Topic Name -->
         <?= $form->field($create_thread_form, 'category')->widget(Select2::classname(), [

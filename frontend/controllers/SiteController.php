@@ -113,8 +113,6 @@ class SiteController extends Controller
         //Create form
         $create_thread_form  = new CreateThreadForm();
         $this->getDefaultChoice($create_thread_form);
-        $user_choice = ['Agree', 'Disagree', 'Neutral'];
-        //$user_choice = $this->convertChoiceToArray($create_thread_form);
         //retrieve trending topic
         $trending_topic_list = $this->getTredingTopicList();
 
@@ -124,7 +122,6 @@ class SiteController extends Controller
         return $this->render('home', ['category_list' => $category_list,
                                     'trending_topic_list' => $trending_topic_list,
                                     'listDataProvider' => $dataProvider,
-                                    'user_choice' => $user_choice,
                                     'create_thread_form' => $create_thread_form]);
     }
 
@@ -201,8 +198,8 @@ class SiteController extends Controller
 
     public function actionCreateThread(){
         $create_thread_form = new CreateThreadForm();
-        $user_choice = $this->getDefaultChoice();
         $create_thread_form->user_id = Yii::$app->user->getId();
+
         if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
             if($thread_id = $create_thread_form->create()){
                 return $this->redirect(Yii::getAlias('@base-url') . '/thread/index?id=' . $thread_id);
@@ -212,7 +209,7 @@ class SiteController extends Controller
             Yii::$app->end(print_r($create_thread_form->getErrors()));
         }
 
-        return $this->renderAjax('home', ['create_thread_form' => $create_thread_form, 'user_choice' => $user_choice]);
+        return $this->renderAjax('home', ['create_thread_form' => $create_thread_form]);
     }
 
     /**
@@ -343,9 +340,8 @@ class SiteController extends Controller
     }
 
     private function getDefaultChoice(&$create_thread_form){
-        $create_thread_form->choice_one = 'Agree';
-        $create_thread_form->choice_one = 'Disagree';
-        $create_thread_form->choice_one = 'Neutral';
+        $create_thread_form->choices = ['Agree','Disagree', 'Neutral'];
+
     }
 
     private function getTredingTopicList(){

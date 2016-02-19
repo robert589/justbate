@@ -24,7 +24,6 @@ $this->title = "Home | Propose";
 		<!-- <label class="control-label">Top Tag</label> -->
 
 		<div class="col-xs-12">
-
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
 				'heading' => 'Popular Category',
@@ -43,7 +42,7 @@ $this->title = "Home | Propose";
 	</div>
 	<div class="col-md-7">
 		<div class="col-md-12">
-			<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form, 'user_choice' => $user_choice]) ?>
+			<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 		</div>
 
 		<div class="col-md-12">
@@ -61,7 +60,7 @@ $this->title = "Home | Propose";
 					'layout' => "{summary}\n{items}\n{pager}",
 					'itemView' => function ($model, $key, $index, $widget) {
 						return $this->render('_list_thread',['model' => $model]);
-					}
+						}
 					])
 				?>
 			<?= Html::endForm() ?>

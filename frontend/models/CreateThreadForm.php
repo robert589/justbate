@@ -14,36 +14,23 @@ use common\models\Thread;
 class CreateThreadForm extends Model
 {
 	public $title;
-	public $user_id;
-	public $category;
-	public $anonymous;
 	public $description;
-	public $user_choice;
-	public $choice_one;
-	public $choice_two;
-	public $choice_three;
-	public $choice_four;
-	public $choice_five;
-	public $choice_six;
-	public $choice_seven;
-	public $choice_eight;
+	public $category;
+	public $user_id;
+
+	public $anonymous;
+	public $choices;
 
 	public function rules()
 	{
 		return [
-			[['user_id', 'title', 'description','user_choice'], 'required'],
+			[['user_id', 'title', 'description'], 'required'],
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
 			['category', 'string'],
-			[
-			['choice_one', 'choice_two', 'choice_three', 'choice_four',
-			'choice_five', 'choice_six','choice_seven', 'choice_eight'], 'unique',
-			'targetAttribute' => ['choice_one', 'choice_two', 'choice_three', 'choice_four', 'choice_five',
-				'choice_six', 'choice_seven', 'choice_eight']
-			],
+			['choices', 'each', 'rule' => ['string']],
 
-			[ ['choice_one', 'choice_two', 'choice_three', 'choice_four',
-				'choice_five', 'choice_six','choice_seven', 'choice_eight'], 'string']
+
 		];
 	}
 
@@ -57,14 +44,9 @@ class CreateThreadForm extends Model
 			$thread->anonymous = $this->anonymous;
 			$thread->description = $this->description;
 			$thread->topic_name = $this->category;
-			$thread->poster_choice = $this->user_choice;
+
 			//save it
 			if($thread->save()){
-				//For prototyping only, please remove it
-				if($this->choices == null){
-					$this->choices = ['Agree', 'Disagree', 'Neutral'];
-				}
-
 
 				if($this->saveChoice($this->choices, $thread->thread_id)){
 
@@ -72,17 +54,10 @@ class CreateThreadForm extends Model
 
 				}
 			}
-
 			//save relevant_parties
-
 			return null;
-
-
 		}
-
 		return true;
-
-
 	}
 
 	private function saveChoice($choices, $thread_id){
