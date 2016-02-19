@@ -18,8 +18,15 @@ class CreateThreadForm extends Model
 	public $category;
 	public $anonymous;
 	public $description;
-	public $choices;
 	public $user_choice;
+	public $choice_one;
+	public $choice_two;
+	public $choice_three;
+	public $choice_four;
+	public $choice_five;
+	public $choice_six;
+	public $choice_seven;
+	public $choice_eight;
 
 	public function rules()
 	{
@@ -28,7 +35,15 @@ class CreateThreadForm extends Model
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
 			['category', 'string'],
-			['choices', 'each', 'rule' => ['string']]
+			[
+			['choice_one', 'choice_two', 'choice_three', 'choice_four',
+			'choice_five', 'choice_six','choice_seven', 'choice_eight'], 'unique',
+			'targetAttribute' => ['choice_one', 'choice_two', 'choice_three', 'choice_four', 'choice_five',
+				'choice_six', 'choice_seven', 'choice_eight']
+			],
+
+			[ ['choice_one', 'choice_two', 'choice_three', 'choice_four',
+				'choice_five', 'choice_six','choice_seven', 'choice_eight'], 'string']
 		];
 	}
 

@@ -43,4 +43,5 @@ use kartik\widgets\StarRating;
         <?= Html::endForm() ?>
     </div>
 </div>
-      <?php Pjax::end();?>
+
+<?php Pjax::end();?>

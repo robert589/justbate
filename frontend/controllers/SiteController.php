@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\models\CreateThreadForm;
+use frontend\models\PersonalizedChoiceForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -111,8 +112,9 @@ class SiteController extends Controller
 
         //Create form
         $create_thread_form  = new CreateThreadForm();
-        $user_choice = $this->getDefaultChoice();
-
+        $this->getDefaultChoice($create_thread_form);
+        $user_choice = ['Agree', 'Disagree', 'Neutral'];
+        //$user_choice = $this->convertChoiceToArray($create_thread_form);
         //retrieve trending topic
         $trending_topic_list = $this->getTredingTopicList();
 
@@ -268,6 +270,17 @@ class SiteController extends Controller
     }
 
     /**
+     *
+     */
+    public function actionPersonalizedChoice(){
+        $personalized_choice_form  = new PersonalizedChoiceForm();
+
+        if($personalized_choice_form->load(Yii::$app->request->post()) && $personalized_choice_form->validate()){
+
+        }
+    }
+
+    /**
      * Requests password reset.
      *
      * @return mixed
@@ -329,13 +342,10 @@ class SiteController extends Controller
         return $out;
     }
 
-    private function getDefaultChoice(){
-        $defaultChoice = array();
-        $defaultChoice['Agree'] = 'Agree';
-        $defaultChoice['Disagree'] = 'Disagree';
-        $defaultChoice['Neutral'] = 'Neutral';
-
-        return $defaultChoice;
+    private function getDefaultChoice(&$create_thread_form){
+        $create_thread_form->choice_one = 'Agree';
+        $create_thread_form->choice_one = 'Disagree';
+        $create_thread_form->choice_one = 'Neutral';
     }
 
     private function getTredingTopicList(){
