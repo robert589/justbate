@@ -26,8 +26,8 @@ $this->title = "Home | Propose";
 		<div class="col-xs-12">
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
-				'heading' => 'Popular Category',
-				'items' => $category_list,
+				'heading' => 'Popular Keyword',
+				'items' => $keyword_list,
 			]) ?>
 		</div>
 

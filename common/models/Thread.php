@@ -42,25 +42,37 @@ class Thread extends ActiveRecord{
 
     }
 
-    public static function retrieveAllBySql(){
-        return "
+    public static function getAllThreads(){
+        $sql =  "
            Select TU.*, COALESCE(avg(rate),0) as avg_rating from
             ((Select * from thread inner join user where thread.user_id = user.id ) TU
             left join thread_rate on
             TU.thread_id = thread_rate.thread_id)
             group by(thread_id)
         ";
+
+        return  \Yii::$app->db->createCommand($sql)->queryAll();
+
+
     }
 
-    public static function retrieveSqlByTopic($topic_name){
-         return "
-            Select TU.*, avg(rating) as avg_rating from
-            ((Select * from thread inner join user where thread.thread_id = user.id ) TU
-            left join rate  on
-            TU.thread_id = rate.thread_id)
-            where topic_name = \"$topic_name\"
-            group by(thread_id)
+    public static function getThreadsByKeyword($keyword){
+         $sql =  "
+             Select *, avg(thread_thread_rate.rate) as avg_rating
+             from (SELECT thread.*, thread_rate.rate as rate
+                   from thread left join thread_rate
+                   on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
+                   user, thread_keyword
+             where thread_thread_rate.user_id = user.id and
+                   thread_keyword.thread_id = thread_thread_rate.thread_id
+                   and thread_keyword.keyword_name =  :keyword
+             group by(thread_thread_rate.thread_id)
         ";
+
+        return  \Yii::$app->db->createCommand($sql)
+                ->bindParam(":keyword", $keyword)
+                ->queryAll();
+
     }
 
 

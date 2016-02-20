@@ -4,18 +4,18 @@ namespace common\models;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use Yii;
-class ThreadTopic extends ActiveRecord{
+class Keyword extends ActiveRecord{
 
 	public static function tableName()
     {
-        return 'thread_topic';
+        return 'keyword';
     }
 
 
     public static function getTopicList($q){
-        $sql = "SELECT topic_name as id, topic_name as text
-                   from thread_topic
-                   where topic_name like concat('%', :q,'%')
+        $sql = "SELECT name as id, name as text
+                   from keyword
+                   where name like concat('%', :q,'%')
                    limit 10";
 
         return Yii::$app->db->createCommand($sql)->
@@ -27,12 +27,16 @@ class ThreadTopic extends ActiveRecord{
      * WRONGGGG, MOTHERFUCKER WRONG, CHANGE PLEASE
      */
     public static function getPopularCategory(){
-        $sql = "SELECT topic_name
-                from thread_topic
+        $sql = "SELECT name
+                from keyword
                 ";
 
         return Yii::$app->db->createCommand($sql)->
         queryAll();
 
+    }
+
+    public static function checkExist($keyword){
+        return Self::find()->where(['name' => $keyword])->exists();
     }
 }

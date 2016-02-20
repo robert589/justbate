@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use common\models\Choice;
+use common\models\Keyword;
+use common\models\ThreadKeyword;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -15,7 +17,7 @@ class CreateThreadForm extends Model
 {
 	public $title;
 	public $description;
-	public $category;
+	public $keywords;
 	public $user_id;
 
 	public $anonymous;
@@ -27,7 +29,7 @@ class CreateThreadForm extends Model
 			[['user_id', 'title', 'description'], 'required'],
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
-			['category', 'string'],
+			['keywords', 'each', 'rule' => ['string']],
 			['choices', 'each', 'rule' => ['string']],
 
 
@@ -43,15 +45,22 @@ class CreateThreadForm extends Model
 			$thread->user_id = $this->user_id;
 			$thread->anonymous = $this->anonymous;
 			$thread->description = $this->description;
-			$thread->topic_name = $this->category;
 
 			//save it
 			if($thread->save()){
-
-				if($this->saveChoice($this->choices, $thread->thread_id)){
-
-					return $thread->thread_id;
-
+				$thread_id = $thread->thread_id;
+				if($this->saveChoice($thread_id)){
+					if($this->saveKeywords($thread_id)){
+						return $thread_id;
+					}
+					else{
+						//error
+						return null;
+					}
+				}
+				else{
+					//eror
+					return null;
 				}
 			}
 			//save relevant_parties
@@ -60,13 +69,33 @@ class CreateThreadForm extends Model
 		return true;
 	}
 
-	private function saveChoice($choices, $thread_id){
-		foreach($choices as $choice_item){
+	private function saveChoice($thread_id){
+		foreach($this->choices as $choice_item){
 			$choice = new Choice();
 			$choice->thread_id = $thread_id;
 			$choice->choice_text = $choice_item;
 			if(!$choice->save()){
 				return null;
+			}
+		}
+
+		return true;
+	}
+
+	private function saveKeywords($thread_id){
+		foreach($this->keywords as $keyword){
+			if(!Keyword::checkExist($keyword)){
+				$keyword_model = new Keyword();
+				$keyword_model->name =  $keyword;
+				if(!$keyword_model->save()){
+					return false;
+				}
+			}
+			$thread_keyword_model = new ThreadKeyword();
+			$thread_keyword_model->thread_id = $thread_id;
+			$thread_keyword_model->keyword_name = $keyword;
+			if(!$thread_keyword_model->save()){
+				return false;
 			}
 		}
 

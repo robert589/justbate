@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Keyword;
 use frontend\models\CreateThreadForm;
 use frontend\models\PersonalizedChoiceForm;
 use Yii;
@@ -15,6 +16,7 @@ use frontend\models\ContactForm;
 use frontend\models\FilterHomeForm;
 
 use yii\base\InvalidParamException;
+use yii\data\ArrayDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -88,22 +90,20 @@ class SiteController extends Controller
     /**
     * Generate Home page include Trending Tag, Trending Topic, and newest Topic
     */
-    public function actionHome(){
-
-
-        //initial data without filter
-        $sql = Thread::retrieveAllBySql();
-        $totalCount = Thread::countAll();
-
+    public function actionHome()
+    {
         //Topic Newest
-        if(!empty($_GET['topic'])){
-            $sql = Thread::retrieveSqlByTopic($_GET['topic']);
-            $totalCount = Thread::countByTopic($_GET['topic']);
+        if(!empty($_GET['keyword'])){
+            $result = Thread::getThreadsByKeyword($_GET['keyword']);
+        }
+        else{
+            //initial data without filter
+            $result = Thread::getAllThreads();
+
         }
 
-        $dataProvider = new SqlDataProvider([
-            'sql' => $sql,  
-            'totalCount' => $totalCount,
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $result,
             'pagination' => [
                 'pageSize' =>10,
             ],
@@ -117,9 +117,9 @@ class SiteController extends Controller
         $trending_topic_list = $this->getTredingTopicList();
 
         //get popular category
-        $category_list = $this->getPopularCategory();
+        $keyword_list = $this->getPopularKeyword();
 
-        return $this->render('home', ['category_list' => $category_list,
+        return $this->render('home', ['keyword_list' => $keyword_list,
                                     'trending_topic_list' => $trending_topic_list,
                                     'listDataProvider' => $dataProvider,
                                     'create_thread_form' => $create_thread_form]);
@@ -332,7 +332,7 @@ class SiteController extends Controller
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!empty($_GET['q'])) {
             $q = $_GET['q'];
-            $topicList = \common\models\ThreadTopic::getTopicList($q);
+            $topicList = \common\models\Keyword::getTopicList($q);
             $out['results'] = array_values($topicList);
         }
 
@@ -359,13 +359,13 @@ class SiteController extends Controller
         return $mapped_trending_topic_list;
     }
 
-    private function getPopularCategory(){
-        $category_list = ThreadTopic::getPopularCategory();
+    private function getPopularKeyword(){
+        $category_list = Keyword::getPopularCategory();
 
         $mapped_category_list = array();
         foreach($category_list as $category){
-            $mapped_category['label'] = $category['topic_name'];
-            $mapped_category['url']  = Yii::getAlias('@base-url') . '/site/home?category=' . $category['topic_name'];
+            $mapped_category['label'] = $category['name'];
+            $mapped_category['url']  = Yii::getAlias('@base-url') . '/site/home?keyword=' . $category['name'];
 
             $mapped_category_list[] = $mapped_category;
         }
