@@ -4,6 +4,7 @@
     use kartik\widgets\Select2;
     use yii\db\Expression;
     use yii\web\JsExpression;
+    use dosamigos\ckeditor\CKEditor;
 ?>
 
 <div align="center"> <h3>Create Post</h3></div>
@@ -17,10 +18,17 @@
             'style' => "text-align: center;" ])->label(false) ?>
     </div>
 
-    <!-- Description -->
-    <?= $form->field($create_thread_form, 'description')->textarea(['placeholder' => 'What are you thinking about it?', 'class' => 'form-control', 'style' => ' height: 175px; width: 100%;'])->label(false) ?>
+    <div class="col-xs-12" style="padding: 0;">
 
-    <!-- Choice -->
+        <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
+            [
+                'clientOptions' => [
+                    'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
+                ],
+            ]) ?>
+    </div>
+
+<!-- Choice -->
     <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'choices')->widget(Select2::className(), [
             'initValueText' => $create_thread_form->choices,

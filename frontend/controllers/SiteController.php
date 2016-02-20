@@ -125,35 +125,6 @@ class SiteController extends Controller
                                     'create_thread_form' => $create_thread_form]);
     }
 
-
-    public function actionFilteredpjax(){
-        $sql = Thread::retrieveAllBySql();
-        $totalCount = Thread::countAll();
-
-
-        if(!empty($_POST['filterwords'])){
-            $filterArrays = array();
-
-            array_push($filterArrays, $_POST['filterwords']);
-
-            $sql = Thread::retrieveFilterBySql($filterArrays);
-            $totalCount = Thread::countFilter($filterArrays);
-
-        }
-
-        $dataProvider = new SqlDataProvider([
-            'sql' => $sql,  
-            'totalCount' => $totalCount,
-          
-            'pagination' => [
-                'pageSize' =>5,
-            ],
-
-        ]);
-
-        return $this->render('home', ['listDataProvider' => $dataProvider]);
-    }
-
     /**
      * Logs in a user.
      *

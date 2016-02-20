@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e1c39e75cf8aabde5fb448913e28ac03",
-    "content-hash": "34355a55656d43a5ac16548ae9e4e503",
+    "hash": "4ef9e41e150e75558df5f5bda941feeb",
+    "content-hash": "515943a2f73ced2b5bc7bc59f9d270a3",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -1539,7 +1539,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/519241c7360a0470624f24d872741e1ea880de75",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/4d03239c1e28ef8d3b96ab7fe360f5cbda34fb69",
                 "reference": "519241c7360a0470624f24d872741e1ea880de75",
                 "shasum": ""
             },
@@ -2127,6 +2127,50 @@
                 "scrolling"
             ],
             "time": "2015-05-08 14:58:16"
+        },
+        {
+            "name": "yiidoc/yii2-redactor",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiidoc/yii2-redactor.git",
+                "reference": "c4c80c19c68728e88d135f4eec5c51352fbbaa37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiidoc/yii2-redactor/zipball/c4c80c19c68728e88d135f4eec5c51352fbbaa37",
+                "reference": "c4c80c19c68728e88d135f4eec5c51352fbbaa37",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii\\redactor\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nghia Nguyen",
+                    "email": "zinzinday@gmail.com"
+                }
+            ],
+            "description": "Extension redactor for Yii2 Framework.",
+            "keywords": [
+                "Redactor",
+                "extension",
+                "html editor",
+                "imperavi",
+                "wysiwyg",
+                "yii2"
+            ],
+            "time": "2015-06-02 21:47:24"
         },
         {
             "name": "yiisoft/yii2",

@@ -44,12 +44,14 @@ class Thread extends ActiveRecord{
 
     public static function getAllThreads(){
         $sql =  "
-           Select TU.*, COALESCE(avg(rate),0) as avg_rating from
-            ((Select * from thread inner join user where thread.user_id = user.id ) TU
-            left join thread_rate on
-            TU.thread_id = thread_rate.thread_id)
-            group by(thread_id)
-        ";
+           Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
+             from (SELECT thread.*, thread_rate.rate as rate
+                   from thread left join thread_rate
+                   on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
+                   user, thread_keyword
+             where thread_thread_rate.user_id = user.id
+             group by(thread_thread_rate.thread_id)
+             order by (date_created) desc       ";
 
         return  \Yii::$app->db->createCommand($sql)->queryAll();
 
@@ -58,7 +60,7 @@ class Thread extends ActiveRecord{
 
     public static function getThreadsByKeyword($keyword){
          $sql =  "
-             Select *, avg(thread_thread_rate.rate) as avg_rating
+             Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
              from (SELECT thread.*, thread_rate.rate as rate
                    from thread left join thread_rate
                    on thread.thread_id = thread_rate.thread_id) thread_thread_rate,

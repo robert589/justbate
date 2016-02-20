@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\Thread;
 use yii\base\Model;
 use Yii;
 use yii\web\UploadedFile;
@@ -46,7 +47,7 @@ class SubmitRateThreadForm extends Model
         }
         else{
 
-            $rateModel = new SubmitRateThreadForm();
+            $rateModel = new ThreadRate();
             $rateModel->thread_id = $this->thread_id;
             $rateModel->user_id = $this->user_id;
             $rateModel->rate = $this->rate;

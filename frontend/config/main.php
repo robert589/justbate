@@ -75,6 +75,12 @@ return [
                 'secret' => '19c1e888bf719334726be35d58cff0f0',
             ],
         ],
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => Yii::getAlias('@image_dir_local'),
+            'uploadUrl' => Yii::getAlias('@image_dir'),
+            'imageAllowExtensions'=>['jpg','png','gif']
+        ],
         // your other modules
     ],
     'params' => $params,

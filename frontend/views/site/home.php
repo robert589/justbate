@@ -60,8 +60,8 @@ $this->title = "Home | Propose";
 					'layout' => "{summary}\n{items}\n{pager}",
 					'itemView' => function ($model, $key, $index, $widget) {
 						return $this->render('_list_thread',['model' => $model]);
-						}
-					])
+					}
+				])
 				?>
 			<?= Html::endForm() ?>
 		</div>
