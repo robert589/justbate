@@ -46,7 +46,8 @@ echo $this->render('_upload_photo_modal', ['model' => $uploadFormModel]);
 Modal::end();
 ?>
 <!-- Page Content -->
-<div class="container" style="margin-left: 0; margin-right: 0;">
+<!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
+<div class="container">
 	<div class="row">
 		<div class="col-xs-6 col-md-3">
 			<nav class="navbar navbar-default sidebar" role="navigation">
@@ -57,40 +58,56 @@ Modal::end();
 				</ul>
 			</nav>
 		</div>
+
 		<div class="col-xs-6 col-md-2">
 			<img class="img-rounded" src="<?= Yii::getAlias('@image_dir') . '/' . $user->photo_path ?>" alt="Profile Picture" style="width:148px;height:148px;" id="avatar">
 			<?= Html::button('Upload Photo', ['onclick' => 'beginProfilePicModal()', 'class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 		</div>
 
-		<div class="col-xs-12 col-lg-4">
+		<div class="col-xs-12 col-md-4">
 			<div id="displayName"><?= $user->first_name ?> <?= $user->last_name ?></div><hr />
-			<table id="bio-table" class="table table-responsive" style="border: 0;">
+			<table id="bio-table" class="table table-responsive">
 				<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
 				<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
-				<tr><td>Followers:</td><td><?= $num_followers ?></td></tr>
-				<tr><td>Following:</td><td><?= $num_following ?></td></tr>
-<?php
-
-foreach($followees as $followee) {
-echo <<<HTML
-				<tr><td>Following:</td><td>$followee[first_name] $followee[last_name]</td></tr>
-HTML;
-}
-
-foreach($followers as $follower) {
-echo <<<HTML
-				<tr><td>Following:</td><td>$follower[first_name] $follower[last_name]</td></tr>
-HTML;
-}
-
-?>
 			</table>
-		</div>
-
-		<div class="col-lg-3">
+			</div>
 		</div>
 	</div>
-</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12" style="float: left;">
+				<table class="table table-responsive" style="text-align: center;" id="profile-details">
+					<tr><td><?= $num_following ?></td><td><?= $num_followers ?></td><td rowspan="2" style="vertical-align: middle; background: rgb(50,205,50); color: white; font-weight: bold;">FOLLOW <?= $user->first_name ?> <?= $user->last_name ?></td></tr>
+					<tr><td>Following</td><td>Follower</td></tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<table class="table table-responsive table-bordered" id="follower-table" style="text-align: center;">
+					<tr style="background: rgb(55,200,55);"><td>List of Follower</td></tr>
+					<?php
+					foreach($followees as $followee) {
+echo <<<HTML
+				<tr><td>$followee[first_name] $followee[last_name]</td></tr>
+HTML;
+}
+					?>
+				</table>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<table class="table table-responsive table-bordered" id="following-table" style="text-align: center;">
+					<tr style="background: rgb(55,55,200);"><td>List of Following</td></tr>
+					<?php
+					foreach($followers as $follower) {
+						echo <<<HTML
+				<tr><td>$follower[first_name] $follower[last_name]</td></tr>
+HTML;
+}
+					?>
+				</table>
+			</div>
+		</div>
+	</div>
 
 <div class="col-xs-12">
 	<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-index.js'); ?>
