@@ -6,6 +6,9 @@ use yii\db\ActiveRecord;
 
 class Follower extends ActiveRecord
 {
+	public $follower_id;
+	public $followee_id;
+
 	public static function tableName() {
 		return 'follower_relation';
 	}
@@ -53,6 +56,13 @@ class Follower extends ActiveRecord
 
 	public static function isFollowing($user_id, $followee_id) {
 		return $this->findOne(['follower_id' => $user_id, 'followee_id' => $followee_id]) !== null;
+	}
+
+	public static function userFollow($user_id, $followee_id) {
+		$following = new Follower();
+		$following->follower_id = $user_id;
+		$following->followee_id = $followee_id;
+		$following->save();
 	}
 }
 
