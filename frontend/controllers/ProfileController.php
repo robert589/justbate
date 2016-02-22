@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use frontend\models\EditProfileForm;
 use frontend\models\UploadProfilePicForm;
+use frontend\models\FollowerForm;
 use Yii;
 use yii\web\Controller;
 use common\models\User;
@@ -96,6 +97,15 @@ class ProfileController extends Controller
 
 		}
 
+	}
+
+	// Added by Peter
+	public static function actionFollow() {
+		$followerForm = new FollowerForm();
+
+		if($followerForm->load(Yii::$app->request->post()) && $followerForm->validate()) {
+			
+		}
 	}
 
 
