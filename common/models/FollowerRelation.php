@@ -4,14 +4,10 @@ namespace common\models;
 use yii\db\Query;
 use yii\db\ActiveRecord;
 
-class Follower extends ActiveRecord
+class FollowerRelation extends ActiveRecord
 {
 	public $follower_id;
 	public $followee_id;
-
-	public static function tableName() {
-		return 'follower_relation';
-	}
 
 	// Returns integer
 	public static function getNumFollowers($followee_id) {

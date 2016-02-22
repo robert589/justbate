@@ -1,8 +1,8 @@
 <?php
 namespace frontend\models;
 
-use yii\common\Follower;
 use yii\base\Model;
+use yii\common\FollowerRelation;
 
 class FollowerForm extends Model
 {

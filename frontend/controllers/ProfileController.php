@@ -12,7 +12,7 @@ use yii\web\UploadedFile;
 use common\models\User;
 use common\models\Comment;
 use common\models\Thread;
-use common\models\Follower;
+use common\models\FollowerRelation;
 
 
 /**
@@ -35,12 +35,12 @@ class ProfileController extends Controller
 				$user_info =  $user->getUser();
 
 				// Retrieve number of followers
-				$num_follower = Follower::getNumFollowers($user_info['id']);
-				$followers = Follower::getFollowers($user_info['id']);
+				$num_follower = FollowerRelation::getNumFollowers($user_info['id']);
+				$followers = FollowerRelation::getFollowers($user_info['id']);
 
 				// Retrieve number of followings
-				$num_following = Follower::getNumFollowing($user_info['id']);
-				$followees = Follower::getFollowees($user_info['id']);
+				$num_following = FollowerRelation::getNumFollowing($user_info['id']);
+				$followees = FollowerRelation::getFollowees($user_info['id']);
 
 				return $this->render('index', [
 					'user' => $user_info,
