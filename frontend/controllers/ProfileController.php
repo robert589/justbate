@@ -105,7 +105,7 @@ class ProfileController extends Controller
 		$follower_form = new FollowerForm();
 
 		if($follower_form->load(Yii::$app->request->post()) && $follower_form->validate()) {
-
+			
 		}
 	}
 
