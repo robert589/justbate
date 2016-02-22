@@ -100,16 +100,6 @@ class ProfileController extends Controller
 
 	}
 
-	// Added by Peter
-	public static function actionFollow() {
-		$follower_form = new FollowerForm();
-
-		if($follower_form->load(Yii::$app->request->post()) && $follower_form->validate()) {
-			
-		}
-	}
-
-
 
 
 

@@ -54,11 +54,16 @@ class FollowerRelation extends ActiveRecord
 		return $this->findOne(['follower_id' => $user_id, 'followee_id' => $followee_id]) !== null;
 	}
 
-	public static function userFollow($user_id, $followee_id) {
+	public static function follow($user_id, $followee_id) {
 		$following = new Follower();
 		$following->follower_id = $user_id;
 		$following->followee_id = $followee_id;
 		$following->save();
+	}
+
+	public static function unfollow($user_id, $followee_id) {
+		$following = self::findOne(['follower_id' => $user_id, 'followee_id' => $followee_id]);
+		$following->delete();
 	}
 }
 
