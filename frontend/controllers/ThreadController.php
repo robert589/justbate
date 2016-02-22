@@ -39,7 +39,6 @@ class ThreadController extends Controller
 
         Yii::trace( Yii::$app->user->identity);
 
-        
         if(!empty($_GET['id'])){
 
             $thread_id = $_GET['id'];

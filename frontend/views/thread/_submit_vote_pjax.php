@@ -33,9 +33,6 @@ else{
 <!--Give Votes Part-->
 <div class="row" align="center">
     <div class="col-xs-12">
-        <h3 style="text-align: center;">Give your vote</h3>
-    </div>
-    <div class="col-xs-12">
         <div align="center">
             <?php $form = ActiveForm::begin([
                 'action' =>   ['thread/submit-vote'],

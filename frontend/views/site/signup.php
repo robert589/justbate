@@ -8,7 +8,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dektrium\user\widgets\Connect;
 
-
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -36,5 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php ActiveForm::end(); ?>
         </div>
+
     </div>
 </div>

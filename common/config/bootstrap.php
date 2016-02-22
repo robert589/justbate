@@ -8,4 +8,5 @@ Yii::setAlias('base-url','/startUp' );
 Yii::setAlias('image_dir', '/startup/frontend/web/photos');
 Yii::setAlias('image_dir_local', dirname(dirname(__DIR__)) . '/frontend/web/photos');
 Yii::setAlias('last_dir_path', dirname(dirname(__DIR__)) . '/frontend/web/photos/last_dir.txt');
-//Yii::setAlias('web', dirname(__DIR__));
+//Yii::setAlias('web', dirname(__DIR__))
+//;
