@@ -6,8 +6,8 @@ use yii\base\Model;
 
 class FollowerForm extends Model
 {
-	public $follower;
-	public $followee;
+	public $follower_id;
+	public $followee_id;
 
 	public function rules()
 	{

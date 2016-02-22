@@ -43,14 +43,16 @@ class Follower extends ActiveRecord
 	}
 
 	public static function getFollowees($follower_id) {
-		$table_name = self::tableName();
-
 		return (new \yii\db\Query())
 			->select(['first_name', 'last_name'])
-			->from($table_name)
-			->join('INNER JOIN', 'user', "user.id = $table_name.followee_id")
+			->from(self::tableName())
+			->join('INNER JOIN', 'user', "user.id = followee_id")
 			->where("follower_id = $follower_id")
 			->all();
+	}
+
+	public static function isFollowing($user_id, $followee_id) {
+		return $this->findOne(['follower_id' => $user_id, 'followee_id' => $followee_id]) !== null;
 	}
 }
 
