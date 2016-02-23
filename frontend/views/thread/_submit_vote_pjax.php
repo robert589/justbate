@@ -12,6 +12,7 @@ if(!isset($user_choice)){
     $user_choice = $model['user_choice'];
 }
 
+
 //Store this variable for javascript
 if(!empty(\Yii::$app->user->isGuest)){
     $guest = "1";
@@ -30,31 +31,38 @@ else{
     ]
 ]);?>
 
+<?php $form = ActiveForm::begin([
+    'action' =>   ['thread/submit-vote'],
+    'method' => 'post',
+
+    'options' => ['id' => 'form_submit_vote', 'data-pjax' => '#submitThreadVote']
+]); ?>
+
+
+<?php
+    if(isset($trigger_login_form) && $trigger_login_form == true){
+        echo 'You need to login to perform this action, click ' . Html::a('Login','', ['id' => 'login_link']) ;
+    }
+?>
 <!--Give Votes Part-->
 <div class="row" align="center">
-    <div class="col-xs-12">
-        <div align="center">
-            <?php $form = ActiveForm::begin([
-                'action' =>   ['thread/submit-vote'],
-                'method' => 'post',
-                'options' => ['data-pjax' => true]
-            ]); ?>
-        </div>
-        <?= Html::hiddenInput('thread_id', $thread_id) ?>
-    </div>
+
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
     <div class="col-xs-12" id="vote">
         <!-- User Option -->
         <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choice, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
         <div class="col-xs-12">
             <?php if(isset($user_choice)){ ?>
-                <?= Html::submitButton('Vote Again', ['class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>
-                <?php } else{ ?>
-                    <?= Html::submitButton('Vote', ['class'=> 'btn btn-primary']) ?>
-                <?php } ?>
-                <?php ActiveForm::end(); ?><br />
+               <?= Html::submitButton('Vote Again', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>
+            <?php } else{ ?>
+                <?= Html::submitButton('Vote', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary']) ?>
+            <?php } ?>
         </div>
-            </div>
-        </div>
-        <?php Pjax::end(); ?>
-        <?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/thread-submit_vote.js'); ?>
+    </div>
+</div>
+
+<?php ActiveForm::end(); ?>
+<br>
+<?php Pjax::end(); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/thread-submit_vote.js'); ?>

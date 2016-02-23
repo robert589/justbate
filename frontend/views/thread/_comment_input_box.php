@@ -15,8 +15,14 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
-            <?= $form->field($commentModel, 'comment')->textArea([ 'placeholder' => 'add comment box...', 'rows' => 4 ])
-                ->label(false)?>
+
+            <?= $form->field($commentModel, 'comment')->widget(\yii\redactor\widgets\Redactor::className(),
+                [
+                    'clientOptions' => [
+                        'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
+                    ],
+
+                ])->label(false) ?>
         </div>
 
     </div>

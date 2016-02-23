@@ -102,7 +102,7 @@ AppAsset::register($this);
     $redirect_from = $_SERVER['REQUEST_URI'];
     $login_form = new \common\models\LoginForm();
 
-    echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
+        echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
 
     Modal::end(); ?>
 
