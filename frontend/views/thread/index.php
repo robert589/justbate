@@ -63,16 +63,13 @@
 ?>
 
 <div class="col-md-offset-2 col-md-8">
+	<div class="col-md-6">
 		<div class="row">
-			<div style="float: left;" class="col-xs-12">
-				<?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?>
-			</div>
+			<div style="float: left;" class="col-xs-12"><?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?></div>
 		</div>
 
 		<div class="row" style="text-align: center;">
-			<div class="col-md-12">
-				<h2><?= $model['title'] ?> </h2>
-			</div>
+			<div class="col-md-12"><h2><?= $model['title'] ?> </h2></div>
 		</div>
 
 		<div class="row" style="border-color: #ccccff;min-height: 250px">
@@ -84,27 +81,10 @@
 			]) ?>
 		</div>
 
-		<div class="row" id="ask_to_login" style="display:none">
-			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
-		</div>
 
-		<div class="row">
-			<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
-
-			<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
-		</div>
 		<hr>
 
-		<div  id="comment_section" style="display:none">
-			<div class="row" >
-				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel, 'thread_choice' => $thread_choice, 'thread_id' => $model['thread_id']]) ?>
-				<br>
-				<br>
-			</div>
-			<hr>
-		</div>
-
-		<div class="row" style="border-color: #ccccff; min-height: 250px">
+		<div class="row" style="border-color: #ccccff; height: 250px">
 			<?= // Ajax Tabs Above
 			TabsX::widget([
 				'items'=>$content_comment,
@@ -114,6 +94,7 @@
 		</div>
 
 
+	</div>
 </div>
 
 
@@ -141,23 +122,12 @@ $script =<<< JS
 	    if(this.value==""){
 	         this.value = "Write your comment here...";
 	    }
-	}).on('click', '#display_hide_comment', function(){
-		if($guest){
-			$("#ask_to_login").show();
-		}
-		else{
-			if($("#display_hide_comment").text() == "Comment"){
-				$("#comment_section").show();
-				$("#display_hide_comment").text("Hide");
-			}
-			else{
-				$("#comment_section").hide();
-				$("#display_hide_comment").text("Comment");
-			}
-		}
-
 	}).on('rating.change', '#thread_rating', function(event, value, caption) {
+		if($guest){
 
+			beginLoginModal();
+			return false;
+		}
 		$("#userThreadRate").val(value);
 
 		$("#ratingForm").submit();
