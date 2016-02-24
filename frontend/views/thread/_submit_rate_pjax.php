@@ -16,15 +16,10 @@ use kartik\widgets\StarRating;
 
 <!--Rating Part-->
 <div class="row">
+    <div class="col-xs-6" style="text-align: right;">
         <!--Rating form part-->
         <?= Html::beginForm('submit-rate', 'post', ['id'=>"ratingForm" ,'data-pjax' => '#submitRating', 'class' => 'form-inline']); ?>
             <?= Html::hiddenInput('thread_id', $thread_id) ?>
-
-            <?php
-            if(isset($trigger_login_form) && $trigger_login_form == true){
-                echo 'You need to login to perform this action, click ' . Html::a('Login','', ['id' => 'login_link']) ;
-            }
-            ?>
             <!-- Current Rating -->
             <?= StarRating::widget([
                 'name' => 'userThreadRate',
@@ -41,10 +36,12 @@ use kartik\widgets\StarRating;
                 'pluginEvents' => [
                 ]
                 ])?>
+            </div>
             <div class="col-xs-6" style="text-align: left; height: 100%;">
                 <span class="label label-primary"><?= $total_raters ?> Voter(s)</span>
             </div>
         <?= Html::endForm() ?>
+    </div>
 </div>
 
 <?php Pjax::end();?>

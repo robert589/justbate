@@ -49,7 +49,6 @@ class ThreadController extends Controller
             $thread_choice = $this->getChoiceAndItsVoters($thread_id);
             //get all comment providers
             $commentProviders = $this->getAllCommentProviders($thread_id, $thread_choice);
-
             // get vote mdoels
             $submitVoteModel = new SubmitThreadVoteForm();
             return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
@@ -146,40 +145,34 @@ class ThreadController extends Controller
      *
      */
     public function actionCommentVote(){
-        if(isset($_POST['comment_id']) && isset($_POST['vote'])){
-
-            $trigger_login_form = false;
-            if(isset($_POST['user_id'])) {
-                $comment_id = $_POST['comment_id'];
-                $user_id = $_POST['user_id'];
-                $vote = $_POST['vote'];
+        if(isset($_POST['comment_id']) && isset($_POST['user_id']) && isset($_POST['vote'])){
+            $comment_id = $_POST['comment_id'];
+            $user_id = $_POST['user_id'];
+            $vote = $_POST['vote'];
 
 
-                $comment_vote_form = new CommentVoteForm();
-                $comment_vote_form->user_id = $user_id;
-                $comment_vote_form->vote = $vote;
-                $comment_vote_form->comment_id =  $comment_id;
-                if ($comment_vote_form->validate()) {
+            $comment_vote_form = new CommentVoteForm();
+            $comment_vote_form->user_id = $user_id;
+            $comment_vote_form->vote = $vote;
+            $comment_vote_form->comment_id =  $comment_id;
 
-                    if ($comment_vote_form->store() == true) {
+            if($comment_vote_form->validate()){
 
-                    } else {
-                        //error if store fail
-                    }
-                } else {
-                    //error if something is wrong
+                if($comment_vote_form->store() == true){
+                    $comment_votes_comment  = CommentVote::getCommentVotesOfComment($comment_id, $user_id);
+                    $total_like  = $comment_votes_comment['total_like'];
+                    $total_dislike = $comment_votes_comment['total_dislike'];
+                    $vote = $comment_votes_comment['vote'];
+                    return $this->renderPartial('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
+                                                        'vote' => $vote, 'comment_id' => $comment_id]);
+                }
+                else{
+                    //error if store fail
                 }
             }
             else{
-                $trigger_login_form = true;
+                //error if something is wrong
             }
-
-            $comment_votes_comment  = CommentVote::getCommentVotesOfComment($comment_id, $user_id);
-            $total_like  = $comment_votes_comment['total_like'];
-            $total_dislike = $comment_votes_comment['total_dislike'];
-            $vote = $comment_votes_comment['vote'];
-            return $this->renderPartial('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
-                'vote' => $vote, 'comment_id' => $comment_id, 'trigger_login_form' => $trigger_login_form]);
         }
     }
 
@@ -190,30 +183,22 @@ class ThreadController extends Controller
      */
     public function actionSubmitRate(){
         if(!empty($_POST['userThreadRate']) && !empty($_POST['thread_id'])){
-            $trigger_login_form = false;
             $userThreadRate = $_POST['userThreadRate'];
             $thread_id = $_POST['thread_id'];
+            $rateModel = new SubmitRateThreadForm();
+            $rateModel->rate = $userThreadRate;
+            $rateModel->thread_id = $thread_id;
+            $rateModel->user_id = \Yii::$app->user->getId();
 
-            if(!Yii::$app->user->isGuest){
-                $rateModel = new SubmitRateThreadForm();
-                $rateModel->rate = $userThreadRate;
-                $rateModel->thread_id = $thread_id;
-                $rateModel->user_id = \Yii::$app->user->getId();
-
-                if(!$rateModel->insertRating()){
-                    //db exception
-                    return false;
-                }
+            if(!$rateModel->insertRating()){
+                return false;
             }
-            else{$trigger_login_form = true;}
+            else{
+                $avg_rating = ThreadRate::getAverageRate($thread_id);
 
-
-            $avg_rating = ThreadRate::getAverageRate($thread_id);
-
-            $total_raters = ThreadRate::getTotalRaters($thread_id);
-            return $this->renderPartial('_submit_rate_pjax', ['trigger_login_form' => $trigger_login_form,
-                'thread_id' => $thread_id,'total_raters' => $total_raters, 'avg_rating' => $avg_rating ]);
-
+                $total_raters = ThreadRate::getTotalRaters($thread_id);
+                 return $this->renderPartial('_submit_rate_pjax', ['thread_id' => $thread_id,'total_raters' => $total_raters, 'avg_rating' => $avg_rating ]);
+            }
         }
     }
 
@@ -224,39 +209,33 @@ class ThreadController extends Controller
      * @return string|\yii\web\Response
      */
     public function actionSubmitVote(){
-        $trigger_login_form = false;
-        $thread_vote_form = new SubmitThreadVoteForm();
 
-        if( (isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
-            $thread_id = $_POST['thread_id'];
-            //only person that is looged in can submit vote
-            if (!Yii::$app->user->isGuest) {
-                //loading thread_vote_form
-                if ((isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
-                    $thread_vote_form->thread_id = $thread_id;
-                    //user id retrieved in controller
-                    $thread_vote_form->user_id = \Yii::$app->user->getId();
-                    if (!$thread_vote_form->submitVote()) {
-                        //if the submission fail
-                    }
+        //only person that is looged in can submit vote
+        if(!Yii::$app->user->isGuest){
+            $thread_vote_form = new SubmitThreadVoteForm();
+
+            //loading thread_vote_form
+            if( (isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())){
+                $thread_id = $_POST['thread_id'];
+                $thread_vote_form->thread_id = $thread_id;
+                //user id retrieved in controller
+                $thread_vote_form->user_id = \Yii::$app->user->getId();
+                if($thread_vote_form->submitVote()){
+                    //get all thread_choices
+                    $thread_choice = $this->getChoiceAndItsVoters($thread_id);
+                    $submitVoteModel = new SubmitThreadVoteForm();
+                    return $this->renderPartial('_submit_vote_pjax', ['user_choice' => $thread_vote_form->choice_text ,
+                                                'submitVoteModel' => $submitVoteModel,
+                                                'thread_choice' => $thread_choice,'thread_id' => $thread_id]);
                 }
-            }
-            else {
-                $trigger_login_form = true;
-            }
+                else{
+                    //if the submission fail
+                }
 
-            //get all thread_choices
-            $thread_choice = $this->getChoiceAndItsVoters($thread_id);
-            $submitVoteModel = new SubmitThreadVoteForm();
-            return $this->renderPartial('_submit_vote_pjax', [
-                'trigger_login_form' => $trigger_login_form,
-                'user_choice' => $thread_vote_form->choice_text,
-                'submitVoteModel' => $submitVoteModel,
-                'thread_choice' => $thread_choice, 'thread_id' => $thread_id
-            ]);
+            }
         }
         else{
-            //if thread_id is not passed
+            return $this->redirect(Yii::getAlias('@base-url'. '/site/login'));
         }
     }
 
