@@ -28,7 +28,6 @@ else{
     $profile_link = Yii::getAlias('@base-url') . '/profile/index?username=' . User::getUsername(Yii::$app->getUser()->id);
 }
 
-
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/style.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/bootstrap-social.css');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/jquery.js');
@@ -50,8 +49,6 @@ AppAsset::register($this);
     <?php $this->head() ?>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
     <?php $this->beginBody() ?>
@@ -79,49 +76,48 @@ AppAsset::register($this);
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href="#">Register</a></li>
-                    <?php }else{ ?>
-                        <li id="settings" class="item"><a href="<?= Yii::getAlias('@base-url'). '/site/home'?>">Home</a></li>
+                        <?php }else{ ?>
+                            <li id="settings" class="item"><a href="<?= Yii::getAlias('@base-url'). '/site/home'?>">Home</a></li>
+                            <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="item"><a href="#">Settings</a></li>
+                                    <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                                </ul>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
-                        <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
-                        <li class="item dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                                   <ul class="dropdown-menu">
-                                <li class="item"><a href="#">Settings</a></li>
-                                <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
-                            </ul>
-                        </li>
-                    <?php } ?>
-                 </ul>
-            </div>
-        </div>
-    </nav>
+            <?php Modal::begin([
+                'id' => 'loginModal'
+            ]);
+            $redirect_from = $_SERVER['REQUEST_URI'];
+            $login_form = new \common\models\LoginForm();
 
-    <?php Modal::begin([
-        'id' => 'loginModal'
-    ]);
-    $redirect_from = $_SERVER['REQUEST_URI'];
-    $login_form = new \common\models\LoginForm();
+            echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
 
-    echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
+            Modal::end(); ?>
 
-    Modal::end(); ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget(    [
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= Alert::widget() ?>
-            <?= $content ?>
-    </div>
-    <footer class="footer">
-        <div class="container">
-            <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
-        </div>
-    </footer>
-<?php
-    $this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
-    $this->endBody();
-?>
-</html>
-<?php $this->endPage() ?>
+            <div class="container">
+                <?= Breadcrumbs::widget(    [
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    ]) ?>
+                    <?= Alert::widget() ?>
+                    <?= $content ?>
+                </div>
+                <footer class="footer">
+                    <div class="container">
+                        <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
+                        <p class="pull-right"><?= Yii::powered() ?></p>
+                    </div>
+                </footer>
+                <?php
+                $this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
+                $this->endBody();
+                ?>
+                </html>
+                <?php $this->endPage() ?>
