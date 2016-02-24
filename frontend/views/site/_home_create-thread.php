@@ -25,6 +25,7 @@
                 'clientOptions' => [
                     'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
                 ],
+
             ]) ?>
     </div>
 

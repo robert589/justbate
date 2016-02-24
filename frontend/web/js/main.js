@@ -4,3 +4,14 @@ function getNotification(){
        $("#notification-form").submit();
     }
 }
+
+function beginLoginModal(){
+    $("#loginModal").modal("show")
+        .find('#loginModal')
+        .load($(this).attr("value"));
+}
+
+$(document).on('click', '#login_link', function(){
+    beginLoginModal();
+    return false;
+});
