@@ -6,7 +6,7 @@ use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
 use common\models\CommentVote;
 
-$this->registerJsFile(Yii::$app->request->baseUrl    . '/js/jquery.js');
+$this->registerJsFile(Yii::$app->request->baseUrl    . '/frontend/web/js/jquery.js');
 ?>
 
 <?php Pjax::begin(['timeout' => false,

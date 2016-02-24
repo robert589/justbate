@@ -65,4 +65,4 @@ else{
 <?php ActiveForm::end(); ?>
 <br>
 <?php Pjax::end(); ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/thread-submit_vote.js'); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/thread-submit_vote.js'); ?>

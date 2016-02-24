@@ -81,8 +81,26 @@
 			]) ?>
 		</div>
 
+		<div class="row" id="ask_to_login" style="display:none">
+			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
+		</div>
 
+		<div class="row">
+			<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
+
+			<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
+		</div>
 		<hr>
+
+
+		<div  id="comment_section" style="display:none">
+			<div class="row" >
+				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel, 'thread_choice' => $thread_choice, 'thread_id' => $model['thread_id']]) ?>
+				<br>
+				<br>
+			</div>
+			<hr>
+		</div>
 
 		<div class="row" style="border-color: #ccccff; height: 250px">
 			<?= // Ajax Tabs Above
@@ -132,6 +150,24 @@ $script =<<< JS
 
 		$("#ratingForm").submit();
 		return false;
+	}).on('click', '#display_hide_comment', function(){
+		if($guest){
+
+			beginLoginModal();
+			return false;
+			$("#ask_to_login").show();
+		}
+		else{
+			if($("#display_hide_comment").text() == "Comment"){
+				$("#comment_section").show();
+				$("#display_hide_comment").text("Hide");
+			}
+			else{
+				$("#comment_section").hide();
+				$("#display_hide_comment").text("Comment");
+			}
+		}
+
 	});
 
 JS;
