@@ -68,5 +68,5 @@ $this->title = "Home | Propose";
 	</div>
 </div>
 <?php
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/home.js');
+$this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/home.js');
 ?>

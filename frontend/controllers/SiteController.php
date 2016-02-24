@@ -11,12 +11,13 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use common\models\Thread;
 use common\models\ThreadTopic;
-
+use common\models\User;
 use frontend\models\ContactForm;
 use frontend\models\FilterHomeForm;
-
+use yii\authclient\ClientInterface;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -74,7 +75,35 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'oAuthSuccess'],
+            ],
         ];
+    }
+
+    /**
+     * This function will be triggered when user is successfuly authenticated using some oAuth client.
+     *
+     * @param yii\authclient\ClientInterface $client
+     * @return boolean|yii\web\Response
+     */
+    public function oAuthSuccess($client) {
+        // get user data from client
+        $userAttributes = $client->getUserAttributes();
+
+
+        // do some thing with user data. for example with $userAttributes['email']
+        $user = User::find()->where(['email' => $userAttributes['email']])->one();
+        if(!empty($user)){
+            Yii::$app->user->login($user);
+        }
+        else{
+            $session = Yii::$app->session;
+            $session['attributes'] =$userAttributes;
+
+           return $this->redirect(Url::to(['signup', 'fb' => true]));
+        }
     }
 
     /**
@@ -216,6 +245,17 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    public function actionSearchInNotif($q = null){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $data = Thread::getThreadsBySearch($q);
+            $out['results'] = array_values($data);
+        }
+
+        return $out;
+    }
+
     /**
      * Signs user up.
      *
@@ -223,7 +263,16 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+
         $model = new SignupForm();
+
+        if(!empty($_GET['fb'])){
+            $session = Yii::$app->session;
+            $model->email = $session['attributes']['email'];
+            $model->first_name = $session['attributes']['first_name'];
+            $model->last_name = $session['attributes']['last_name'];
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -322,7 +371,7 @@ class SiteController extends Controller
 
         foreach($trending_topic_list as $trending_topic){
             $mapped_trending_topic['label'] = $trending_topic['title'];
-            $mapped_trending_topic['url'] = Yii::getAlias('@base-url') . '/thread/index?id=' . $trending_topic['thread_id'];
+            $mapped_trending_topic['url'] = Yii::$app->request->baseUrl . '/thread/index?id=' . $trending_topic['thread_id'];
 
             $mapped_trending_topic_list[] = $mapped_trending_topic;
 
@@ -336,7 +385,7 @@ class SiteController extends Controller
         $mapped_category_list = array();
         foreach($category_list as $category){
             $mapped_category['label'] = $category['name'];
-            $mapped_category['url']  = Yii::getAlias('@base-url') . '/site/home?keyword=' . $category['name'];
+            $mapped_category['url']  = Yii::$app->request->baseUrl . '/site/home?keyword=' . $category['name'];
 
             $mapped_category_list[] = $mapped_category;
         }
