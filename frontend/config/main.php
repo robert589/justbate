@@ -9,26 +9,20 @@ $params = array_merge(
 );
 
 
-
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    '@dektrium/user/views' => '@app/views/user'
-                ],
-            ],
-        ],
+
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'clientId' => '1681620248755767',
+                    'attributeNames' => ['id', 'name', 'email', 'first_name', 'last_name'],
                     'clientSecret' => '19c1e888bf719334726be35d58cff0f0',
                 ],
                 'twitter' => [
@@ -50,6 +44,10 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
         ],
+        'request'=>[
+            'class' => 'common\components\Request',
+            'web'=> '/frontend/web'
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -67,8 +65,6 @@ return [
         'social' => [
             // the module class
             'class' => 'kartik\social\Module',
-
-
             // the global settings for the Facebook plugins widget
             'facebook' => [
                 'appId' => '1681620248755767',

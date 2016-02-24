@@ -15,23 +15,25 @@ use yii\helpers\ArrayHelper;
 use common\models\User;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
-
+use yii\web\JsExpression;
 
 //all links
 if(Yii::$app->user->isGuest){
     //all links
-    $register_link = Yii::getAlias('@base-url') . '/site/register';
-    $login_link = Yii::getAlias('@base-url') . '/site/link';
+    $register_link = Yii::$app->request->baseUrl . '/site/register';
+    $login_link = Yii::$app->request->baseUrl . '/site/link';
 }
 else{
-    $logout_link = Yii::getAlias('@base-url') . '/site/logout';
-    $profile_link = Yii::getAlias('@base-url') . '/profile/index?username=' . User::getUsername(Yii::$app->getUser()->id);
+    $logout_link = Yii::$app->request->baseUrl . '/site/logout';
+    $profile_link = Yii::$app->request->baseUrl . '/profile/index?username=' . User::getUsername(Yii::$app->getUser()->id);
 }
 
-$this->registerCssFile(Yii::$app->request->baseUrl . '/css/style.css');
-$this->registerCssFile(Yii::$app->request->baseUrl . '/css/bootstrap-social.css');
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/jquery.js');
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/script.js');
+$this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
+$this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/bootstrap-social.css');
+$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
+$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+
+$temp_localhost = Yii::$app->request->baseUrl;
 
 AppAsset::register($this);
 ?>
@@ -61,23 +63,47 @@ AppAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Yii::getAlias('@base-url')?>">Opinion.com</a>
+                <a class="navbar-brand" href="<?= Yii::$app->request->baseUrl?>">Opinion.com</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <form action="" method="GET" class="navbar-form navbar-left" role="search" style="width: auto;">
+                    <div class="navbar-form navbar-left" style="width:300px" >
                         <div class="form-group pull-right" style="display: inline;">
-                            <div class="input-group navbar-searchbox" style="display:table;">
-                                <input id="search" type="text" placeholder="Search something" class="form-control" />
-                                <span style="border: 1px solid black;" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                            </div>
+                            <?=  Select2::widget([
+                                'name' => 'search_box_menu',
+                                'id' => 'search_box_menu',
+                                'options' => ['placeholder' => 'Search'],
+                                'pluginEvents' => [
+                                    "select2:select" => "function(){
+                                                window.location.replace(
+                                                     'http://' +  document.domain  + '$temp_localhost' + '/thread/index?id=' + $('#search_box_menu').val()  );
+                                                }"
+                                ],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                    'minimumInputLength' => 1,
+                                    'language' => [
+                                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                    ],
+                                    'ajax' => [
+                                        'url' => \yii\helpers\Url::to(['site/search-in-notif']),
+                                        'dataType' => 'json',
+                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                    ],
+                                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                    'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
+                                    'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
+                                ],
+                            ]) ?>
                         </div>
-                    </form>
+
+                    </div>
+
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href="#">Register</a></li>
                         <?php }else{ ?>
-                            <li id="settings" class="item"><a href="<?= Yii::getAlias('@base-url'). '/site/home'?>">Home</a></li>
+                            <li id="settings" class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
                             <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -92,15 +118,17 @@ AppAsset::register($this);
                 </div>
             </nav>
 
-            <?php Modal::begin([
-                'id' => 'loginModal'
-            ]);
-            $redirect_from = $_SERVER['REQUEST_URI'];
-            $login_form = new \common\models\LoginForm();
+            <?php
+                Modal::begin([
+                    'id' => 'loginModal'
+                ]);
+                $redirect_from = $_SERVER['REQUEST_URI'];
+                $login_form = new \common\models\LoginForm();
 
-            echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
+                echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
 
-            Modal::end(); ?>
+                Modal::end();
+            ?>
 
             <div class="container">
                 <?= Breadcrumbs::widget(    [
@@ -109,14 +137,9 @@ AppAsset::register($this);
                     <?= Alert::widget() ?>
                     <?= $content ?>
                 </div>
-                <footer class="footer">
-                    <div class="container">
-                        <p class="pull-left">&copy; App Kita <?= date('Y') ?></p>
-                        <p class="pull-right"><?= Yii::powered() ?></p>
-                    </div>
-                </footer>
+
                 <?php
-                $this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js');
+                $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/main.js');
                 $this->endBody();
                 ?>
                 </html>

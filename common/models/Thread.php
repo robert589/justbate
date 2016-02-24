@@ -77,6 +77,15 @@ class Thread extends ActiveRecord{
 
     }
 
+    public static function getThreadsBySearch($query){
+        $sql = "SELECT thread_id as id, title as text from thread where title like concat('%', :query,'%')";
+
+        return  \Yii::$app->db->createCommand($sql)
+            ->bindParam(":query", $query)
+            ->queryAll();
+
+    }
+
 
     /**
      * WEAKNESS: it is not right, it is wrong

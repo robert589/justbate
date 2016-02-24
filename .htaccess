@@ -1,12 +1,22 @@
-RewriteEngine on
-RewriteCond %{REQUEST_URI} ^/(assets|css|js|ember)
+Options +FollowSymlinks
+RewriteEngine On
+
+# deal with admin first
+RewriteCond %{REQUEST_URI} ^/startUp/(admin)
+RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/startUp/backend/web/(assets|css)/
+RewriteCond %{REQUEST_URI} ^/startUp/(admin)
+RewriteRule ^.*$ backend/web/index.php [L]
+
+
+RewriteCond %{REQUEST_URI} ^/startUp/(assets|css)
 RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
 RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
-RewriteRule ^js/(.*)$ web/js/$1 [L]
-RewriteRule ^ember/(.*)$ web/ember/$1 [L]
-RewriteCond %{REQUEST_URI} !^/(frontend|backend)/web/(assets|css|js|ember)/
+
+RewriteCond %{REQUEST_URI} !^/startUp/(frontend|backend)/web/(assets|css)/
 RewriteCond %{REQUEST_URI} !index.php
 RewriteCond %{REQUEST_FILENAME} !-f [OR]
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ frontend/web/index.php/$1 [L,QSA]
-#RewriteRule (.*) frontend/web/$1 [L]
+RewriteRule ^.*$ frontend/web/index.php
