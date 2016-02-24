@@ -39,14 +39,14 @@ Modal::end();
 
 <!-- array definiton -->
 <?php
-$following_x = new \yii\data\ArrayDataProvider([
+$foll_owing = new \yii\data\ArrayDataProvider([
 	'allModels' => $followees,
 	'pagination' => [
 		'pageSize' => 10,
 	]
 ]);
 
-$followers_x = new \yii\data\ArrayDataProvider([
+$foll_owers = new \yii\data\ArrayDataProvider([
 	'allModels' => $followers,
 	'pagination' => [
 		'pageSize' => 10,
@@ -57,13 +57,14 @@ $item = [
 	[
 		'label' => 'Main Activity',
 		'content' => ListView::widget([
-			'dataProvider' => $followers_x,
+			'dataProvider' => $foll_owers,
 			'summary' => false,
 			'itemOptions' => ['class' => 'item'],
 			'layout' => "{summary}\n{items}\n{pager}",
 			'itemView' => function ($model, $key, $index, $widget) {
 				return $this->render('_list_follower', ['model' => $model]);
 			}
+			// $this->render('_list_following', ['model' => $model, 'first-name' => $model[first_name], 'last-name' => $model[last_name]])
 		]),
 		'active' => false,
 	],
@@ -71,13 +72,14 @@ $item = [
 	[
 		'label' => 'Following',
 		'content' => ListView::widget([
-			'dataProvider' => $following_x,
+			'dataProvider' => $foll_owing,
 			'summary' => false,
 			'itemOptions' => ['class' => 'item'],
 			'layout' => "{summary}\n{items}\n{pager}",
 			'itemView' => function ($model, $key, $index, $widget) {
 				return $this->render('_list_follower', ['model' => $model]);
 			}
+			// $this->render('_list_following', ['first-name' => $model[first_name], 'last-name' => $model[last_name]])
 		]),
 		'active' => true,
 	],
@@ -85,13 +87,14 @@ $item = [
 	[
 		'label' => 'Follower',
 		'content' => ListView::widget([
-			'dataProvider' => $follower_x,
+			'dataProvider' => $foll_owers,
 			'summary' => false,
 			'itemOptions' => ['class' => 'item'],
 			'layout' => "{summary}\n{items}\n{pager}",
 			'itemView' => function ($model, $key, $index, $widget) {
 				return $this->render('_list_follower', ['model' => $model]);
 			}
+			// $this->render('_list_following', ['model' => $model, 'first-name' => $model[first_name], 'last-name' => $model[last_name]])
 		]),
 		'active' => false,
 	]
@@ -147,6 +150,7 @@ Modal::end();
 			</div>
 		</div>
 	</div>
+
 <div class="col-xs-12">
 	<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-index.js'); ?>
 </div>
