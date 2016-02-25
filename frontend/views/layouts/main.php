@@ -67,7 +67,7 @@ AppAsset::register($this);
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <div class="navbar-form navbar-left" style="width:300px" >
+                    <div class="navbar-form navbar-left" style="width:600px" >
                         <div class="form-group pull-right" style="display: inline;">
                             <?=  Select2::widget([
                                 'name' => 'search_box_menu',
@@ -97,23 +97,25 @@ AppAsset::register($this);
                             ]) ?>
                         </div>
 
-                    </div>
+
 
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href="#">Register</a></li>
-                        <?php }else{ ?>
-                            <li id="settings" class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
-                            <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li class="item"><a href="#">Settings</a></li>
-                                    <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
-                                </ul>
-                            </li>
-                            <?php } ?>
-                        </ul>
+                    <?php }else{ ?>
+
+                        <?= $this->render('../notification/index') ?>
+                        <li id="settings" class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                        <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="item"><a href="#">Settings</a></li>
+                                <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                    </ul>
+                </li>
+                  <?php } ?>
+                     </ul>
                     </div>
                 </div>
             </nav>
