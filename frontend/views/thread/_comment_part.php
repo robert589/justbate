@@ -1,53 +1,41 @@
-<div class="row" style="margin:2px">
-    <!-- Yes Comment -->
-    <div class="col-md-6">
-        <h1 align="center"> YES </h1>
-        <?= ListView::widget([
-            'dataProvider' => $yesCommentData,
-            'options' => [
-                'tag' => 'div',
-                'class' => 'list-wrapper',
-                'id' => 'list-wrapper',
-            ],
-            'layout' => "\n{items}\n{pager}",
+<?php
+    use kartik\tabs\TabsX;
+    use yii\widgets\ListView;
 
+    $content_comment = array();
+
+    $first = 1;
+    foreach($comment_providers as $thread_choice_item => $comment_provider){
+        $content_comment_item['label'] = $thread_choice_item;
+        $content_comment_item['content'] =  ListView::widget([
+            'dataProvider' => $comment_provider,
+            'summary' => false,
+            'itemOptions' => ['class' => 'item'],
+            'layout' => "{summary}\n{items}\n{pager}",
             'itemView' => function ($model, $key, $index, $widget) {
-                return $this->render('_list_comment',['model' => $model]);
-            },
-            'pager' => [
-                'firstPageLabel' => 'first',
-                'lastPageLabel' => 'last',
-                'nextPageLabel' => 'next',
-                'prevPageLabel' => 'previous',
-                'maxButtonCount' => 3,
-            ],
-        ]) ?>
+                $childCommentForm = new \frontend\models\ChildCommentForm();
+                $comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+                return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
+                    'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
+                    'vote' => $comment_vote_comment['vote']]);
+            }
+        ]);
+        if($first == 1){
+            $content_comment_item['active'] = true;
+            $first = 0;
+        }
+        else{
+            $content_comment_item['active'] = false;
+        }
 
-    </div>
+        $content_comment[] = $content_comment_item;
+    }
+?>
 
-    <!-- No Comment-->
-    <div class="col-md-6">
-        <h1 align="center"> NO </h1>
-        <?= ListView::widget([
-            'dataProvider' => $noCommentData,
-            'options' => [
-                'tag' => 'div',
-                'class' => 'list-wrapper',
-                'id' => 'list-wrapper',
-            ],
-            'layout' => "\n{items}\n{pager}",
 
-            'itemView' => function ($model, $key, $index, $widget) {
-                return $this->render('_list_comment',['model' => $model]);
-            },
-            'pager' => [
-                'firstPageLabel' => 'first',
-                'lastPageLabel' => 'last',
-                'nextPageLabel' => 'next',
-                'prevPageLabel' => 'previous',
-                'maxButtonCount' => 3,
-            ],
-        ]) ?>
-
-    </div>
-</div>
+<?= // Ajax Tabs Above
+TabsX::widget([
+    'items'=>$content_comment,
+    'position'=>TabsX::POS_ABOVE,
+    'encodeLabels'=>false
+]) ?>

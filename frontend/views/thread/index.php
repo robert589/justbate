@@ -26,7 +26,7 @@
 		[
 
 			'label' => 'Vote',
-			'content' => $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel]),
+			'content' => $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel]),
 			'active' => false
 		]
 	];
@@ -65,7 +65,13 @@
 <div class="col-md-offset-2 col-md-10">
 	<div class="col-md-8" align="center">
 		<div class="row">
-			<div style="float: left;" class="col-xs-12"><?php echo $this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'], 'avg_rating' => $model['avg_rating'], 'total_raters' => $model['total_raters']] );?></div>
+			<div style="float: left;" class="col-xs-12">
+				<?=
+					$this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'],
+													'avg_rating' => $model['avg_rating'],
+													'total_raters' => $model['total_raters']] );
+				?>
+			</div>
 		</div>
 
 		<div class="row" style="text-align: center;">
@@ -95,7 +101,7 @@
 
 		<div  id="comment_section" style="display:none">
 			<div class="row" >
-				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel, 'thread_choice' => $thread_choice, 'thread_id' => $model['thread_id']]) ?>
+				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel, 'thread_choices' => $thread_choices, 'thread_id' => $model['thread_id']]) ?>
 				<br>
 				<br>
 			</div>

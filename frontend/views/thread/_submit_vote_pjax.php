@@ -3,6 +3,7 @@ use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
+
 //using pjax, the data sent is not $model['thread_id'] but $thread_id
 if(!isset($thread_id)){
     $thread_id = $model['thread_id'];
@@ -51,7 +52,7 @@ else{
 
     <div class="col-xs-12" id="vote">
         <!-- User Option -->
-        <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choice, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
+        <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choices, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
         <div class="col-xs-12">
             <?php if(isset($user_choice)){ ?>
                <?= Html::submitButton('Vote Again', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>

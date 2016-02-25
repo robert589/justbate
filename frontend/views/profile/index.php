@@ -18,61 +18,35 @@ $this->title = $user->first_name . ' ' . $user->last_name;
 
 <!-- Edit Profile Modal-->
 <?php
-Modal::begin([
-	'id' => 'editModal',
-	'size' => 'modal-lg'
-]);
-
-$editProfileModel = new \frontend\models\EditProfileForm();
-$editUser = new User();
-// $editUser->id = \Yii::$app->user->identity->getId();
-$user_data = $editUser->getUser();
-
-// pass data
-$editProfileModel->occupation = $user_data['occupation'];
-$editProfileModel->birthday = $user_data['birthday'];
-$editProfileModel->first_name = $user_data['first_name'];
-$editProfileModel->last_name = $user_data['last_name'];
-echo $this->render('edit', ['model' => $editProfileModel]);
-Modal::end();
+	Modal::begin([
+		'id' => 'editModal',
+		'size' => 'modal-lg'
+	]);
+		$editProfileModel = new \frontend\models\EditProfileForm();
+		$editUser = new User();
+		// $editUser->id = \Yii::$app->user->identity->getId();
+		$user_data = $editUser->getUser();
+		// pass data
+		$editProfileModel->occupation = $user_data['occupation'];
+		$editProfileModel->birthday = $user_data['birthday'];
+		$editProfileModel->first_name = $user_data['first_name'];
+		$editProfileModel->last_name = $user_data['last_name'];
+		echo $this->render('edit', ['model' => $editProfileModel]);
+    Modal::end();
 ?>
 
-<!-- array definiton -->
 <?php
-$foll_owing = new \yii\data\ArrayDataProvider([
-	'allModels' => $followees,
-	'pagination' => [
-		'pageSize' => 10,
-	]
-]);
-
-$foll_owers = new \yii\data\ArrayDataProvider([
-	'allModels' => $followers,
-	'pagination' => [
-		'pageSize' => 10,
-	]
-]);
-
 $item = [
 	[
 		'label' => 'Main Activity',
-		'content' => ListView::widget([
-			'dataProvider' => $foll_owers,
-			'summary' => false,
-			'itemOptions' => ['class' => 'item'],
-			'layout' => "{summary}\n{items}\n{pager}",
-			'itemView' => function ($model, $key, $index, $widget) {
-				return $this->render('_list_follower', ['model' => $model]);
-			}
-			// $this->render('_list_following', ['model' => $model, 'first-name' => $model[first_name], 'last-name' => $model[last_name]])
-		]),
+		'content' => '',
 		'active' => false,
 	],
 
 	[
 		'label' => 'Following',
 		'content' => ListView::widget([
-			'dataProvider' => $foll_owing,
+			'dataProvider' => $followings_provider,
 			'summary' => false,
 			'itemOptions' => ['class' => 'item'],
 			'layout' => "{summary}\n{items}\n{pager}",
@@ -87,7 +61,7 @@ $item = [
 	[
 		'label' => 'Follower',
 		'content' => ListView::widget([
-			'dataProvider' => $foll_owers,
+			'dataProvider' => $followers_provider,
 			'summary' => false,
 			'itemOptions' => ['class' => 'item'],
 			'layout' => "{summary}\n{items}\n{pager}",
@@ -103,13 +77,13 @@ $item = [
 
 <!-- Upload photo modal -->
 <?php
-Modal::begin([
-	'id' => 'uploadProfilePicModal',
-	'size' => 'modal-lg'
-]);
-$uploadFormModel = new \frontend\models\UploadProfilePicForm();
-echo $this->render('_upload_photo_modal', ['model' => $uploadFormModel]);
-Modal::end();
+	Modal::begin([
+		'id' => 'uploadProfilePicModal',
+		'size' => 'modal-lg'
+	]);
+	$uploadFormModel = new \frontend\models\UploadProfilePicForm();
+	echo $this->render('_upload_photo_modal', ['model' => $uploadFormModel]);
+	Modal::end();
 ?>
 <!-- Page Content -->
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
@@ -131,7 +105,11 @@ Modal::end();
 		</div>
 
 		<div class="col-xs-12 col-md-3">
-			<div id="displayName"><?= $user->first_name ?> <?= $user->last_name ?><button style="float: right;" class="btn btn-primary">Follow</button></div><hr />
+			<div id="displayName">
+				<?= $user->first_name ?> <?= $user->last_name ?>
+				<button style="float: right;" class="btn btn-primary">Follow</button>
+			</div>
+			<hr>
 			<table id="bio-table" class="table table-responsive">
 				<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
 				<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
