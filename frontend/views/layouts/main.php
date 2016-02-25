@@ -101,7 +101,7 @@ AppAsset::register($this);
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href="#">Register</a></li>
                         <?php }else{ ?>
-                            <li class="item" style="margin-top: 10px;"><?= $this->render('../notification/index') ?></li>
+                            <li class="item" id="notification"><?= $this->render('../notification/index') ?></li>
                             <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
                             <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
                             <li class="dropdown">

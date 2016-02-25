@@ -184,3 +184,8 @@ button#upload-image {
     border-radius: 0;
     opacity: 0;
 }
+
+li#search-box {
+    padding: 7px 20px;
+    width: 450px;
+}
