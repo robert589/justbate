@@ -55,7 +55,7 @@ AppAsset::register($this);
 <body>
     <?php $this->beginBody() ?>
     <!-- website menu bar and navigation -->
-    <nav class="navbar navbar-default" id="menubar">
+    <nav class="navbar navbar-default" id="menubar" style="width: 100%;">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -67,69 +67,66 @@ AppAsset::register($this);
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <div class="navbar-form navbar-left" style="width:600px" >
-                        <div class="form-group pull-right" style="display: inline;">
-                            <?=  Select2::widget([
-                                'name' => 'search_box_menu',
-                                'id' => 'search_box_menu',
-                                'options' => ['placeholder' => 'Search'],
-                                'pluginEvents' => [
-                                    "select2:select" => "function(){
-                                                window.location.replace(
-                                                     'http://' +  document.domain  + '$temp_localhost' + '/thread/index?id=' + $('#search_box_menu').val()  );
-                                                }"
+                    <li id="search-box" class="item">
+                        <?=  Select2::widget([
+                            'name' => 'search_box_menu',
+                            'class' => 'form-input',
+                            'id' => 'search_box_menu',
+                            'options' => ['placeholder' => 'Search'],
+                            'pluginEvents' => [
+                                "select2:select" => "function(){
+                                    window.location.replace(
+                                    'http://' +  document.domain  + '$temp_localhost' + '/thread/index?id=' + $('#search_box_menu').val()  );
+                                }"
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'minimumInputLength' => 1,
+                                'language' => [
+                                    'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
                                 ],
-                                'pluginOptions' => [
-                                    'allowClear' => true,
-                                    'minimumInputLength' => 1,
-                                    'language' => [
-                                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
-                                    ],
-                                    'ajax' => [
-                                        'url' => \yii\helpers\Url::to(['site/search-in-notif']),
-                                        'dataType' => 'json',
-                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                                    ],
-                                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                                    'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
-                                    'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
+                                'ajax' => [
+                                    'url' => \yii\helpers\Url::to(['site/search-in-notif']),
+                                    'dataType' => 'json',
+                                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
                                 ],
-                            ]) ?>
-                        </div>
-
-
-
+                                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
+                                'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
+                            ],
+                        ])
+                        ?>
+                    </li>
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href="#">Register</a></li>
-                    <?php }else{ ?>
-
-                        <?= $this->render('../notification/index') ?>
-                        <li id="settings" class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
-                        <li id="profile-page" class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="item"><a href="#">Settings</a></li>
-                                <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
-                    </ul>
-                </li>
-                  <?php } ?>
-                     </ul>
+                        <?php }else{ ?>
+                            <li class="item" style="margin-top: 10px;"><?= $this->render('../notification/index') ?></li>
+                            <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                            <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="item"><a href="#">Settings</a></li>
+                                    <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                                </ul>
+                            </li>
+                            <?php } ?>
+                        </ul>
                     </div>
                 </div>
             </nav>
 
             <?php
-                Modal::begin([
-                    'id' => 'loginModal'
-                ]);
-                $redirect_from = $_SERVER['REQUEST_URI'];
-                $login_form = new \common\models\LoginForm();
+            Modal::begin([
+                'id' => 'loginModal'
+            ]);
+            $redirect_from = $_SERVER['REQUEST_URI'];
+            $login_form = new \common\models\LoginForm();
 
-                echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
+            echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
 
-                Modal::end();
+            Modal::end();
             ?>
 
             <div class="container">

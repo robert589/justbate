@@ -15,15 +15,15 @@ Pjax::begin([
 <?= Html::beginForm(['notification/index'],
 'post',
 ['id' => 'notification-form', 'data-pjax' => '#notifbar', 'class' => 'form-inline'])?>
-<!-- id notif-expansion is used in js to check whether the dropdown is opened or closed-->
+<!-- id notif-expansion is used in js to check whether the dropdown is opened or closed -->
 <?php if (isset($recent_notifications_provider)) { ?>
-    <li id='notif-expansion' class='dropdown open item'>
+    <li id='notif-expansion' class='dropdown open'>
 <?php } else { ?>
     <li id='notif-expansion' class='dropdown'>
 <?php } ?>
-        <a class="dropdown-toggle" onclick="getNotification()" data-toggle="dropdown">notification <b class="caret"></b></a>
-        <ul class="dropdown-menu" class="position: absolute;">
-            <label style="text-align: center;">notifications</label><hr />
+        <a href="#" class="dropdown-toggle" onclick="getNotification()" data-toggle="dropdown">Notification</a>
+        <ul class="dropdown-menu" style="text-align: center;">
+            <label>notifications</label><hr />
             <?php if(isset($recent_notifications_provider)) { ?>
                 <?= $this->render('_notifications', ['recent_notifications_provider' => $recent_notifications_provider]) ?>
             <?php } else { ?>
