@@ -380,6 +380,11 @@ class SiteController extends Controller
         return $out;
     }
 
+
+    public function actionSubmitComment(){
+        
+    }
+
     private function getDefaultChoice(&$create_thread_form){
         $create_thread_form->choices = ['Agree','Disagree', 'Neutral'];
 
