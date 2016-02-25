@@ -37,24 +37,25 @@ class ThreadController extends Controller
 
     public function actionIndex(){
 
-        Yii::trace( Yii::$app->user->identity);
-
         if(!empty($_GET['id'])){
 
             $thread_id = $_GET['id'];
             //thread data
             $thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
+
+
             $commentModel = new CommentForm();
             //get all thread_choices
-            $thread_choice = $this->getChoiceAndItsVoters($thread_id);
+            $thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+
             //get all comment providers
-            $commentProviders = $this->getAllCommentProviders($thread_id, $thread_choice);
+            $comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
 
             // get vote mdoels
             $submitVoteModel = new SubmitThreadVoteForm();
             return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
-                                        ,'thread_choice' => $thread_choice, 'submitVoteModel' => $submitVoteModel,
-                                            'comment_providers' => $commentProviders]);
+                                        ,'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel,
+                                            'comment_providers' => $comment_providers]);
 
         }
 
@@ -246,13 +247,13 @@ class ThreadController extends Controller
             }
 
             //get all thread_choices
-            $thread_choice = $this->getChoiceAndItsVoters($thread_id);
+            $thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
             $submitVoteModel = new SubmitThreadVoteForm();
             return $this->renderPartial('_submit_vote_pjax', [
                 'trigger_login_form' => $trigger_login_form,
                 'user_choice' => $thread_vote_form->choice_text,
                 'submitVoteModel' => $submitVoteModel,
-                'thread_choice' => $thread_choice, 'thread_id' => $thread_id
+                'thread_choices' => $thread_choices, 'thread_id' => $thread_id
             ]);
         }
         else{
@@ -261,38 +262,6 @@ class ThreadController extends Controller
     }
 
 
-    /**Thread Choice */
-    private function getChoiceAndItsVoters($thread_id){
-        $thread_choice = Choice::getChoiceAndItsVoters($thread_id);
-
-        //Map it in proper way
-        return ArrayHelper::map($thread_choice, 'choice_text', 'choice_text_and_total_voters');
-    }
-
-
-    private function getAllCommentProviders($thread_id, $thread_choices){
-
-        //the prev $thread_choice is an associative array, convert to normal array
-        //the prev $thread_chocie: e.g  ("agree" : "agree ( 0 voters), " disagree": "disagree (1 voters) " )
-        $thread_choices = array_keys($thread_choices);
-
-        //initialize array
-        $all_providers = array();
-
-        foreach($thread_choices as $thread_choice){
-            //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
-            $dataProvider =new ArrayDataProvider([
-                                'allModels' => Comment::getCommentByChoiceText($thread_id, $thread_choice),
-                                    'pagination' => [
-                                    'pageSize' =>10,
-                                ],
-
-                            ]);
-            $all_providers[$thread_choice] = $dataProvider;
-        }
-
-        return $all_providers;
-    }
 
 
 }

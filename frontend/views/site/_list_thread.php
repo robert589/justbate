@@ -1,7 +1,10 @@
 <?php
-use kartik\rating\StarRating;
-use yii\helpers\Html;
-use yii\helpers\Url;
+	use kartik\rating\StarRating;
+	use yii\helpers\Html;
+	use yii\helpers\Url;
+	use yii\widgets\Pjax;
+	use yii\widgets\ActiveForm;
+
 
 ?>
 
@@ -27,9 +30,13 @@ use yii\helpers\Url;
 						'max' => 5,
 						'step' => 1,
 						'size' => 'xs',
-						]])
+					]])
 				?>
+
+
 			</div>
+
+			<?= $this->render('_list_thread_comment_part', ['thread_id' => $model['thread_id']]) ?>
 		</div>
 		</div>
 </article>

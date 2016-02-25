@@ -46,24 +46,19 @@ $this->title = "Home | Propose";
 		</div>
 
 		<div class="col-md-12">
-			<!-- The form only be used as refresh page -->
-			<?= Html::beginForm(['site/home'], 'post', ['id' => 'refresh-form', 'data-pjax' => '', 'class' => 'form-inline']); ?>
-				<!-- this hidden input will be filled by select2:select event -->
-				<?= Html::hiddenInput('filterwords', null, ['id' => 'filter_tag'])?>
 
-				<?= ListView::widget([
-					'id' => 'threadList',
-					'dataProvider' => $listDataProvider,
-					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
-					'summary' => false,
-					'itemOptions' => ['class' => 'item'],
-					'layout' => "{summary}\n{items}\n{pager}",
-					'itemView' => function ($model, $key, $index, $widget) {
-						return $this->render('_list_thread',['model' => $model]);
-					}
-				])
-				?>
-			<?= Html::endForm() ?>
+			<?= ListView::widget([
+				'id' => 'threadList',
+				'dataProvider' => $listDataProvider,
+				'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+				'summary' => false,
+				'itemOptions' => ['class' => 'item'],
+				'layout' => "{summary}\n{items}\n{pager}",
+				'itemView' => function ($model, $key, $index, $widget) {
+					return $this->render('_list_thread',['model' => $model]);
+				}
+			])
+			?>
 		</div>
 	</div>
 </div>

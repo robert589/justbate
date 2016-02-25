@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\db\ActiveRecord;
+use yii\data\ArrayDataProvider;
 
 class Comment extends ActiveRecord
 {
@@ -135,5 +136,30 @@ class Comment extends ActiveRecord
             ->createCommand($sql)
             ->bindValues([':username' => $username])
             ->queryAll();
+    }
+
+
+    public static function getAllCommentProviders($thread_id, $thread_choices){
+
+        //the prev $thread_choice is an associative array, convert to normal array
+        //the prev $thread_chocie: e.g  ("agree" : "agree ( 0 voters), " disagree": "disagree (1 voters) " )
+        $thread_choices = array_keys($thread_choices);
+
+        //initialize array
+        $all_providers = array();
+
+        foreach($thread_choices as $thread_choice){
+            //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
+            $dataProvider =new ArrayDataProvider([
+                'allModels' => self::getCommentByChoiceText($thread_id, $thread_choice),
+                'pagination' => [
+                    'pageSize' =>10,
+                ],
+
+            ]);
+            $all_providers[$thread_choice] = $dataProvider;
+        }
+
+        return $all_providers;
     }
 }

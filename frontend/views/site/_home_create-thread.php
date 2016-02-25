@@ -4,7 +4,6 @@
     use kartik\widgets\Select2;
     use yii\db\Expression;
     use yii\web\JsExpression;
-    use dosamigos\ckeditor\CKEditor;
 ?>
 
 <div align="center"> <h3>Create Post</h3></div>

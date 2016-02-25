@@ -3,7 +3,7 @@
 namespace common\models;
 
 use yii\db\ActiveRecord;
-
+use yii\helpers\ArrayHelper;
 class Choice extends ActiveRecord
 {
     public function getTable(){
@@ -28,6 +28,12 @@ class Choice extends ActiveRecord
                     queryAll();
 
         return $result;
+    }
+
+    public static function getMappedChoiceAndItsVoters($thread_id){
+        $thread_choice = self::getChoiceAndItsVoters($thread_id);
+        //Map it in proper way
+        return ArrayHelper::map($thread_choice, 'choice_text', 'choice_text_and_total_voters');
     }
 
 }

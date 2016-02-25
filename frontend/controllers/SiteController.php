@@ -3,14 +3,14 @@ namespace frontend\controllers;
 
 use common\models\Keyword;
 use frontend\models\CreateThreadForm;
-use frontend\models\PersonalizedChoiceForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use common\models\Thread;
-use common\models\ThreadTopic;
+use common\models\Choice;
+use common\models\Comment;
 use common\models\User;
 use frontend\models\ContactForm;
 use frontend\models\FilterHomeForm;
@@ -180,6 +180,27 @@ class SiteController extends Controller
             return $this->render('login', [
                 'login_form' => $model,
             ]);
+        }
+    }
+
+    /**
+     *
+     */
+    public function actionGetComment(){
+        if(!empty($_POST['thread_id'])){
+            $thread_id = $_POST['thread_id'];
+
+            //get all thread_choices
+            $thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+            //get all comment providers
+            $comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
+
+
+            return $this->renderPartial('_list_thread_comment_part', [
+                        'thread_id' => $thread_id,
+                        'comment_retrieved' => true,
+                        'thread_choices' => $thread_choices,
+                        'comment_providers' => $comment_providers]);
         }
     }
 

@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-xs-12">
             <?= $form->field($commentModel, 'choice_text')->widget(Select2::classname(), [
-                'data' => $thread_choice,
+                'data' => $thread_choices,
                 'hideSearch' => true,
                 'options' => ['placeholder' => 'Choose your side ...'],
                 'pluginOptions' => [

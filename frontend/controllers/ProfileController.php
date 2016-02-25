@@ -42,13 +42,28 @@ class ProfileController extends Controller
 				$num_following = FollowerRelation::getNumFollowing($user_info['id']);
 				$followees = FollowerRelation::getFollowees($user_info['id']);
 
+
+				$followings_provider = new \yii\data\ArrayDataProvider([
+					'allModels' => $followees,
+					'pagination' => [
+						'pageSize' => 10,
+					]
+				]);
+
+				$followers_provider = new \yii\data\ArrayDataProvider([
+					'allModels' => $followers,
+					'pagination' => [
+						'pageSize' => 10,
+					]
+				]);
+
 				return $this->render('index', [
 					'user' => $user_info,
 					'num_followers' => $num_follower,
 					'num_following' => $num_following,
 					'num_followings' => $num_following,
-					'followees' => $followees,
-					'followers' => $followers
+					'followings_provider' => $followings_provider,
+					'followers_provider' => $followers_provider
 				]);
 			}
 			else{
