@@ -147,7 +147,6 @@ $script =<<< JS
 			return false;
 		}
 		$("#userThreadRate").val(value);
-
 		$("#ratingForm").submit();
 		return false;
 	}).on('click', '#display_hide_comment', function(){

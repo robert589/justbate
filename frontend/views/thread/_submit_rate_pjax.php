@@ -14,6 +14,8 @@ use kartik\widgets\StarRating;
     ]
 ]);?>
 
+<?= Html::beginForm('submit-rate', 'post', ['id'=>"ratingForm" ,'data-pjax' => '#submitRating', 'class' => 'form-inline', 'style' => 'float: right;']); ?>
+
 <!--Rating Part-->
 <div class="row">
     <div class="col-xs-12 col-md-6" style="float: right:">
@@ -41,7 +43,6 @@ use kartik\widgets\StarRating;
         </span> <!-- span.label-primary -->
     </div> <!-- div.col-xs-12.col-md-6 -->
 </div> <!-- div.row -->
-<?= Html::beginForm('submit-rate', 'post', ['id'=>"ratingForm" ,'data-pjax' => '#submitRating', 'class' => 'form-inline', 'style' => 'float: right;']); ?>
 <?= Html::endForm() ?>
 
 <?php Pjax::end();?>
