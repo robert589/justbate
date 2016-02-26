@@ -4,6 +4,8 @@ namespace frontend\models;
 use common\models\CommentVote;
 
 use yii\base\Model;
+use common\models\User;
+use common\models\Comment;
 
 use Yii;
 
@@ -57,12 +59,10 @@ class CommentVoteForm extends Model
 		if($comment_votes->vote != $this->vote){
 			$comment_votes->vote = $this->vote;
 			if( $comment_votes->update()){
-				$sql = 'UPDATE user SET reputation = reputation + 2 * :vote WHERE id = (SELECT user_id FROM comment WHERE comment_id = :comment_id LIMIT 1);';
-				\Yii::$app->db
-					->createCommand($sql)
-					->bindValues([':vote' => $comment_votes->vote, ':comment_id' => $comment_votes->comment_id])
-					->update();
-				return true;
+				$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
+				$user = User::findOne(['id' => $comment->user_id]);
+				$user->reputation += 2 * $this->vote;
+				return $user->update();
 			}
 			else{
 				return false;
@@ -80,12 +80,10 @@ class CommentVoteForm extends Model
 		$comment_votes->comment_id = $this->comment_id;
 
 		if($comment_votes->save()){
-			$sql = 'UPDATE user SET reputation = reputation + :vote WHERE id = (SELECT user_id FROM comment WHERE comment_id = :comment_id LIMIT 1);';
-			\Yii::$app->db
-				->createCommand($sql)
-				->bindValues([':vote' => $comment_votes->vote, ':comment_id' => $comment_votes->comment_id])
-				->update();
-			return true;
+			$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
+			$user = User::findOne(['id' => $comment->user_id]);
+			$user->reputation += $this->vote;
+			return $user->update();
 		}
 		else{
 			return false;
