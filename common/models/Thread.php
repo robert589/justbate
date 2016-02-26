@@ -135,7 +135,7 @@ class Thread extends ActiveRecord
 
 		return \Yii::$app->db
 			->createCommand($sql)
-			->bindParam([':follower_id' => $follower_id])
+			->bindParam(':follower_id', $follower_id)
 			->queryAll();
 	}
 }
