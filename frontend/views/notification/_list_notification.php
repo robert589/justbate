@@ -1,7 +1,7 @@
 <?php
 ?>
 
-<p style="color: black"><?=  $model['description'] ?> </p>
+<p style="color: black" data-pjax=0><?=  $model['description'] ?> </p>
 <hr>
 
 

@@ -42,7 +42,7 @@ class NotificationForm extends Model
             $trigger_user_link = \Yii::$app->request->baseUrl . '/profile/index?username=' . $trigger_user['username'];
             $notification = new Notification();
             $notification->user_id = $this->triggered_id;
-            $notification->description = "<a href='". $trigger_user_link .  "'>$trigger_user_full_name</a> commented on your thread";
+            $notification->description = "<a data-pjax=0 href='". $trigger_user_link .  "'>$trigger_user_full_name</a> commented on your thread";
 
             if($notification->save()){
                 return true;
@@ -68,7 +68,7 @@ class NotificationForm extends Model
 
             $notification = new Notification();
             $notification->user_id = $this->triggered_id;
-            $notification->description = "<a href='". $trigger_user_link .  "'>$trigger_user_full_name</a> commented on your comment";
+            $notification->description = "<a data-pjax=0 href='". $trigger_user_link .  "'>$trigger_user_full_name</a> commented on your comment";
 
             if($notification->save()){
                 return true;

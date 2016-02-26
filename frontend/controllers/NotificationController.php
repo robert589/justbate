@@ -19,7 +19,6 @@ class NotificationController extends Controller{
     public function actionIndex(){
         //Leave it first
 
-        if( Yii::$app->request->isPjax) {
             $recentTags = Notification::getAllNotifications(\Yii::$app->user->getId());
             // build an ArrayDataProvider with an empty query and a pagination with 40 items for page
             $recentTagsProvider = new \yii\data\ArrayDataProvider([
@@ -31,10 +30,6 @@ class NotificationController extends Controller{
 
             //remve the base line
             return $this->renderAjax( 'index' , ['recent_notifications_provider' => $recentTagsProvider] );
-        }
-        else{
-            return $this->renderAjax( 'index' );
-        }
 
     }
 

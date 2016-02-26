@@ -5,7 +5,6 @@ use kartik\widgets\Spinner;
 
 Pjax::begin([
     'id' => 'notifbar',
-    'timeout' => false,
     'enablePushState' => false,
     'clientOptions' => [
         'container' => '#notifbar',
