@@ -130,9 +130,19 @@ class Thread extends ActiveRecord
 	}
 
 	public static function retrieveThreadFromFollowee($follower_id) {
+		$sql =  "
+			 Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
+				 from (SELECT thread.*, thread_rate.rate as rate
+							 from thread left join thread_rate
+							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
+							 user, thread_keyword
+				 where thread_thread_rate.user_id = user.id and user.id in (SELECT followee_id from follower_relation where follower_id = :follower_id )
+				 group by(thread_thread_rate.thread_id)
+				 order by (date_created) desc";
+		/*
 		$sql = 'SELECT * FROM thread INNER JOIN
 					(SELECT followee_id user_id FROM follower_relation WHERE follower_id = :follower_id) AS temp_table ON thread.user_id = temp_table.user_id';
-
+*/
 		return \Yii::$app->db
 			->createCommand($sql)
 			->bindParam(':follower_id', $follower_id)
