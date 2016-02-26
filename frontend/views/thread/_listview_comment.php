@@ -53,7 +53,7 @@ use common\models\Comment;
 		<div class="row">
 			<!--The name of the person that make the comments -->
 			<div class="col-md-6">
-				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->homeUrl . "../../profile/index?username=" . $model['username'] )?>
+				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/profile/index?username=" . $model['username'] )?>
 			</div>
 
 			<!-- Votes part-->

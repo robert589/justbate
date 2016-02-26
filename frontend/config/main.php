@@ -15,7 +15,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
