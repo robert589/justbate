@@ -99,21 +99,21 @@ AppAsset::register($this);
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href="#">Register</a></li>
-                        <?php }else{ ?>
-                            <li class="item" id="notification"><?= $this->render('../notification/index') ?></li>
-                            <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
-                            <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
-                            <li class="dropdown">
-                                <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li class="item"><a href="#">Settings</a></li>
-                                    <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
-                                </ul>
-                            </li>
-                            <?php } ?>
-                        </ul>
-                    </div>
+                    <?php } else { ?>
+                        <li class="dropdown" style="margin: 15px 0 0 10px;"><?= $this->render('../notification/index') ?></li>
+                        <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                        <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
+                        <li class="dropdown">
+                        <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="item"><a href="#">Settings</a></li>
+                                <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                            </ul>
+                        </li>
+                        <?php } ?>
+                    </ul>
                 </div>
+            </div>
             </nav>
 
             <?php

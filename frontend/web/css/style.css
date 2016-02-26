@@ -1,11 +1,12 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+/*@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
 @import url(https://fonts.googleapis.com/css?family=Crete+Round);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
 /* Web Content */
 body {
     background: #fff !important;
     color: #000 !important;
     font-family: 'Crete Round', serif !important;
-    line-height: 2em !important;
+    line-height: 20px !important;
 }
 
 div#main-body {
@@ -20,7 +21,8 @@ nav#menubar {
     padding: 1%;
     font-size: 1em;
     border-radius: 0 !important;
-    font-family: Open Sans;
+    /*font-family: Open Sans;*/
+    font-family: 'PT Sans Narrow', sans-serif;
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
@@ -134,17 +136,6 @@ div.modal-body button#sign-up {
     font-family: Agency FB;
 }
 
-/* Footer */
-.navbar-fixed-bottom {
-    color: white;
-    text-align: center;
-    border: 0;
-    padding: 1%;
-    font-size: 2em;
-    text-transform: uppercase;
-    background: #AA3939;
-}
-
 div#submitThreadVote div#form-control input[type="radio"] {
     margin-right: 1%;
 }
@@ -199,12 +190,63 @@ li#notification {
     margin-bottom: 0px;
 }
 
+/* removing the border for search form */
 span.select2-selection--single,
 span#select2-search_box_menu-container {
     color: black;
     border: 0 !important;
 }
 
+/* removing the description label */
 label[for="createthreadform-description"] {
     display: none;
+}
+
+/* glyphicon style */
+span#left-icon {
+    margin-left: 15px;
+}
+
+span#right-icon {
+    margin-right: 15px;
+}
+
+li.item {
+    transition: 0.5s;
+}
+
+li.item:hover {
+    background: #558379;
+}
+
+/* thread things */
+blockquote#quote-on-thread {
+    background: rgba(37,110,93,0.25);
+    margin: 0;
+
+}
+
+div.tab-content {
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+li#search-box:hover {
+    background: none !important;
+}
+
+li#notif-expansion {
+    margin-top: -15px;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+li#notif-expansion:hover {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none !important;
 }
