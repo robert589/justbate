@@ -49,14 +49,13 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
     <?php $this->beginBody() ?>
     <!-- website menu bar and navigation -->
     <nav class="navbar navbar-default" id="menubar" style="width: 100%;">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
@@ -105,7 +104,7 @@ AppAsset::register($this);
                             <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
                             <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
                             <li class="dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
                                 <ul class="dropdown-menu">
                                     <li class="item"><a href="#">Settings</a></li>
                                     <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
@@ -129,7 +128,7 @@ AppAsset::register($this);
             Modal::end();
             ?>
 
-            <div class="container">
+            <div class="container" style="padding: 0;">
                 <?= Breadcrumbs::widget(    [
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
