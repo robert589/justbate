@@ -35,7 +35,6 @@ class NotificationController extends Controller{
         }
         else{
             return $this->renderAjax( 'index' );
-
         }
 
     }
