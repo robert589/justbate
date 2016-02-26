@@ -129,9 +129,10 @@ class Thread extends ActiveRecord
 		return $result;
 	}
 
-	public static function retrieveTopicFromFollowee($follower_id) {
+	public static function retrieveThreadFromFollowee($follower_id) {
 		$sql = 'SELECT * FROM thread INNER JOIN
 					(SELECT followee_id user_id FROM follower_relation WHERE follower_id = :follower_id) AS temp_table ON thread.user_id = temp_table.user_id';
+
 		return \Yii::$app->db
 			->createCommand($sql)
 			->bindParam([':follower_id' => $follower_id])
