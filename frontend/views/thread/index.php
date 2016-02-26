@@ -20,7 +20,7 @@
 	$itemsHeader = [
 		[
 			'label' => 'Description',
-			'content' => "<h3>" . $model['description'] . "</h3>",
+			'content' => "<blockquote id='quote-on-thread' style='text-align: right; margin: 0 !important;'><h3>" . $model['description'] . "</h3></blockquote>",
 			'active' => true,
 		],
 		[
@@ -71,12 +71,14 @@
 													'avg_rating' => $model['avg_rating'],
 													'total_raters' => $model['total_raters']] );
 				?>
-			</div>
-		</div>
+			</div> <!-- div.col-xs-12 -->
+		</div> <!-- div.row -->
 
 		<div class="row" style="text-align: center;">
-			<div class="col-md-12"><h2><?= $model['title'] ?> </h2></div>
-		</div>
+			<div class="col-md-12">
+				<h1><?= $model['title'] ?> </h1>
+			</div> <!-- div.col-md-12 -->
+		</div> <!-- row -->
 
 		<div class="row" style="border-color: #ccccff;min-height: 250px">
 			<?= // Ajax Tabs Above
@@ -148,7 +150,6 @@ $script =<<< JS
 	    }
 	}).on('rating.change', '#thread_rating', function(event, value, caption) {
 		if($guest){
-
 			beginLoginModal();
 			return false;
 		}
@@ -157,7 +158,6 @@ $script =<<< JS
 		return false;
 	}).on('click', '#display_hide_comment', function(){
 		if($guest){
-
 			beginLoginModal();
 			return false;
 			$("#ask_to_login").show();
