@@ -1,9 +1,10 @@
-/* Web Content */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Crete+Round);
+/* Web Content */
 body {
     background: #fff !important;
     color: #000 !important;
-    font-family: Open Sans !important;
+    font-family: 'Crete Round', serif !important;
     line-height: 2em !important;
 }
 
@@ -18,16 +19,18 @@ nav#menubar {
     border: 0;
     padding: 1%;
     font-size: 1em;
+    border-radius: 0 !important;
     font-family: Open Sans;
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
+    background: #025845 !important;
 }
 
 div.navbar-header a,
 li.item a,
 .navbar-collapse {
-    color: black !important;
+    color: #fff !important;
 }
 
 input[type="text"]#search {
@@ -186,6 +189,22 @@ button#upload-image {
 }
 
 li#search-box {
-    padding: 7px 20px;
+    padding: 7px;
     width: 450px;
+}
+
+li#notification {
+    margin: 15px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+span.select2-selection--single,
+span#select2-search_box_menu-container {
+    color: black;
+    border: 0 !important;
+}
+
+label[for="createthreadform-description"] {
+    display: none;
 }
