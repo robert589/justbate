@@ -22,10 +22,10 @@ Pjax::begin([
 <?php } ?>
         <a href="#" class="dropdown-toggle" onclick="getNotification()" data-toggle="dropdown">Notification <span style="padding-right: 15px;" id="left-icon" class="glyphicon glyphicon-chevron-down"></span></a>
         <ul class="dropdown-menu">
-            <label style="color:black;">Notifications</label>
+            <div align="center" id="dropdown-menu-title">Notifications</div>
             <hr>
             <?php if(isset($recent_notifications_provider)) { ?>
-                <?= $this->render('_notifications', ['recent_notifications_provider' => $recent_notifications_provider]) ?>
+                <?= $this->render('_notifications', ['id' => 'dropdown-menu-body', 'recent_notifications_provider' => $recent_notifications_provider]) ?>
             <?php } else { ?>
                 <?= Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']) ?>
             <?php } ?>

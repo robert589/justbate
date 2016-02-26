@@ -1,11 +1,13 @@
 /*@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
+@import url(https://fonts.googleapis.com/css?family=EB+Garamond);
 @import url(https://fonts.googleapis.com/css?family=Crete+Round);
 @import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
 /* Web Content */
 body {
     background: #fff !important;
     color: #000 !important;
-    font-family: 'Crete Round', serif !important;
+    /*font-family: 'Crete Round', serif !important;*/
+    font-family: 'Garamond', serif !important;
     line-height: 20px !important;
 }
 
@@ -211,10 +213,13 @@ span#right-icon {
     margin-right: 15px;
 }
 
+li#dropdown-menu-setings,
 li.item {
     transition: 0.5s;
 }
 
+a.dropdown-toggle:hover,
+li#dropdown-menu-setings:hover,
 li.item:hover {
     background: #558379;
 }
@@ -247,6 +252,65 @@ li#notif-expansion:hover {
     text-decoration: none;
 }
 
-a:hover {
+.nav .open > a:hover {
+    background: #256E5D  !important;
     text-decoration: none !important;
+}
+
+.nav .open > a,
+.nav .open > a:focus {
+    background: none !important;
+    transition: 0.5s;
+}
+
+li a:active,
+li.dropdown,
+li a:visited {
+    background: none !important;
+}
+
+ul.dropdown-menu {
+    border: 0;
+    padding: 1%;
+    font-size: 1em;
+    border-radius: 0 !important;
+    /*font-family: Open Sans;*/
+    font-family: 'PT Sans Narrow', sans-serif;
+    text-transform: uppercase;
+    background: white !important;
+    border-bottom: 3px solid black;
+    background: #025845 !important;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none !important;
+}
+
+ul.dropdown-menu div#dropdown-menu-title {
+    padding: 0px 15px;
+    padding-top: 15px;
+}
+
+ul.dropdown-menu div.kv-spin-center {
+    padding: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    li#notif-expansion a.dropdown-toggle {
+        margin-left: -10px !important;
+    }
+}
+
+li#notif-expansion {
+    background: none !important;
+    transition: 0.5s;
+}
+
+li#notif-expansion:hover {
+    background: #558379 !important;
+}
+
+li#notif-expansion a.dropdown-toggle {
+    background: none !important;
 }

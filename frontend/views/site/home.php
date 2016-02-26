@@ -10,58 +10,54 @@ use yii\web\JsExpression;
 
 $this->title = "Home | Propose";
 ?>
-
-
-<div class="col-md-12">
-	<div class="col-md-3">
+<div class="col-xs-12" style="padding: 0;">
+	<div class="col-md-3" style="padding: 0;">
 		<div class="col-xs-12">
 			<table class="table table-bordered table-responsive" id="left-menu">
 				<tr><td><button type="button" class="btn">Your Friend</button></td></tr>
 				<tr><td><button type="button" class="btn">Popular Thread</button></td></tr>
 				<tr><td><button type="button" class="btn">Interesting Thread</button></td></tr>
 			</table>
-		</div>
-		<!-- <label class="control-label">Top Tag</label> -->
+		</div> <!-- div.co-xs-12 -->
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
 				'heading' => 'Popular Keyword',
 				'items' => $keyword_list,
-			]) ?>
-		</div>
+				]) ?>
+			</div><!-- div.col-xs-12 -->
 
-		<div class="col-xs-12">
-
-			<?= SideNav::widget([
+			<div class="col-xs-12">
+				<?= SideNav::widget([
 					'type' => SideNav::TYPE_DEFAULT,
 					'heading' => 'Trending Topic',
 					'items' => $trending_topic_list,
-			]) ?>
-		</div>
-	</div>
-	<div class="col-md-7">
-		<div class="col-md-12">
-			<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
-		</div>
+					]) ?>
+				</div> <!-- div.col-xs-12 -->
+			</div><!-- div.col-md-3 -->
 
-		<div class="col-md-12">
+			<div class="col-md-7">
+				<div class="col-md-12">
+					<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
+				</div>
+				<div class="col-md-12">
+					<?= ListView::widget([
+						'id' => 'threadList',
+						'dataProvider' => $listDataProvider,
+						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+						'summary' => false,
+						'itemOptions' => ['class' => 'item'],
+						'layout' => "{summary}\n{items}\n{pager}",
+						'itemView' => function ($model, $key, $index, $widget) {
+							return $this->render('_list_thread',['model' => $model]);
+						}
+					])
+					?>
+				</div><!-- div.col-xs-12 -->
+			</div> <!-- div.md-7 -->
+		</div> <!-- div.col-md-12 -->
 
-			<?= ListView::widget([
-				'id' => 'threadList',
-				'dataProvider' => $listDataProvider,
-				'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
-				'summary' => false,
-				'itemOptions' => ['class' => 'item'],
-				'layout' => "{summary}\n{items}\n{pager}",
-				'itemView' => function ($model, $key, $index, $widget) {
-					return $this->render('_list_thread',['model' => $model]);
-				}
-			])
-			?>
-		</div>
-	</div>
-</div>
-<?php
-$this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/home.js');
-?>
+		<?php
+		$this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/home.js');
+		?>
