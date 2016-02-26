@@ -382,7 +382,7 @@ class SiteController extends Controller
 
 
     public function actionSubmitComment(){
-        
+
     }
 
     private function getDefaultChoice(&$create_thread_form){

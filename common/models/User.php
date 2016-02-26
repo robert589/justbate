@@ -222,13 +222,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->getfullName() . ' - ' . $this->occupation;
     }
 
-    /**
-     * Get all business people
-     * @return array|\yii\db\ActiveRecord[]
-     */
-    public static function retrieveAllBusinessPeople(){
-        return Self::find()->where(['business' => 1])->all();
-    }
+
 
     /**
      * Get user based on id or username

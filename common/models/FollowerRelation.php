@@ -6,9 +6,12 @@ use yii\db\ActiveRecord;
 
 class FollowerRelation extends ActiveRecord
 {
-	public $follower_id;
-	public $followee_id;
+//	public $follower_id;
+//	public $followee_id;
 
+	public static function getTable(){
+		return 'follower_relation';
+	}
 	// Returns integer
 	public static function getNumFollowers($followee_id) {
 		return self::find()
@@ -50,21 +53,11 @@ class FollowerRelation extends ActiveRecord
 			->all();
 	}
 
-	public static function isFollowing($user_id, $followee_id) {
-		return $this->findOne(['follower_id' => $user_id, 'followee_id' => $followee_id]) !== null;
+	public static function isFollowing($follower_id, $followee_id) {
+		return self::findOne(['follower_id' => $follower_id, 'followee_id' => $followee_id]) !== null;
 	}
 
-	public static function follow($user_id, $followee_id) {
-		$following = new Follower();
-		$following->follower_id = $user_id;
-		$following->followee_id = $followee_id;
-		$following->save();
-	}
 
-	public static function unfollow($user_id, $followee_id) {
-		$following = self::findOne(['follower_id' => $user_id, 'followee_id' => $followee_id]);
-		$following->delete();
-	}
 }
 
 ?>
