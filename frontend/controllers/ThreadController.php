@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\models\CommentVoteForm;
+use frontend\models\NotificationForm;
 use frontend\models\SubmitRateThreadForm;
 use frontend\models\SubmitThreadVoteForm;
 use Yii;
@@ -11,7 +12,6 @@ use yii\web\Controller;
 use yii\data\Pagination;
 
 use frontend\models\CommentForm;
-use frontend\models\CommentLikeForm;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
 
@@ -74,7 +74,6 @@ class ThreadController extends Controller
                 'pagination' => [
                     'pageSize' => 5,
                 ]
-
             ]);
 
             $child_comment_form = new ChildCommentForm();
@@ -102,23 +101,29 @@ class ThreadController extends Controller
 
             if($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate()){
                 if($child_comment_form->store()){
-                    $child_comment_form = new ChildCommentForm();
+                    if($this->updateChildCommentNotification($user_id, $parent_id)){
 
-                    $result =  ChildCOmment::getAllChildComments($parent_id);
+                        $child_comment_form = new ChildCommentForm();
+                        $result =  ChildCOmment::getAllChildComments($parent_id);
+                        $child_comment_provider = new \yii\data\ArrayDataProvider([
+                            'allModels' => $result,
+                            'pagination' => [
+                                'pageSize' => 5,
+                            ]
+                        ]);
 
-                    $child_comment_provider = new \yii\data\ArrayDataProvider([
-                        'allModels' => $result,
-                        'pagination' => [
-                            'pageSize' => 5,
-                        ]
+                        return $this->render('_child_comment', ['comment_id' => $parent_id,
+                            'retrieved' => true, 'child_comment_provider' => $child_comment_provider, 'child_comment_form' => $child_comment_form]);
 
-                    ]);
-
-                    return $this->render('_child_comment', ['comment_id' => $parent_id,
-                                'retrieved' => true, 'child_comment_provider' => $child_comment_provider, 'child_comment_form' => $child_comment_form]);
+                    }
                 }
             }
         }
+        else{
+            return null;
+        }
+
+        return null;
     }
 
 
@@ -134,13 +139,17 @@ class ThreadController extends Controller
                 $commentModel->thread_id =  $thread_id;
                 $commentModel->user_id = \Yii::$app->user->getId();
                 if($commentModel->store()){
-                    return  $this->redirect(Yii::getAlias('@base-url') . '/thread/index?id=' . $thread_id );
+                    if($this->updateCommentNotification($commentModel->user_id, $thread_id)){
+                        return  $this->redirect(Yii::$app->request->baseUrl . '/thread/index?id=' . $thread_id );
+                    }
                 }
                 else{
 
                 }
             }
         }
+
+        return null;
     }
 
     /**
@@ -182,6 +191,7 @@ class ThreadController extends Controller
             return $this->renderPartial('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
                 'vote' => $vote, 'comment_id' => $comment_id, 'trigger_login_form' => $trigger_login_form]);
         }
+        return null;
     }
 
     /**
@@ -261,7 +271,21 @@ class ThreadController extends Controller
         }
     }
 
+    private function updateCommentNotification($trigger_id, $thread_id){
+        $notification_form = new NotificationForm();
+        $notification_form->trigger_id = $trigger_id;
+        if($notification_form->insertCommentNotification($thread_id) == true){
+            return true;
+        }
+    }
 
+    private function updateChildCommentNotification($trigger_id, $comment_id){
+        $notification_form = new NotificationForm();
+        $notification_form->trigger_id = $trigger_id;
+        if($notification_form->insertChildCommentNotification($comment_id)){
+            return true;
+        }
+    }
 
 
 }
