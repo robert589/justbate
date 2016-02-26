@@ -12,7 +12,6 @@ use yii\web\Controller;
 use yii\data\Pagination;
 
 use frontend\models\CommentForm;
-use frontend\models\CommentLikeForm;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditCommentForm;
 
@@ -149,6 +148,8 @@ class ThreadController extends Controller
                 }
             }
         }
+
+        return null;
     }
 
     /**

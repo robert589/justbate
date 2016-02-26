@@ -13,14 +13,14 @@ use yii\helpers\Url;
 use frontend\models\ThreadTopic;
 use frontend\models\CreateThreadForm;
 use common\models\User;
-
+use common\models\Notification;
 class NotificationController extends Controller{
 
     public function actionIndex(){
         //Leave it first
 
         if( Yii::$app->request->isPjax) {
-            $recentTags = TagInThread::getRecentTags(User::getUsername(Yii::$app->user->getId()));
+            $recentTags = Notification::getAllNotifications(\Yii::$app->user->getId());
             // build an ArrayDataProvider with an empty query and a pagination with 40 items for page
             $recentTagsProvider = new \yii\data\ArrayDataProvider([
                 'allModels' => $recentTags,
@@ -28,7 +28,6 @@ class NotificationController extends Controller{
                     'pageSize' => 20,
                 ],
             ]);
-
 
             //remve the base line
             return $this->renderAjax( 'index' , ['recent_notifications_provider' => $recentTagsProvider] );
