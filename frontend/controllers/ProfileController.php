@@ -2,8 +2,8 @@
 namespace frontend\controllers;
 
 use frontend\models\EditProfileForm;
-use frontend\models\UploadProfilePicForm;
 use frontend\models\FollowerForm;
+use frontend\models\UploadProfilePicForm;
 
 use Yii;
 use yii\web\Controller;
@@ -21,16 +21,13 @@ use common\models\FollowerRelation;
 class ProfileController extends Controller
 {
 
-
-	public function actionBusiness(){
-	}
-	
 	public function actionIndex()
 	{
 		if(isset($_GET['username'])){
 			$user = new User();
 			$username = $_GET['username'];
 			$user->username = $_GET['username'];
+
 			if($user->checkUsernameExist()){
 				$user_info =  $user->getUser();
 
@@ -41,7 +38,6 @@ class ProfileController extends Controller
 				// Retrieve number of followings
 				$num_following = FollowerRelation::getNumFollowing($user_info['id']);
 				$followees = FollowerRelation::getFollowees($user_info['id']);
-
 
 				$followings_provider = new \yii\data\ArrayDataProvider([
 					'allModels' => $followees,
@@ -57,10 +53,14 @@ class ProfileController extends Controller
 					]
 				]);
 
+				//is following
+				$is_following = FollowerRelation::isFollowing(Yii::$app->getUser()->id, $user_info['id']);
+				//render index
 				return $this->render('index', [
 					'user' => $user_info,
 					'num_followers' => $num_follower,
 					'num_following' => $num_following,
+					'is_following' => $is_following,
 					'num_followings' => $num_following,
 					'followings_provider' => $followings_provider,
 					'followers_provider' => $followers_provider
@@ -90,10 +90,30 @@ class ProfileController extends Controller
 		}
 	}
 
+	public function actionFollow(){
+		if(isset($_POST['follower_id']) && isset($_POST['followee_id'])){
+			$follower_id = $_POST['follower_id'];
+			$followee_id = $_POST['followee_id'];
 
+			$follower_form = new FollowerForm();
+			$follower_form->followee_id = $followee_id;
+			$follower_form->follower_id = $follower_id;
+			if($follow = $follower_form->update()){
+				if($follow == 1){
+					return $this->render('_index_follow_button', ['is_following' => $follow , 'followee_id' => $followee_id]);
+				}
+				else{
+					return $this->render('_index_follow_button', ['is_following' => -1, 'followee_id' => $followee_id ]);
 
-	 public function actionUpload()
-	{
+				}
+			}
+			else{
+				//error
+			}
+		}
+	}
+
+	public function actionUpload(){
 		if(Yii::$app->request->isPost){
 			$model = new UploadProfilePicForm();
 

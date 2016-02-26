@@ -107,7 +107,8 @@ $item = [
 		<div class="col-xs-12 col-md-3">
 			<div id="displayName">
 				<?= $user->first_name ?> <?= $user->last_name ?>
-				<button style="float: right;" class="btn btn-primary">Follow</button>
+
+				<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
 			</div>
 			<hr>
 			<table id="bio-table" class="table table-responsive">
@@ -130,5 +131,5 @@ $item = [
 	</div>
 
 <div class="col-xs-12">
-	<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/profile-index.js'); ?>
+	<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/profile-index.js'); ?>
 </div>
