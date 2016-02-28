@@ -24,7 +24,7 @@ else{
 ?>
 
 <?php Pjax::begin([
-    'id' => 'submitThreadVote',
+    'id' => 'submit_thread_vote',
     'timeout' => false,
     'enablePushState' => false,
     'clientOptions'=>[
@@ -35,7 +35,6 @@ else{
 <?php $form = ActiveForm::begin([
     'action' =>   ['thread/submit-vote'],
     'method' => 'post',
-
     'options' => ['id' => 'form_submit_vote', 'data-pjax' => '#submitThreadVote']
 ]); ?>
 

@@ -1,4 +1,3 @@
-
 <?php
 
 use yii\widgets\Pjax;
