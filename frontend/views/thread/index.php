@@ -17,20 +17,6 @@
 		$guest = "0";
 	}
 
-	$itemsHeader = [
-		[
-			'label' => 'Description',
-			'content' => "<blockquote id='quote-on-thread' style='text-align: right; margin: 0 !important;'><h3>" . $model['description'] . "</h3></blockquote>",
-			'active' => true,
-		],
-		[
-
-			'label' => 'Vote',
-			'content' => $this->render('_submit_vote_pjax', ['model' => $model, 'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel]),
-			'active' => false
-		]
-	];
-
 
 	$content_comment = array();
 
@@ -64,59 +50,58 @@
 
 <div class="col-md-offset-2 col-md-10">
 	<div class="col-md-8" align="center">
+		<!-- Submit Rate Part-->
 		<div class="row">
 			<div style="float: left;" class="col-xs-12">
 				<?=
-					$this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'],
-													'avg_rating' => $model['avg_rating'],
-													'total_raters' => $model['total_raters']] );
+				$this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'],
+					'avg_rating' => $model['avg_rating'],
+					'total_raters' => $model['total_raters']] );
 				?>
 			</div> <!-- div.col-xs-12 -->
 		</div> <!-- div.row -->
 
-		<div class="row" style="text-align: center;">
-			<div class="col-md-12">
-				<h1><?= $model['title'] ?> </h1>
-			</div> <!-- div.col-md-12 -->
-		</div> <!-- row -->
-
-		<div class="row" style="border-color: #ccccff;min-height: 250px">
-			<?= // Ajax Tabs Above
-			 TabsX::widget([
-				'items'=>$itemsHeader,
-				'position'=>TabsX::POS_ABOVE,
-				'encodeLabels'=>false
-			]) ?>
-		</div>
+		<?= $this->render('_title_description_vote', ['title' => $model['title'],
+													'description' => $model['description'],
+													'thread_choices' => $thread_choices,
+													'thread_id' => $model['thread_id'],
+													'user_choice' => $model['user_choice'],
+													'submitVoteModel' => $submitVoteModel]) ?>
 
 		<div class="row" id="ask_to_login" style="display:none">
 			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
 		</div>
 
 		<div class="row">
-			<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
+			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 
+			<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
+
+			<?php } ?>
+			<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
 			<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
 		</div>
-		<hr>
 
+		<hr>
 
 		<div  id="comment_section" style="display:none">
 			<div class="row" >
-				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel, 'thread_choices' => $thread_choices, 'thread_id' => $model['thread_id']]) ?>
-				<br>
-				<br>
+				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,
+														'thread_choices' => $thread_choices,
+														'thread_id' => $model['thread_id']]) ?>
+				<br><br>
 			</div>
 			<hr>
 		</div>
 
 		<div class="row" style="border-color: #ccccff; height: 250px">
 			<?= // Ajax Tabs Above
-			TabsX::widget([
-				'items'=>$content_comment,
-				'position'=>TabsX::POS_ABOVE,
-				'encodeLabels'=>false
-			]) ?>
+				TabsX::widget([
+					'items'=>$content_comment,
+					'position'=>TabsX::POS_ABOVE,
+					'encodeLabels'=>false
+				])
+			?>
 		</div>
 
 
@@ -140,7 +125,7 @@ $script =<<< JS
 	        return false;
 	     }
 	}).on('focus', '#comment-box', function(){
-	    if(this.value == "Write your comment here..."){
+		    if(this.value == "Write your comment here..."){
 	         this.value = "";
 	    }
 
@@ -177,4 +162,6 @@ $script =<<< JS
 
 JS;
 $this->registerJs($script);
+
+$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/thread-index.js');
 ?>
