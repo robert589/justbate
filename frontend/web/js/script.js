@@ -25,11 +25,18 @@ $(document).ready(function() {
             .load($(this).attr("value"));
     });
 
-    $("button#create-button").mouseenter(function(){
-        $('span#create-button-label').css("text-decoration","underline");
+    // $("button#create-button").mouseenter(function(){
+    //     $('span#create-button-label').css("text-decoration","underline");
+    // });
+    //
+    // $("button#create-button").mouseleave(function(){
+    //     $('span#create-button-label').css("text-decoration","none");
+    // });
+
+    $("div#create-thread-dropdown").click(function() {
+        $("div#create-thread-form").slideToggle("fast");
+        $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
+        $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
 
-    $("button#create-button").mouseleave(function(){
-        $('span#create-button-label').css("text-decoration","none");
-    });
 })

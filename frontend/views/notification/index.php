@@ -21,7 +21,7 @@ Pjax::begin([
     <li id='notif-expansion' class='item dropdown'>
 <?php } ?>
         <a href="#" class="dropdown-toggle" onclick="getNotification()" data-toggle="dropdown">Notification <span style="padding-right: 15px;" id="left-icon" class="glyphicon glyphicon-chevron-down"></span></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="background: #fff !important; color: black !important;">
             <div align="center" id="dropdown-menu-title">Notifications</div>
             <hr>
             <?php if(isset($recent_notifications_provider)) { ?>

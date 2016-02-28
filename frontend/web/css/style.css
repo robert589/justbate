@@ -6,8 +6,8 @@
 body {
     background: #fff !important;
     color: #000 !important;
-    /*font-family: 'Crete Round', serif !important;*/
-    font-family: 'Garamond', serif !important;
+    font-family: 'Crete Round', serif !important;
+    /*font-family: 'Garamond', serif !important;*/
     line-height: 20px !important;
 }
 
@@ -28,7 +28,7 @@ nav#menubar {
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
-    background: #025845 !important;
+    background: #95938A !important;
 }
 
 div.navbar-header a,
@@ -221,7 +221,7 @@ li.item {
 a.dropdown-toggle:hover,
 li#dropdown-menu-setings:hover,
 li.item:hover {
-    background: #558379;
+    background: #545249;
 }
 
 /* thread things */
@@ -300,6 +300,15 @@ ul.dropdown-menu div.kv-spin-center {
     li#notif-expansion a.dropdown-toggle {
         margin-left: -10px !important;
     }
+
+    li#search-box {
+        width: 100%;
+    }
+
+    li#notif-expansion ul.dropdown-menu {
+        margin-top: 15px;
+        margin-left: -15px;
+    }
 }
 
 li#notif-expansion {
@@ -308,9 +317,59 @@ li#notif-expansion {
 }
 
 li#notif-expansion:hover {
-    background: #558379 !important;
+    background: #545249 !important;
 }
 
 li#notif-expansion a.dropdown-toggle {
     background: none !important;
+}
+
+li#notif-expansion ul.dropdown-menu,
+li#notif-expansion ul.dropdown-menu a {
+    font-family: 'Crete Round', serif !important;
+    width: 500px;
+    color: #000 !important;
+}
+
+li#notif-expansion ul.dropdown-menu span.glyphicon {
+    padding-right: 10px;
+    padding-left: 15px;
+}
+
+li#notif-expansion ul.dropdown-menu span#notification-label {
+    margin: 0px 15px;
+    font-family: 'Crete Round', serif !important;
+}
+
+div#main-post-desc {
+    text-align: justify;
+    line-height: 30px;
+}
+
+div#create-thread-dropdown {
+    background: #AAA839;
+    color: white;
+    padding: 15px;
+    margin: 0px 15px;
+}
+
+div#create-thread-form {
+    display: none;
+    background: #ECEB9C;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+div#create-thread-form input,
+div#create-thread-form select,
+div#create-thread-form span.select2-selection--multiple,
+div#create-thread-form li.select2-selection__choice {
+    border: 0 !important;
+    border-radius: 0;
+}
+
+div#submit-thread {
+    vertical-align: middle;
+    text-align: center;
+    float: right;
 }

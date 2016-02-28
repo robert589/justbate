@@ -64,7 +64,7 @@ use common\models\Comment;
 														'total_dislike' => $total_dislike]) ?>
 		</div>
 
-		<div class="row">	
+		<div class="row">
 			<?= $model['comment']?>
 		</div>
 
@@ -73,11 +73,9 @@ use common\models\Comment;
 											'user_id' => $model['user_id'],'child_comment_form' => $child_comment_form ]) ?>
 
 	</div>
-	
+
 
 	<br><br><br><br>
 
 
 </article>
-		
-
