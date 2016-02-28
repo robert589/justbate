@@ -68,6 +68,7 @@
 
         <div class="row" >
             <?= \yii\redactor\widgets\Redactor::widget([
+                'name' => 'description',
                 'value' => $description,
                 'clientOptions' => [
                     'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
