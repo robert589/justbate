@@ -22,7 +22,7 @@ Pjax::begin([
 <?php
     ActiveForm::end();
     }else{ ?>
-            <?= Html::button('Hide', ['class' => 'btn btn-default', 'id' => 'comment_hide_list_thread_btn']) ?>
+            <?= Html::button('Hide', ['class' => 'btn btn-primary', 'id' => 'comment_hide_list_thread_btn']) ?>
 
             <div id = 'list_thread_comment_part'>
                 <br>

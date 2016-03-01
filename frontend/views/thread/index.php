@@ -53,10 +53,9 @@
 		<!-- Submit Rate Part-->
 		<div class="row">
 			<div style="float: left;" class="col-xs-12">
-				<?=
-				$this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'],
-					'avg_rating' => $model['avg_rating'],
-					'total_raters' => $model['total_raters']] );
+				<?=	$this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'],
+						'avg_rating' => $model['avg_rating'],
+						'total_raters' => $model['total_raters']] );
 				?>
 			</div> <!-- div.col-xs-12 -->
 		</div> <!-- div.row -->

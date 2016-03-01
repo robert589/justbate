@@ -13,10 +13,8 @@ $this->title = "Home | Propose";
 <div class="col-xs-12" style="padding: 0;">
 	<div class="col-md-3" style="padding: 0;">
 		<div class="col-xs-12">
-			<table class="table table-bordered table-responsive" id="left-menu">
-				<tr><td><button type="button" class="btn">Your Friend</button></td></tr>
-				<tr><td><button type="button" class="btn">Popular Thread</button></td></tr>
-				<tr><td><button type="button" class="btn">Interesting Thread</button></td></tr>
+			<table class="table table-bordered table-responsive" style="text-align: center" id="left-menu">
+				<tr><td><a href=<?= Yii::$app->request->baseUrl . '/site/followee'?>>Your Friend Post</a></td></tr>
 			</table>
 		</div> <!-- div.co-xs-12 -->
 

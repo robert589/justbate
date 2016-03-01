@@ -7,6 +7,10 @@ body {
     font-size: 30px;
 }
 
+*{
+    font-family: "Helvetica Neue";
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -17,7 +21,10 @@ body {
 .wrap > .container {
     padding: 70px 15px 20px;
 }
-img{max-width:500px}
+
+img{
+    max-width:500px
+}
 
 .footer {
     height: 60px;

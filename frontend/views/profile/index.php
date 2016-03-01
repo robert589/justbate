@@ -89,26 +89,18 @@ $item = [
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
 <div class="container">
 	<div class="row">
-		<div class="col-xs-6 col-md-3">
-			<nav class="navbar navbar-default sidebar" role="navigation">
-				<ul class="nav nav-pills nav-stacked">
-					<li class="sidebar-brand"><a href="#">Feeds</a></li>
-					<li><a href="#">All Activity</a></li>
-					<li><a href="#">All tags</a></li>
-				</ul>
-			</nav>
-		</div>
 
 		<div class="col-xs-6 col-md-2">
 			<img class="img-rounded" src="<?= Yii::getAlias('@image_dir') . '/' . $user->photo_path ?>" alt="Profile Picture" style="width:148px;height:148px;" id="avatar">
 			<?= Html::button('Upload Photo', ['onclick' => 'beginProfilePicModal()', 'class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 		</div>
 
-		<div class="col-xs-12 col-md-3">
+		<div class="col-xs-12 col-md-4">
 			<div id="displayName">
 				<?= $user->first_name ?> <?= $user->last_name ?>
-
-				<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
+				<div align="right">
+					<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
+				</div>
 			</div>
 			<hr>
 			<table id="bio-table" class="table table-responsive">
@@ -117,8 +109,10 @@ $item = [
 			</table>
 		</div>
 	</div>
+
+	<br>
 	<div class="container">
-		<div class="col-md-offset-3 col-xs-12 col-md-6" style="float: left;">
+		<div class=" col-xs-12 col-md-6" style="float: left;">
 				<?=
 				TabsX::widget([
 					'items'=>$item,

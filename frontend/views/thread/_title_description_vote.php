@@ -7,7 +7,7 @@
     $itemsHeader = [
         [
             'label' => 'Description',
-            'content' => "<blockquote id='quote-on-thread' style='text-align: right; margin: 0 !important;'><h3>" . $description . "</h3></blockquote>",
+            'content' => "<div style='font-size: 20px' align='left'>" . $description . "</div>",
             'active' => true,
         ],
         [
@@ -53,6 +53,7 @@
             'encodeLabels'=>false
         ]) ?>
     </div>
+
 </div>
 <!-- Edit part-->
 <div id="edit_part" style="display:none">

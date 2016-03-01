@@ -25,9 +25,9 @@
 
 
             <?php if ($is_following == 1) { ?>
-                <?= Html::submitButton('Unfollow', ['style' => 'float:right;', 'class' => 'btn btn-danger']) ?>
+                <?= Html::submitButton('Unfollow', ['class' => 'btn btn-danger']) ?>
             <?php } else { ?>
-                <?= Html::submitButton('Follow', ['style' => 'float:right;', 'class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Follow', ['class' => 'btn btn-primary']) ?>
             <?php } ?>
 
             <?php ActiveForm::end();
