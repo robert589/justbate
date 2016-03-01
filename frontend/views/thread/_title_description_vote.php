@@ -7,8 +7,8 @@
     $itemsHeader = [
         [
             'label' => 'Description',
-            'content' => "<div style='font-size: 20px' align='left'>" . $description . "</div>",
-            'active' => true,
+            'content' => "<div style='font-size: 15px' align='left'>" . $description . "</div>",
+            'active' => isset($vote_tab_active) ? false: true,
         ],
         [
 
@@ -17,7 +17,7 @@
                                                             'user_choice' => $user_choice,
                                                             'thread_choices' => $thread_choices,
                                                             'submitVoteModel' => $submitVoteModel]),
-            'active' => false
+            'active' => isset($vote_tab_active) ? true : false,
         ]
     ];
 
@@ -39,10 +39,11 @@
     <!-- Title part-->
     <div class="row" style="text-align: center;">
         <div class="col-md-12">
-            <h1><?= $title ?> </h1>
+            <h3><b><?= $title ?></b> </h3>
         </div> <!-- div.col-md-12 -->
     </div> <!-- row -->
 
+    <br>
 
     <!-- First tab part -->
     <div class="row" style="border-color: #ccccff;min-height: 250px">
@@ -88,3 +89,4 @@
     <?php   ActiveForm::end() ?>
 </div>
 
+<?php Pjax::end() ?>

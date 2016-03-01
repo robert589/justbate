@@ -1,12 +1,8 @@
 /*@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
-@import url(https://fonts.googleapis.com/css?family=EB+Garamond);
-@import url(https://fonts.googleapis.com/css?family=Crete+Round);
-@import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
 /* Web Content */
 body {
     background: #fff !important;
     color: #000 !important;
-    font-family: 'Crete Round', serif !important;
     /*font-family: 'Garamond', serif !important;*/
     line-height: 20px !important;
 }

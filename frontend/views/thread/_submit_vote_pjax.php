@@ -2,32 +2,15 @@
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-
-
-
-
-//Store this variable for javascript
-if(!empty(\Yii::$app->user->isGuest)){
-    $guest = "1";
-}
-else{
-    $guest = "0";
-}
+/** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
+/** @var $thread_choices array */
 ?>
-
-<?php Pjax::begin([
-    'id' => 'submit_thread_vote',
-    'timeout' => false,
-    'enablePushState' => false,
-    'clientOptions'=>[
-        'container' => '#submitThreadVote',
-    ]
-]);?>
 
 <?php $form = ActiveForm::begin([
     'action' =>   ['thread/submit-vote'],
     'method' => 'post',
-    'options' => ['id' => 'form_submit_vote', 'data-pjax' => '#submitThreadVote']
+    'id' => 'from_submit_vote',
+    'options' => [   'data-pjax' => '#edit_thread']
 ]); ?>
 
 
@@ -36,27 +19,27 @@ else{
         echo 'You need to login to perform this action, click ' . Html::a('Login','', ['id' => 'login_link']) ;
     }
 ?>
-<!--Give Votes Part-->
-<div class="row" align="center">
 
-    <?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <!--Give Votes Part-->
+    <div class="row" align="center">
 
-    <div class="col-xs-12" id="vote">
-        <!-- User Option -->
-        <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choices, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
+        <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
-        <!-- Submit vote-->
-        <div class="col-xs-12">
-            <?php if(isset($user_choice)){ ?>
-               <?= Html::submitButton('Vote Again', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>
-            <?php } else{ ?>
-                <?= Html::submitButton('Vote', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary']) ?>
-            <?php } ?>
+        <div class="col-xs-12" id="vote">
+            <!-- User Option -->
+            <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choices, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
+
+            <!-- Submit vote-->
+            <div class="col-xs-12">
+                <?php if(isset($user_choice)){ ?>
+                   <?= Html::submitButton('Vote Again', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>
+                <?php } else{ ?>
+                    <?= Html::submitButton('Vote', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary']) ?>
+                <?php } ?>
+            </div>
         </div>
     </div>
-</div>
 
 <?php ActiveForm::end(); ?>
 <br>
-<?php Pjax::end(); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/thread-submit_vote.js'); ?>

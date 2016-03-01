@@ -47,7 +47,7 @@ class Thread extends ActiveRecord
 							 from thread left join thread_rate
 							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
 							 user, thread_keyword
-				 where thread_thread_rate.user_id = user.id
+				 where thread_thread_rate.user_id = user.id and thread_status = 10
 				 group by(thread_thread_rate.thread_id)
 				 order by (date_created) desc       ";
 
@@ -63,7 +63,7 @@ class Thread extends ActiveRecord
 							 user, thread_keyword
 				 where thread_thread_rate.user_id = user.id and
 							 thread_keyword.thread_id = thread_thread_rate.thread_id
-							 and thread_keyword.keyword_name =  :keyword
+							 and thread_keyword.keyword_name =  :keyword and thread_status = 10
 				 group by(thread_thread_rate.thread_id)
 		";
 
@@ -73,7 +73,7 @@ class Thread extends ActiveRecord
 	}
 
 	public static function getThreadsBySearch($query) {
-		$sql = "SELECT thread_id as id, title as text from thread where title like concat('%', :query,'%')";
+		$sql = "SELECT thread_id as id, title as text from thread where title like concat('%', :query,'%') and thread_status = 10";
 
 		return  \Yii::$app->db->createCommand($sql)
 			->bindParam(":query", $query)
@@ -97,6 +97,7 @@ class Thread extends ActiveRecord
 						order by participants desc
 						limit 10 ) TT
 						on T.thread_id = TT.thread_id
+						where thread_status = 10
 						limit 10
 		";
 
@@ -119,7 +120,7 @@ class Thread extends ActiveRecord
 									(SELECT choice_text from thread_vote where thread_id = :thread_id and user_id = :user_id) as user_choice,
 									(SELECT count(*) from thread_rate where thread_id = :thread_id and user_id = :user_id) as has_rate
 					FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
-					where thread_id = :thread_id";
+					where thread_id = :thread_id and thread_status = 10";
 
 		$result =  \Yii::$app->db->createCommand($sql)->
 			bindParam(':thread_id', $thread_id)->

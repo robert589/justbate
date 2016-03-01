@@ -22,13 +22,7 @@ class DeleteCommentForm extends Model {
 		}
 	}
 
-	public function update() {
-		if($this->validate()) {
-			$comment = Comment::findOne(['comment_id' => $this->comment_id]);
-			$comment->comment_status = 0;
-			$comment->update();
-		}
-	}
+
 }
 
 ?>

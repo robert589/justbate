@@ -1,11 +1,12 @@
 <?php
-	use yii\widgets\ActiveForm;
-	use yii\helpers\Url;
-	use yii\widgets\Pjax;
 	use yii\widgets\ListView;
-	use yii\bootstrap\Modal;
 	use yii\helpers\Html;
 	use kartik\tabs\TabsX;
+	use kartik\dialog\Dialog;
+	use yii\widgets\ActiveForm;
+
+	/** @var $model array */
+	/** @var $commentModel CommentForm */
 
 	$this->title =  $model['title'];
 
@@ -48,18 +49,11 @@
 	}
 ?>
 
+<?= Dialog::widget(); ?>
+
+
 <div class="col-md-offset-2 col-md-10">
 	<div class="col-md-8" align="center">
-		<!-- Submit Rate Part-->
-		<div class="row">
-			<div style="float: left;" class="col-xs-12">
-				<?=	$this->render('_submit_rate_pjax',['thread_id' => $model['thread_id'],
-						'avg_rating' => $model['avg_rating'],
-						'total_raters' => $model['total_raters']] );
-				?>
-			</div> <!-- div.col-xs-12 -->
-		</div> <!-- div.row -->
-
 		<?= $this->render('_title_description_vote', ['title' => $model['title'],
 													'description' => $model['description'],
 													'thread_choices' => $thread_choices,
@@ -75,10 +69,13 @@
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 
 			<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
+			<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn btn-danger']) ?>
 
 			<?php } ?>
+
 			<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
 			<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
+
 		</div>
 
 		<hr>
@@ -107,9 +104,12 @@
 	</div>
 </div>
 
+<?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
+
+	<?= Html::hiddenInput('thread_id', $model['thread_id']) ?>
+<?php ActiveForm::end() ?>
 
 <?php
-
 //Inline script, not really good
 $script =<<< JS
 

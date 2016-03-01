@@ -27,26 +27,6 @@ use common\models\Comment;
 
 ?>
 
-<?php
-	Modal::begin([
-			'header' => '<h4> Edit Comment </h4>',
-			'id' => "editModal-$comment_id",
-			'size' => 'modal-lg'
-		]);
-
-
-		$redirectFrom = \Yii::$app->homeUrl . '../../thread/index?id=' . $model['thread_id'];
-		$editCommentModel = new EditCommentForm();
-		$editCommentModel->parent_id = $comment_id;
-		$editCommentModel->comment = Comment::getComment($comment_id);
-		echo $this->render('../thread/editModal', ['editCommentModel' => $editCommentModel]);
-
-	Modal::end();
-?>
-
-
-
-
 <article>
 	<div class="box col-md-12" >
 		<!--First TOP -->
@@ -69,12 +49,15 @@ use common\models\Comment;
 			<?= $model['comment']?>
 		</div>
 
+
+
 		<?= $this->render('_child_comment', ['guest' => $guest, 'belongs' => $belongs,
 											'comment_id' => $model['comment_id'], 'thread_id' => $model['thread_id'],
 											'user_id' => $model['user_id'],'child_comment_form' => $child_comment_form ]) ?>
 
 	</div>
 
+	<hr>
 
 	<br><br><br><br>
 

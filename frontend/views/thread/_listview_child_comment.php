@@ -25,27 +25,27 @@ else{
 }
 ?>
 
-    <br>
-    <article>
-        <div class="box col-md-12">
-            <div class="row">
-                <div class="col-md-6">
-                    <?= Html::a($model['first_name'] . ' ' . $model['last_name'], "#" )?>
-                </div>
-
-                <!-- Vote -->
-
-                <?= $this->render('_comment_votes', ['comment_id' => $comment_id, 'total_like' => $total_like,
-                                'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
-
-
-            </div>
-            <div class="row">
-                <?= $model['comment']?>
+<br>
+<article>
+    <div class="box col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <?= Html::a($model['first_name'] . ' ' . $model['last_name'], "#" )?>
             </div>
 
-            <hr>
-    </article>
+            <!-- Vote -->
+
+            <?= $this->render('_comment_votes', ['comment_id' => $comment_id, 'total_like' => $total_like,
+                            'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
+
+
+        </div>
+        <div class="row">
+            <?= $model['comment']?>
+        </div>
+
+        <hr>
+</article>
 
 
 <?php

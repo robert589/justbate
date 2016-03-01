@@ -11,7 +11,7 @@
 <article>
 
 	<div class="box col-md-12" style="min-height:250px;background-color: " >
-		<hr style="border-top: 4px solid #8c8b8b;">
+		<hr style="border-top: 2px solid #8c8b8b;">
 
 		<div class="col-xs-12" style="font-size: 20px;, line-height: 40px !important;">
 			<?= Html::a($model['title'], Url::to('../thread/index?id='. $model['thread_id']))?>

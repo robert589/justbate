@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\models\CommentVoteForm;
+use frontend\models\DeleteThreadForm;
 use frontend\models\NotificationForm;
 use frontend\models\SubmitRateThreadForm;
 use frontend\models\SubmitThreadVoteForm;
@@ -13,7 +14,6 @@ use yii\data\Pagination;
 
 use frontend\models\CommentForm;
 use frontend\models\ChildCommentForm;
-use frontend\models\EditCommentForm;
 use frontend\models\EditThreadForm;
 
 use common\models\Comment;
@@ -257,18 +257,40 @@ class ThreadController extends Controller
 				$trigger_login_form = true;
 			}
 
+
+			$submitVoteModel = new SubmitThreadVoteForm();
+			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
+
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+
+			//get all comment providers
+			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
+
+			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
-			return $this->renderPartial('_submit_vote_pjax', [
-				'trigger_login_form' => $trigger_login_form,
-				'user_choice' => $thread_vote_form->choice_text,
-				'submitVoteModel' => $submitVoteModel,
-				'thread_choices' => $thread_choices, 'thread_id' => $thread_id
-			]);
+			return $this->render('_title_description_vote',
+				['thread_choices' => $thread_choices,
+					'submitVoteModel' => $submitVoteModel,
+					'comment_providers' => $comment_providers,
+					'user_choice' => $thread['user_choice'],
+					'vote_tab_active' => true,
+					'thread_id' => $thread_id,
+					'title' => $thread['title'],
+					'description' => $thread['description']]);
 		}
 		else{
 			//if thread_id is not passed
+		}
+	}
+
+	public function actionDeleteThread(){
+		$delete_thread_form = new DeleteThreadForm();
+		if(isset($_POST['thread_id'])){
+			$delete_thread_form->thread_id = $_POST['thread_id'];
+			if($delete_thread_form->delete()){
+				return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
+			}
 		}
 	}
 
@@ -281,7 +303,6 @@ class ThreadController extends Controller
 			//thread data
 			$thread = Thread::retrieveThreadById($editted_thread->thread_id, \Yii::$app->user->getId());
 
-			$commentModel = new CommentForm();
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($editted_thread->thread_id);
 
