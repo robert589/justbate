@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 if(empty($redirect_from)){
-    $redirect_from = Yii::getAlias('@base-url') ;
+    $redirect_from = Yii::$app->request->baseUrl ;
 }
 
 ?>

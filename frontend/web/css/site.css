@@ -17,6 +17,7 @@ body {
 .wrap > .container {
     padding: 70px 15px 20px;
 }
+img{max-width:500px}
 
 .footer {
     height: 60px;

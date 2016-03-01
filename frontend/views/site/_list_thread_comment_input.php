@@ -11,7 +11,6 @@ use yii\helpers\Html;
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
-
             <?= $form->field($comment_model, 'comment')->textarea(['rows' => 1, 'placeholder' => 'Comment here..'])->label(false) ?>
         </div>
 

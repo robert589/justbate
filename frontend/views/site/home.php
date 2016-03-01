@@ -44,6 +44,7 @@ $this->title = "Home | Propose";
 				<div class="col-xs-12" id="create-thread-form">
 					<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 				</div> <!-- div.col-xs-12 -->
+
 				<div class="col-xs-12" id="main-post-desc">
 					<?= ListView::widget([
 						'id' => 'threadList',
