@@ -250,7 +250,6 @@ li#notif-expansion:hover {
 
 .nav .open > a:hover {
     background: #256E5D  !important;
-    text-decoration: none !important;
 }
 
 .nav .open > a,
@@ -280,7 +279,6 @@ ul.dropdown-menu {
 
 a:hover,
 a:focus {
-    text-decoration: none !important;
 }
 
 ul.dropdown-menu div#dropdown-menu-title {

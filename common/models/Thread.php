@@ -2,12 +2,6 @@
 
 namespace common\models;
 use yii\db\ActiveRecord;
-use yii\db\Query;
-use yii\method\ActiveQuery;
-
-use common\models\User;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use Yii;
 
 class Thread extends ActiveRecord
@@ -42,33 +36,30 @@ class Thread extends ActiveRecord
 
 	public static function getAllThreads() {
 		$sql =  "
-			 Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
-				 from (SELECT thread.*, thread_rate.rate as rate
-							 from thread left join thread_rate
-							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
-							 user, thread_keyword
-				 where thread_thread_rate.user_id = user.id and thread_status = 10
-				 group by(thread_thread_rate.thread_id)
+			 Select thread.*, user.*
+				 from thread,user
+				 where thread.user_id = user.id and thread_status = 10
 				 order by (date_created) desc       ";
 
 		return  \Yii::$app->db->createCommand($sql)->queryAll();
 	}
 
-	public static function getThreadsByKeyword($keyword) {
+	public static function getThreadsBytag($tag) {
 		 $sql =  "
 				 Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
 				 from (SELECT thread.*, thread_rate.rate as rate
 							 from thread left join thread_rate
 							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
-							 user, thread_keyword
+							 user, thread_tag, tag
 				 where thread_thread_rate.user_id = user.id and
-							 thread_keyword.thread_id = thread_thread_rate.thread_id
-							 and thread_keyword.keyword_name =  :keyword and thread_status = 10
+							 thread_tag.thread_id = thread_thread_rate.thread_id AND
+							 tag.tag_id = thread_tag.tag_id
+							 and tag.tag_name =  :tag and thread_status = 10
 				 group by(thread_thread_rate.thread_id)
 		";
 
 		return  \Yii::$app->db->createCommand($sql)
-			->bindParam(":keyword", $keyword)
+			->bindParam(":tag", $tag)
 			->queryAll();
 	}
 
@@ -140,7 +131,7 @@ class Thread extends ActiveRecord
 				 from (SELECT thread.*, thread_rate.rate as rate
 							 from thread left join thread_rate
 							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
-							 user, thread_keyword
+							 user, thread_tag
 				 where thread_thread_rate.user_id = user.id and user.id in (SELECT followee_id from follower_relation where follower_id = :follower_id )
 				 group by(thread_thread_rate.thread_id)
 				 order by (date_created) desc";

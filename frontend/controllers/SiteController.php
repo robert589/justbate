@@ -1,7 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use common\models\Keyword;
+use common\models\Tag;
 use frontend\models\CreateThreadForm;
 use Yii;
 use frontend\models\PasswordResetRequestForm;
@@ -123,8 +123,8 @@ class SiteController extends Controller
 	public function actionHome()
 	{
 		//Topic Newest
-		if(!empty($_GET['keyword'])){
-			$result = Thread::getThreadsByKeyword($_GET['keyword']);
+		if(!empty($_GET['tag'])){
+			$result = Thread::getThreadsBytag($_GET['tag']);
 		}
 		else{
 			//initial data without filter
@@ -147,9 +147,9 @@ class SiteController extends Controller
 		$trending_topic_list = $this->getTredingTopicList();
 
 		//get popular category
-		$keyword_list = $this->getPopularKeyword();
+		$tag_list = $this->getPopulartag();
 
-		return $this->render('home', ['keyword_list' => $keyword_list,
+		return $this->render('home', ['tag_list' => $tag_list,
 									'trending_topic_list' => $trending_topic_list,
 									'listDataProvider' => $dataProvider,
 									'create_thread_form' => $create_thread_form]);
@@ -178,9 +178,9 @@ class SiteController extends Controller
 		$trending_topic_list = $this->getTredingTopicList();
 
 		//get popular category
-		$keyword_list = $this->getPopularKeyword();
+		$tag_list = $this->getPopulartag();
 
-		return $this->render('home', ['keyword_list' => $keyword_list,
+		return $this->render('home', ['tag_list' => $tag_list,
 									'trending_topic_list' => $trending_topic_list,
 									'listDataProvider' => $dataProvider,
 									'create_thread_form' => $create_thread_form]);
@@ -405,7 +405,7 @@ class SiteController extends Controller
 		$out = ['results' => ['id' => '', 'text' => '']];
 		if (!empty($_GET['q'])) {
 			$q = $_GET['q'];
-			$topicList = \common\models\Keyword::getTopicList($q);
+			$topicList = \common\models\tag::getTopicList($q);
 			$out['results'] = array_values($topicList);
 		}
 
@@ -437,13 +437,13 @@ class SiteController extends Controller
 		return $mapped_trending_topic_list;
 	}
 
-	private function getPopularKeyword(){
-		$category_list = Keyword::getPopularCategory();
+	private function getPopulartag(){
+		$category_list = tag::getPopularCategory();
 
 		$mapped_category_list = array();
 		foreach($category_list as $category){
-			$mapped_category['label'] = $category['name'];
-			$mapped_category['url']  = Yii::$app->request->baseUrl . '/site/home?keyword=' . $category['name'];
+			$mapped_category['label'] = $category['tag_name'];
+			$mapped_category['url']  = Yii::$app->request->baseUrl . '/site/home?tag=' . $category['tag_name'];
 
 			$mapped_category_list[] = $mapped_category;
 		}

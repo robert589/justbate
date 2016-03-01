@@ -8,6 +8,7 @@ use yii\widgets\ListView;
 use yii\bootstrap\Modal;
 use frontend\models\EditCommentForm;
 use common\models\Comment;
+
 	if(Yii::$app->user->isGuest){
 		$guest = 1;
 		$belongs = 0;
@@ -27,33 +28,39 @@ use common\models\Comment;
 
 ?>
 
-<article>
-	<div class="box col-md-12" >
+<article >
+	<div class="col-md-12" style="border-bottom: 1px silver" >
 		<!--First TOP -->
-		<div class="row">
+		<div class="row name_link" align="left">
 			<!--The name of the person that make the comments -->
-			<div class="col-md-6">
-				<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/profile/index?username=" . $model['username'],
-						['data-pjax' => 0])?>
+			<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/profile/index?username=" . $model['username'],
+					['data-pjax' => 0])?>
+		</div>
+
+		<div class="row" style="min-height: 50px">
+			<div align="left">
+				<?= $model['comment']?>
+			</div>
+		</div>
+
+
+		<div class="row" >
+			<div class="col-md-6" style="margin-bottom: 10px">
+				<div class="col-md-7">
+					<!-- Votes part-->
+					<?= $this->render('_comment_votes', [  'comment_id' => $model['comment_id'],
+						'vote' => $vote,
+						'thread_id' => $model['thread_id'],
+						'total_like' => $total_like ,
+						'total_dislike' => $total_dislike]) ?>
+				</div>
 			</div>
 
-			<!-- Votes part-->
-			<?= $this->render('_comment_votes', [  'comment_id' => $model['comment_id'],
-													'vote' => $vote,
-													'thread_id' => $model['thread_id'],
-													'total_like' => $total_like ,
-														'total_dislike' => $total_dislike]) ?>
+			<?= $this->render('_child_comment', ['guest' => $guest, 'belongs' => $belongs,
+				'comment_id' => $model['comment_id'], 'thread_id' => $model['thread_id'],
+				'user_id' => $model['user_id'],'child_comment_form' => $child_comment_form ]) ?>
+
 		</div>
-
-		<div class="row">
-			<?= $model['comment']?>
-		</div>
-
-
-
-		<?= $this->render('_child_comment', ['guest' => $guest, 'belongs' => $belongs,
-											'comment_id' => $model['comment_id'], 'thread_id' => $model['thread_id'],
-											'user_id' => $model['user_id'],'child_comment_form' => $child_comment_form ]) ?>
 
 	</div>
 

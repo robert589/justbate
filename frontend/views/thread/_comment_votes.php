@@ -30,56 +30,44 @@ Pjax::begin([
 
     <?= Html::hiddenInput("comment_id", $comment_id) ?>
     <?= Html::hiddenInput("user_id", Yii::$app->user->getId()) ?>
+
     <div class="col-md-6">
-        <div class="col-md-3">
-            <?php if($vote_up == true){ ?>
-                <?= Html::submitButton("<span class=\"glyphicon glyphicon-arrow-up\"></span>", ['id' => "btn_vote_up_" . $comment_id ,
-                                                                                                 'class' => 'btn btn-default',
-                                                                                                'style'=> 'border:0px solid',
-                                                                                                'name' => 'vote',
-                                                                                                'value' => 1,
-                                                                                                'disabled' => true]) ?>
-            <?php } else{ ?>
+        <?php if($vote_up == true){ ?>
+            <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>(+" . $total_like. ")" , ['id' => "btn_vote_up_" . $comment_id ,
+                                                                                             'class' => 'btn btn-default',
+                                                                                            'name' => 'vote',
+                                                                                            'value' => 1,
+                                                                                            'disabled' => true]) ?>
+        <?php } else{ ?>
 
-                <?= Html::submitButton("<span class=\"glyphicon glyphicon-arrow-up\"></span>", ['id' => "btn_vote_up_" . $comment_id ,
-                    'class' => 'btn btn-default',
-                    'style'=> 'border:0px solid',
-                    'name' => 'vote',
-                    'value' => 1
-                    ]) ?>
+            <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>(+" . $total_like. ")" , ['id' => "btn_vote_up_" . $comment_id ,
+                'class' => 'btn btn-default',
+                'name' => 'vote',
+                'value' => 1
+                ]) ?>
 
-            <?php } ?>
-        </div>
-
-        <div class="col-md-3">
-            +<?= $total_like ?>
-        </div>
-
-        <div class="col-md-3">
-            -<?= $total_dislike ?>
-        </div>
-
-        <div class="col-md-3">
-
-            <?php if($vote_down){ ?>
-                <?= Html::submitButton("<span class=\"glyphicon glyphicon-arrow-down\"></span>", ['id' => "btn_vote_down_" . $comment_id ,
-                    'class' => 'btn btn-default',
-                    'style'=> 'border:0px solid',
-                    'name' => 'vote',
-                    'value' => -1,
-                    'disabled' => true]) ?>
-
-            <?php }else{ ?>
-                <?= Html::submitButton("<span class=\"glyphicon glyphicon-arrow-down\"></span>", ['id' => "btn_vote_down_" . $comment_id ,
-                    'class' => 'btn btn-default',
-                    'style'=> 'border:0px solid',
-                    'name' => 'vote',
-                    'value' => -1]) ?>
-            <?php } ?>
-
-         </div>
-
+        <?php } ?>
     </div>
+
+
+    <div class="col-md-6">
+
+        <?php if($vote_down){ ?>
+            <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-down'></span> (-" . $total_dislike. ")" , ['id' => "btn_vote_down_" . $comment_id ,
+                'class' => 'btn btn-default',
+                'name' => 'vote',
+                'value' => -1,
+                'disabled' => true]) ?>
+
+        <?php }else{ ?>
+            <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-down'></span> (-" . $total_dislike. ")", ['id' => "btn_vote_down_" . $comment_id ,
+                'class' => 'btn btn-default',
+                'name' => 'vote',
+                'value' => -1]) ?>
+        <?php } ?>
+
+     </div>
+
 
 <?= Html::endForm() ?>
 

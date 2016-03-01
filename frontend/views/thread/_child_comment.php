@@ -21,11 +21,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl    . '/frontend/web/js/jquery.
 
 <?php if(!isset($retrieved)){ ?>
 
-    <div class="col-md-12">
-        <div class="row">
+        <div class="col-md-6" xmlns:margin-top="http://www.w3.org/1999/xhtml">
             <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
                                                 'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
-                <div align="right">
+                <div align="left">
 
                     <?= Html::hiddenInput('comment_id', $comment_id) ?>
 
@@ -34,52 +33,46 @@ $this->registerJsFile(Yii::$app->request->baseUrl    . '/frontend/web/js/jquery.
 
             <?php ActiveForm::end() ?>
         </div>
-    </div>
 
 <?php }else{ ?>
-    <div class="col-md-12">
-            <div class="row" align="right">
-                <?= Html::button('Hide', ['class' => 'btn btn-default', 'id' => 'hide_button_' . $comment_id ]) ?>
+        <div class="col-md-6" align="right" >
+            <?= Html::button('Hide', ['class' => 'btn btn-default', 'id' => 'hide_button_' . $comment_id ]) ?>
+        </div>
+
+        <div class="col-md-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
+            <div class="col-md-12" style="margin-top: 30px;" >
+                <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'], 'id' => "child_comment_form_" . $comment_id,
+                                                               'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
+
+                    <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
+
+                    <?= Html::hiddenInput('parent_id' , $comment_id) ?>
+
+                    <?= $form->field($child_comment_form, 'child_comment')->textarea(['id' => 'child_comment_text_area_' . $comment_id,
+                                                                                    'rows' => 1, 'placeholder' => 'add comment box..' ])
+                                                                                        ->label(false)?>
+
+                <?php ActiveForm::end() ?>
             </div>
+            <div class="col-md-12">
+                <?= ListView::widget([
+                    'id' => 'threadList',
+                    'dataProvider' => $child_comment_provider,
+                    'summary' => false,
+                    'itemOptions' => ['class' => 'item'],
+                    'layout' => "{summary}\n{items}\n{pager}",
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        $comment_vote_form = CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+                        return $this->render('_listview_child_comment',['model' => $model, 'total_like' => $comment_vote_form['total_like'],
+                                        'total_dislike' => $comment_vote_form['total_dislike'], 'vote' => $comment_vote_form['vote']]);
+                    }
 
-            <div class="row" id="<?= 'comment_part_' . $comment_id ?>">
-                <div class="col-md-12" >
-                    <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'], 'id' => "child_comment_form_" . $comment_id,
-                                                                   'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
+                ]) ?>
 
-                        <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
-
-                        <?= Html::hiddenInput('parent_id' , $comment_id) ?>
-
-                        <?= $form->field($child_comment_form, 'child_comment')->textarea(['id' => 'child_comment_text_area_' . $comment_id,
-                                                                                        'rows' => 3, 'placeholder' => 'add comment box..' ])
-                                                                                            ->label(false)?>
-
-                    <?php ActiveForm::end() ?>
-                </div>
-                <div class="col-md-12">
-                    <?= ListView::widget([
-                        'id' => 'threadList',
-                        'dataProvider' => $child_comment_provider,
-
-                         'summary' => false,
-                        'itemOptions' => ['class' => 'item'],
-
-                        'layout' => "{summary}\n{items}\n{pager}",
-
-                        'itemView' => function ($model, $key, $index, $widget) {
-                            $comment_vote_form = CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
-                            return $this->render('_listview_child_comment',['model' => $model, 'total_like' => $comment_vote_form['total_like'],
-                                            'total_dislike' => $comment_vote_form['total_dislike'], 'vote' => $comment_vote_form['vote']]);
-                        }
-
-                    ]) ?>
-
-                </div>
             </div>
+        </div>
 
 
-    </div>
 <?php } ?>
 
 

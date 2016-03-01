@@ -21,8 +21,8 @@ $this->title = "Home | Propose";
 		<div class="col-xs-12">
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
-				'heading' => 'Popular Keyword',
-				'items' => $keyword_list,
+				'heading' => 'Popular tag',
+				'items' => $tag_list,
 				]) ?>
 			</div><!-- div.col-xs-12 -->
 
@@ -45,15 +45,15 @@ $this->title = "Home | Propose";
 
 				<div class="col-xs-12" id="main-post-desc">
 					<?= ListView::widget([
-						'id' => 'threadList',
-						'dataProvider' => $listDataProvider,
-						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
-						'summary' => false,
-						'itemOptions' => ['class' => 'item'],
-						'layout' => "{summary}\n{items}\n{pager}",
-						'itemView' => function ($model, $key, $index, $widget) {
-							return $this->render('_list_thread',['model' => $model]);
-						}
+							'id' => 'threadList',
+							'dataProvider' => $listDataProvider,
+							'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+							'summary' => false,
+							'itemOptions' => ['class' => 'item'],
+							'layout' => "{summary}\n{items}\n{pager}",
+							'itemView' => function ($model, $key, $index, $widget) {
+								return $this->render('_list_thread',['model' => $model]);
+							}
 					])
 					?>
 				</div><!-- div.col-xs-12 -->
