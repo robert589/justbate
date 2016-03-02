@@ -92,8 +92,6 @@ class SiteController extends Controller
 	public function oAuthSuccess($client) {
 		// get user data from client
 		$userAttributes = $client->getUserAttributes();
-
-
 		// do some thing with user data. for example with $userAttributes['email']
 		$user = User::find()->where(['email' => $userAttributes['email']])->one();
 		if(!empty($user)){
@@ -122,14 +120,12 @@ class SiteController extends Controller
 	*/
 	public function actionHome()
 	{
-		//Topic Newest
+		//get tag
 		if(!empty($_GET['tag'])){
 			$result = Thread::getThreadsBytag($_GET['tag']);
 		}
 		else{
-			//initial data without filter
 			$result = Thread::getAllThreads();
-
 		}
 
 		$dataProvider = new ArrayDataProvider([
@@ -248,7 +244,12 @@ class SiteController extends Controller
 		return $this->goHome();
 	}
 
-
+	/**
+	 * Create thread
+	 *
+	 * @return string|\yii\web\Response
+	 * @throws \yii\base\ExitException
+	 */
 	public function actionCreateThread(){
 		$create_thread_form = new CreateThreadForm();
 		$create_thread_form->user_id = Yii::$app->user->getId();
@@ -298,6 +299,10 @@ class SiteController extends Controller
 		return $this->render('about');
 	}
 
+	public function actionEditInterest(){
+		return $this->render('edit-interest');
+	}
+
 	public function actionSearchInNotif($q = null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
@@ -319,6 +324,7 @@ class SiteController extends Controller
 
 		$model = new SignupForm();
 
+		//if it comes from facebook
 		if(!empty($_GET['fb'])){
 			$session = Yii::$app->session;
 			$model->email = $session['attributes']['email'];
@@ -329,7 +335,7 @@ class SiteController extends Controller
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {
 				if (Yii::$app->getUser()->login($user)) {
-					return $this->goHome();
+					return $this->redirect(Yii::$app->request->baseUrl . '/site/edit-interest');
 				}
 			}
 		}
@@ -337,17 +343,6 @@ class SiteController extends Controller
 		return $this->render('signup', [
 			'model' => $model,
 		]);
-	}
-
-	/**
-	 *
-	 */
-	public function actionPersonalizedChoice(){
-		$personalized_choice_form  = new PersonalizedChoiceForm();
-
-		if($personalized_choice_form->load(Yii::$app->request->post()) && $personalized_choice_form->validate()){
-
-		}
 	}
 
 	/**
@@ -413,13 +408,8 @@ class SiteController extends Controller
 	}
 
 
-	public function actionSubmitComment(){
-
-	}
-
 	private function getDefaultChoice(&$create_thread_form){
 		$create_thread_form->choices = ['Agree','Disagree', 'Neutral'];
-
 	}
 
 	private function getTredingTopicList(){

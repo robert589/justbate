@@ -3,9 +3,6 @@ body {
     height: 100%;
 }
 
-#displayName{
-    font-size: 30px;
-}
 
 body{
     font-family:Arial;
@@ -18,6 +15,10 @@ a{
 
 a:hover{
     text-decoration: underline;
+}
+
+#displayName{
+    font-size: 30px;
 }
 
 .thread_link{

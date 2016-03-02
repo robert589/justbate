@@ -9,10 +9,7 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\Select2;
 use wbraganca\dynamicform\DynamicFormWidget;
 use unclead\widgets\MultipleInput;
-
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 $this->title = "Create Proposal";
-
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'create-thread-form', 'options' => ['enctype' => 'multipart/form-data']]); ?>

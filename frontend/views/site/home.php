@@ -60,6 +60,3 @@ $this->title = "Home | Propose";
 			</div> <!-- div.md-7 -->
 		</div> <!-- div.col-md-12 -->
 
-		<?php
-		$this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/home.js');
-		?>

@@ -1,7 +1,5 @@
 <?php
     use yii\helpers\Html;
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
-
 ?>
     <div class="row">
 
@@ -52,4 +50,3 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/jquery.js');
 
     </div>
 
-<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/js/dashboard-_choice_thread.js' )?>

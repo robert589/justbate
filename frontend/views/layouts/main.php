@@ -16,11 +16,10 @@ use common\models\User;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 use yii\web\JsExpression;
-
 //all links
 if(Yii::$app->user->isGuest){
     //all links
-    $register_link = Yii::$app->request->baseUrl . '/site/register';
+    $register_link = Yii::$app->request->baseUrl . '/site/signup';
     $login_link = Yii::$app->request->baseUrl . '/site/link';
 }
 else{
@@ -31,10 +30,8 @@ else{
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/bootstrap-social.css');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
-$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
 
 $temp_localhost = Yii::$app->request->baseUrl;
-
 AppAsset::register($this);
 ?>
 
@@ -62,7 +59,7 @@ AppAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Yii::$app->request->baseUrl?>">Opinion.com</a>
+                <a class="navbar-brand" href="<?= Yii::$app->request->baseUrl?>">Opilage</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
@@ -98,7 +95,7 @@ AppAsset::register($this);
                     </li>
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
-                        <li id="register" class="item"><a href="#">Register</a></li>
+                        <li id="register" class="item"><a href=<?= $register_link ?>>Register</a></li>
                     <?php } else { ?>
                         <li class="dropdown" style="margin: 15px 0 0 10px;"><?= $this->render('../notification/index') ?></li>
                         <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
@@ -134,11 +131,12 @@ AppAsset::register($this);
                     ]) ?>
                     <?= Alert::widget() ?>
                     <?= $content ?>
-                </div>
+             </div>
 
-                <?php
-                $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/main.js');
-                $this->endBody();
-                ?>
-                </html>
-                <?php $this->endPage() ?>
+<?php
+$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+
+$this->endBody();
+?>
+</html>
+<?php $this->endPage() ?>

@@ -36,6 +36,3 @@ Pjax::begin([
 
 <?php Pjax::end(); ?>
 
-
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
-$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/site-_list_thread_comment_part.js'); ?>
