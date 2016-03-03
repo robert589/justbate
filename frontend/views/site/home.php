@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
-$this->title = "Home | Propose";
+$this->title = "Home";
 ?>
 <div class="col-xs-12">
 	<div class="col-md-3">
