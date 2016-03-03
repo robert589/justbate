@@ -96,21 +96,21 @@ AppAsset::register($this);
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <li id="register" class="item"><a href=<?= $register_link ?>>Register</a></li>
-                    <?php } else { ?>
-                        <li class="dropdown" style="margin: 15px 0 0 10px;"><?= $this->render('../notification/index') ?></li>
-                        <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
-                        <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
-                        <li class="dropdown" id="dropdown-menu-settings">
-                        <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="item"><a href="#">Settings</a></li>
-                                <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
-                            </ul>
-                        </li>
-                        <?php } ?>
-                    </ul>
+                        <?php } else { ?>
+                            <li class="dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
+                            <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                            <li class="item"><a href="<?= $profile_link ?>"><?= User::getUsername(Yii::$app->getUser()->id) ?></a></li>
+                            <li class="dropdown" id="dropdown-menu-settings">
+                                <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="item"><a href="#">Settings</a></li>
+                                    <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                                </ul>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
                 </div>
-            </div>
             </nav>
 
             <?php
@@ -119,24 +119,22 @@ AppAsset::register($this);
             ]);
             $redirect_from = $_SERVER['REQUEST_URI'];
             $login_form = new \common\models\LoginForm();
-
             echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
-
             Modal::end();
             ?>
 
             <div class="container" style="padding: 0;">
-                <?= Breadcrumbs::widget(    [
+                <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
                     <?= Alert::widget() ?>
                     <?= $content ?>
-             </div>
+                </div>
 
-<?php
-$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+                <?php
+                $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
 
-$this->endBody();
-?>
-</html>
-<?php $this->endPage() ?>
+                $this->endBody();
+                ?>
+                </html>
+                <?php $this->endPage() ?>

@@ -18,21 +18,16 @@ Pjax::begin([
     if(empty($comment_retrieved)){
     $form = ActiveForm::begin(['action' =>['site/get-comment'],'method' => 'post','id' => 'get_comment_form_' . $thread_id, 'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]  ) ?>
             <?= Html::hiddenInput('thread_id', $thread_id) ?>
-            <?= Html::submitButton('Comment', ['class' => 'btn btn-primary', 'style' => 'background']) ?>
+            <?= Html::submitButton('Comment', ['class' => 'btn btn-primary', 'id' => 'comment_post']) ?>
 <?php
     ActiveForm::end();
-    }else{ ?>
-            <?= Html::button('Hide', ['class' => 'btn btn-primary', 'id' => 'comment_hide_list_thread_btn']) ?>
-
-            <div id = 'list_thread_comment_part'>
-                <br>
-                <div class="col-xs-12" >
-                        <?= $this->render('../thread/_comment_part', ['comment_providers' => $comment_providers]) ?>
+    } else{ ?>
+            <?= Html::button('Hide', ['class' => 'btn btn-primary', 'id' => 'comment_post']) ?>
+            <div id = 'list_thread_comment_part'><br />
+                <div class="col-xs-12" id="comment">
+                    <?= $this->render('../thread/_comment_part', ['comment_providers' => $comment_providers]) ?>
                 </div>
-
             </div>
-
     <?php } ?>
 
 <?php Pjax::end(); ?>
-

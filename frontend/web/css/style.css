@@ -1,16 +1,12 @@
-/*@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
 /* Web Content */
 body {
     background: #fff !important;
     color: #000 !important;
-    /*font-family: 'Garamond', serif !important;*/
     line-height: 20px !important;
 }
 
 div#main-body {
     width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
 }
 
 /* Menubar */
@@ -19,8 +15,6 @@ nav#menubar {
     padding: 1%;
     font-size: 1em;
     border-radius: 0 !important;
-    /*font-family: Open Sans;*/
-    font-family: 'PT Sans Narrow', sans-serif;
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
@@ -47,6 +41,19 @@ ul.dropdown {
 table#left-menu {
     background: white;
     color: black;
+    text-align: center;
+    padding-right: 15px;
+    height: 50px;
+}
+
+tbody > tr > td {
+    vertical-align: middle !important;
+}
+
+table#left-menu a {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 table#left-menu tr td button {
@@ -107,7 +114,6 @@ div.modal-content div.modal-header {
     text-align: center;
     font-weight: bold;
     font-size: 2em;
-    font-family: Open Sans;
 }
 
 div.modal-content div.modal-body {
@@ -117,10 +123,7 @@ div.modal-content div.modal-body {
 
 div.modal-body input[type="text"],
 div.modal-body input[type="password"] {
-    font-family: Agency FB;
     text-align: center;
-    font-size: 2em;
-    width: 100%;
     border: 0;
 }
 
@@ -131,7 +134,6 @@ div.modal-body button#sign-up {
     text-transform: uppercase;
     border-radius: 0;
     font-size: 2em;
-    font-family: Agency FB;
 }
 
 div#submitThreadVote div#form-control input[type="radio"] {
@@ -233,6 +235,12 @@ div.tab-content {
     padding-right: 0;
 }
 
+div.tab-content div.row div.col-xs-6 {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+
+
 li#search-box:hover {
     background: none !important;
 }
@@ -290,7 +298,7 @@ ul.dropdown-menu div.kv-spin-center {
     padding: 15px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     li#notif-expansion a.dropdown-toggle {
         margin-left: -10px !important;
     }
@@ -338,20 +346,34 @@ li#notif-expansion ul.dropdown-menu span#notification-label {
 div#main-post-desc {
     text-align: justify;
     line-height: 30px;
+    margin-left: 15px;
+    padding-right: 0px !important;
+    margin-right: 30px !important;
+}
+
+div#create-thread {
+    margin-left: 0px;
+    margin-right: 15px;
+    padding-right: 30px;
+    padding-left: 15px;
+    margin-bottom: 20px;
 }
 
 div#create-thread-dropdown {
     background: #AAA839;
     color: white;
     padding: 15px;
-    margin: 0px 15px;
+    margin-left: 15px !important;
+    margin-right: 30px;
+    padding-right: 15px !important;
 }
 
 div#create-thread-form {
     display: none;
     background: #ECEB9C;
+    padding: 0;
     margin-left: 15px;
-    margin-right: 15px;
+    margin-right: 30px;
 }
 
 div#create-thread-form input,
@@ -366,4 +388,57 @@ div#submit-thread {
     vertical-align: middle;
     text-align: center;
     float: right;
+}
+
+div.panel-heading {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+div#login-form input.form-control {
+    width: 75% !important;
+}
+
+div#login-form div.form-group label.control-label {
+    width: 25%;
+    height: 100%;
+    float: left;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+li#notification-bar {
+    margin: 15px 0 0 10px;
+}
+
+
+div#thread-view {
+    width: 100% !important;
+    padding-right: -30px;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    padding-bottom: 30px !important;
+    padding-top: 30px !important;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;;
+}
+
+div.ias-trigger {
+    width: 100%;
+    padding: 15px;
+}
+
+div#comment {
+    margin-left: -15px !important;
+}
+
+div#comment div#w0 {
+    padding: 15px;
+    padding-left: 0;
+}
+
+div#comment-rate {
+    float: left;
 }

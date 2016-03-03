@@ -57,7 +57,6 @@ $(document).ready(function() {
         });
     });
 
-
     $("#cancel_edit_thread_button").click(function(){
         $("#shown_part").show();
         $("#edit_part").hide();
@@ -85,6 +84,8 @@ $(document).ready(function() {
         beginLoginModal();
         return false;
     });
+});
 
-
-})
+$("button#comment_post").click(function() {
+    $("div#w6-container").slideToggle("fast");
+});

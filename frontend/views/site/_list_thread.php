@@ -9,10 +9,7 @@
 ?>
 
 <article>
-
-	<div class="box col-md-12" style="min-height:250px;background-color: " >
-		<hr style="border-top: 2px solid #8c8b8b;">
-
+	<div class="col-xs-12" id="thread-view">
 		<div class="col-xs-12 thread_link">
 			<?= Html::a($model['title'], Url::to('../thread/index?id='. $model['thread_id']))?>
 		</div>
@@ -23,5 +20,4 @@
 			<?= $this->render('_list_thread_comment_part', ['thread_id' => $model['thread_id']]) ?>
 		</div>
 	</div>
-
 </article>
