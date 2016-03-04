@@ -23,7 +23,7 @@ Pjax::begin([
     ActiveForm::end();
     } else{ ?>
             <?= Html::button('Hide', ['class' => 'btn btn-primary', 'id' => 'comment_post']) ?>
-            <div id = 'list_thread_comment_part'><br />
+            <div id="list_thread_comment_part"><br />
                 <div class="col-xs-12" id="comment">
                     <?= $this->render('../thread/_comment_part', ['comment_providers' => $comment_providers]) ?>
                 </div>
