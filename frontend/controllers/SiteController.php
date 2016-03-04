@@ -335,7 +335,7 @@ class SiteController extends Controller
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {
 				if (Yii::$app->getUser()->login($user)) {
-					return $this->redirect(Yii::$app->request->baseUrl . '/site/edit-interest');
+					return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
 				}
 			}
 		}
