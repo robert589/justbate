@@ -3,11 +3,11 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
-
+    use yii\helpers\HtmlPurifier;
     $itemsHeader = [
         [
             'label' => 'Description',
-            'content' => "<div style='font-size: 15px' align='left'>" . $description . "</div>",
+            'content' => "<div style='font-size: 15px' align='left'>" . HtmlPurifier::process($description) . "</div>",
             'active' => isset($vote_tab_active) ? false: true,
         ],
         [
@@ -39,7 +39,7 @@
     <!-- Title part-->
     <div class="row" style="text-align: center;">
         <div class="col-md-12">
-            <h3><b><?= $title ?></b> </h3>
+            <h3><b><?= Html::encode($title) ?></b> </h3>
         </div> <!-- div.col-md-12 -->
     </div> <!-- row -->
 
@@ -71,7 +71,7 @@
         <div class="row" >
             <?= \yii\redactor\widgets\Redactor::widget([
                 'name' => 'description',
-                'value' => $description,
+                'value' => HtmlPurifier::process($description),
                 'clientOptions' => [
                     'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
                 ],

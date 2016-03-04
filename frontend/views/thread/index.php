@@ -68,13 +68,13 @@
 		<div class="row">
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 
-			<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
-			<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn btn-danger']) ?>
+				<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
+				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn btn-danger']) ?>
 
 			<?php } ?>
 
-			<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
-			<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
+				<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
+				<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
 
 		</div>
 

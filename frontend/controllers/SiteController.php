@@ -400,7 +400,7 @@ class SiteController extends Controller
 		$out = ['results' => ['id' => '', 'text' => '']];
 		if (!empty($_GET['q'])) {
 			$q = $_GET['q'];
-			$topicList = \common\models\tag::getTagList($q);
+			$topicList = Tag::getTagList($q);
 			$out['results'] = array_values($topicList);
 		}
 
