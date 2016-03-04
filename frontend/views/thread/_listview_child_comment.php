@@ -30,12 +30,12 @@ else{
     <div class="box col-md-12" align="left" >
         <div class="row">
             <div class="col-md-6 name_link">
-                <?= Html::a($model['first_name'] . ' ' . $model['last_name'], "#" )?>
+                <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), "#" )?>
             </div>
         </div>
 
         <div class="row">
-            <?= $model['comment']?>
+            <?= Html::encode($model['comment'])?>
         </div>
 
         <div class="row">

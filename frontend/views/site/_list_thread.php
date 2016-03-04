@@ -4,6 +4,7 @@
 	use yii\helpers\Url;
 	use yii\widgets\Pjax;
 	use yii\widgets\ActiveForm;
+	use yii\helpers\HtmlPurifier;
 	/** @var $model array */
 
 ?>
@@ -11,10 +12,10 @@
 <article>
 	<div class="col-xs-12" id="thread-view">
 		<div class="col-xs-12 thread_link">
-			<?= Html::a($model['title'], Url::to('../thread/index?id='. $model['thread_id']))?>
+			<?= Html::a(Html::encode($model['title']), Url::to('../thread/index?id='. $model['thread_id']))?>
 		</div>
 		<div class="col-xs-12">
-			<?= $model['description'] ?>
+			<?= HtmlPurifier::process($model['description']) ?>
 		</div>
 		<div class="col-xs-12">
 			<?= $this->render('_list_thread_comment_part', ['thread_id' => $model['thread_id']]) ?>

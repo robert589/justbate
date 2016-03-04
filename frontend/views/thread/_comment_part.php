@@ -1,12 +1,12 @@
 <?php
 use kartik\tabs\TabsX;
 use yii\widgets\ListView;
-
+use yii\helpers\Html;
 $content_comment = array();
 
 $first = 1;
 foreach($comment_providers as $thread_choice_item => $comment_provider){
-    $content_comment_item['label'] = $thread_choice_item;
+    $content_comment_item['label'] = Html::encode($thread_choice_item);
     $content_comment_item['content'] =  ListView::widget([
         'dataProvider' => $comment_provider,
         'summary' => false,

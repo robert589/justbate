@@ -73,7 +73,7 @@ return [
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => Yii::getAlias('@image_dir_local'),
-            'uploadUrl' => Yii::$app->request->baseUrl . '/frontend/web/photos',
+            'uploadUrl' => Yii::getAlias('@image_dir'),
             'imageAllowExtensions'=>['jpg','png','gif']
         ],
         // your other modules
