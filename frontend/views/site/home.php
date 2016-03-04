@@ -11,7 +11,7 @@ use yii\web\JsExpression;
 $this->title = "Home";
 ?>
 <div class="col-xs-12">
-	<div class="col-md-3">
+	<div class="col-md-3" id="left-sidebar">
 		<div class="col-xs-12">
 			<table class="table table-bordered table-responsive" id="left-menu">
 				<tr><td><a href=<?= Yii::$app->request->baseUrl . '/site/followee'?>>Your Friend Post</a></td></tr>

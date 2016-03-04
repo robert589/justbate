@@ -3,6 +3,8 @@ body {
     background: #fff !important;
     color: #000 !important;
     line-height: 20px !important;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
 }
 
 div#main-body {
@@ -18,7 +20,7 @@ nav#menubar {
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
-    background: #95938A !important;
+    background: #979797 !important;
 }
 
 div.navbar-header a,
@@ -308,6 +310,10 @@ ul.dropdown-menu div.kv-spin-center {
     li#notif-expansion ul.dropdown-menu {
         margin-top: 15px;
         margin-left: -15px;
+    }
+
+    div#left-sidebar {
+        display: none;
     }
 }
 
