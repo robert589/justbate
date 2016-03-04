@@ -42,18 +42,17 @@ use yii\web\JsExpression;
 
     <div class="col-xs-12" style="padding:0;">
         <!-- Topic Name -->
-        <?= $form->field($create_thread_form, 'keywords')->widget(Select2::classname(), [
-            'initValueText' => $create_thread_form->keywords,
+        <?= $form->field($create_thread_form, 'tags')->widget(Select2::classname(), [
+            'initValueText' => $create_thread_form->tags,
             'maintainOrder' => true,
 
             'options' => ['placeholder' => 'Select Keywords ...', 'multiple' => true],
             'pluginOptions' => [
-                'tags' => true,
                 'maximumInputLength' => 10,
                 'minimumInputLength' => 1,
                 'allowClear' => true,
                 'ajax' => [
-                    'url' => \yii\helpers\Url::to(['topic-list']),
+                    'url' => \yii\helpers\Url::to(['tag-list']),
                     'dataType' => 'json',
                     'data' => new JsExpression('function(params) { return {q:params.term}; }')
                 ],

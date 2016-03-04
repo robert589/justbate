@@ -256,7 +256,7 @@ class SiteController extends Controller
 
 		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
 			if($thread_id = $create_thread_form->create()){
-				return $this->redirect(Yii::getAlias('@base-url') . '/thread/index?id=' . $thread_id);
+				return $this->redirect(Yii::$app->request->baseUrl . '/thread/index?id=' . $thread_id);
 			}
 		}
 		else{
@@ -395,12 +395,12 @@ class SiteController extends Controller
 	}
 
 
-	public function actionTopicList(){
+	public function actionTagList(){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
 		if (!empty($_GET['q'])) {
 			$q = $_GET['q'];
-			$topicList = \common\models\tag::getTopicList($q);
+			$topicList = \common\models\tag::getTagList($q);
 			$out['results'] = array_values($topicList);
 		}
 

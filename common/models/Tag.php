@@ -12,10 +12,10 @@ class Tag extends ActiveRecord{
     }
 
 
-    public static function getTopicList($q){
-        $sql = "SELECT tag_name as id, tag_name as text
+    public static function getTagList($q){
+        $sql = "SELECT tag_id as id, tag_name as text
                    from tag
-                   where name like concat('%', :q,'%')
+                   where tag_name like concat('%', :q,'%')
                    limit 10";
 
         return Yii::$app->db->createCommand($sql)->
@@ -37,6 +37,6 @@ class Tag extends ActiveRecord{
     }
 
     public static function checkExist($tag){
-        return Self::find()->where(['tag' => $tag])->exists();
+        return Self::find()->where(['tag_id' => $tag])->exists();
     }
 }
