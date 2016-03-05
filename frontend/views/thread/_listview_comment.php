@@ -46,14 +46,20 @@ $comment_id = $model['comment_id'];
 			<div class="col-xs-6">
 				<!-- Votes part-->
 				<?= $this->render('_comment_votes', [  'comment_id' => $model['comment_id'],
-				'vote' => $vote,
-				'thread_id' => $model['thread_id'],
-				'total_like' => $total_like ,
-				'total_dislike' => $total_dislike]) ?>
+					'vote' => $vote,
+					'thread_id' => $model['thread_id'],
+					'total_like' => $total_like ,
+					'total_dislike' => $total_dislike])
+				?>
 			</div>
+
 			<?= $this->render('_child_comment', ['guest' => $guest, 'belongs' => $belongs,
 			'comment_id' => $model['comment_id'], 'thread_id' => $model['thread_id'],
 			'user_id' => $model['user_id'],'child_comment_form' => $child_comment_form ]) ?>
-		</div><br />
+
+		</div>
+
+		<br/>
+
 	</div>
 </article>

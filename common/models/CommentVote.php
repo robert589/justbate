@@ -11,9 +11,9 @@ class CommentVote extends ActiveRecord
 	}
 
 	public static function getCommentVotesOfComment($comment_id, $user_id){
-		$sql = "SELECT (SELECT COALESCE (count(*),0) from comment_vote where comment_id = :comment_id and vote = 1) as total_like,
-				(SELECT COALESCE (count(*),0) from comment_vote where comment_id = :comment_id and vote = -1) as total_dislike,
-				vote
+		$sql = "SELECT  CASE WHEN count(*) = 0 then 0 else vote end as vote,
+						(SELECT COALESCE (count(*),0) from comment_vote where comment_id = :comment_id and vote = 1) as total_like,
+						(SELECT COALESCE (count(*),0) from comment_vote where comment_id = :comment_id and vote = -1) as total_dislike
 				from comment_vote
 				where comment_id = :comment_id and user_id = :user_id";
 

@@ -20,7 +20,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl    . '/frontend/web/js/jquery.
 
 
 <?php if(!isset($retrieved)){ ?>
-
         <div class="col-md-6" xmlns:margin-top="http://www.w3.org/1999/xhtml">
             <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
                                                 'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
