@@ -20,7 +20,7 @@ nav#menubar {
     text-transform: uppercase;
     background: white !important;
     border-bottom: 3px solid black;
-    background: #979797 !important;
+    background: rgb(2,116,203) !important;
 }
 
 div.navbar-header a,
@@ -363,7 +363,7 @@ div#create-thread {
 }
 
 div#create-thread-dropdown {
-    background: #AAA839;
+    background: rgb(2,116,203);
     color: white;
     padding: 15px;
     margin-left: 15px !important;
