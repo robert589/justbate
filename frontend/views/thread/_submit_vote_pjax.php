@@ -42,4 +42,3 @@ use yii\widgets\Pjax;
 
 <?php ActiveForm::end(); ?>
 <br>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/thread-submit_vote.js'); ?>
