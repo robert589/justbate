@@ -27,6 +27,7 @@ Pjax::begin([
 <!-- The vote -->
 <!-- The form only be used as refresh page -->
 <?= Html::beginForm(["thread/comment-vote" ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => '#comment_likes_' . $comment_id, 'class' => 'form-inline']); ?>
+
     <?= Html::hiddenInput("comment_id", $comment_id) ?>
     <?= Html::hiddenInput("user_id", Yii::$app->user->getId()) ?>
 

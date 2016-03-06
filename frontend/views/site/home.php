@@ -36,9 +36,11 @@ $this->title = "Home";
 			</div><!-- div.col-md-3 -->
 
 			<div class="col-xs-12 col-md-7" id="create-thread">
+
 				<div class="col-xs-12" id="create-thread-dropdown">
 					<div id="create-thread-button"><span>Click Here to Start Make a Thread</span><span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span></div>
 				</div> <!-- div.col-xs-12 -->
+
 				<div class="col-xs-12" id="create-thread-form">
 					<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 				</div> <!-- div.col-xs-12 -->

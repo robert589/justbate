@@ -31,9 +31,24 @@
 										'layout' => "{summary}\n{items}\n{pager}",
 										'itemView' => function ($model, $key, $index, $widget) {
 											$childCommentForm = new \frontend\models\ChildCommentForm();
+
+											if (Yii::$app->user->isGuest) {
+												$belongs = 0;
+											}
+											else {
+												if(Yii::$app->user->getId()== $model['user_id']){
+													$belongs = 1;
+												} else {
+													$belongs = 0;
+												}
+											}
+
 											$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
-											return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
-												'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
+											return $this->render('_listview_comment',['model' => $model,
+												'belongs' => $belongs,
+												'child_comment_form' => $childCommentForm,
+												'total_like' => $comment_vote_comment['total_like'],
+												'total_dislike' => $comment_vote_comment['total_dislike'],
 												'vote' => $comment_vote_comment['vote']]);
 										}
 									]);
@@ -67,15 +82,11 @@
 
 		<div class="row">
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
-
 				<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
 				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn btn-danger']) ?>
-
 			<?php } ?>
-
 				<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
 				<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
-
 		</div>
 
 		<hr>
@@ -162,5 +173,4 @@ $script =<<< JS
 JS;
 $this->registerJs($script);
 
-$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/thread-index.js');
 ?>

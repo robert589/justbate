@@ -81,8 +81,6 @@
 
         <div class="row" align="right">
             <?= Html::button('Cancel', ['class' => 'btn btn-danger', 'id' => 'cancel_edit_thread_button']) ?>
-
-
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
         </div>
 
