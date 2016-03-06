@@ -6,6 +6,10 @@ body {
     font-weight: 300;
 }
 
+div#left-sidebar {
+    margin-left: -15px;
+}
+
 div#main-body {
     width: 100% !important;
 }
@@ -13,11 +17,11 @@ div#main-body {
 /* Menubar */
 nav#menubar {
     border: 0;
-    padding: 1%;
+    padding: 15px;
     font-size: 1em;
     border-radius: 0 !important;
     text-transform: uppercase;
-    background: #3977A7 !important;
+    background: #FFA500 !important;
     border-bottom: 3px solid black;
 }
 
@@ -313,6 +317,10 @@ ul.dropdown-menu div.kv-spin-center {
     div#left-sidebar {
         display: none;
     }
+
+    div#main-content {
+        margin-left: 0;
+    }
 }
 
 li#notif-expansion {
@@ -448,4 +456,8 @@ div#comment-rate {
 div#threadList div.ias-trigger,
 div#threadList div.ias-noneleft {
     margin: 0;
+}
+
+div#main-content {
+    margin-left: -15px;
 }

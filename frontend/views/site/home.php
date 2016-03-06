@@ -35,20 +35,20 @@ $this->title = "Home";
 				</div> <!-- div.col-xs-12 -->
 			</div><!-- div.col-md-3 -->
 
-			<div class="col-xs-12 col-md-7" id="create-thread">
+			<div id="main-content">
+				<div class="col-xs-12 col-md-7" id="create-thread">
+					<div class="col-xs-12" id="create-thread-dropdown">
+						<div id="create-thread-button"><span>Click Here to Start Make a Thread</span><span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span></div>
+					</div> <!-- div.col-xs-12 -->
 
-				<div class="col-xs-12" id="create-thread-dropdown">
-					<div id="create-thread-button"><span>Click Here to Start Make a Thread</span><span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span></div>
-				</div> <!-- div.col-xs-12 -->
+					<div class="col-xs-12" id="create-thread-form">
+						<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
+					</div> <!-- div.col-xs-12 -->
+				</div>
 
-				<div class="col-xs-12" id="create-thread-form">
-					<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
-				</div> <!-- div.col-xs-12 -->
-			</div>
-
-			<div class="col-xs-12 col-md-7">
-				<div class="col-xs-12" id="main-post-desc">
-					<?= ListView::widget([
+				<div class="col-xs-12 col-md-7">
+					<div class="col-xs-12" id="main-post-desc">
+						<?= ListView::widget([
 							'id' => 'threadList',
 							'dataProvider' => $listDataProvider,
 							'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
@@ -58,8 +58,9 @@ $this->title = "Home";
 							'itemView' => function ($model, $key, $index, $widget) {
 								return $this->render('_list_thread',['model' => $model]);
 							}
-					])
-					?>
-				</div><!-- div.col-xs-12 -->
-			</div> <!-- div.md-7 -->
-		</div> <!-- div.col-md-12 -->
+						])
+						?>
+					</div><!-- div.col-xs-12 -->
+				</div> <!-- div.md-7 -->
+			</div> <!-- div.col-md-12 -->
+		</div>
