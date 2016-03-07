@@ -1,4 +1,4 @@
-/* Web Content */
+ /* Web Content */
 body {
     background: #E6E6E6!important;
     color: #000 !important;
@@ -17,18 +17,17 @@ div#main-body {
 /* Menubar */
 nav#menubar {
     border: 0;
-    padding: 15px;
     font-size: 1em;
     border-radius: 0 !important;
     text-transform: uppercase;
-    background: #FFA500 !important;
-    border-bottom: 3px solid black;
+    background: #fff !important;
+    border-bottom: 3px solid #0E5A94;
 }
 
 div.navbar-header a,
 li.item a,
 .navbar-collapse {
-    color: #fff !important;
+    color: #000 !important;
 }
 
 input[type="text"]#search {
@@ -460,4 +459,13 @@ div#threadList div.ias-noneleft {
 
 div#main-content {
     margin-left: -15px;
+}
+
+div.ias-trigger a {
+    width: 100% !important;
+    text-align: center;
+    padding: 15px;
+    background: #0E5A94;
+    color: #fff;
+    text-decoration: none;
 }

@@ -51,7 +51,7 @@ AppAsset::register($this);
 <body>
     <?php $this->beginBody() ?>
     <!-- website menu bar and navigation -->
-    <nav class="navbar navbar-default" id="menubar" style="width: 100%;">
+    <nav class="navbar navbar-default navbar-fixed-top" id="menubar">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -123,7 +123,7 @@ AppAsset::register($this);
             Modal::end();
             ?>
 
-            <div class="container" style="padding: 0;">
+            <div class="container" style="margin-top: 73px;">
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
