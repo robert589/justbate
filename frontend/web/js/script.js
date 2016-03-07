@@ -20,6 +20,7 @@ $(document).ready(function() {
         $("button#upload-image").css("opacity","0");
     });
 
+    //menu bar
     $("#loginMenu").click(function(){
         $("#loginModal").modal("show")
         .find('#loginModal')

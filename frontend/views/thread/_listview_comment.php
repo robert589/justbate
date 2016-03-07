@@ -9,6 +9,7 @@ use yii\bootstrap\Modal;
 use frontend\models\EditCommentForm;
 use common\models\Comment;
 use yii\widgets\ActiveForm;
+/** @var $model array */
 $comment_id = $model['comment_id'];
 
 ?>
@@ -23,17 +24,9 @@ $comment_id = $model['comment_id'];
 	</div>
 
 	<div class="row" align="left">
-
-	</div>
-
-	<div class="row" align="left">
-		<div id="comment_shown_part_<?= $comment_id ?>">
-			<?= $model['comment']?>
-		</div>
-
-		<div id="comment_edit_part_<?= $comment_id ?>" style="display: none">
-
-		</div>
+		<?= $this->render('_view_edit_comment_part', ['comment' => $model['comment'],
+													'edit_comment_form' => new EditCommentForm(),
+													'comment_id' => $comment_id]) ?>
 	</div> <!--- div.row -->
 
 	<div class="row">
@@ -67,13 +60,3 @@ $comment_id = $model['comment_id'];
 	</div>
 </article>
 <hr>
-
-<?php
-//Inline script, not really good
-$script =<<< JS
-	$("#edit_comment_$comment_id")
-JS;
-
-$this->registerJs($script);
-
-?>

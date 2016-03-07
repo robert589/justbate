@@ -23,6 +23,8 @@ class EditCommentForm extends Model
 		return [
 			[['parent_id'], 'integer'],
 			[['comment', 'parent_id'] , 'required'],
+
+
 	   ];
 	}
 
@@ -36,9 +38,9 @@ class EditCommentForm extends Model
 		if ($this->validate()) {
 
 			$comment = Comment::findOne($this->parent_id);
-			$comment->update_at = new Expression('NOW()');
+			$comment->updated_at = new Expression('NOW()');
 			$comment->comment = $this->comment;
-			if($comment->save()){
+			if($comment->update()){
 				return true;
 			}
 

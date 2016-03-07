@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteThreadForm;
+use frontend\models\EditCommentForm;
 use frontend\models\NotificationForm;
 use frontend\models\SubmitRateThreadForm;
 use frontend\models\SubmitThreadVoteForm;
@@ -284,6 +285,10 @@ class ThreadController extends Controller
 		}
 	}
 
+	public function actionDeleteComment(){
+
+	}
+
 	public function actionDeleteThread(){
 		$delete_thread_form = new DeleteThreadForm();
 		if(isset($_POST['thread_id'])){
@@ -291,6 +296,31 @@ class ThreadController extends Controller
 			if($delete_thread_form->delete()){
 				return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
 			}
+		}
+	}
+
+	/**
+	 * POST DATA: Edit comment form (but only parent id filled), and comment
+	 * CONCERN: There is a weakness in the redactor that cannot use form to store data
+	 */
+	public function actionEditComment(){
+		$edit_comment_form = new EditCommentForm();
+		$edit_comment_form->load(Yii::$app->request->post());
+
+		if(isset($_POST['comment']) ){
+			$edit_comment_form->comment = $_POST['comment'];
+			if($edit_comment_form->update()){
+				return $this->renderAjax('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
+																'comment' => $edit_comment_form->comment,
+																'edit_comment_form'=> new EditCommentForm()]);
+			}
+			else{
+				//Error
+			}
+		}
+		else{
+			Yii::$app->end('error');
+			//error
 		}
 	}
 

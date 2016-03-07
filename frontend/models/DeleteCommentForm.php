@@ -18,7 +18,7 @@ class DeleteCommentForm extends Model {
 		if($this->validate()) {
 			$comment = Comment::findOne(['comment_id' => $this->comment_id]);
 			$comment->comment_status = 0;
-			$comment->update();
+			return $comment->update();
 		}
 	}
 
