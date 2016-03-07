@@ -68,7 +68,7 @@
 
 
 <div class="col-md-offset-2 col-md-10">
-	<div class="col-md-8" align="center">
+	<div class="col-md-8" align="center" id="thread-details">
 		<?= $this->render('_title_description_vote', ['title' => $model['title'],
 													'description' => $model['description'],
 													'thread_choices' => $thread_choices,
@@ -76,11 +76,11 @@
 													'user_choice' => $model['user_choice'],
 													'submitVoteModel' => $submitVoteModel]) ?>
 
-		<div class="row" id="ask_to_login" style="display:none">
+		<div class="row" id="ask_to_login" style="display: none;">
 			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
 		</div>
 
-		<div class="row">
+		<div class="row" id="action-button">
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 				<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
 				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn btn-danger']) ?>

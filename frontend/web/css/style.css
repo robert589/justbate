@@ -469,3 +469,21 @@ div.ias-trigger a {
     color: #fff;
     text-decoration: none;
 }
+
+div#shown_part {
+    background: #ccddff;
+    padding: 15px !important;
+}
+
+div#action-button {
+    padding: 15px;
+}
+
+ul#w34,
+ul#w34 + div.tab-content {
+    padding: 15px;
+}
+
+div#thread-details {
+
+}

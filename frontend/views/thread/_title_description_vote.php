@@ -63,12 +63,12 @@
     <?php $form = ActiveForm::begin(['action' => ['thread/edit-thread'], 'method' => 'post', 'options' => ['data-pjax' => '#edit_thread']])?>
 
         <?= Html::hiddenInput('thread_id', $thread_id ) ?>
-    
+
         <div class="row">
             <?= Html::input('text','title', $title, ['placeholder' => 'Title..', 'class' => 'form-control']) ?>
         </div>
 
-        <div class="row" >
+        <div class="row">
             <?= \yii\redactor\widgets\Redactor::widget([
                 'name' => 'description',
                 'value' => HtmlPurifier::process($description),
