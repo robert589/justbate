@@ -6,7 +6,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
-
+use common\models\Thread;
 /**
  * Site controller
  */
@@ -56,6 +56,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionThread(){
+       $all_threads = Thread::find()->all();
+        
     }
 
     public function actionLogin()

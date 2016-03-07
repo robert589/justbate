@@ -184,7 +184,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates "remember me" authentication key
+             * Generates "remember me" authentication key
      */
     public function generateAuthKey()
     {

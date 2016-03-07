@@ -123,18 +123,18 @@ AppAsset::register($this);
             Modal::end();
             ?>
 
-            <div class="container" style="margin-top: 73px;">
-                <?= Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                    ]) ?>
-                    <?= Alert::widget() ?>
-                    <?= $content ?>
-                </div>
+<div class="container" style="margin-top: 73px;">
+    <?= Breadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+        <?= Alert::widget() ?>
+        <?= $content ?>
+</div>
 
-                <?php
-                $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+<?php
+$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
 
-                $this->endBody();
-                ?>
-                </html>
-                <?php $this->endPage() ?>
+$this->endBody();
+?>
+</html>
+<?php $this->endPage() ?>
