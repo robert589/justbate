@@ -60,7 +60,7 @@ class SiteController extends Controller
 
     public function actionThread(){
        $all_threads = Thread::find()->all();
-        
+
     }
 
     public function actionLogin()
