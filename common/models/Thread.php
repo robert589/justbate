@@ -6,6 +6,10 @@ use Yii;
 
 class Thread extends ActiveRecord
 {
+	const STATUS_DELETED = 0;
+	const STATUS_ACTIVE = 10;
+	const STATUS_BANNED = 11;
+
 	public static function tableName() {
 		return 'thread';
 	}

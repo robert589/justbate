@@ -9,8 +9,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
-
 AppAsset::register($this);
+
+$this->registerJsFile(Yii::$app->request->baseUrl . '/../backend/web/js/jquery.js');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -70,7 +71,9 @@ AppAsset::register($this);
     </div>
 </footer>
 
-<?php $this->endBody() ?>
+<?php $this->endBody();
+    $this->registerJsFile(Yii::$app->request->baseUrl . '/../backend/web/js/script.js');
+?>
 </body>
 </html>
 <?php $this->endPage() ?>

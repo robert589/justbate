@@ -6,16 +6,19 @@ use yii\base\Model;
 
 use common\models\Thread;
 
-class EditThreadForm extends ModeL {
+class EditThreadForm extends Model {
 	public $thread_id;
 	public $title;
 	public $description;
+	public $choices;
 
 	public function rules() {
 		return [
 			[['thread_id'], 'integer'],
 			[['title', 'description'], 'string'],
-			[['thread_id', 'title'], 'required']
+			[['thread_id', 'title', 'description'], 'required'],
+			['choices', 'each', 'rule' => ['string']],
+
 		];
 	}
 

@@ -23,7 +23,7 @@ use yii\web\JsExpression;
                 'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
             ],
 
-            ]) ?>
+         ]) ?>
     </div> <!-- div.col-xs-12 -->
 
     <!-- Choice -->

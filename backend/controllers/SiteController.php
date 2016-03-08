@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
@@ -22,7 +23,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['thread', 'login', 'error'],
                         'allow' => true,
                     ],
                     [
@@ -59,8 +60,16 @@ class SiteController extends Controller
     }
 
     public function actionThread(){
-       $all_threads = Thread::find()->all();
+        $all_threads = Thread::find()->all();
 
+        $thread_provider = new ArrayDataProvider([
+            'allModels' => $all_threads,
+            'pagination' => [
+                'pageSize' => 30
+            ]
+        ]);
+
+        return $this->render('thread', ['thread_provider' => $thread_provider]);
     }
 
     public function actionLogin()
