@@ -38,6 +38,15 @@ return [
                 'class' => 'yii\web\UrlManager',
                 'enablePrettyUrl' => true,
                 'showScriptName' => false,
+                'rules' => [
+                    '' => 'site/home',
+                    'login' => 'site/login',
+                    'signup' => 'site/signup',
+                    'thread/<id:\d+>' => 'thread/index',
+                    'profile/<username:\w+>' => 'profile/index',
+
+
+                ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',

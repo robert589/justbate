@@ -14,7 +14,6 @@ return [
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
-
         ],
     ],
     'components' => [
@@ -24,6 +23,10 @@ return [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -36,6 +39,12 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+        ],
+        // backend, under components array
+        'request'=>[
+            'class' => 'common\components\Request',
+            'web'=> '/backend/web',
+            'adminUrl' => '/admin'
         ],
     ],
     'as access' => [
