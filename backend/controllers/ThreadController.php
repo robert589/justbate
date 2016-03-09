@@ -1,9 +1,11 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\BanThreadForm;
 use common\models\Choice;
 use backend\models\EditChoiceForm;
 use backend\models\EditThreadForm;
+use frontend\models\CreateThreadForm;
 use Yii;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -12,6 +14,7 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use common\models\Thread;
+use common\models\Issue;
 /**
  * Thread controller
  */
@@ -20,6 +23,7 @@ class ThreadController extends Controller
     /**
      * @inheritdoc
      */
+
     public function behaviors()
     {
         return [
@@ -27,7 +31,7 @@ class ThreadController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['edit'],
+                        'actions' => ['edit', 'banned', 'create', 'issue-list'],
                         'allow' => true,
                         'roles' => ['@']
                     ],
@@ -51,8 +55,41 @@ class ThreadController extends Controller
     public function actionBanned(){
         if(isset($_GET['id'])){
             $id = $_GET['id'];
+            $ban_thread_form = new BanThreadForm();
+            $ban_thread_form->thread_id = $id;
+            if(!$ban_thread_form->update()){
+                return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
+            }
+            return $this->redirect(Yii::$app->request->baseUrl . '/site/thread');
 
         }
+        else{
+            return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
+        }
+
+    }
+
+    public function actionCreate(){
+        $create_thread_form = new CreateThreadForm();
+        $create_thread_form->user_id = \Yii::$app->user->id;
+        if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
+            if($create_thread_form->create()){
+                return $this->redirect(Yii::$app->request->baseUrl . '/thread/create');
+            }
+        }
+        return $this->render('create', ['create_thread_form' => $create_thread_form]);
+    }
+
+    public function actionIssueList(){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!empty($_GET['q'])) {
+            $q = $_GET['q'];
+            $topicList = Issue::getIssueList($q);
+            $out['results'] = array_values($topicList);
+        }
+
+        return $out;
     }
 
     public function actionEdit(){
@@ -74,7 +111,6 @@ class ThreadController extends Controller
                 $edit_choice_forms[] = $edit_choice_form;
             }
 
-            var_dump($_POST);
             if($edit_thread_form->load(Yii::$app->request->post()) && $edit_thread_form->validate()){
 
                 if(Model::loadMultiple($edit_choice_forms, Yii::$app->request->post()) && Model::validateMultiple($edit_choice_forms)){

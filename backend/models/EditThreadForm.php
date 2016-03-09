@@ -11,7 +11,6 @@ class EditThreadForm extends ModeL {
     public $thread_id;
     public $title;
     public $description;
-
     public function rules() {
         return [
             [['thread_id'], 'integer'],

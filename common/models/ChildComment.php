@@ -11,7 +11,7 @@ class ChildComment extends ActiveRecord
 
     }
 
-    public static function getAllChildComments($thread_comment_id){
+    public static function getAllChildCommentsByCommentId($thread_comment_id   ){
         $sql = "SELECT *
                 from child_comment
                 inner join comment
@@ -26,5 +26,26 @@ class ChildComment extends ActiveRecord
 
         return $result;
     }
+
+    public static function getAllChildComments(){
+        $sql = "SELECT *
+                from child_comment
+                inner join comment
+                on child_comment.comment_id = comment.comment_id";
+
+        $result =  \Yii::$app->db->createCommand($sql)->
+        queryAll();
+
+        return $result;
+    }
+
+    public static function getComment($comment_id){
+        $sql = "SELECT * from child_comment inner join comment on child_comment.comment_id = comment.comment_id
+                where child_comment.comment_id = :comment_id";
+
+        return  \Yii::$app->db->createCommand($sql)->bindParam(':comment_id', $comment_id)->queryOne();
+
+    }
+
 
 }

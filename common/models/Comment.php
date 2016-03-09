@@ -9,6 +9,7 @@ class Comment extends ActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const STATUS_BANNED = 11;
 
     public function getTable(){
 		return 'comment';
@@ -162,4 +163,5 @@ class Comment extends ActiveRecord
 
         return $all_providers;
     }
+
 }

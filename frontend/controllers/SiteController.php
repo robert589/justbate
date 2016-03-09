@@ -1,7 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use common\models\Tag;
+use common\models\Issue;
 use frontend\models\CreateThreadForm;
 use Yii;
 use frontend\models\PasswordResetRequestForm;
@@ -116,13 +116,13 @@ class SiteController extends Controller
 	}
 
 	/**
-	* Generate Home page include Trending Tag, Trending Topic, and newest Topic
+	* Generate Home page include Trending Issue, Trending Topic, and newest Topic
 	*/
 	public function actionHome()
 	{
-		//get tag
-		if(!empty($_GET['tag'])){
-			$result = Thread::getThreadsBytag($_GET['tag']);
+		//get Issue
+		if(!empty($_GET['issue'])){
+			$result = Thread::getThreadsByIssue($_GET['issue']);
 		}
 		else{
 			$result = Thread::getAllThreads();
@@ -143,9 +143,9 @@ class SiteController extends Controller
 		$trending_topic_list = $this->getTredingTopicList();
 
 		//get popular category
-		$tag_list = $this->getPopulartag();
+		$issue_list = $this->getPopularIssue();
 
-		return $this->render('home', ['tag_list' => $tag_list,
+		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
 									'listDataProvider' => $dataProvider,
 									'create_thread_form' => $create_thread_form]);
@@ -174,9 +174,9 @@ class SiteController extends Controller
 		$trending_topic_list = $this->getTredingTopicList();
 
 		//get popular category
-		$tag_list = $this->getPopulartag();
+		$issue_list = $this->getPopularIssue();
 
-		return $this->render('home', ['tag_list' => $tag_list,
+		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
 									'listDataProvider' => $dataProvider,
 									'create_thread_form' => $create_thread_form]);
@@ -395,12 +395,12 @@ class SiteController extends Controller
 	}
 
 
-	public function actionTagList(){
+	public function actionIssueList(){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
 		if (!empty($_GET['q'])) {
 			$q = $_GET['q'];
-			$topicList = Tag::getTagList($q);
+			$topicList = Issue::getIssueList($q);
 			$out['results'] = array_values($topicList);
 		}
 
@@ -427,13 +427,13 @@ class SiteController extends Controller
 		return $mapped_trending_topic_list;
 	}
 
-	private function getPopulartag(){
-		$category_list = tag::getPopularCategory();
+	private function getPopularIssue(){
+		$category_list = Issue::getPopularCategory();
 
 		$mapped_category_list = array();
 		foreach($category_list as $category){
-			$mapped_category['label'] = $category['tag_name'];
-			$mapped_category['url']  = Yii::$app->request->baseUrl . '/site/home?tag=' . $category['tag_name'];
+			$mapped_category['label'] = $category['issue_name'];
+			$mapped_category['url']  = Yii::$app->request->baseUrl . '/site/home?issue=' . $category['issue_name'];
 
 			$mapped_category_list[] = $mapped_category;
 		}

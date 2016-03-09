@@ -10,6 +10,20 @@ class ThreadComment extends ActiveRecord
         return 'thread_comment';
     }
 
+    public static function getAllThreadComments(){
+        $sql = "SELECT * from thread_comment inner join comment on
+            thread_comment.comment_id = comment.comment_id
+            ";
+        return  \Yii::$app->db->createCommand($sql)->queryAll();
+    }
+
+    public static function getComment($comment_id){
+        $sql = "SELECT * from thread_comment inner join comment on thread_comment.comment_id = comment.comment_id
+                where thread_comment.comment_id = :comment_id";
+
+        return  \Yii::$app->db->createCommand($sql)->bindParam(':comment_id', $comment_id)->queryOne();
+
+    }
 
 
 

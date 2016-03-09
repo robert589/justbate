@@ -48,22 +48,22 @@ class Thread extends ActiveRecord
 		return  \Yii::$app->db->createCommand($sql)->queryAll();
 	}
 
-	public static function getThreadsBytag($tag) {
+	public static function getThreadsByIssue($issue) {
 		 $sql =  "
 				 Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
 				 from (SELECT thread.*, thread_rate.rate as rate
 							 from thread left join thread_rate
 							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
-							 user, thread_tag, tag
+							 user, thread_issue, issue
 				 where thread_thread_rate.user_id = user.id and
-							 thread_tag.thread_id = thread_thread_rate.thread_id AND
-							 tag.tag_id = thread_tag.tag_id
-							 and tag.tag_name =  :tag and thread_status = 10
+							 thread_issue.thread_id = thread_thread_rate.thread_id AND
+							 issue.issue_id = thread_issue.issue_id
+							 and issue.issue_name =  :issue and thread_status = 10
 				 group by(thread_thread_rate.thread_id)
 		";
 
 		return  \Yii::$app->db->createCommand($sql)
-			->bindParam(":tag", $tag)
+			->bindParam(":issue", $issue)
 			->queryAll();
 	}
 
@@ -135,7 +135,7 @@ class Thread extends ActiveRecord
 				 from (SELECT thread.*, thread_rate.rate as rate
 							 from thread left join thread_rate
 							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
-							 user, thread_tag
+							 user, thread_issue
 				 where thread_thread_rate.user_id = user.id and user.id in (SELECT followee_id from follower_relation where follower_id = :follower_id )
 				 group by(thread_thread_rate.thread_id)
 				 order by (date_created) desc";

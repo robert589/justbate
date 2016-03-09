@@ -6,7 +6,7 @@ $(document).ready(function(){
         var id = $(this).data('service')       ;
         krajeeDialog.confirm("Are you sure you want to ban thread =" + id + " ?", function (result) {
             if (result) {
-                return window.location.href = window.location.href + '/../../thread/banned/index?id=' + id;
+                return window.location.href = window.location.href + '/../../thread/banned?id=' + id;
             }
 
 

@@ -69,7 +69,7 @@ class ThreadController extends Controller
 	public function actionGetChildComment(){
 		if(isset($_POST['comment_id'])){
 			$comment_id = $_POST['comment_id'];
-			$result =  ChildCOmment::getAllChildComments($comment_id);
+			$result =  ChildCOmment::getAllChildCommentsByCommentId($comment_id);
 
 			$child_comment_provider = new \yii\data\ArrayDataProvider([
 				'allModels' => $result,
@@ -106,7 +106,7 @@ class ThreadController extends Controller
 					if($this->updateChildCommentNotification($user_id, $parent_id)){
 
 						$child_comment_form = new ChildCommentForm();
-						$result =  ChildCOmment::getAllChildComments($parent_id);
+						$result =  ChildCOmment::getAllChildCommentsByCommentId($parent_id);
 						$child_comment_provider = new \yii\data\ArrayDataProvider([
 							'allModels' => $result,
 							'pagination' => [

@@ -2,26 +2,27 @@
 
 namespace backend\models;
 
+use common\models\Comment;
 use yii\base\Model;
 
 use common\models\Thread;
 
-class BanThreadForm extends ModeL {
+class BanCommentForm extends ModeL {
 
-    public $thread_id;
+    public $comment_id;
 
     public function rules() {
         return [
-            [['thread_id'], 'integer'],
-            ['thread_id', 'required']
+            [['comment_id'], 'integer'],
+            ['comment_id', 'required']
         ];
     }
 
     public function update() {
         if($this->validate()) {
-            $thread  = Thread::findOne(['thread_id' => $this->thread_id]);
-            $thread->thread_status = Thread::STATUS_BANNED;
-            if($thread->update()){
+            $comment  = Comment::findOne(['comment_id' => $this->comment_id]);
+            $comment->comment_status = Comment::STATUS_BANNED;
+            if($comment->update()){
                 return true;
             }
             else{

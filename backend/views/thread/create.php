@@ -4,26 +4,29 @@ use yii\helpers\Html;
 use kartik\widgets\Select2;
 use yii\db\Expression;
 use yii\web\JsExpression;
+
+/** @var $create_thread_form \frontend\models\CreateThreadForm  */
 ?>
 
+<p>Programmer: This is bad practice, since we have two forms in frontend and backend, code smelly</p>
 
-<?php $form = ActiveForm::begin(['action' => 'site/create-thread' ,'method' => 'post']) ?>
+<?php $form = ActiveForm::begin(['action' => 'create' ,'method' => 'post']) ?>
 <!-- Title input box -->
 <div style="margin-left: 15px; margin-right: 15px; padding: 15px;">
     <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'title')->textInput(['placeholder' => 'Post Title',
-        'class' => 'form-control',
-        'style' => "text-align: center;" ])->label(false) ?>
+            'class' => 'form-control',
+            'style' => "text-align: center;" ])->label(false) ?>
     </div> <!--- div.col-xs-12 -->
 
     <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
-        [
-            'clientOptions' => [
-                'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
-            ],
+            [
+                'clientOptions' => [
+                    'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
+                ],
 
-         ]) ?>
+            ]) ?>
     </div> <!-- div.col-xs-12 -->
 
     <!-- Choice -->
@@ -60,7 +63,7 @@ use yii\web\JsExpression;
                 'templateResult' => new JsExpression('function(topic_name) { return topic_name.text; }'),
                 'templateSelection' => new JsExpression('function (topic_name) { return topic_name.text; }'),
             ],
-            ])->label(false) ?>
+        ])->label(false) ?>
     </div> <!-- div.col-xs-12 -->
 
     <div style="vertical-align: middle;" class="col-xs-6">

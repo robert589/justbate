@@ -3,8 +3,8 @@
 namespace frontend\models;
 
 use common\models\Choice;
-use common\models\Tag;
-use common\models\ThreadTag;
+use common\models\Issue;
+use common\models\ThreadIssue;
 use Yii;
 use yii\base\Model;
 use common\models\Thread;
@@ -13,7 +13,7 @@ class CreateThreadForm extends Model
 {
 	public $title;
 	public $description;
-	public $tags;
+	public $issues;
 	public $user_id;
 
 	public $anonymous;
@@ -22,11 +22,11 @@ class CreateThreadForm extends Model
 	public function rules()
 	{
 		return [
-			[['user_id', 'title', 'tags'], 'required'],
+			[['user_id', 'title', 'issues'], 'required'],
 			['description','string'],
 			['anonymous', 'boolean'],
 			['user_id' , 'integer'],
-			['tags', 'each', 'rule' => ['string']],
+			['issues', 'each', 'rule' => ['string']],
 			['choices', 'each', 'rule' => ['string']],
 
 
@@ -45,7 +45,7 @@ class CreateThreadForm extends Model
 			if($thread->save()){
 				$thread_id = $thread->thread_id;
 				if($this->saveChoice($thread_id)){
-					if($this->saveTags($thread_id)){
+					if($this->saveIssues($thread_id)){
 						return $thread_id;
 					}
 					else{
@@ -61,7 +61,7 @@ class CreateThreadForm extends Model
 			//save relevant_parties
 			return null;
 		}
-		return true;
+		return false;
 	}
 
 	private function saveChoice($thread_id){
@@ -77,19 +77,19 @@ class CreateThreadForm extends Model
 		return true;
 	}
 
-	private function saveTags($thread_id){
-		foreach($this->tags as $tag){
-			if(!Tag::checkExist($tag)){
-				$tag_model = new Tag();
-				$tag_model->tag_name =  $tag;
-				if(!$tag_model->save()){
+	private function saveIssues($thread_id){
+		foreach($this->issues as $issue){
+			if(!issue::checkExist($issue)){
+				$issue_model = new Issue();
+				$issue_model->issue_name =  $issue;
+				if(!$issue_model->save()){
 					return false;
 				}
 			}
-			$thread_tag_model = new ThreadTag();
-			$thread_tag_model->thread_id = $thread_id;
-			$thread_tag_model->tag_id = $tag;
-			if(!$thread_tag_model->save()){
+			$thread_issue_model = new ThreadIssue();
+			$thread_issue_model->thread_id = $thread_id;
+			$thread_issue_model->issue_id = $issue;
+			if(!$thread_issue_model->save()){
 				return false;
 			}
 		}

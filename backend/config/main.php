@@ -58,7 +58,8 @@ return [
         'allowActions' => [
             'admin/*',
             'site/*', // add or remove allowed actions to this list
-            'thread/*'
+            'thread/*',
+            'comment/*'
         ]
     ],
     'params' => $params,

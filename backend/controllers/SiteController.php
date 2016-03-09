@@ -1,6 +1,8 @@
 <?php
 namespace backend\controllers;
 
+use common\models\ChildComment;
+use common\models\ThreadComment;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
@@ -16,6 +18,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
+    /*
     public function behaviors()
     {
         return [
@@ -42,6 +45,8 @@ class SiteController extends Controller
         ];
     }
 
+    */
+
     /**
      * @inheritdoc
      */
@@ -59,6 +64,20 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionChildComment(){
+        $all_child_comment = ChildComment::getAllChildComments();
+
+        $child_comment_provider = new ArrayDataProvider([
+            'allModels' => $all_child_comment,
+            'pagination' => [
+                'pageSize' => 30
+            ]
+        ]);
+
+        return $this->render('child-comment', ['child_comment_provider' => $child_comment_provider]);
+
+    }
+
     public function actionThread(){
         $all_threads = Thread::find()->all();
 
@@ -70,6 +89,20 @@ class SiteController extends Controller
         ]);
 
         return $this->render('thread', ['thread_provider' => $thread_provider]);
+    }
+
+    public function actionThreadComment(){
+        $all_thread_comment = ThreadComment::getAllThreadComments();
+
+        $thread_comment_provider = new ArrayDataProvider([
+            'allModels' => $all_thread_comment,
+            'pagination' => [
+                'pageSize' => 30
+            ]
+        ]);
+
+        return $this->render('thread-comment', ['thread_comment_provider' => $thread_comment_provider]);
+
     }
 
     public function actionLogin()
