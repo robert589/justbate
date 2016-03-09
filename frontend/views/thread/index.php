@@ -67,7 +67,7 @@
 <?= Dialog::widget(); ?>
 
 
-<div class="col-md-offset-2 col-md-10">
+<div class="col-xs-10" style="padding: 0;" id="left-part-of-thread">
 	<div class="col-md-8" align="center" id="thread-details">
 		<?= $this->render('_title_description_vote', ['title' => $model['title'],
 													'description' => $model['description'],
