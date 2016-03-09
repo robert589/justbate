@@ -13,7 +13,6 @@
     if ($(window).innerWidth() < 768) {
         // DOM style for description and vote
         $("div#action-button-thing").width($("div#first-part").width()/4);
-        $("#action-button").removeclass("col-xs-6");
     }
 
     //on profile/index

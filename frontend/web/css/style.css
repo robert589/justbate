@@ -581,17 +581,23 @@ div#first-part div.col-xs-12:first-child {
 
 div#action-button-thing {
     padding: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 div#action-button-thing button {
     padding: 15px;
-    height: 125px;
+    float: right;
     border: 1px solid white;
     font-size: 32px;
     color: #fff;
     border-radius: 0;
-    width: 100%;
+    height: 64px;
+    width: 64px;
+    margin-left: 0;
+    margin-right: 0;
     background: #1097FF;
+    margin-bottom: 20px;
 }
 
 div#comment-tab div.tabs-above ul.nav-tabs {

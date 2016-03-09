@@ -68,7 +68,7 @@
 
 <div class="col-xs-12" id="thread-title"><?= $model['title'] ?></div>
 <div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
-	<div id="thread-details" class="col-xs-12 col-md-8">
+	<div id="thread-details" class="col-xs-12">
 		<?= $this->render('_title_description_vote', ['title' => $model['title'],
 													'description' => $model['description'],
 													'thread_choices' => $thread_choices,
@@ -78,17 +78,17 @@
 													?>
 												</div>
 
-													<div class="col-xs-12 col-md-offset-1 col-md-3" id="action-button" style="padding: 0;">
+													<div class="col-xs-12" id="action-button" style="padding: 0;">
 														<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 															<script type="text/javascript">
 																$("#edit_thread").css("display","none");
 																$("#delete_thread").css("display","none");
 															</script>
 														<?php } ?>
-														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
-														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
-														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment', 'class' => 'btn']) ?></div>
-														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn']) ?></div>
+														<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
+														<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
+														<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment', 'class' => 'btn']) ?></div>
+														<div id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn']) ?></div>
 													</div>
 												</div>
 
