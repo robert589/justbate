@@ -1,4 +1,21 @@
-$(document).ready(function() {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            $(document).ready(function() {
+
+    // some script to define the height of edit, delete, share, and comment button
+    var x1 = $("#first-part").height();
+    var x2 = $("#first-part").width();
+    var xTab = $("#first-part  div.col-xs-12 li");
+    var y = $("div#comment-tab div.tabs-above ul.nav-tabs");
+    var yChild = $("div#comment-tab div.tabs-above ul.nav-tabs li");
+
+    yChild.width(xTab.width());
+    var w1 = ($("div#first-part").width()/(y.children.length+1));
+
+    if ($(window).innerWidth() < 768) {
+        // DOM style for description and vote
+        $("div#action-button-thing").width($("div#first-part").width()/4);
+        $("#action-button").removeclass("col-xs-6");
+    }
+
     //on profile/index
     $("img#avatar").mouseenter(function() {
         $("img#avatar").css("opacity",".5");
@@ -44,6 +61,7 @@ $(document).ready(function() {
         }
     });
 
+    // thread
     $("#edit_thread").click(function(){
         $("#shown_part").hide();
         $("#edit_part").show();

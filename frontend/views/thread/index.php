@@ -66,28 +66,37 @@
 
 <?= Dialog::widget(); ?>
 
-
-<div class="col-xs-10" style="padding: 0;" id="left-part-of-thread">
-	<div class="col-md-8" align="center" id="thread-details">
+<div class="col-xs-12" id="thread-title"><?= $model['title'] ?></div>
+<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
+	<div id="thread-details" class="col-xs-12 col-md-8">
 		<?= $this->render('_title_description_vote', ['title' => $model['title'],
 													'description' => $model['description'],
 													'thread_choices' => $thread_choices,
 													'thread_id' => $model['thread_id'],
 													'user_choice' => $model['user_choice'],
-													'submitVoteModel' => $submitVoteModel]) ?>
+													'submitVoteModel' => $submitVoteModel])
+													?>
+												</div>
+
+													<div class="col-xs-12 col-md-offset-1 col-md-3" id="action-button" style="padding: 0;">
+														<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
+															<script type="text/javascript">
+																$("#edit_thread").css("display","none");
+																$("#delete_thread").css("display","none");
+															</script>
+														<?php } ?>
+														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
+														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
+														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment', 'class' => 'btn']) ?></div>
+														<div class="col-xs-6" id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn']) ?></div>
+													</div>
+												</div>
 
 		<div class="row" id="ask_to_login" style="display: none;">
 			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
 		</div>
 
-		<div class="row" id="action-button">
-			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
-				<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn btn-default']) ?>
-				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn btn-danger']) ?>
-			<?php } ?>
-				<?= Html::button('Comment', [ 'id' => 'display_hide_comment', 'class' => 'btn btn-default']) ?>
-				<?= Html::button('Share on facebook', ['class' => 'btn btn-default']) ?>
-		</div>
+
 
 		<hr>
 
@@ -101,7 +110,7 @@
 			<hr>
 		</div>
 
-		<div class="row" style="border-color: #ccccff; height: 250px">
+		<div class="row" style="border-color: #ccccff; height: 250px" id="comment-tab">
 			<?= // Ajax Tabs Above
 				TabsX::widget([
 					'items'=>$content_comment,

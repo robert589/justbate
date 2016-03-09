@@ -42,8 +42,6 @@
         </div> <!-- div.col-md-12 -->
     </div> <!-- row -->
 
-    <br>
-
     <!-- First tab part -->
     <div class="row" id="first-part">
         <div class="col-xs-12">
@@ -71,15 +69,10 @@
             <?= Html::hiddenInput('thread_id', $thread_id ) ?>
         </div>
     </div>
-
 </div>
 <!-- Edit part-->
-<div id="edit_part" style="display:none">
-    <br><br>
-
-
-
-        <div class="row">
+<div id="edit_part">
+    <div class="row">
             <?= Html::input('text','title', $title, ['placeholder' => 'Title..', 'class' => 'form-control']) ?>
         </div>
 
