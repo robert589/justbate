@@ -34,11 +34,10 @@
 
 
 <!-- Shown part-->
-<div id="shown_part" style="display:block">
-
+<div id="shown_part">
     <!-- Title part-->
-    <div class="row" style="text-align: center;">
-        <div class="col-md-12">
+    <div class="row" id="title-part">
+        <div class="col-xs-12">
             <h3><b><?= Html::encode($title) ?></b> </h3>
         </div> <!-- div.col-md-12 -->
     </div> <!-- row -->
@@ -46,13 +45,31 @@
     <br>
 
     <!-- First tab part -->
-    <div class="row" style="border-color: #ccccff;min-height: 250px">
-        <?= // Ajax Tabs Above
-        TabsX::widget([
-            'items'=>$itemsHeader,
-            'position'=>TabsX::POS_ABOVE,
-            'encodeLabels'=>false
-        ]) ?>
+    <div class="row" id="first-part">
+        <div class="col-xs-12">
+            <?= // Ajax Tabs Above
+            TabsX::widget([
+                'items'=>$itemsHeader,
+                'position'=>TabsX::POS_ABOVE,
+                'encodeLabels'=>false
+            ]) ?>
+        </div>
+
+        <div class="col-xs-12- col-md-6" id="edit_part">
+            <div class="col-xs-12">
+                <h3>Moderate Your Post</h3>
+            </div> <!-- div.col-xs-12 -->
+            <div class="col-xs-12">
+                <?php
+                $form = ActiveForm::begin([
+                    'action' => ['thread/edit-thread'],
+                    'method' => 'post',
+                    'options' => ['data-pjax' => '#edit_thread']
+                ])
+                ?>
+            </div> <!-- div.col-xs-6 -->
+            <?= Html::hiddenInput('thread_id', $thread_id ) ?>
+        </div>
     </div>
 
 </div>
@@ -60,9 +77,7 @@
 <div id="edit_part" style="display:none">
     <br><br>
 
-    <?php $form = ActiveForm::begin(['action' => ['thread/edit-thread'], 'method' => 'post', 'options' => ['data-pjax' => '#edit_thread']])?>
 
-        <?= Html::hiddenInput('thread_id', $thread_id ) ?>
 
         <div class="row">
             <?= Html::input('text','title', $title, ['placeholder' => 'Title..', 'class' => 'form-control']) ?>

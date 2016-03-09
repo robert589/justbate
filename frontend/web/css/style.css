@@ -234,8 +234,7 @@ blockquote#quote-on-thread {
 
 div.tab-content {
     height: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 15px;
 }
 
 div.tab-content div.row div.col-xs-6 {
@@ -300,6 +299,12 @@ ul.dropdown-menu div.kv-spin-center {
 }
 
 @media screen and (max-width: 767px) {
+    div#left-part-of-thread {
+        width: 100%;
+        padding: 0;
+
+    }
+
     li#notif-expansion a.dropdown-toggle {
         margin-left: -10px !important;
     }
@@ -470,8 +475,7 @@ div.ias-trigger a {
     text-decoration: none;
 }
 
-div#shown_part {
-    background: #ccddff;
+div#shown_part + div.row {
     padding: 15px !important;
 }
 
@@ -479,11 +483,72 @@ div#action-button {
     padding: 15px;
 }
 
-ul#w34,
-ul#w34 + div.tab-content {
+div#w15 {
+    padding: 0;
+}
+
+ul#w34 {
     padding: 15px;
 }
 
-div#thread-details {
+div#w15-tab0 {
+    margin-left: 15px;
+    color: #04365C;
+}
 
+div#vote {
+    padding: 0;
+}
+
+div#first-part {
+    margin-top: -20px;
+    background: #fff;
+    min-height: 250px;
+}
+
+div#title-part {
+    color: white;
+    padding: 15px;
+    text-align: center;
+    background: #074676;
+    margin-bottom: 15px;
+}
+
+div#title-part h3 {
+    margin: 0;
+}
+
+div#edit_part {
+    display: none;
+}
+
+div#shown_part {
+    display: block;
+}
+
+ul#w15 li {
+    background: #F3F9FE;
+    margin: 0;
+    width: 50%;
+}
+
+ul#w15 li.active {
+    background: #0E5A94;
+}
+
+div#first-part div.col-xs-12:first-child {
+    padding: 0;
+}
+
+.nav-tabs > li > a {
+    color: #04365C;
+    background: #fff;
+    text-transform: uppercase;
+    margin-right: 0 !important;
+    border-radius: 0 !important;
+}
+
+.nav-tabs > li.active > a {
+    background: #04365C !important;
+    color: #fff !important;
 }
