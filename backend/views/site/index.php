@@ -3,7 +3,7 @@ use kartik\widgets\SideNav;
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Welcome to admin page!';
 
 $items = [
     ['label' => 'Threads',
@@ -17,9 +17,7 @@ $items = [
 ?>
 <div class="site-index">
     <div class="col-md-3">
-        <?=
-            SideNav::widget(['items' => $items, 'heading' => false])
-        ?>
+
 
     </div>
 

@@ -15,6 +15,12 @@ return [
         'admin' => [
             'class' => 'mdm\admin\Module',
         ],
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => Yii::getAlias('@image_dir_local'),
+            'uploadUrl' => Yii::getAlias('@image_dir'),
+            'imageAllowExtensions'=>['jpg','png','gif']
+        ],
     ],
     'components' => [
         'user' => [
@@ -52,6 +58,8 @@ return [
         'allowActions' => [
             'admin/*',
             'site/*', // add or remove allowed actions to this list
+            'thread/*',
+            'comment/*'
         ]
     ],
     'params' => $params,

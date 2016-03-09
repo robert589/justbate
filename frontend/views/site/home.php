@@ -22,7 +22,7 @@ $this->title = "Home";
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
 				'heading' => 'Popular tag',
-				'items' => $tag_list,
+				'items' => $issue_list,
 				]) ?>
 			</div><!-- div.col-xs-12 -->
 

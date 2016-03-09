@@ -125,7 +125,6 @@
 </div>
 
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
-
 	<?= Html::hiddenInput('thread_id', $model['thread_id']) ?>
 <?php ActiveForm::end() ?>
 
