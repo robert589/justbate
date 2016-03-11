@@ -12,7 +12,7 @@
 <article>
 	<div class="col-xs-12" id="thread-view">
 		<div class="col-xs-12 thread_link">
-			<?= Html::a(Html::encode($model['title']), Url::to('../thread/index?id='. $model['thread_id']))?>
+			<?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'])?>
 		</div>
 		<div class="col-xs-12">
 			<?= HtmlPurifier::process($model['description']) ?>

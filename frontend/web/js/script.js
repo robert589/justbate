@@ -61,8 +61,11 @@
     });
 
     // thread
+    //edit thread part
+
     $("#edit_thread").click(function(){
         $("#shown_part").hide();
+
         $("#edit_part").show();
     });
 

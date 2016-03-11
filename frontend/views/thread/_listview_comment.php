@@ -19,7 +19,7 @@ $comment_id = $model['comment_id'];
 	<div class="row name_link" style="margin-top: 15px;" align="left">
 		<!--First TOP -->
 		<!--The name of the person that make the comments -->
-		<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/profile/index?username=" . $model['username'],
+		<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/profile/" . $model['username'],
 		['data-pjax' => 0])?>
 	</div>
 

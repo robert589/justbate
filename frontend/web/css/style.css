@@ -525,10 +525,8 @@ div#thread-title {
     margin: 0;
     padding: 30px;
     text-align: center !important;
-    background: #04365C;
     font-weight: bold;
     font-size: 16pt;
-    color: white;
 }
 
 div#title-part {
@@ -605,6 +603,3 @@ div#comment-tab div.tabs-above ul.nav-tabs {
     padding-right: 15px;
 }
 
-div#comment-tab div.tabs-above ul.nav-tabs li {
-    width: ;
-}

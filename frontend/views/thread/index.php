@@ -6,8 +6,10 @@
 	use yii\widgets\ActiveForm;
 
 	/** @var $model array */
-	/** @var $commentModel CommentForm */
-
+	/** @var $commentModel \frontend\models\CommentForm */
+	/** @var $comment_providers \yii\data\ArrayDataProvider */
+	/** @var $thread_choices array */
+	/** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
 	$this->title =  $model['title'];
 
 	//Store this variable for javascript
@@ -66,62 +68,64 @@
 
 <?= Dialog::widget(); ?>
 
-<div class="col-xs-12" id="thread-title"><?= $model['title'] ?></div>
-<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
-	<div id="thread-details" class="col-xs-12">
-		<?= $this->render('_title_description_vote', ['title' => $model['title'],
-													'description' => $model['description'],
-													'thread_choices' => $thread_choices,
-													'thread_id' => $model['thread_id'],
-													'user_choice' => $model['user_choice'],
-													'submitVoteModel' => $submitVoteModel])
-													?>
-												</div>
-
-													<div class="col-xs-12" id="action-button" style="padding: 0;">
-														<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
-															<script type="text/javascript">
-																$("#edit_thread").css("display","none");
-																$("#delete_thread").css("display","none");
-															</script>
-														<?php } ?>
-														<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
-														<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
-														<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment', 'class' => 'btn']) ?></div>
-														<div id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn']) ?></div>
-													</div>
-												</div>
-
-		<div class="row" id="ask_to_login" style="display: none;">
-			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
-		</div>
-
-
-
-		<hr>
-
-		<div  id="comment_section" style="display:none">
-			<div class="row" >
-				<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,
-														'thread_choices' => $thread_choices,
-														'thread_id' => $model['thread_id']]) ?>
-				<br><br>
-			</div>
-			<hr>
-		</div>
-
-		<div class="row" style="border-color: #ccccff; height: 250px" id="comment-tab">
-			<?= // Ajax Tabs Above
-				TabsX::widget([
-					'items'=>$content_comment,
-					'position'=>TabsX::POS_ABOVE,
-					'encodeLabels'=>false
-				])
-			?>
-		</div>
-
-
+<div class="col-xs-8 col-md-offset-1" style="background-color: white">
+	<div class="col-xs-12" id="thread-title">
+		<?= $model['title'] ?>
 	</div>
+	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
+		<div id="thread-details" class="col-xs-12">
+			<?= $this->render('_title_description_vote', ['title' => $model['title'],
+														'description' => $model['description'],
+														'thread_choices' => $thread_choices,
+														'thread_id' => $model['thread_id'],
+														'user_choice' => $model['user_choice'],
+														'submitVoteModel' => $submitVoteModel])
+														?>
+		</div>
+
+		<div class="col-xs-12" id="action-button" style="padding: 0;">
+			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
+				<script type="text/javascript">
+					$("#edit_thread").css("display","none");
+					$("#delete_thread").css("display","none");
+				</script>
+			<?php } ?>
+			<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
+			<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
+			<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment', 'class' => 'btn']) ?></div>
+			<div id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn']) ?></div>
+		</div>
+	</div>
+
+	<div class="row" id="ask_to_login" style="display: none;">
+		You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
+	</div>
+
+
+
+	<hr>
+
+	<div  id="comment_section" style="display:none">
+		<div class="row" >
+			<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,
+													'thread_choices' => $thread_choices,
+													'thread_id' => $model['thread_id']]) ?>
+			<br><br>
+		</div>
+		<hr>
+	</div>
+
+	<div class="row">
+		<?= // Ajax Tabs Above
+			TabsX::widget([
+				'items'=>$content_comment,
+				'position'=>TabsX::POS_ABOVE,
+				'encodeLabels'=>false
+			])
+			?>
+	</div>
+
+
 </div>
 
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
