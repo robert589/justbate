@@ -1,22 +1,15 @@
 <?php
 namespace backend\controllers;
 
-use backend\models\BanThreadForm;
-use backend\models\EditChoiceThreadCommentForm;
-use backend\models\EditCommentForm;
-use common\models\ChildComment;
-use common\models\Choice;
+use backend\models\BanIssueForm;
+use backend\models\CreateIssueForm;
+use backend\models\EditIssueForm;
+use yii\data\ArrayDataProvider;
 use backend\models\EditChoiceForm;
-use backend\models\EditThreadForm;
-use common\models\ThreadComment;
 use Yii;
-use yii\base\Model;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use common\models\LoginForm;
-use yii\filters\VerbFilter;
-use common\models\Thread;
+use common\models\Issue;
 /**
  * Thread controller
  */
@@ -33,7 +26,7 @@ class IssueController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create','list', 'request'],
+                        'actions' => ['create','list', 'request', 'edit', 'banned'],
                         'allow' => true,
                         'roles' => ['@']
                     ],
@@ -54,5 +47,68 @@ class IssueController extends Controller
         ];
     }
 
+    public function actionBanned(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
 
+            $ban_issue_form = new BanIssueForm();
+            $ban_issue_form->issue_id = $id;
+
+            if ($ban_issue_form->validate() && $ban_issue_form->ban()) {
+                return $this->redirect(Yii::$app->request->baseUrl . '/issue/list');
+            }
+            //return $this->redirect(Yii::$app->request->baseUrl. '/site/error');
+        }
+
+    }
+
+    public function actionEdit(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+
+            $issue = Issue::find()->where(['issue_id' => $id])->one();
+
+            $edit_issue_form = new EditIssueForm();
+            $edit_issue_form->issue_id = $id;
+            if($edit_issue_form->load(Yii::$app->request->post()) && $edit_issue_form->validate()){
+                if($edit_issue_form->update()){
+                    return $this->redirect(Yii::$app->request->baseUrl . '/issue/list');
+                }
+            }
+            return $this->render('edit', ['issue' => $issue, 'edit_issue_form' => $edit_issue_form]);
+        }
+    }
+
+    public function actionList(){
+        $issue_list = Issue::find()->all();
+
+        $issue_provider = new ArrayDataProvider([
+            'allModels' => $issue_list,
+            'pagination' => [
+                'pageSize' => 30
+            ]
+        ]);
+
+        return $this->render('list', ['issue_provider' => $issue_provider]);
+
+
+    }
+
+    public function actionCreate(){
+        $create_issue_form = new CreateIssueForm();
+
+        if($create_issue_form->load(Yii::$app->request->post()) && $create_issue_form->validate()){
+            if($create_issue_form->create()){
+                return $this->render('create', ['create_issue_form' => new CreateIssueForm()]);
+            }
+        }
+
+        return $this->render('create', ['create_issue_form' => new CreateIssueForm()]);
+
+
+    }
+
+    public function actionRequest(){
+        return $this->render('request');
+    }
 }

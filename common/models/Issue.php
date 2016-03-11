@@ -10,6 +10,10 @@ class Issue extends ActiveRecord{
     const DESCRIPTION = "issue_description";
     const TABLE_NAME = "issue";
 
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
+    const STATUS_BANNED = 11;
+
 	public static function tableName()
     {
         return self::TABLE_NAME;

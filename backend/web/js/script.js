@@ -13,4 +13,17 @@ $(document).ready(function(){
         });
         return false;
     })
-})
+
+    //banned issue button
+    $(".banned_issue_button").click(function(e){
+        e.preventDefault();
+        var id = $(this).data('service')       ;
+        krajeeDialog.confirm("Are you sure you want to ban issue =" + id + " ?", function (result) {
+            if (result) {
+                return window.location.href = window.location.href + '/../../issue/banned?id=' + id;
+            }
+
+
+        });
+        return false;
+    })})
