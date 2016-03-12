@@ -25,57 +25,57 @@ else{
 }
 ?>
 
-<br>
 <article>
-    <div class="box col-md-12" align="left" >
-        <div class="row">
-            <div class="col-md-6 name_link">
+    <div class="col-xs-12">
+        <div class="row" id="commentator-name">
+            <div class="col-xs-12">
                 <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), "#" )?>
             </div>
         </div>
 
         <div class="row">
-            <?= Html::encode($model['comment'])?>
+            <div class="col-xs-12" id="commentator-comment">
+                <?= Html::encode($model['comment'])?>
+            </div>
         </div>
 
         <div class="row">
-            <!-- Vote -->
-            <div class="col-md-3">
+            <div class="col-xs-12" id="commentator-moderate">
                 <?= $this->render('_comment_votes', ['comment_id' => $comment_id, 'total_like' => $total_like,
-                    'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
+                'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
             </div>
         </div>
-        <hr>
     </div>
+</div>
 </article>
 
 
 <?php
 $script =<<< JS
 function beginLoginModal(){
-		$("#loginModal").modal("show")
-			.find('#loginModal')
-			.load($(this).attr("value"));
+    $("#loginModal").modal("show")
+    .find('#loginModal')
+    .load($(this).attr("value"));
 }
 // Button voteup child when clicked
 $( document ).on( 'click', "#btnVoteUp-child-$comment_id", function () {
     // Do click stuff here
-	$("#vote_result_child_$comment_id").val(1);
-	if($guest){
-		beginLoginModal();
-		return false;
-	}
-	$("#submitvote-form-child-$comment_id").submit();
+    $("#vote_result_child_$comment_id").val(1);
+    if($guest){
+        beginLoginModal();
+        return false;
+    }
+    $("#submitvote-form-child-$comment_id").submit();
 })
 //Button votedown when clicked
 .on( 'click', "#btnVoteDown-child-$comment_id", function () {
     // Do click stuff here
-	$("#vote_result_child_$comment_id").val(-1);
-	if($guest){
-		beginLoginModal();
-		return false;
-	}
-	$("#submitvote-form-child-$comment_id"	).submit();
+    $("#vote_result_child_$comment_id").val(-1);
+    if($guest){
+        beginLoginModal();
+        return false;
+    }
+    $("#submitvote-form-child-$comment_id"	).submit();
 })
 JS;
 $this->registerJs($script);

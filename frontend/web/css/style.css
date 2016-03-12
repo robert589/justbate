@@ -237,11 +237,6 @@ div.tab-content {
     padding: 15px;
 }
 
-div.tab-content div.row div.col-xs-6 {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-}
-
 
 li#search-box:hover {
     background: none !important;
@@ -303,10 +298,6 @@ ul.dropdown-menu div.kv-spin-center {
         width: 100%;
         margin: 0;
         padding: 0;
-    }
-
-    div#comment-tab div.tabs-above ul.nav-tabs li {
-        width: 33.333% !important;
     }
 
     div#action-button-thing button {
@@ -516,6 +507,7 @@ div#first-part {
 div#title-part {
     color: white;
     padding: 15px;
+    display: none;
     text-align: center;
     background: #074676;
     margin-bottom: 15px;
@@ -527,10 +519,6 @@ div#thread-title {
     text-align: center !important;
     font-weight: bold;
     font-size: 16pt;
-}
-
-div#title-part {
-    display: none;
 }
 
 div#edit_part {
@@ -553,6 +541,10 @@ div#first-part div.tabs-above li {
 
 div#first-part div.tabs-above li.active {
     background: #0E5A94;
+}
+
+div#first-part div.tabs-above div.tab-content div#post-description p {
+    margin-left: 0 !important;
 }
 
 div#first-part div.col-xs-12:first-child {
@@ -601,5 +593,44 @@ div#action-button-thing button {
 div#comment-tab div.tabs-above ul.nav-tabs {
     padding-left: 15px;
     padding-right: 15px;
+    border-bottom: 0;
 }
 
+div#comment-tab div.tabs-above ul.nav-tabs li {
+    width: 33.333% !important;
+    border-bottom: 1px solid #ddd;
+}
+
+div#commentator-action div#commentator-comment {
+    float: left;
+}
+
+div#commentator-action div#commentator-moderate {
+    float: left;
+
+}
+
+div#button-vote-up,
+div#button-vote-down {
+    padding: 0;
+}
+
+div#button-vote-up button,
+div#button-vote-down button {
+    border-radius: 0;
+}
+
+div#comment-tab div.tabs-above div.tab-content div.row {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+div.list-view {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+div.list-view div.item {
+    padding: 0 !important;
+    margin: 0 !important;
+}

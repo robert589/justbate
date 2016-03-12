@@ -20,31 +20,22 @@ use common\models\CommentVote;
 <div class="col-md-4" align="left" style="padding: 0px">
     <?php if(!isset($retrieved)){ ?>
         <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
-            'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
+            'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]])
+        ?>
 
         <div align="left">
-
             <?= Html::hiddenInput('comment_id', $comment_id) ?>
-
             <?= Html::submitButton('Comment', ['class' => 'btn btn-default']) ?>
         </div>
+
         <?php ActiveForm::end() ?>
 
-    <?php }else{ ?>
+    <?php } else { ?>
         <div align="left">
             <?= Html::button('Hide', ['class' => 'btn btn-default', 'id' => 'hide_button_' . $comment_id ]) ?>
         </div>
     <?php } ?>
-
 </div>
-
-<div class="col-md-4">
-
-</div>
-
-
-
-
 
 <?php if(isset($retrieved)){ ?>
 
@@ -54,16 +45,14 @@ use common\models\CommentVote;
                                                        'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
 
             <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
-
             <?= Html::hiddenInput('parent_id' , $comment_id) ?>
-
             <?= $form->field($child_comment_form, 'child_comment')->textarea(['id' => 'child_comment_text_area_' . $comment_id,
                                                                             'rows' => 1, 'placeholder' => 'add comment box..' ])
                                                                                 ->label(false)?>
 
         <?php ActiveForm::end() ?>
     </div>
-    <div class="col-md-12">
+    <div class="col-xs-12">
         <?= ListView::widget([
             'id' => 'threadList',
             'dataProvider' => $child_comment_provider,
@@ -77,7 +66,6 @@ use common\models\CommentVote;
             }
 
         ]) ?>
-
     </div>
 </div>
 

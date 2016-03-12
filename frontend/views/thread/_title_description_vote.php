@@ -7,7 +7,7 @@
     $itemsHeader = [
         [
             'label' => 'Description',
-            'content' => "<div style='font-size: 15px' align='left'>" . HtmlPurifier::process($description) . "</div>",
+            'content' => "<div id='post-description'>" . HtmlPurifier::process($description) . "</div>",
             'active' => isset($vote_tab_active) ? false: true,
         ],
         [
@@ -54,9 +54,6 @@
         </div>
 
         <div class="col-xs-12- col-md-6" id="edit_part">
-            <div class="col-xs-12">
-                <h3>Moderate Your Post</h3>
-            </div> <!-- div.col-xs-12 -->
             <div class="col-xs-12">
                 <?php
                 $form = ActiveForm::begin([

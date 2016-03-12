@@ -12,9 +12,9 @@
     <h3>Give your comment</h3>
 </div>
 
-<div class="col-md-12">
+<div class="col-xs-12">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
 
             <?= $form->field($commentModel, 'comment')->widget(\yii\redactor\widgets\Redactor::className(),
                 [
