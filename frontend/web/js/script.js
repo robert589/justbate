@@ -80,20 +80,20 @@
 
     });
 
-    $('#display_hide_comment').click(function(){
-        if($guest){
+    $('#display_hide_comment_input_box').click(function(){
+        if($(this).data('guest') == 0){
             beginLoginModal();
             return false;
             $("#ask_to_login").show();
         }
         else{
-            if($("#display_hide_comment").text() == "Comment"){
+            if($(this).html() == "<span class=\"glyphicon glyphicon-comment\"></span>"){
                 $("#comment_section").show();
-                $("#display_hide_comment").text("Hide");
+                $("#display_hide_comment_input_box").html("<span class=\"glyphicon glyphicon-menu-up\"></span>");
             }
             else{
                 $("#comment_section").hide();
-                $("#display_hide_comment").text("Comment");
+                $("#display_hide_comment_input_box").html("<span class=\"glyphicon glyphicon-comment\"></span>");
             }
         }
 
@@ -107,19 +107,18 @@
             return false;
         }
     })
-
     .focus(function() {
 
         if (this.value == "Add comment here...") {
             this.value = "";
         }
     })
-    .blue(function(){
+    .blur(function(){
 
         if(this.value==""){
             this.value = "Add comment here...";
         }
-    })
+    });
 
     $(".hide_comment") .click(function(){
         var comment_id = $(this).data('service');

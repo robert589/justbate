@@ -45,7 +45,6 @@ class ThreadController extends Controller
 			//thread data
 			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
 
-
 			$commentModel = new CommentForm();
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
@@ -55,14 +54,19 @@ class ThreadController extends Controller
 
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
-			return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
-										,'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel,
-											'comment_providers' => $comment_providers]);
 
+			if($thread['thread_status'] != Thread::STATUS_BANNED){
+				return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
+					,'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel,
+					'comment_providers' => $comment_providers]);
+			}
+			else{
+				return $this->render('banned');
+			}
 		}
 
 
-		return $this->render('index');
+		return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 	}
 
 
@@ -80,8 +84,19 @@ class ThreadController extends Controller
 
 			$child_comment_form = new ChildCommentForm();
 
-			$this->renderAjax('_child_comment', ['child_comment_provider' => $child_comment_provider, 'comment_id' => $comment_id,
-												'retrieved' => true, 'child_comment_form' => $child_comment_form]);
+			$whose_comment = Comment::findOne(['comment_id' => $comment_id]);
+			if(\Yii::$app->getUser()->id == $whose_comment->user_id){
+				$belongs = 1;
+			}
+			else{
+				$belongs = 0;
+			}
+
+			$this->renderAjax('_child_comment', ['child_comment_provider' => $child_comment_provider,
+												'comment_id' => $comment_id,
+												'belongs' => $belongs,
+												'retrieved' => true,
+												'child_comment_form' => $child_comment_form]);
 		}
 		else{
 			Yii::$app->end('comment_id not poster');

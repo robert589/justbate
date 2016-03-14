@@ -10,6 +10,8 @@
 	/** @var $comment_providers \yii\data\ArrayDataProvider */
 	/** @var $thread_choices array */
 	/** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
+
+
 	$this->title =  $model['title'];
 
 	//Store this variable for javascript
@@ -70,6 +72,7 @@
 
 <div class="col-xs-12 col-md-8" style="background-color: white">
 	<div class="col-xs-12" id="thread-title">
+
 		<?= $model['title'] ?>
 	</div>
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
@@ -88,8 +91,8 @@
 				<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
 				<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
 			<?php } ?>
-			<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment', 'class' => 'btn']) ?></div>
-			<div id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn']) ?></div>
+			<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?></div>
+			<div id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn','data-guest' => $guest]) ?></div>
 		</div>
 	</div>
 
