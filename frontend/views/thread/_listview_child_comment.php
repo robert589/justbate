@@ -50,33 +50,3 @@ else{
 </article>
 
 
-<?php
-$script =<<< JS
-function beginLoginModal(){
-    $("#loginModal").modal("show")
-    .find('#loginModal')
-    .load($(this).attr("value"));
-}
-// Button voteup child when clicked
-$( document ).on( 'click', "#btnVoteUp-child-$comment_id", function () {
-    // Do click stuff here
-    $("#vote_result_child_$comment_id").val(1);
-    if($guest){
-        beginLoginModal();
-        return false;
-    }
-    $("#submitvote-form-child-$comment_id").submit();
-})
-//Button votedown when clicked
-.on( 'click', "#btnVoteDown-child-$comment_id", function () {
-    // Do click stuff here
-    $("#vote_result_child_$comment_id").val(-1);
-    if($guest){
-        beginLoginModal();
-        return false;
-    }
-    $("#submitvote-form-child-$comment_id"	).submit();
-})
-JS;
-$this->registerJs($script);
-?>

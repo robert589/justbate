@@ -32,7 +32,7 @@ use common\models\CommentVote;
 
     <?php } else { ?>
         <div align="left">
-            <?= Html::button('Hide', ['class' => 'btn btn-default', 'id' => 'hide_button_' . $comment_id ]) ?>
+            <?= Html::button('Hide', ['class' => 'btn btn-default hide_comment', 'data-service' =>  $comment_id ]) ?>
         </div>
     <?php } ?>
 </div>
@@ -46,7 +46,8 @@ use common\models\CommentVote;
 
             <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
             <?= Html::hiddenInput('parent_id' , $comment_id) ?>
-            <?= $form->field($child_comment_form, 'child_comment')->textarea(['id' => 'child_comment_text_area_' . $comment_id,
+            <?= $form->field($child_comment_form, 'child_comment')->textarea(['class' => 'child_comment_text_area',
+                                                                            'data-service' => $comment_id,
                                                                             'rows' => 1, 'placeholder' => 'add comment box..' ])
                                                                                 ->label(false)?>
 
@@ -77,31 +78,3 @@ use common\models\CommentVote;
 
 
 
-<?php
-$script =<<< JS
-    $(document).on('keydown', "#child_comment_text_area_$comment_id", function(event){
-        if(event.keyCode == 13){
-            $("#child_comment_form_$comment_id").submit();
-            return false;
-        }
-    }).on('focus','#child_comment_text_area_$comment_id', function(){
-         if(this.value == "Add comment here..."){
-             this.value = "";
-        }
-    }).on('blur','#child_comment_text_area_$comment_id', function(){
-        if(this.value==""){
-            this.value = "Add comment here...";
-        }
-    }).on('click','#hide_button_$comment_id'  ,function(){
-        if($("#hide_button_$comment_id").text() == "Hide"){
-            $("#comment_part_$comment_id").hide();
-            $("#hide_button_$comment_id").text("Show");
-        }
-        else{
-            $("#comment_part_$comment_id").show();
-            $("#hide_button_$comment_id").text("Hide");
-        }
-    });
-JS;
-$this->registerJs($script);
-?>

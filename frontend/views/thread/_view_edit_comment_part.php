@@ -36,7 +36,7 @@
 
                 <div align="right" class="row">
                     <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
-                    <?= Html::button('Cancel', ['class' => 'btn btn-danger', 'id' => 'cancel_edit_comment_' . $comment_id]) ?>
+                    <?= Html::button('Cancel', ['class' => 'btn btn-danger cancel_edit_comment', 'data-service' => $comment_id]) ?>
                 </div>
             <?php ActiveForm::end(); ?>
 
@@ -46,22 +46,4 @@
 
 
 
-<?php
-//Inline script, not really good
-$script =<<< JS
-	$(document).on('click', '#edit_comment_$comment_id', function(){
-		$("#comment_shown_part_$comment_id").hide();
-		$("#comment_edit_part_$comment_id").show();
-
-	});
-	$(document).on('click', '#cancel_edit_comment_$comment_id',function(){
-		$("#comment_shown_part_$comment_id").show();
-		$("#comment_edit_part_$comment_id").hide();
-
-	});
-JS;
-
-$this->registerJs($script);
-
-?>
 

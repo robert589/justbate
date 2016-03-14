@@ -40,7 +40,7 @@ $comment_id = $model['comment_id'];
 				?>
 
 				<?php if($belongs){ ?>
-					<?= Html::button('Edit', ['class' => 'btn btn-primary', 'id' => 'edit_comment_' . $comment_id]) ?>
+					<?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
 
 					<?= Html::button('Delete', ['class' => 'btn btn-danger', 'id' => 'delete_comment_' . $comment_id]) ?>
 					<?php } ?>
@@ -53,5 +53,5 @@ $comment_id = $model['comment_id'];
 				</div>
 			</div>
 		</div>
-	</article>
-	<hr>
+</article>
+<hr>

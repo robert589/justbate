@@ -4,3 +4,6 @@ function getNotification() {
         $("#notification-form").submit();
     }
 }
+
+
+
