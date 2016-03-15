@@ -88,31 +88,32 @@ $item = [
 <!-- Page Content -->
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
 <div class="container">
-	<div class="row">
-
-		<div class="col-xs-6 col-md-2">
-			<img class="img-rounded" src="<?= Yii::getAlias('@image_dir') . '/' . $user->photo_path ?>" alt="Profile Picture" style="width:148px;height:148px;" id="avatar">
-			<?= Html::button('Upload Photo', ['onclick' => 'beginProfilePicModal()', 'class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
-		</div>
-
-		<div class="col-xs-12 col-md-4">
-			<div id="displayName">
-				<?= $user->first_name ?> <?= $user->last_name ?>
-				<div align="right">
-					<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
-				</div>
+	<div class="col-md-offset-3" style="background-color: white; padding: 20px">
+		<div class="row">
+			<br>
+			<div class="col-xs-6 col-md-3">
+				<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>" alt="Profile Picture" style="width:148px;height:148px;" id="avatar">
+				<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 			</div>
-			<hr>
-			<table id="bio-table" class="table table-responsive">
-				<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
-				<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
-			</table>
-		</div>
-	</div>
 
-	<br>
-	<div class="container">
-		<div class=" col-xs-12 col-md-6" style="float: left;">
+			<div class="col-xs-12 col-md-4">
+				<div id="displayName">
+					<?= $user->first_name ?> <?= $user->last_name ?>
+					<div align="right">
+						<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
+					</div>
+				</div>
+				<hr>
+				<table id="bio-table" class="table table-responsive">
+					<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
+					<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
+				</table>
+			</div>
+		</div>
+
+		<br>
+		<div class="container">
+			<div class=" col-xs-12 col-md-6" style="float: left;">
 				<?=
 				TabsX::widget([
 					'items'=>$item,
@@ -124,6 +125,5 @@ $item = [
 		</div>
 	</div>
 
-<div class="col-xs-12">
-	<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/frontend/web/js/profile-index.js'); ?>
 </div>
+

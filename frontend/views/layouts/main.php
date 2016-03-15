@@ -24,7 +24,7 @@ if(Yii::$app->user->isGuest){
 }
 else{
     $logout_link = Yii::$app->request->baseUrl . '/site/logout';
-    $profile_link = Yii::$app->request->baseUrl . '/profile/index?username=' . User::getUsername(Yii::$app->getUser()->id);
+    $profile_link = Yii::$app->request->baseUrl . '/user/' . User::getUsername(Yii::$app->getUser()->id);
 }
 
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
@@ -81,7 +81,7 @@ AppAsset::register($this);
                                 'language' => [
                                     'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
                                 ],
-                                'ajax' => [
+                                    'ajax' => [
                                     'url' => \yii\helpers\Url::to(['site/search-in-notif']),
                                     'dataType' => 'json',
                                     'data' => new JsExpression('function(params) { return {q:params.term}; }')

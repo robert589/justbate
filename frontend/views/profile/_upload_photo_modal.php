@@ -1,11 +1,9 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+/** @var $model \frontend\models\UploadProfilePicForm */
 ?>
-
-
-
-<?php $form = ActiveForm::begin(['action' => 'upload', 'options' => ['enctype' => 'multipart/form-data']]) ?>
+<?php $form = ActiveForm::begin(['action' => ['profile/upload'],'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]) ?>
 
     <?= $form->field($model, 'imageFile')->widget(\bupy7\cropbox\Cropbox::className(),[
         'attributeCropInfo' => 'crop_info'

@@ -27,6 +27,11 @@
         $("img#avatar").css("opacity","1");
         $("button#upload-image").css("opacity","0");
     });
+    $("#upload-image").click(function(){
+        $("#uploadProfilePicModal").modal("show")
+            .find('#uploadProfilePicModal')
+            .load($(this).attr("value"));
+    });
     //menu bar
     $("#loginMenu").click(function(){
         $("#loginModal").modal("show")

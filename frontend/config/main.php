@@ -43,7 +43,7 @@ return [
                     'login' => 'site/login',
                     'signup' => 'site/signup',
                     'thread/<id:\d+>' => 'thread/index',
-                    'profile/<username:\w+>' => 'profile/index',
+                    'user/<username:\w+>' => 'profile/index',
 
 
                 ]

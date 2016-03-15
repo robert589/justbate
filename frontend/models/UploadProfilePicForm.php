@@ -62,6 +62,7 @@ class UploadProfilePicForm extends Model
             $newSizeThumb = new Box($crop_info['dWidth'], $crop_info['dHeight']);
             $cropSizeThumb = new Box(200, 200); //frame size of crop
             $cropPointThumb = new Point($crop_info['x'], $crop_info['y']);
+            //profile save
             $pathThumbImage = Yii::getAlias('@image_dir_local')
                 . '/' . $dir . '/' . $file_name;
 
@@ -97,7 +98,7 @@ class UploadProfilePicForm extends Model
     }
 
     private function checkDirectoryAvailability($dir_name){
-        $dir_path = Yii::getAlias('@image_dir') . '/' . $dir_name;
+        $dir_path = Yii::getAlias('@image_dir_local') . '/' . $dir_name;
 
         $fi = glob($dir_path);
 
@@ -112,7 +113,7 @@ class UploadProfilePicForm extends Model
     }
     private function createNewDirectory($new_dir){
         if($this->saveNewDirectory($new_dir) != false){
-            return mkdir(Yii::getAlias('@image_dir') . '/' . $new_dir);
+            return mkdir(Yii::getAlias('@image_dir_local') . '/' . $new_dir);
 
         }
         else{
@@ -146,13 +147,17 @@ class UploadProfilePicForm extends Model
 
     private function updateToUserProfile($total_path){
 
-        $user = User::findOne(['id' => \Yii::$app->user->getId()]);
-        $user->photo_path = $total_path;
-        if($user->update()){
-            return true;
+        $user = User::findOne(\Yii::$app->user->getId());
+        if($user->photo_path != $total_path){
+            $user->photo_path = $total_path;
+            if($user->update()){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        else{
-            return false;
-        }
+        return true;
+
     }
 }
