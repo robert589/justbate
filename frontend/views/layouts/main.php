@@ -107,34 +107,33 @@ AppAsset::register($this);
                                     <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
                                 </ul>
                             </li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+                        <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-            <?php
-            Modal::begin([
-                'id' => 'loginModal'
-            ]);
-            $redirect_from = $_SERVER['REQUEST_URI'];
-            $login_form = new \common\models\LoginForm();
-            echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
-            Modal::end();
-            ?>
+    <?php
+    Modal::begin([
+        'id' => 'loginModal'
+    ]);
+        $redirect_from = $_SERVER['REQUEST_URI'];
+        $login_form = new \common\models\LoginForm();
+        echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
+    Modal::end();
+    ?>
 
-<div class="container" style="margin-top: 73px;">
-    <?= Breadcrumbs::widget([
-        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    <div class="container" style="margin-top: 73px;">
+        <?= Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
-</div>
+    </div>
 
 <?php
-$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
-
-$this->endBody();
+    $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+    $this->endBody();
 ?>
 </html>
 <?php $this->endPage() ?>

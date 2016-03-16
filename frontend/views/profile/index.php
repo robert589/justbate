@@ -88,14 +88,13 @@ $item = [
 <!-- Page Content -->
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
 <div class="container">
-	<div class="col-md-offset-3" style="background-color: white; padding: 20px">
+	<div class="col-md-8" style="background-color: white;">
 		<div class="row">
 			<br>
 			<div class="col-xs-6 col-md-3">
 				<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>" alt="Profile Picture" style="width:148px;height:148px;" id="avatar">
 				<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 			</div>
-
 			<div class="col-xs-12 col-md-4">
 				<div id="displayName">
 					<?= $user->first_name ?> <?= $user->last_name ?>
@@ -110,20 +109,30 @@ $item = [
 				</table>
 			</div>
 		</div>
-
-		<br>
-		<div class="container">
+		<hr>
+		<div class="row" style="min-height: 350px">
+			<div class="col-md-3">
+				<ul class="sidebar-nav" style="width: 150px;border-right-style:solid; border-right-width: 1px">
+					<div style="margin-left: 40px">
+						<label><u>Feeds</u></label>
+					</div>
+					<li>
+						<a href="#">Thread Starters</a>
+					</li>
+					<li>
+						<a href="#">Answers</a>
+					</li>
+					<li>
+						<a href="#">Followers <span class="badge">5</span></a>
+					</li>
+					<li>
+						<a href="#">Following <span class="badge">5</span></a>
+					</li>
+				</ul>
+			</div>
 			<div class=" col-xs-12 col-md-6" style="float: left;">
-				<?=
-				TabsX::widget([
-					'items'=>$item,
-					'position'=>TabsX::POS_ABOVE,
-					'encodeLabels'=>false
-				])
-				?>
+
 			</div>
 		</div>
 	</div>
-
 </div>
-
