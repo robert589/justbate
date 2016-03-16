@@ -18,7 +18,7 @@ $comment_id = $model['comment_id'];
 	<div class="col-xs-12" id="commentator-name">
 		<!--First TOP -->
 		<!--The name of the person that make the comments -->
-		<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/profile/" . $model['username'],
+		<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'],
 		['data-pjax' => 0])?>
 	</div>
 

@@ -72,8 +72,7 @@
 
 <div class="col-xs-12 col-md-8" style="background-color: white">
 	<div class="col-xs-12" id="thread-title">
-
-		<?= $model['title'] ?>
+		<?= Html::encode($model['title']) ?>
 	</div>
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
 		<div id="thread-details" class="col-xs-12">
@@ -110,12 +109,12 @@
 
 	<div class="row">
 		<div id="comment-tab">
-		<?= // Ajax Tabs Above
-			TabsX::widget([
-				'items'=>$content_comment,
-				'position'=>TabsX::POS_ABOVE,
-				'encodeLabels'=>false
-			])
+			<?= // Ajax Tabs Above
+				TabsX::widget([
+					'items'=>$content_comment,
+					'position'=>TabsX::POS_ABOVE,
+					'encodeLabels'=>false
+				])
 			?>
 		</div>
 	</div>

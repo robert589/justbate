@@ -29,7 +29,7 @@ else{
     <div class="col-xs-12">
         <div class="row" id="commentator-name">
             <div class="col-xs-12">
-                <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), "#" )?>
+                <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), Yii::$app->request->baseUrl . "/user/" . $model['username'] )?>
             </div>
         </div>
 
