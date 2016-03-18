@@ -44,17 +44,13 @@ class ThreadController extends Controller
 			$thread_id = $_GET['id'];
 			//thread data
 			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
-
 			$commentModel = new CommentForm();
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-
 			//get all comment providers
 			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
-
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
-
 			if($thread['thread_status'] != Thread::STATUS_BANNED){
 				return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
 					,'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel,
@@ -98,6 +94,7 @@ class ThreadController extends Controller
 												'retrieved' => true,
 												'child_comment_form' => $child_comment_form]);
 		}
+
 		else{
 			Yii::$app->end('comment_id not poster');
 		}

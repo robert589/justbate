@@ -4,18 +4,13 @@
 /* @var $content string */
 use kartik\select2\Select2;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use yii\widgets\ActiveForm;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\bootstrap\Modal;
-use yii\helpers\ArrayHelper;
 use common\models\User;
-use yii\widgets\Pjax;
-use yii\widgets\ListView;
 use yii\web\JsExpression;
+
 //all links
 if(Yii::$app->user->isGuest){
     //all links

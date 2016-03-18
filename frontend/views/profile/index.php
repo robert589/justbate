@@ -1,19 +1,27 @@
 <?php
 
 /* @var $this yii\web\View */
+/** @var $user \yii\base\Object */
+/** @var $type string */
+/** @var $model_provider \yii\data\ArrayDataProvider */
+/** @var $num_followings integer */
+/** @var $num_followers integer */
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
-use kartik\select2\Select2;
-use kartik\tabs\TabsX;
-use yii\data\ArrayDataProvider;
-use yii\widgets\ActiveForm;
-use yii\helpers\Url;
+use frontend\controllers\ProfileController;
 use yii\bootstrap\Modal;
 use common\models\User;
 
 //Set title for the page
 $this->title = $user->first_name . ' ' . $user->last_name;
+
+//link variable
+$thread_starter_link =  Yii::$app->request->baseUrl . '/user/' . $user->username . '/starters';
+$comment_link =  Yii::$app->request->baseUrl . '/user/' . $user->username . '/comments';
+$follower_link =  Yii::$app->request->baseUrl . '/user/' . $user->username . '/followers';
+$followee_link =  Yii::$app->request->baseUrl . '/user/' . $user->username . '/followees';
+
 ?>
 
 <!-- Edit Profile Modal-->
@@ -35,45 +43,6 @@ $this->title = $user->first_name . ' ' . $user->last_name;
     Modal::end();
 ?>
 
-<?php
-$item = [
-	[
-		'label' => 'Main Activity',
-		'content' => '',
-		'active' => false,
-	],
-
-	[
-		'label' => 'Following',
-		'content' => ListView::widget([
-			'dataProvider' => $followings_provider,
-			'summary' => false,
-			'itemOptions' => ['class' => 'item'],
-			'layout' => "{summary}\n{items}\n{pager}",
-			'itemView' => function ($model, $key, $index, $widget) {
-				return $this->render('_list_follower', ['model' => $model]);
-			}
-			// $this->render('_list_following', ['first-name' => $model[first_name], 'last-name' => $model[last_name]])
-		]),
-		'active' => true,
-	],
-
-	[
-		'label' => 'Follower',
-		'content' => ListView::widget([
-			'dataProvider' => $followers_provider,
-			'summary' => false,
-			'itemOptions' => ['class' => 'item'],
-			'layout' => "{summary}\n{items}\n{pager}",
-			'itemView' => function ($model, $key, $index, $widget) {
-				return $this->render('_list_follower', ['model' => $model]);
-			}
-			// $this->render('_list_following', ['model' => $model, 'first-name' => $model[first_name], 'last-name' => $model[last_name]])
-		]),
-		'active' => false,
-	]
-];
-?>
 
 <!-- Upload photo modal -->
 <?php
@@ -92,7 +61,10 @@ $item = [
 		<div class="row">
 			<br>
 			<div class="col-xs-6 col-md-3">
-				<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>" alt="Profile Picture" style="width:148px;height:148px;" id="avatar">
+				<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>"
+					 alt="Profile Picture"
+					 style="width:148px;height:148px;"
+					 id="avatar">
 				<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 			</div>
 			<div class="col-xs-12 col-md-4">
@@ -117,21 +89,84 @@ $item = [
 						<label><u>Feeds</u></label>
 					</div>
 					<li>
-						<a href="#">Thread Starters</a>
+						<a href="<?= $comment_link ?>">Comments</a>
 					</li>
 					<li>
-						<a href="#">Answers</a>
+						<a href="<?= $thread_starter_link ?>">Thread Starters</a>
 					</li>
 					<li>
-						<a href="#">Followers <span class="badge">5</span></a>
+						<a href="<?= $follower_link?>">Followers <span class="badge"><?= $num_followers ?></span></a>
 					</li>
 					<li>
-						<a href="#">Following <span class="badge">5</span></a>
+						<a href="<?= $followee_link ?>">Following <span class="badge"><?= $num_followings ?></span></a>
 					</li>
 				</ul>
 			</div>
 			<div class=" col-xs-12 col-md-6" style="float: left;">
+				<?php if($type == ProfileController::THREAD_STARTERS){ ?>
+					<h3>Thread Starters</h3>
+					<hr>
+					<?= ListView::widget([
+						'id' => 'thread_starter_list_view',
+						'dataProvider' => $model_provider,
+						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+						'summary' => false,
+						'itemOptions' => ['class' => 'item'],
+						'layout' => "{summary}\n{items}\n{pager}",
+						'itemView' => function ($model, $key, $index, $widget) {
+							return $this->render('_list_starters',['model' => $model]);
+						}
+					])
+					?>
+				<?php }else if($type == ProfileController::COMMENTS){ ?>
+					<h3>Comments</h3>
+					<hr>
+					<?= ListView::widget([
+						'id' => 'thread_starter_list_view',
+						'dataProvider' => $model_provider,
+						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+						'summary' => false,
+						'itemOptions' => ['class' => 'item'],
+						'layout' => "{summary}\n{items}\n{pager}",
+						'itemView' => function ($model, $key, $index, $widget) {
+							return $this->render('_list_comments',['model' => $model]);
+						}
+					])
+					?>
 
+				<?php }else if($type == ProfileController::FOLLOWERS){ ?>
+					<h3>Followers</h3>
+					<hr>
+					<?= ListView::widget([
+						'id' => 'thread_starter_list_view',
+						'dataProvider' => $model_provider,
+						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+						'summary' => false,
+						'itemOptions' => ['class' => 'item'],
+						'layout' => "{summary}\n{items}\n{pager}",
+						'itemView' => function ($model, $key, $index, $widget) {
+							return $this->render('_list_follower',['model' => $model]);
+						}
+					])
+					?>
+
+				<?php } else if($type == ProfileController::FOLLOWEES ){ ?>
+					<h3>Followees</h3>
+					<hr>
+					<?= ListView::widget([
+						'id' => 'thread_starter_list_view',
+						'dataProvider' => $model_provider,
+						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+						'summary' => false,
+						'itemOptions' => ['class' => 'item'],
+						'layout' => "{summary}\n{items}\n{pager}",
+						'itemView' => function ($model, $key, $index, $widget) {
+							return $this->render('_list_follower',['model' => $model]);
+						}
+					])
+					?>
+
+				<?php } ?>
 			</div>
 		</div>
 	</div>

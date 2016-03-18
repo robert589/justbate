@@ -44,8 +44,10 @@ return [
                     'signup' => 'site/signup',
                     'thread/<id:\d+>' => 'thread/index',
                     'user/<username:\w+>' => 'profile/index',
-
-
+                    [
+                        'pattern' => 'user/<username:\w+>/<attr:\w+>',
+                        'route' => 'profile/index'
+                    ],
                 ]
         ],
         'user' => [

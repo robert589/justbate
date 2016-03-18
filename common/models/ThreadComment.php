@@ -25,6 +25,14 @@ class ThreadComment extends ActiveRecord
 
     }
 
+    public static function getThreadCommentsByUserId($user_id){
+        $sql = "SELECT *
+                from thread_comment, comment, thread
+                where comment.user_id = :user_id and comment.comment_id = thread_comment.comment_id and thread.thread_id  =thread_comment.thread_id";
+
+        return  \Yii::$app->db->createCommand($sql)->bindParam(':user_id', $user_id)->queryAll();
+
+    }
 
 
 }

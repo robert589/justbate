@@ -18,8 +18,6 @@
         }
     });
 
-    var tab = $("div#list_thread_comment_part div.tabs-above ul").children().length;
-    alert(tab);
 
     //on profile/index
     $("img#avatar").mouseenter(function() {

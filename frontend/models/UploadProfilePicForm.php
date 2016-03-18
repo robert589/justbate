@@ -148,16 +148,8 @@ class UploadProfilePicForm extends Model
     private function updateToUserProfile($total_path){
 
         $user = User::findOne(\Yii::$app->user->getId());
-        if($user->photo_path != $total_path){
-            $user->photo_path = $total_path;
-            if($user->update()){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
+        $user->photo_path = $total_path;
+        $user->update(false);
         return true;
-
     }
 }

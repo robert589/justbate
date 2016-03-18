@@ -1,0 +1,3 @@
+<?= $model['comment']?>
+
+<hr>
