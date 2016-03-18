@@ -63,7 +63,7 @@ use yii\web\JsExpression;
             ])->label(false) ?>
     </div> <!-- div.col-xs-12 -->
 
-    <div style="vertical-align: middle;" class="col-xs-6">
+    <div class="col-xs-6">
         <?= $form->field($create_thread_form, 'anonymous')->checkbox([]) ?>
     </div> <!-- div.col-xs-6 -->
 

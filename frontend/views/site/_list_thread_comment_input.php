@@ -31,8 +31,7 @@ use yii\helpers\Html;
             <?= Html::hiddenInput('thread_id', $thread_id) ?>
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'width: 100%;'])?>
         </div>
-
-
+        
     </div>
 
 </div>

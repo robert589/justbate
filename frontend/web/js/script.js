@@ -10,6 +10,17 @@
         // DOM style for description and vote
         $("div#action-button-thing").width($("div#first-part").width()/4);
     }
+
+    // on site/home
+    $("button#comment_post").click(function() {
+        if (($("button#comment_post").text()).length == "4") {
+            $("div#list_thread_comment_part").slideDown("fast");
+        }
+    });
+
+    var tab = $("div#list_thread_comment_part div.tabs-above ul").children().length;
+    alert(tab);
+
     //on profile/index
     $("img#avatar").mouseenter(function() {
         $("img#avatar").css("opacity",".5");
@@ -125,7 +136,7 @@
         }
     });
 
-    $(".hide_comment") .click(function(){
+    $(".hide_comment").click(function(){
         var comment_id = $(this).data('service');
 
         if($("#hide_button_" + comment_id).text() == "Hide"){

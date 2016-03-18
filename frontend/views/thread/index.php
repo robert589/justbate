@@ -98,7 +98,7 @@
 	<div class="row" id="ask_to_login" style="display: none;">
 		You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
 	</div>
-	
+
 	<div  id="comment_section" style="display:none">
 		<div class="row" >
 			<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,

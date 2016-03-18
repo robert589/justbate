@@ -41,6 +41,10 @@ ul.dropdown {
     background: none;
 }
 
+span#anonymous-checkbox {
+    vertical-align: middle;
+}
+
 table#left-menu {
     background: white;
     color: black;
@@ -633,4 +637,20 @@ div.list-view {
 div.list-view div.item {
     padding: 0 !important;
     margin: 0 !important;
+}
+
+div#vote-part-home {
+    padding: 0;
+}
+
+div#vote-part-home select {
+    border-radius: 0;
+}
+
+div#vote-part-home select option {
+    padding-left: 15px;
+}
+
+div#list_thread_comment_part {
+    width: 100%;
 }
