@@ -27,7 +27,7 @@
 
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6">
             <?= $form->field($commentModel, 'choice_text')->widget(Select2::classname(), [
                 'data' => $thread_choices,
                 'hideSearch' => true,
@@ -38,7 +38,7 @@
             ])->label(false) ?>
         </div>
 
-        <div align="right" class="col-xs-12">
+        <div align="right" class="col-xs-6">
             <?= Html::hiddenInput('thread_id', $thread_id) ?>
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'width: 100%;'])?>
         </div>

@@ -195,16 +195,7 @@ class ProfileController extends Controller
 				return $this->redirect(Yii::$app->request->baseUrl . '/user/' . User::getUsername(Yii::$app->user->getId()));
 			}
 			else{
-	//			Yii::$app->end("hello a");
-			}
-		}
-		else{
-			if($model->hasErrors()){
-
-//				Yii::$app->end('Error: ' .  print_r($model->getErrors()));
-			}
-			else{
-//				Yii::$app->end('hello');
+				return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 			}
 		}
 

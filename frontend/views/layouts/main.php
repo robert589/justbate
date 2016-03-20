@@ -61,7 +61,7 @@ AppAsset::register($this);
                     <li id="search-box" class="item">
                         <?=  Select2::widget([
                             'name' => 'search_box_menu',
-                            'class' => 'form-input',
+                            'class'  => 'form-input',
                             'id' => 'search_box_menu',
                             'options' => ['placeholder' => 'Search'],
                             'pluginEvents' => [

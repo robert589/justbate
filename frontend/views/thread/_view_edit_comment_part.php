@@ -13,7 +13,8 @@
         'clientOptions'=>[
             'container' => '#edit_comment_' . $comment_id,
         ]
-    ]);?>
+    ]);
+?>
 
         <div id="comment_shown_part_<?= $comment_id ?>">
             <br>

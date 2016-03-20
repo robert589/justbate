@@ -2,6 +2,7 @@
 use kartik\tabs\TabsX;
 use yii\widgets\ListView;
 use yii\helpers\Html;
+/** @var  $comment_providers \yii\data\ArrayDataProvider */
 $content_comment = array();
 
 $first = 1;
@@ -15,9 +16,11 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
         'itemView' => function ($model, $key, $index, $widget) {
             $childCommentForm = new \frontend\models\ChildCommentForm();
             $comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
-            return $this->render('_listview_comment',['model' => $model, 'child_comment_form' => $childCommentForm,
-            'total_like' => $comment_vote_comment['total_like'], 'total_dislike' => $comment_vote_comment['total_dislike'],
-            'vote' => $comment_vote_comment['vote']]);
+            return $this->render('_listview_comment',['model' => $model,
+                                                      'child_comment_form' => $childCommentForm,
+                                                      'total_like' => $comment_vote_comment['total_like'],
+                                                      'total_dislike' => $comment_vote_comment['total_dislike'],
+                                                      'vote' => $comment_vote_comment['vote']]);
         }
     ]);
     if ($first == 1) {
@@ -32,9 +35,9 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 
 <?= // Ajax Tabs Above
-TabsX::widget([
-    'items'=>$content_comment,
-    'position'=>TabsX::POS_ABOVE,
-    'encodeLabels'=>false
+    TabsX::widget([
+        'items'=>$content_comment,
+        'position'=>TabsX::POS_ABOVE,
+        'encodeLabels'=>false
     ])
 ?>

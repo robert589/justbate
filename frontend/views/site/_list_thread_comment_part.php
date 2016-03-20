@@ -14,7 +14,6 @@ Pjax::begin([
     ]) ?>
 
 
-    <div class="col-xs-6" id="comment-part-home">
     <?php
     if(empty($comment_retrieved)){
         $form = ActiveForm::begin(['action' =>['site/get-comment'],'method' => 'post','id' => 'get_comment_form_' . $thread_id, 'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]  ) ?>
@@ -28,15 +27,6 @@ Pjax::begin([
         <div id="list_thread_comment_part">
             <?= $this->render('../thread/_comment_part', ['comment_providers' => $comment_providers]) ?>
         </div>
-        <?php } ?>
-    </div>
-    <div class="col-xs-6" id="vote-part-home">
-        <select class="form-control">
-            <option>-- Choose one of these vote --</option>
-            <option>Agree</option>
-            <option>Disagree</option>
-            <option>Neutral</option>
-            <option>Custom ...</option>
-        </select>
-    </div>
-    <?php Pjax::end(); ?>
+    <?php } ?>
+
+<?php Pjax::end(); ?>

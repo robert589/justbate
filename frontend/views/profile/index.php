@@ -57,7 +57,7 @@ $followee_link =  Yii::$app->request->baseUrl . '/user/' . $user->username . '/f
 <!-- Page Content -->
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
 <div class="container">
-	<div class="col-md-8" style="background-color: white;">
+	<div class="col-md-9 col-md-offset-1" style="background-color: white;">
 		<div class="row">
 			<br>
 			<div class="col-xs-6 col-md-3">

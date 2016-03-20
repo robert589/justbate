@@ -1,3 +1,22 @@
+/*from robert**/
+/** replace action-button-thing  with */
+.button-like-link{
+    background:none!important;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    /*border is optional*/
+    border-bottom:1px solid #444;
+    cursor: pointer;
+}
+
+/**section, give margin to every new section **/
+.section{
+    padding: 0px !important;
+    margin-left:0px;
+    margin-top:30px;
+}
+
  /* Web Content */
 body {
     background: #E6E6E6!important;
@@ -517,7 +536,7 @@ div#title-part {
     margin-bottom: 15px;
 }
 
-div#thread-title {
+div.thread-title {
     margin: 0;
     padding: 30px;
     text-align: center !important;
@@ -540,7 +559,7 @@ div#first-part {
 div#first-part div.tabs-above li {
     margin: 0;
     text-align: center;
-    width: 50%;
+    width: 150px;
 }
 
 div#first-part div.tabs-above li.active {
@@ -595,13 +614,12 @@ div#action-button-thing button {
 }
 
 div#comment-tab div.tabs-above ul.nav-tabs {
-    padding-left: 15px;
     padding-right: 15px;
     border-bottom: 0;
 }
 
 div#comment-tab div.tabs-above ul.nav-tabs li {
-    width: 33.333% !important;
+    width: 100px !important;
     border-bottom: 1px solid #ddd;
 }
 

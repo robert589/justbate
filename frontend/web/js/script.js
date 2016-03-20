@@ -101,13 +101,13 @@
             $("#ask_to_login").show();
         }
         else{
-            if($(this).html() == "<span class=\"glyphicon glyphicon-comment\"></span>"){
+            if($(this).html() == "Comment"){
                 $("#comment_section").show();
                 $("#display_hide_comment_input_box").html("<span class=\"glyphicon glyphicon-menu-up\"></span>");
             }
             else{
                 $("#comment_section").hide();
-                $("#display_hide_comment_input_box").html("<span class=\"glyphicon glyphicon-comment\"></span>");
+                $("#display_hide_comment_input_box").html("Comment");
             }
         }
 

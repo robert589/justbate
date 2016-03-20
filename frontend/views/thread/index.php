@@ -71,7 +71,7 @@
 <?= Dialog::widget(); ?>
 
 <div class="col-xs-12 col-md-8" style="background-color: white">
-	<div class="col-xs-12" id="thread-title">
+	<div class="col-xs-12 thread-title">
 		<?= Html::encode($model['title']) ?>
 	</div>
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
@@ -86,20 +86,20 @@
 		</div>
 
 		<div class="col-xs-12" id="action-button">
+			<?= Html::button('Comment', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?>
+			<?= Html::button('Share on facebook', ['id' => 'edit_thread', 'class' => 'btn']) ?>
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
-				<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-pencil"></span>', ['id' => 'edit_thread', 'class' => 'btn']) ?></div>
-				<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-trash"></span>', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?></div>
+				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
+				<?= Html::button('Edit', ['id' => 'share-on-facebook', 'class' => 'btn','data-guest' => $guest]) ?>
 			<?php } ?>
-			<div id="action-button-thing"><?= Html::button('<span class="glyphicon glyphicon-comment"></span>', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?></div>
-			<div id="action-button-thing"><?= Html::button('<span class="fa fa-facebook"></span>', ['id' => 'share-on-facebook', 'class' => 'btn','data-guest' => $guest]) ?></div>
 		</div>
 	</div>
 
-	<div class="row" id="ask_to_login" style="display: none;">
+	<div class="col-xs-12" id="ask_to_login" style="display: none;">
 		You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
 	</div>
 
-	<div  id="comment_section" style="display:none">
+	<div  id="comment_section" class="section col-xs-12" style="display:none">
 		<div class="row" >
 			<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,
 													'thread_choices' => $thread_choices,
@@ -107,7 +107,8 @@
 		</div>
 	</div>
 
-	<div class="row">
+
+	<div class="col-xs-12 section">
 		<div id="comment-tab">
 			<?= // Ajax Tabs Above
 				TabsX::widget([
