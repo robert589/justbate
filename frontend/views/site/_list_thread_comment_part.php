@@ -7,9 +7,9 @@ use yii\helpers\Html;
 /** @var $thread_id integer */
 /** @var $comment_providers \yii\data\ArrayDataProvider */
 Pjax::begin([
-    'id' => 'pjax_comment_' . $thread_id,
-    'timeout' => false,
+    'id' => 'comment_section_' . $thread_id,
     'enablePushState' => false,
+    'timeout' => 6000,
     'options' => [
         'container' => '#comment_section_' . $thread_id
     ]
@@ -19,10 +19,16 @@ Pjax::begin([
 
     <?php
     if(empty($comment_retrieved)){
+        /*Html::beginForm(['site/get-comment'],
+                        'post',
+                        ['id' => 'get_comment_form_' . $thread_id,
+                            'data-pjax' => '#comment_section_' . $thread_id]
+        );*/
+
         $form = ActiveForm::begin(['action' =>['site/get-comment'],
-                                    'method' => 'post',
-                                    'id' => 'get_comment_form_' . $thread_id,
-                                    'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]  ) ?>
+                                  'method' => 'post',
+                                'id' => 'get_comment_form_' . $thread_id,
+                              'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]])  ?>
 
         <?= Html::hiddenInput('thread_id', $thread_id) ?>
         <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>

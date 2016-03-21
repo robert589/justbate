@@ -175,3 +175,14 @@
     $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
     });
+
+
+    /** pjax handling */
+
+
+
+    $(document).on('submit', 'form[data-pjax]', function(event) {
+        var services = '' + $(this).data('pjax');
+        $.pjax.defaults.scrollTo = false;
+        $.pjax.submit(event,  services, {push:false});
+    })
