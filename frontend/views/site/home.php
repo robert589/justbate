@@ -1,12 +1,7 @@
 <?php
 use yii\widgets\ListView;
-use kartik\select2\Select2;
-use yii\widgets\Pjax;
-use yii\widgets\ActiveForm;
+use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\JsExpression;
 
 /** @var $list_data_provider \yii\data\ArrayDataProvider */
 /** @var $issue_list array */
@@ -59,7 +54,16 @@ $this->title = "Home";
 					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
-					'layout' => "{summary}\n{items}\n{pager}",
+					'pager' => [
+						'class' => ScrollPager::class,
+						'enabledExtensions' => [
+							ScrollPager::EXTENSION_TRIGGER,
+							ScrollPager::EXTENSION_SPINNER,
+							ScrollPager::EXTENSION_NONE_LEFT,
+							ScrollPager::EXTENSION_PAGING,
+						],
+						'triggerOffset' => 100
+					],
 					'itemView' => function ($model, $key, $index, $widget) {
 						return $this->render('_list_thread',['model' => $model]);
 					}

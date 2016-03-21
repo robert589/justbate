@@ -215,7 +215,7 @@ class SiteController extends Controller
 	 *
 	 */
 	public function actionGetComment(){
-		if(!empty($_POST['thread_id'])){
+		if(!empty($_POST['thread_id']) && Yii::$app->request->isPjax){
 			$thread_id = $_POST['thread_id'];
 
 			//get all thread_choices
@@ -229,6 +229,9 @@ class SiteController extends Controller
 						'comment_retrieved' => true,
 						'thread_choices' => $thread_choices,
 						'comment_providers' => $comment_providers]);
+		}
+		else{
+			return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 		}
 	}
 

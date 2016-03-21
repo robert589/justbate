@@ -172,6 +172,6 @@
         return false;
     })
 
-    $("button#comment_post").click(function() {
+    $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
     });

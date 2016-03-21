@@ -8,8 +8,8 @@ use yii\helpers\Html;
 /** @var $comment_providers \yii\data\ArrayDataProvider */
 Pjax::begin([
     'id' => 'pjax_comment_' . $thread_id,
-    'enablePushState' => false,
     'timeout' => false,
+    'enablePushState' => false,
     'options' => [
         'container' => '#comment_section_' . $thread_id
     ]
@@ -25,7 +25,7 @@ Pjax::begin([
                                     'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]  ) ?>
 
         <?= Html::hiddenInput('thread_id', $thread_id) ?>
-        <?= Html::submitButton('Comment', ['class' => 'btn btn-primary', 'id' => 'comment_post']) ?>
+        <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
 
     <?php ActiveForm::end();
     }

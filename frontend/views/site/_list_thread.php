@@ -10,7 +10,7 @@
 ?>
 
 <article>
-	<div class="col-xs-12" id="thread-view">
+	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
 			<?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'])?>
 		</div>

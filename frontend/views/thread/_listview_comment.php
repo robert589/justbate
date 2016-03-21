@@ -15,20 +15,20 @@ $comment_id = $model['comment_id'];
 ?>
 
 <article >
-	<div class="col-xs-12" id="commentator-name">
+	<div class="col-xs-12 commentator-name">
 		<!--First TOP -->
 		<!--The name of the person that make the comments -->
 		<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'],
 		['data-pjax' => 0])?>
 	</div>
 
-	<div class="col-xs-12" id="commentator-comment">
+	<div class="col-xs-12 commentator-comment">
 		<?= $this->render('_view_edit_comment_part', ['comment' => $model['comment'],
 		'edit_comment_form' => new EditCommentForm(),
 		'comment_id' => $comment_id]) ?>
 	</div>
 
-	<div class="col-xs-12" id="commentator-moderate">
+	<div class="col-xs-12 commentator-moderate">
 		<div class="col-xs-5">
 			<!-- Votes part-->
 			<?= $this->render('_comment_votes', [  'comment_id' => $comment_id,
