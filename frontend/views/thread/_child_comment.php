@@ -5,10 +5,14 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
 use common\models\CommentVote;
+/** @var $comment_id integer */
+/** @var $user_id integer */
+
 
 ?>
 
-<?php Pjax::begin(['timeout' => false,
+<?php Pjax::begin([
+    'timeout' => false,
     'id' => 'child_comment_'  . $comment_id,
     'enablePushState' => false,
     'clientOptions'=>[
@@ -17,7 +21,7 @@ use common\models\CommentVote;
 ]) ?>
 
 <div class="col-md-4">
-    <?php if($belongs){ ?>
+    <?php if(\Yii::$app->user->getId() == $user_id){ ?>
 
         <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
         <?= Html::button('Delete', ['class' => 'btn btn-danger', 'id' => 'delete_comment_' . $comment_id]) ?>
@@ -27,10 +31,10 @@ use common\models\CommentVote;
 </div>
 
 
-<div class="col-md-4" align="left" style="padding: 0px">
+<div class="col-md-3" align="left" style="padding: 0px">
     <?php if(!isset($retrieved)){ ?>
         <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
-            'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]])
+                                        'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]])
         ?>
 
         <div align="left">
@@ -58,7 +62,8 @@ use common\models\CommentVote;
             <?= Html::hiddenInput('parent_id' , $comment_id) ?>
             <?= $form->field($child_comment_form, 'child_comment')->textarea(['class' => 'child_comment_text_area',
                                                                             'data-service' => $comment_id,
-                                                                            'rows' => 1, 'placeholder' => 'add comment box..' ])
+                                                                            'rows' => 1,
+                                                                            'placeholder' => 'add comment box..' ])
                                                                                 ->label(false)?>
 
         <?php ActiveForm::end() ?>

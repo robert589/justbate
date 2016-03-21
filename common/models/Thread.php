@@ -19,7 +19,7 @@ class Thread extends ActiveRecord
 			 Select thread.*, user.*
 				 from thread,user
 				 where thread.user_id = user.id and thread_status = 10
-				 order by (date_created) desc       ";
+				 order by (date_created) desc";
 
 		return  \Yii::$app->db->createCommand($sql)->queryAll();
 	}

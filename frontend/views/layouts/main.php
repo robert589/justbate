@@ -54,7 +54,7 @@ AppAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Yii::$app->request->baseUrl?>">Opilage.com</a>
+                <a class="navbar-brand" href="<?= Yii::$app->request->baseUrl?>">JUSTBATE.com</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">

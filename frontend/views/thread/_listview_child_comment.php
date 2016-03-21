@@ -27,23 +27,17 @@ else{
 
 <article>
     <div class="col-xs-12">
-        <div class="row" id="commentator-name">
-            <div class="col-xs-12">
-                <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), Yii::$app->request->baseUrl . "/user/" . $model['username'] )?>
-            </div>
+        <div class="col-xs-12" id="commentator-name">
+           <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), Yii::$app->request->baseUrl . "/user/" . $model['username'] )?>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12" id="commentator-comment">
-                <?= Html::encode($model['comment'])?>
-            </div>
+        <div class="col-xs-12" id="commentator-comment">
+           <?= Html::encode($model['comment'])?>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12" id="commentator-moderate">
+        <div class="col-xs-12" id="commentator-moderate">
                 <?= $this->render('_comment_votes', ['comment_id' => $comment_id, 'total_like' => $total_like,
                 'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
-            </div>
         </div>
     </div>
 </article>

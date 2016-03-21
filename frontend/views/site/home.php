@@ -8,6 +8,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
+/** @var $list_data_provider \yii\data\ArrayDataProvider */
+/** @var $issue_list array */
+/** @var $trending_topic_list array */
 $this->title = "Home";
 ?>
 <div class="col-xs-12">
@@ -35,10 +38,12 @@ $this->title = "Home";
 		</div> <!-- div.col-xs-12 -->
 	</div><!-- div.col-md-3 -->
 
-	<div id="main-content">
-		<div class="col-xs-12 col-md-7" id="create-thread">
+	<div class="col-md-8 home-main-section" >
+		<div class="col-xs-12" id="create-thread">
 			<div class="col-xs-12" id="create-thread-dropdown">
-				<div id="create-thread-button"><span>Click Here to Start Make a Thread</span><span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span></div>
+				<div id="create-thread-button">Click Here to Start Make a Thread
+					<span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span>
+				</div>
 			</div> <!-- div.col-xs-12 -->
 
 			<div class="col-xs-12" id="create-thread-form">
@@ -46,11 +51,11 @@ $this->title = "Home";
 			</div> <!-- div.col-xs-12 -->
 		</div>
 
-		<div class="col-xs-12 col-md-7">
+		<div class="col-xs-12 home-thread-list">
 			<div class="col-xs-12" id="main-post-desc">
 				<?= ListView::widget([
 					'id' => 'threadList',
-					'dataProvider' => $listDataProvider,
+					'dataProvider' => $list_data_provider,
 					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],

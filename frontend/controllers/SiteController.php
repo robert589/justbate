@@ -128,17 +128,17 @@ class SiteController extends Controller
 			$result = Thread::getAllThreads();
 		}
 
-		$dataProvider = new ArrayDataProvider([
+		$data_provider = new ArrayDataProvider([
 			'allModels' => $result,
 			'pagination' => [
 				'pageSize' =>10,
 			],
-
 		]);
 
 		//Create form
 		$create_thread_form  = new CreateThreadForm();
 		$this->getDefaultChoice($create_thread_form);
+
 		//retrieve trending topic
 		$trending_topic_list = $this->getTredingTopicList();
 
@@ -147,7 +147,7 @@ class SiteController extends Controller
 
 		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
-									'listDataProvider' => $dataProvider,
+									'list_data_provider' => $data_provider,
 									'create_thread_form' => $create_thread_form]);
 	}
 
@@ -224,7 +224,7 @@ class SiteController extends Controller
 			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
 
 
-			return $this->renderPartial('_list_thread_comment_part', [
+			return $this->renderAjax('_list_thread_comment_part', [
 						'thread_id' => $thread_id,
 						'comment_retrieved' => true,
 						'thread_choices' => $thread_choices,
