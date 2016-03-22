@@ -18,7 +18,8 @@
 			<?= HtmlPurifier::process($model['description']) ?>
 		</div>
 		<div class="col-xs-12 home-comment-tab">
-			<?= $this->render('_list_thread_comment_part', ['thread_id' => $model['thread_id']]) ?>
+			<?= $this->render('_list_thread_comment_part', ['thread_id' => $model['thread_id'],
+															'total_comments' => $model['total_comments']]) ?>
 		</div>
 	</div>
 </article>

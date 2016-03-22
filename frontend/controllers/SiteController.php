@@ -122,10 +122,10 @@ class SiteController extends Controller
 	{
 		//get Issue
 		if(!empty($_GET['issue'])){
-			$result = Thread::getThreadsByIssue($_GET['issue']);
+			$result = Thread::getThreads($_GET['issue']);
 		}
 		else{
-			$result = Thread::getAllThreads();
+			$result = Thread::getThreads();
 		}
 
 		$data_provider = new ArrayDataProvider([
@@ -192,8 +192,6 @@ class SiteController extends Controller
 		if (!\Yii::$app->user->isGuest) {
 			return $this->goHome();
 		}
-
-
 
 		$model = new LoginForm();
 		if ($model->load(Yii::$app->request->post()) && $model->login()) {

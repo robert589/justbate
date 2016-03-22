@@ -14,41 +14,45 @@ class Thread extends ActiveRecord
 		return 'thread';
 	}
 
-	public static function getAllThreads() {
-		$sql =  "
-			 Select thread.*, user.*
-				 from thread,user
-				 where thread.user_id = user.id and thread_status = 10
-				 order by (date_created) desc";
+	public static function getThreads($issue = null) {
+		$template_sql = "Select thread_info.*, count(thread_comment.comment_id) as total_comments
+						from (Select thread.*, user.* from thread, user
+							  where thread.user_id = user.id and
+									thread_status = 10
+									) thread_info
+							  left join thread_comment
+							  on thread_info.thread_id = thread_comment.thread_id
+						group by thread_info.thread_id
 
-		return  \Yii::$app->db->createCommand($sql)->queryAll();
-	}
+						order by (date_created) desc
+						";
+		if($issue == null){
+			$sql =  $template_sql;
 
-	public static function getThreadsByIssue($issue) {
-		 $sql =  "
-				 Select thread_thread_rate.*, user.*, avg(thread_thread_rate.rate) as avg_rating
-				 from (SELECT thread.*, thread_rate.rate as rate
-							 from thread left join thread_rate
-							 on thread.thread_id = thread_rate.thread_id) thread_thread_rate,
-							 user, thread_issue, issue
-				 where thread_thread_rate.user_id = user.id and
-							 thread_issue.thread_id = thread_thread_rate.thread_id AND
-							 issue.issue_id = thread_issue.issue_id
-							 and issue.issue_name =  :issue and thread_status = 10
-				 group by(thread_thread_rate.thread_id)
-		";
+			return  \Yii::$app->db->createCommand($sql)->queryAll();
 
-		return  \Yii::$app->db->createCommand($sql)
-			->bindParam(":issue", $issue)
-			->queryAll();
-	}
+		}
+		else{
+			$sql =  "Select thread_info.*, count(thread_comment.comment_id) as total_comments
+					from (Select thread.*, user.* from thread, user, thread_issue
+						  where thread.user_id = user.id and
+								thread_status = 10   and
+								thread_issue.thread_id = thread.thread_id
+								and thread_issue.issue_id = :issue_id
+								) thread_info
+						  left join thread_comment
+						  on thread_info.thread_id = thread_comment.thread_id
+					group by thread_info.thread_id
 
-	public static function getThreadsBySearch($query) {
-		$sql = "SELECT thread_id as id, title as text from thread where title like concat('%', :query,'%') and thread_status = 10";
+					order by (date_created) desc
+			";
 
-		return  \Yii::$app->db->createCommand($sql)
-			->bindParam(":query", $query)
-			->queryAll();
+			return  \Yii::$app->db->createCommand($sql)->
+									bindParam(':issue_id', $issue)
+									->queryAll();
+		}
+
+
 	}
 
 

@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /** @var $thread_id integer */
+/** @var $total_comment integer */
+
 /** @var $comment_providers \yii\data\ArrayDataProvider */
 Pjax::begin([
     'id' => 'comment_section_' . $thread_id,
@@ -31,7 +33,7 @@ Pjax::begin([
                               'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]])  ?>
 
         <?= Html::hiddenInput('thread_id', $thread_id) ?>
-        <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Comment (' . $total_comments . ')', ['class' => 'btn btn-primary']) ?>
 
     <?php ActiveForm::end();
     }
