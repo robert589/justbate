@@ -18,7 +18,6 @@
         }
     });
 
-
     //on profile/index
     $("img#avatar").mouseenter(function() {
         $("img#avatar").css("opacity",".5");
@@ -134,6 +133,24 @@
         }
     });
 
+
+    $(document).on('click', '.home_show_hide', function(){
+        var thread_id  = $(this).data('service');
+        var $this_button = $("#home_show_hide_" + thread_id);
+        console.log(thread_id + $this_button.text());
+        if($this_button.text() == 'Hide'){
+            console.log('' + $this_button.length);
+            $("#home_comment_section_" + thread_id).hide();
+            $this_button.text('Comment (' + $("#hi_total_comments_" + thread_id).val() + ")");
+        }
+        else{
+            $this_button.text('Hide');
+            $("#home_comment_section_" + thread_id).show();
+
+        }
+    });
+
+
     $(".hide_comment").click(function(){
         var comment_id = $(this).data('service');
 
@@ -167,6 +184,7 @@
         .find('#loginModal')
         .load($(this).attr("value"));
     }
+
     $("#login_link").click(function(){
         beginLoginModal();
         return false;
@@ -176,11 +194,7 @@
         $("div#w6-container").slideToggle("fast");
     });
 
-
     /** pjax handling */
-
-
-
     $(document).on('submit', 'form[data-pjax]', function(event) {
         var services = '' + $(this).data('pjax');
         $.pjax.defaults.scrollTo = false;

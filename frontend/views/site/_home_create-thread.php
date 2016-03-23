@@ -13,7 +13,7 @@ use yii\web\JsExpression;
     <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'title')->textInput(['placeholder' => 'Post Title',
         'class' => 'form-control',
-        'style' => "text-align: center;" ])->label(false) ?>
+         ])->label(false) ?>
     </div> <!--- div.col-xs-12 -->
 
     <div class="col-xs-12" style="padding: 0;">

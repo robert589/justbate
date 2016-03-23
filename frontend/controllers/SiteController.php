@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Issue;
+use common\models\ThreadComment;
 use frontend\models\CreateThreadForm;
 use Yii;
 use frontend\models\PasswordResetRequestForm;
@@ -221,10 +222,12 @@ class SiteController extends Controller
 			//get all comment providers
 			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
 
+			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
 
 			return $this->renderAjax('_list_thread_comment_part', [
 						'thread_id' => $thread_id,
 						'comment_retrieved' => true,
+						'total_comments' => $total_comments,
 						'thread_choices' => $thread_choices,
 						'comment_providers' => $comment_providers]);
 		}

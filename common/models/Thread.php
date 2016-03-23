@@ -23,7 +23,6 @@ class Thread extends ActiveRecord
 							  left join thread_comment
 							  on thread_info.thread_id = thread_comment.thread_id
 						group by thread_info.thread_id
-
 						order by (date_created) desc
 						";
 		if($issue == null){

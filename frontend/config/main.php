@@ -1,4 +1,4 @@
-<?php
+    <?php
 use \yii\web\Request;
 
 $params = array_merge(
