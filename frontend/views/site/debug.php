@@ -1,0 +1,1 @@
+<label> $model->message </label>
