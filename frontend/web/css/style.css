@@ -1,0 +1,706 @@
+/*from robert**/
+/** replace action-button-thing  with */
+.button-like-link{
+    background:none!important;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    /*border is optional*/
+    border-bottom:1px solid #444;
+    cursor: pointer;
+}
+
+/** for all name-link **/
+.name-link{
+    font-size: 15px;
+    font-weight:bold;
+}
+
+div.inline{
+    float:left;
+}
+/**section, give margin to every new section **/
+.section{
+    padding: 0px !important;
+    margin-left:0px;
+    margin-top:30px;
+}
+
+.home-main-section{
+    padding:0px !important;
+    margin-left: 0px !important;
+    margin-top: 0px;
+    width:100%;
+}
+
+.thread-link{
+    font-size:20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.home-thread-list{
+    margin-top: 20px;
+    padding-left:0px !important;
+    padding-right: 0px !important;
+}
+
+/* Web Content */
+body {
+    background: #E6E6E6!important;
+    color: #000 !important;
+    line-height: 20px !important;
+    font-weight: 300;
+}
+
+div#left-sidebar {
+    margin-left: -25px;
+    margin-right: 0px;
+    padding-left:0px;
+    padding-right: 0px;
+    font-size:13px;
+}
+
+div#main-body {
+    width: 100% !important;
+}
+
+/* Menubar */
+nav#menubar {
+    border: 0;
+    font-size: 1em;
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    background: #fff !important;
+    border-bottom: 3px solid #0E5A94;
+}
+
+div.navbar-header a,
+li.item a,
+.navbar-collapse {
+    color: #000 !important;
+}
+
+input[type="text"]#search {
+    border: 1px solid black;
+    color: black;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+ul.dropdown {
+    background: none;
+}
+
+span#anonymous-checkbox {
+    vertical-align: middle;
+}
+
+table#left-menu {
+    background: white;
+    color: black;
+    text-align: center;
+    padding-right: 15px;
+    height: 50px;
+}
+
+tbody > tr > td {
+    vertical-align: middle !important;
+}
+
+table#left-menu a {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table#left-menu tr td button {
+    background: none;
+    text-transform: uppercase;
+    text-align: left;
+    width: 100% !important;
+}
+
+/* Page Header */
+div#page-header {
+    margin-bottom: 1%;
+}
+
+#button-badge {
+    width: 100%;
+}
+
+div#main-post {
+    text-align: justify;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Ratebar */
+div#ratebar {
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 100% !important;
+    background: red;
+}
+
+div#ratebar span#upvote {
+    background: #00FF00;
+    position: relative;
+    text-align: center;
+    float: left;
+    width: 70%;
+}
+
+div#ratebar span#downvote {
+    background: red;
+    position: relative;
+    text-align: center;
+    float: left;
+    width: 30%;
+}
+
+/* Login Form */
+div#login-box.fade.in {
+    opacity: 1 !important;
+}
+
+div.modal-content div.modal-header {
+    background: #286090;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+div.modal-content div.modal-body {
+    width: 100%;
+    text-align: center;
+}
+
+div.modal-body input[type="text"],
+div.modal-body input[type="password"] {
+    text-align: center;
+    border: 0;
+}
+
+div.modal-body button#sign-up {
+    border: 0;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    font-size: 2em;
+}
+
+div#submitThreadVote div#form-control input[type="radio"] {
+    margin-right: 1%;
+}
+
+div.field-submitthreadvoteform-choice_text label.control-label {
+    display: none;
+    margin: 0;
+}
+
+div#vote button[type="submit"].btn-primary {
+    width: 100% !important;
+}
+
+div.field-submitthreadvoteform-choice_text {
+    margin: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+div.input-multiselect {
+    height: auto !important;
+    vertical-align: middle;
+    text-align: justify;
+}
+
+h3#user-choice {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table#bio-table tbody tr td {
+    border: 0;
+}
+
+button#upload-image {
+    width: 148px;
+    bottom: 0;
+    position: absolute;
+    left: 15px;
+    border-radius: 0;
+    opacity: 0;
+}
+
+li#search-box {
+    padding: 7px;
+    width: 450px;
+}
+
+li#notification {
+    margin: 15px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+/* removing the border for search form */
+span.select2-selection--single,
+span#select2-search_box_menu-container {
+    color: black;
+    border: 0 !important;
+}
+
+/* removing the description label */
+label[for="createthreadform-description"] {
+    display: none;
+}
+
+/* glyphicon style */
+span#left-icon {
+    margin-left: 15px;
+}
+
+span#right-icon {
+    margin-right: 15px;
+}
+
+li#dropdown-menu-setings,
+li.item {
+    transition: 0.5s;
+}
+
+a.dropdown-toggle:hover,
+li#dropdown-menu-setings:hover,
+li.item:hover {
+    background: #545249;
+}
+
+/* thread things */
+blockquote#quote-on-thread {
+    background: rgba(37,110,93,0.25);
+    margin: 0;
+
+}
+
+div.tab-content {
+    height: 100%;
+    padding: 0px;
+}
+
+
+li#search-box:hover {
+    background: none !important;
+}
+
+li#notif-expansion {
+    margin-top: -15px;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+li#notif-expansion:hover {
+    text-decoration: none;
+}
+
+.nav .open > a:hover {
+    background: #256E5D  !important;
+}
+
+.nav .open > a,
+.nav .open > a:focus {
+    background: none !important;
+    transition: 0.5s;
+}
+
+li a:active,
+li.dropdown,
+li a:visited {
+    background: none !important;
+}
+
+ul.dropdown-menu {
+    border: 0;
+    padding: 1%;
+    font-size: 1em;
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    background: white !important;
+    border-bottom: 3px solid black;
+    background: #025845 !important;
+}
+
+a:hover,
+a:focus {
+}
+
+ul.dropdown-menu div#dropdown-menu-title {
+    padding: 0px 15px;
+    padding-top: 15px;
+}
+
+ul.dropdown-menu div.kv-spin-center {
+    padding: 15px;
+}
+
+@media screen and (max-width: 767px) {
+    div#left-part-of-thread {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    div#action-button-thing button {
+        font-size: 16px;
+        width: 25%;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+        margin-bottom: 20px;
+        color: #fff;
+        border-radius: 0;
+        background: #1097FF;
+    }
+
+    li#notif-expansion a.dropdown-toggle {
+        margin-left: -10px !important;
+    }
+
+    li#search-box {
+        width: 100%;
+    }
+
+    li#notif-expansion ul.dropdown-menu {
+        margin-top: 15px;
+        margin-left: -15px;
+    }
+
+    div#left-sidebar {
+        display: none;
+    }
+
+    div#main-content {
+        margin-left: 0;
+    }
+}
+
+li#notif-expansion {
+    background: none !important;
+    transition: 0.5s;
+}
+
+li#notif-expansion:hover {
+    background: #545249 !important;
+}
+
+li#notif-expansion a.dropdown-toggle {
+    background: none !important;
+}
+
+li#notif-expansion ul.dropdown-menu,
+li#notif-expansion ul.dropdown-menu a {
+    font-family: 'Crete Round', serif !important;
+    width: 500px;
+    color: #000 !important;
+}
+
+li#notif-expansion ul.dropdown-menu span.glyphicon {
+    padding-right: 10px;
+    padding-left: 15px;
+}
+
+li#notif-expansion ul.dropdown-menu span#notification-label {
+    margin: 0px 15px;
+}
+
+div#main-post-desc {
+    text-align: justify;
+    line-height: 30px;
+    margin-left: 15px;
+    padding-right: 0px !important;
+}
+
+div#create-thread {
+    margin-top: 0px;
+    width: 100% !important;
+    padding:0px;
+}
+
+div#create-thread-dropdown {
+    background: #0E5A94;
+    color: white;
+    padding: 15px;
+    margin-left: 15px !important;
+    width: calc(100% - 15px);
+}
+
+div#create-thread-form {
+    display: none;
+    background: #fff;
+    padding: 0;
+    margin-left: 15px;
+    margin-right: 30px;
+    width: calc(100% - 15px);
+}
+
+div#create-thread-form input,
+div#create-thread-form select,
+div#create-thread-form span.select2-selection--multiple,
+div#create-thread-form li.select2-selection__choice {
+    border: 0 !important;
+    border-radius: 0;
+}
+
+div#submit-thread {
+    vertical-align: middle;
+    text-align: center;
+    float: right;
+}
+
+div.panel-heading {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+div#login-form input.form-control {
+    width: 75% !important;
+}
+
+div#login-form div.form-group label.control-label {
+    width: 25%;
+    height: 100%;
+    float: left;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+li#notification-bar {
+    margin: 15px 0 0 10px;
+}
+
+
+div.thread-view {
+    width: 100% !important;
+    padding-right: -30px;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    padding-bottom: 30px !important;
+    padding-top: 30px !important;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;;
+}
+
+div.ias-trigger {
+    width: 100%;
+    padding: 15px;
+}
+
+div#comment {
+    margin-left: -15px !important;
+}
+
+div#comment div#w0 {
+    padding: 15px;
+    padding-left: 0;
+}
+
+div#comment-rate {
+    float: left;
+}
+
+div#threadList div.ias-trigger,
+div#threadList div.ias-noneleft {
+    margin: 0;
+    width: calc(100% - 15px);
+}
+
+div#main-content {
+    margin-left: -15px;
+}
+
+div.ias-trigger a {
+    width: 100% !important;
+    text-align: center;
+    padding: 15px;
+    background: #0E5A94;
+    color: #fff;
+    text-decoration: none;
+}
+
+div#shown_part + div.row {
+    padding: 15px !important;
+}
+
+div#action-button {
+    padding-right: 0;
+    margin-top: 20px;
+}
+
+div#vote {
+    padding: 0;
+}
+
+div#left-part-of-thread {
+    width: 100%;
+}
+
+div#first-part {
+    margin-top: 20px;
+    background: #fff;
+    min-height: 250px;
+}
+
+div#title-part {
+    color: white;
+    padding: 15px;
+    display: none;
+    text-align: center;
+    background: #074676;
+    margin-bottom: 15px;
+}
+
+div.thread-title {
+    margin: 0;
+    padding: 30px;
+    text-align: center !important;
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+div#edit_part {
+    display: none;
+}
+
+div#shown_part {
+    display: block;
+}
+
+div#first-part {
+    margin-bottom: 20px;
+}
+
+div#first-part div.tabs-above li {
+    margin: 0;
+    text-align: center;
+    width: 150px;
+}
+
+div#first-part div.tabs-above li.active {
+    background: #0E5A94;
+}
+
+div#first-part div.tabs-above div.tab-content div#post-description p {
+    margin-left: 0 !important;
+    padding: 15px;
+}
+
+div#first-part div.col-xs-12:first-child {
+    padding: 0;
+}
+
+.nav-tabs > li {
+    width: 50%;
+}
+
+.nav-tabs > li > a {
+    color: #04365C;
+    background: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-right: 0 !important;
+    border-radius: 0 !important;
+}
+
+.nav-tabs > li.active > a {
+    background: #04365C !important;
+    color: #fff !important;
+}
+
+div#action-button-thing {
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+div#action-button-thing button {
+    padding: 15px;
+    float: right;
+    border: 1px solid white;
+    font-size: 32px;
+    color: #fff;
+    border-radius: 0;
+    height: 64px;
+    width: 64px;
+    margin-left: 0;
+    margin-right: 0;
+    background: #1097FF;
+    margin-bottom: 20px;
+}
+
+div.comment-tab div.tabs-above ul.nav-tabs {
+    padding-right: 15px;
+    border-bottom: 0;
+}
+
+div.comment-tab div.tabs-above ul.nav-tabs li {
+    width: 100px !important;
+    border-bottom: 1px solid #ddd;
+}
+
+div#commentator-action div.commentator-comment {
+    float: left;
+}
+
+div#commentator-action div.commentator-moderate {
+    padding-top: 10px !important;
+    float: left;
+
+}
+
+div#button-vote-up,
+div#button-vote-down {
+    padding: 0;
+}
+
+div#button-vote-up button,
+div#button-vote-down button {
+    border-radius: 0;
+}
+
+div.comment-tab div.tabs-above div.tab-content div.row {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+div.list-view {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+div.list-view div.item {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+div#vote-part-home {
+    padding: 0;
+}
+
+div#vote-part-home select {
+    border-radius: 0;
+}
+
+div#vote-part-home select option {
+    padding-left: 15px;
+}
+
+div#list_thread_comment_part {
+    width: 100%;
+}
