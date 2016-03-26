@@ -28,7 +28,7 @@ div.inline{
 
 .home-main-section{
     padding:0px !important;
-    margin-left: 0px !important;
+    margin-left: 35%;
     margin-top: 0px;
     width:100%;
 }
@@ -59,6 +59,7 @@ div#left-sidebar {
     padding-left:0px;
     padding-right: 0px;
     font-size:13px;
+    position: fixed;
 }
 
 div#main-body {
