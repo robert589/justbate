@@ -53,8 +53,8 @@ use common\models\CommentVote;
 
 <?php if(isset($retrieved)){ ?>
 
-<div class="col-md-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
-    <div class="col-md-12" style="margin-top: 30px;" >
+<div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
+    <div class="col-xs-12" style="margin-top: 30px;" >
         <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'], 'id' => "child_comment_form_" . $comment_id,
                                                        'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
 
@@ -90,6 +90,3 @@ use common\models\CommentVote;
 
 
 <?php Pjax::end() ?>
-
-
-

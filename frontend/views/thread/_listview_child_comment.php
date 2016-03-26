@@ -26,7 +26,10 @@ else{
 ?>
 
 <article>
-    <div class="col-xs-12">
+    <div class="col-xs-3">
+        <img class="img img-rounded" class="profile-picture-comment" src="http://www.hit4hit.org/img/login/user-icon-6.png">
+    </div>
+    <div class="col-xs-9">
         <div class="col-xs-12" id="commentator-name">
            <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), Yii::$app->request->baseUrl . "/user/" . $model['username'] )?>
         </div>
@@ -41,5 +44,3 @@ else{
         </div>
     </div>
 </article>
-
-

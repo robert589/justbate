@@ -22,7 +22,7 @@
 			<?php if($comment != null || $comment != false){ ?>
 
 					<div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name']  ?> </div> &nbsp; chooses <b><?= $comment['choice_text'] ?></b> and says <br>
-					<br>
+					<br />
 					<?= HtmlPurifier::process($comment['comment']) ?>
 
 			<?php }else{ ?>

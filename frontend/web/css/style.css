@@ -704,3 +704,39 @@ div#vote-part-home select option {
 div#list_thread_comment_part {
     width: 100%;
 }
+
+/* _listview_comment.php */
+
+img.profile-picture-comment {
+    width: 65px;
+    height: 65px;
+}
+
+div.commentator-name a {
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+div.comment-votes {
+    padding: 0;
+}
+
+article.block-for-comment {
+    margin-top: 20px;
+}
+
+div.comment-created {
+    padding-left: 18px;
+}
+
+div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
+    line-height: 26px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+div.commentator-moderate {
+    margin-bottom: 20px;
+    margin-top: 15px;
+    padding: 0;
+}

@@ -17,13 +17,11 @@
 ?>
 
         <div id="comment_shown_part_<?= $comment_id ?>">
-            <br>
             <?= $comment ?>
         </div>
 
         <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
             <?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => ['data-pjax' => '#edit_comment_' . $comment_id]])?>
-                <br>
                 <!-- Cannot use initial value if used with form -->
                 <?= \yii\redactor\widgets\Redactor::widget([
                     'name' => 'comment',
@@ -44,7 +42,3 @@
         </div>
 
 <?php Pjax::end(); ?>
-
-
-
-
