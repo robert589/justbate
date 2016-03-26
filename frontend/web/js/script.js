@@ -12,10 +12,16 @@
     }
 
     // on site/home
-    $("button#comment_post").click(function() {
-        if (($("button#comment_post").text()).length == "4") {
-            $("div#list_thread_comment_part").slideDown("fast");
+    $(document).ready(function() {
+        var count = ($("li#notif-expansion ul.dropdown-menu").children().length)+1;
+        var temp = $("a#trigger_notification").text();
+        if (count > 0) {
+            $("a#trigger_notification").text(temp + "(" + count + ")");
         }
+    });
+
+    $("li#notif-expansion").hover(function() {
+        $("a#trigger_notification").css("color", "#fff");
     });
 
     //on profile/index
@@ -40,17 +46,20 @@
             .find('#uploadProfilePicModal')
             .load($(this).attr("value"));
     });
+
     //menu bar
     $("#loginMenu").click(function(){
         $("#loginModal").modal("show")
         .find('#loginModal')
         .load($(this).attr("value"));
     });
+
     $("div#create-thread-dropdown").click(function() {
         $("div#create-thread-form").slideToggle("fast");
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
+
     // site_home
     $("#comment_hide_list_thread_btn").click(function(){
         if($(this).text() == 'Comment'){
@@ -114,7 +123,6 @@
 
     $(".child_comment_text_area").keydown(function(event){
         var comment_id = $(this).data('service');
-
         if(event.keyCode == 13){
             $("#child_comment_form_" + comment_id).submit();
             return false;
@@ -153,7 +161,6 @@
 
     $(".hide_comment").click(function(){
         var comment_id = $(this).data('service');
-
         if($("#hide_button_" + comment_id).text() == "Hide"){
             $("#comment_part_" + comment_id).hide();
             $("#hide_button_" + comment_id).text("Show");
@@ -168,17 +175,20 @@
         $("#shown_part").show();
         $("#edit_part").hide();
     });
+
     function beginProfilePicModal(){
         $("#uploadProfilePicModal").modal("show")
         .find('#uploadProfilePicModal')
         .load($(this).attr("value"));
     }
+
     $("li#notif-expansion").click(function() {
         //the reason of length 0 instead of 1 because this code is executed first then the notifcation is opened
         if($('#notif-expansion').parent().find('.open').length == 0){
             $("#notification-form").submit();
         }
     });
+
     function beginLoginModal(){
         $("#loginModal").modal("show")
         .find('#loginModal')
