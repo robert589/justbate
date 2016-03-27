@@ -19,6 +19,7 @@
 div.inline{
     float:left;
 }
+
 /**section, give margin to every new section **/
 .section{
     padding: 0px !important;
@@ -194,6 +195,7 @@ div.modal-body button#sign-up {
     font-size: 2em;
 }
 
+/* thread */
 div#submitThreadVote div#form-control input[type="radio"] {
     margin-right: 1%;
 }
@@ -640,6 +642,11 @@ div#action-button-thing button {
     margin-right: 0;
     background: #1097FF;
     margin-bottom: 20px;
+}
+
+div[id^='comment_edit_part'] form[method='POST'] div.row {
+    margin-right: 0;
+    margin-bottom: 15px;
 }
 
 div.comment-tab div.tabs-above ul.nav-tabs {

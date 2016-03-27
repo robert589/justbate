@@ -20,7 +20,7 @@ use common\models\CommentVote;
     ]
 ]) ?>
 
-<div class="col-md-4">
+<div class="col-md-6">
     <?php if(\Yii::$app->user->getId() == $user_id){ ?>
 
         <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>

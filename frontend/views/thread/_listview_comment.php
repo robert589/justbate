@@ -35,7 +35,7 @@ $comment_id = $model['comment_id'];
 			'comment_id' => $comment_id]) ?>
 		</div>
 
-		<div class="col-xs-6" class="comment-votes">
+		<div class="col-xs-4" class="comment-votes">
 			<!-- Votes part-->
 			<?= $this->render('_comment_votes', [  'comment_id' => $comment_id,
 			'vote' => $vote,
@@ -45,11 +45,13 @@ $comment_id = $model['comment_id'];
 			?>
 		</div>
 
-		<!-- Child commetn and the button, must be started with col-md-6  -->
-		<?= $this->render('_child_comment', ['comment_id' => $comment_id,
-		'thread_id' => $model['thread_id'],
-		'user_id' => $model['user_id'],
-		'child_comment_form' => $child_comment_form ]) ?>
+		<div class="col-xs-8">
+			<!-- Child commetn and the button, must be started with col-md-6  -->
+			<?= $this->render('_child_comment', ['comment_id' => $comment_id,
+			'thread_id' => $model['thread_id'],
+			'user_id' => $model['user_id'],
+			'child_comment_form' => $child_comment_form ]) ?>
+		</div>
 	</div>
 </article>
 <hr>
