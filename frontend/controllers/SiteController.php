@@ -149,9 +149,12 @@ class SiteController extends Controller
 		//get popular category
 		$issue_list = $this->getPopularIssue();
 
+		$validated = User::findOne(['id' => \Yii::$app->user->getId()])->validated;
+
 		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
 									'list_data_provider' => $data_provider,
+									'validated' => $validated,
 									'create_thread_form' => $create_thread_form]);
 	}
 
