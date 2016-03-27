@@ -340,6 +340,8 @@ class ThreadController extends Controller
 		$editted_thread = new EditThreadForm();
 		$editted_thread->thread_id = $_POST['thread_id'];
 		$editted_thread->title = $_POST['title'];
+
+
 		$editted_thread->description = $_POST['description'];
 		if($editted_thread->update()) {
 			//thread data
@@ -353,13 +355,14 @@ class ThreadController extends Controller
 
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
+
 			return $this->render('_title_description_vote',
 				['thread_choices' => $thread_choices,
 				'submitVoteModel' => $submitVoteModel,
 				'comment_providers' => $comment_providers,
 				'user_choice' => $thread['user_choice'],
 				'thread_id' => $editted_thread->thread_id,
-				'title' => $editted_thread->title,
+				'title' => $_POST['title'],
 				'description' => $editted_thread->description]);
 		}
 	}

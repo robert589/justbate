@@ -1,13 +1,13 @@
 <?php
 
+// rendered from
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
 use common\models\CommentVote;
 /** @var $comment_id integer */
-/** @var $user_id integer */
-
+/** @var $belongs boolean */
 
 ?>
 
@@ -21,7 +21,7 @@ use common\models\CommentVote;
 ]) ?>
 
 <div class="col-md-4">
-    <?php if(\Yii::$app->user->getId() == $user_id){ ?>
+    <?php if($belongs){ ?>
 
         <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
         <?= Html::button('Delete', ['class' => 'btn btn-danger', 'id' => 'delete_comment_' . $comment_id]) ?>

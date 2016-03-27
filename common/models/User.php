@@ -20,6 +20,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property integer $validated
+
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -198,6 +200,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
+
 
     /**
      * Removes password reset token

@@ -46,7 +46,7 @@ class UploadProfilePicForm extends Model
             // open image
             $this->imageFile = Image::getImagine()->open($this->imageFile->tempName);
 
-            // rendering information about crop of ONE option 
+            // rendering information about crop of ONE option
             $crop_info = Json::decode($this->crop_info)[0];
             $crop_info['dWidth'] = (int)$crop_info['dWidth']; //new width image
             $crop_info['dHeight'] = (int)$crop_info['dHeight']; //new height image
@@ -81,6 +81,21 @@ class UploadProfilePicForm extends Model
             Yii::$app->end('error');
             return false;
         }
+    }
+
+    public function uploadFacebookPhoto($photos){
+        $uniqId = uniqid();
+        $user_id = Yii::$app->user->getId();
+        $dir = self::getDirectory();
+        $file_name = $uniqId . '_' . $dir . '_'  . $user_id . '.' . 'jpg';
+        $total_path  = $dir . '/' . $file_name;
+
+        $full_path_name = Yii::getAlias('@image_dir_local') . '/'. $total_path;
+        $file = fopen($full_path_name, 'w');
+        fputs($file, $photos);
+        fclose($file);
+
+        return $total_path;
     }
 
     private function getDirectory(){

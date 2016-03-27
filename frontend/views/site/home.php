@@ -6,20 +6,23 @@ use kartik\sidenav\SideNav;
 /** @var $list_data_provider \yii\data\ArrayDataProvider */
 /** @var $issue_list array */
 /** @var $trending_topic_list array */
+/** @var $create_thread_form \frontend\models\CreateThreadForm */
 $this->title = "Home";
 ?>
 <div class="col-xs-12">
 	<div class="col-md-3" id="left-sidebar">
-		<div class="col-xs-12">
-			<table class="table table-bordered table-responsive" id="left-menu">
-				<tr><td><a href=<?= Yii::$app->request->baseUrl . '/site/followee'?>>Your Friend Post</a></td></tr>
-			</table>
-		</div> <!-- div.co-xs-12 -->
+		<?php if(!Yii::$app->user->isGuest){ ?>
+			<div class="col-xs-12">
+				<table class="table table-bordered table-responsive" id="left-menu">
+					<tr><td><a href=<?= Yii::$app->request->baseUrl . '/site/followee'?>>Your Friend Post</a></td></tr>
+				</table>
+			</div> <!-- div.co-xs-12 -->
+		<?php } ?>
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([
 				'type' => SideNav::TYPE_DEFAULT,
-				'heading' => 'Popular tag',
+				'heading' => 'Popular issue',
 				'items' => $issue_list,
 				]) ?>
 		</div><!-- div.col-xs-12 -->
@@ -51,7 +54,6 @@ $this->title = "Home";
 				<?= ListView::widget([
 					'id' => 'threadList',
 					'dataProvider' => $list_data_provider,
-					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
 					'pager' => [

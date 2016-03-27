@@ -10,6 +10,8 @@ use common\widgets\Alert;
 use yii\bootstrap\Modal;
 use common\models\User;
 use yii\web\JsExpression;
+use kartik\widgets\Typeahead;
+use yii\helpers\Url;
 
 //all links
 if(Yii::$app->user->isGuest){
@@ -59,10 +61,12 @@ AppAsset::register($this);
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li id="search-box" class="item">
-                        <?=  Select2::widget([
+                        <?=
+                        Select2::widget([
                             'name' => 'search_box_menu',
                             'class'  => 'form-input',
                             'id' => 'search_box_menu',
+                            'theme' => Select2::THEME_KRAJEE,
                             'options' => ['placeholder' => 'Search'],
                             'pluginEvents' => [
                                 "select2:select" => "function(){

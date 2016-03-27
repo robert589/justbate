@@ -4,6 +4,8 @@ namespace frontend\controllers;
 use common\models\Issue;
 use common\models\ThreadComment;
 use frontend\models\CreateThreadForm;
+use frontend\models\UploadProfilePicForm;
+use frontend\models\ValidateAccountForm;
 use Yii;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -19,6 +21,7 @@ use frontend\models\FilterHomeForm;
 use yii\authclient\ClientInterface;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -94,7 +97,7 @@ class SiteController extends Controller
 		// get user data from client
 		$userAttributes = $client->getUserAttributes();
 		// do some thing with user data. for example with $userAttributes['email']
-		$user = User::find()->where(['email' => $userAttributes['email']])->one();
+		$user = User::find()->where(['facebook_id' => $userAttributes['id']])->one();
 		if(!empty($user)){
 			Yii::$app->user->login($user);
 		}
@@ -310,12 +313,12 @@ class SiteController extends Controller
 	public function actionSearchInNotif($q = null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
-		if (!is_null($q)) {
-			$data = Thread::getThreadsBySearch($q);
+		if ($q != null || $q != '') {
+			$data = Thread::getThreadBySearch($q);
 			$out['results'] = array_values($data);
 		}
 
-		return $out;
+		echo Json::encode($out);
 	}
 
 	/**
@@ -331,9 +334,16 @@ class SiteController extends Controller
 		//if it comes from facebook
 		if(!empty($_GET['fb'])){
 			$session = Yii::$app->session;
-			$model->email = $session['attributes']['email'];
+
+			if(isset($session['attributes']['email'])){
+				$model->email = $session['attributes']['email'];
+			}
+			$model->facebook_id = $session['attributes']['id'];
 			$model->first_name = $session['attributes']['first_name'];
 			$model->last_name = $session['attributes']['last_name'];
+			$url = "https://graph.facebook.com/". $session['attributes']['id'] . "/picture?width=150";
+			$photos = file_get_contents($url);
+			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
 		}
 
 		if ($model->load(Yii::$app->request->post())) {
@@ -398,6 +408,23 @@ class SiteController extends Controller
 		]);
 	}
 
+
+	public function actionValidateAccount(){
+		if(isset($_GET['token'])){
+			$model = new ValidateAccountForm();
+			$model->user_id = \Yii::$app->user->getId();
+			$model->code = $_GET['token'];
+			if($model->validateAccount() == true){
+				return $this->goHome();
+			}
+			else{
+				Yii::$app->end('Code is not recognized');
+				//error
+			}
+		}else{
+			Yii::$app->end("No token given");
+		}
+	}
 
 	public function actionIssueList(){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

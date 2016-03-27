@@ -21,17 +21,10 @@ return [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'clientId' => '1681620248755767',
-                    'attributeNames' => ['id', 'name', 'email', 'first_name', 'last_name'],
+                    'attributeNames' => ['id', 'name', 'email', 'first_name', 'last_name', 'picture'],
                     'clientSecret' => '19c1e888bf719334726be35d58cff0f0',
                 ],
-                'twitter' => [
-                    'class' => 'yii\authclient\clients\Twitter',
-                    'consumerKey' => '6KF1Bq5PNY2xd3Pwpc2DaGUz4 ',
-                    'consumerSecret' => 'LpdUmMftiF3eIcONAHzM0WiWEYdQ9jhid42EDTO1j3BeE9xc7r'
-                ],
-                'google' => [
-                    'class' => 'yii\authclient\clients\GoogleOpenId'
-                ]
+
             ],
         ],
         'urlManager' => [

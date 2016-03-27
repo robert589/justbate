@@ -574,9 +574,6 @@ div.thread-title {
     font-size: 16pt;
 }
 
-div#edit_part {
-    display: none;
-}
 
 div#shown_part {
     display: block;

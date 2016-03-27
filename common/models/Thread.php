@@ -135,4 +135,14 @@ class Thread extends ActiveRecord
 			->queryAll();
 
 	}
+
+	public static function getThreadBySearch($q){
+		$q = '%' . $q . '%';
+		$sql = "Select thread_id as id, title as text from thread where title like :query";
+
+		return \Yii::$app->db
+			->createCommand($sql)
+			->bindParam(':query', $q)
+			->queryAll();
+	}
 }

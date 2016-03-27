@@ -2,6 +2,7 @@
 namespace frontend\models;
 
 use common\models\User;
+use common\models\ValidationToken;
 use yii\base\Model;
 use Yii;
 
@@ -15,7 +16,8 @@ class SignupForm extends Model
     public $password;
     public $first_name;
     public $last_name;
-
+    public $facebook_id;
+    public $photo_path;
     /**
      * @inheritdoc
      */
@@ -24,6 +26,9 @@ class SignupForm extends Model
         return [
             [['first_name' , 'last_name'], 'string' ],
             ['first_name' , 'required' ],
+
+            ['photo_path', 'string'],
+            ['facebook_id', 'integer'],
 
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
@@ -54,10 +59,40 @@ class SignupForm extends Model
             $user->last_name = $this->last_name;
             $user->username = $this->username;
             $user->email = $this->email;
+            $user->photo_path = $this->photo_path;
+            $user->facebook_id = $this->facebook_id;
+
             $user->setPassword($this->password);
+
             $user->generateAuthKey();
-            if ($user->save()) {
-                return $user;
+
+            if ($user->save(false)) {
+                if (!ValidationToken::find()->where(['user_id' => $user->id])->exists()) {
+                    $validation_token = new ValidationToken();
+                    $validation_token->user_id = $user->id;
+                    $validation_token->code = ValidationToken::generateValidationToken();
+                    if ($validation_token->save()) {
+
+                        if(
+                        \Yii::$app->mailer->compose(['html' => 'validateToken-html', 'text' => 'validateToken-text'],
+                            ['user' => $user, 'validation_token' => $validation_token->code ])
+                            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                            ->setTo($this->email)
+                            ->setSubject('Validate your email in ' . \Yii::$app->name)
+                            ->send()
+                        ){
+                            return $user;
+                        }
+                    }
+                    else{
+                        //error
+                    }
+                }
+                else{
+                    //error
+                }
+
+
             }
         }
 

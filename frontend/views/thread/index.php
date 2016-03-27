@@ -71,10 +71,9 @@
 <?= Dialog::widget(); ?>
 
 <div class="col-xs-12 col-md-8" style="background-color: white">
-	<div class="col-xs-12 thread-title">
-		<?= Html::encode($model['title']) ?>
-	</div>
+
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
+
 		<div id="thread-details" class="col-xs-12">
 			<?= $this->render('_title_description_vote', ['title' => $model['title'],
 														'description' => $model['description'],
@@ -87,10 +86,10 @@
 
 		<div class="col-xs-12" id="action-button">
 			<?= Html::button('Comment', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?>
-			<?= Html::button('Share on facebook', ['id' => 'edit_thread', 'class' => 'btn']) ?>
+			<?= Html::button('Share on facebook', ['id' => 'share_on_facebook', 'class' => 'btn']) ?>
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
-				<?= Html::button('Edit', ['id' => 'share-on-facebook', 'class' => 'btn','data-guest' => $guest]) ?>
+				<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn','data-guest' => $guest]) ?>
 			<?php } ?>
 		</div>
 	</div>

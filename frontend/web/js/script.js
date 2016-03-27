@@ -12,17 +12,7 @@
     }
 
     // on site/home
-    $(document).ready(function() {
-        var count = ($("li#notif-expansion ul.dropdown-menu").children().length)+1;
-        var temp = $("a#trigger_notification").text();
-        if (count > 0) {
-            $("a#trigger_notification").text(temp + "(" + count + ")");
-        }
-    });
 
-    $("li#notif-expansion").hover(function() {
-        $("a#trigger_notification").css("color", "#fff");
-    });
 
     //on profile/index
     $("img#avatar").mouseenter(function() {
@@ -74,7 +64,7 @@
     //edit thread part
     $("#edit_thread").click(function(){
         $("#shown_part").hide();
-        $("#edit_part").show();
+        $("#edit_title_description_part").show();
     });
     $("#delete_thread").on("click", function() {
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
