@@ -7,4 +7,3 @@
         <?= $model['comment'] ?>
     </div>
 </article>
-<hr>
