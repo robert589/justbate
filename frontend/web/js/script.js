@@ -12,7 +12,9 @@
     }
 
     // on site/home
-
+    $("div#verify-email-dropdown").click(function() {
+        $("div#verify-email-form").slideToggle("fast");
+    });
 
     //on profile/index
     $("img#avatar").mouseenter(function() {

@@ -46,6 +46,34 @@ div.inline{
     padding-right: 0px !important;
 }
 
+div#verify-email {
+    position: fixed;
+    width: 21.5%;
+    margin-left: 63%;
+}
+
+div#verify-email-form {
+    background: #fff;
+    display: none;
+    padding: 15px;
+    margin-left: 15px;
+    width: calc(100% - 15px);
+}
+
+div#verify-email-form input[type='email'] {
+    padding: 15px;
+    width: 90% !important;
+    text-align: center;
+}
+
+div#verify-email-form button {
+    background: #0E5A94 !important;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 90%;
+    color: #fff;
+}
+
 /* Web Content */
 body {
     background: #E6E6E6!important;
@@ -436,6 +464,7 @@ div#create-thread {
     padding:0px;
 }
 
+div#verify-email-dropdown,
 div#create-thread-dropdown {
     background: #0E5A94;
     color: white;

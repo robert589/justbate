@@ -79,6 +79,21 @@ $this->title = "Home";
 
 	</div> <!-- div.col-md-12 -->
 
+	<?php if(!Yii::$app->user->isGuest){ ?>
+		<div id="verify-email">
+			<div class="col-xs-12" id="verify-email-dropdown">
+				<div id="create-thread-button">Verify Your Email
+					<span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span>
+				</div>
+			</div> <!-- div.col-xs-12 -->
+
+			<div class="col-xs-12" align="center" id="verify-email-form">
+				<input type="email" class="form-control" placeholder="Your Email" name="email" />
+				<button class="btn btn-default">Verify</button>
+			</div> <!-- div.col-xs-12 -->
+		</div>
+	<?php } ?>
+
 	<div class="col-md-3">
 		<?= $this->render('_profile_section') ?>
 	</div>
