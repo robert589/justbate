@@ -58,17 +58,21 @@ div#verify-email-form {
     padding: 15px;
     margin-left: 15px;
     width: calc(100% - 15px);
+    vertical-align: middle;
 }
 
 div#verify-email-form input[type='email'] {
     padding: 15px;
+    border: 1px solid #0E5A94;
+    border-radius: 0;
     width: 90% !important;
     text-align: center;
 }
 
 div#verify-email-form button {
     background: #0E5A94 !important;
-    margin-top: 15px;
+    border: 1px solid #0E5A94;
+    border-radius: 0;
     margin-bottom: 15px;
     width: 90%;
     color: #fff;
