@@ -20,13 +20,8 @@ use common\models\CommentVote;
     ]
 ]) ?>
 
-<<<<<<< HEAD
 <div class="col-md-4">
     <?php if($belongs){ ?>
-=======
-<div class="col-md-6">
-    <?php if(\Yii::$app->user->getId() == $user_id){ ?>
->>>>>>> origin/master
 
         <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
         <?= Html::button('Delete', ['class' => 'btn btn-danger', 'id' => 'delete_comment_' . $comment_id]) ?>
@@ -36,7 +31,7 @@ use common\models\CommentVote;
 </div>
 
 
-<div class="col-md-3" align="left" style="padding: 0px">
+<div class="col-md-4" align="left" style="padding: 0px">
     <?php if(!isset($retrieved)){ ?>
         <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
                                         'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]])
