@@ -47,9 +47,9 @@ div.inline{
 }
 
 div#verify-email {
-    position: fixed;
+    position: absolute;
     width: 21.5%;
-    margin-left: 63%;
+    margin-left: 91%;
 }
 
 div#verify-email-form {
