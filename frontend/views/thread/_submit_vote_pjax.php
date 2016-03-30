@@ -5,6 +5,14 @@ use yii\widgets\Pjax;
 /** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
 /** @var $thread_choices array */
 /** @var $thread_id integer */
+
+// $choice_and_voters array
+$choice_and_voters = array();
+//prepare data
+foreach($thread_choices as $thread_choice){
+    $choice_and_voters[$thread_choice['choice_text']] =$thread_choice['choice_text'] . '( ' . $thread_choice['total_voters'] . ' )';
+}
+
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -28,7 +36,7 @@ use yii\widgets\Pjax;
 
     <div class="col-xs-12" id="vote">
         <!-- User Option -->
-        <?= $form->field($submitVoteModel, 'choice_text')->multiselect($thread_choices, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
+        <?= $form->field($submitVoteModel, 'choice_text')->multiselect($choice_and_voters, ['style' => 'border: 0 !important;', 'selector'=>'radio', 'check' => ['Agree']]) ?>
 
         <!-- Submit vote-->
         <div class="col-xs-12">

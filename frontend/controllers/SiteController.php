@@ -149,7 +149,13 @@ class SiteController extends Controller
 		//get popular category
 		$issue_list = $this->getPopularIssue();
 
-		$validated = User::findOne(['id' => \Yii::$app->user->getId()])->validated;
+		if(!Yii::$app->user->isGuest){
+			$validated = User::findOne(['id' => \Yii::$app->user->getId()])->validated;
+
+		}
+		else{
+			$validated = null;
+		}
 
 		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,

@@ -10,20 +10,21 @@ use frontend\models\EditCommentForm;
 use common\models\Comment;
 use yii\widgets\ActiveForm;
 /** @var $model array */
+/** @var $vote integer */
 $comment_id = $model['comment_id'];
 
 ?>
 
 <article class="block-for-comment">
-	<div class="col-xs-1" class="image-commentator">
+	<div class="col-xs-1 image-commentator">
 		<img class="img img-rounded profile-picture-comment" src="http://www.hit4hit.org/img/login/user-icon-6.png">
 	</div>
-	<div class="col-xs-11" class="non-image-commentator">
+	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
 			<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'],
 			['data-pjax' => 0])?>
 		</div>
-		<div class="col-xs-12" class="comment-created-block">
+		<div class="col-xs-12 comment-created-block">
 			<div class="comment-created">xxxx-yy-zz hh:mm:ss</div>
 		</div>
 	</div>

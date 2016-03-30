@@ -12,16 +12,26 @@ class Choice extends ActiveRecord
     }
 
     public static function getChoiceAndItsVoters($thread_id){
-        $sql = "select thread_choice.choice_text,
-                      concat(thread_choice.choice_text, ' (', count(user_id), ' voters) ') as choice_text_and_total_voters
-                from (select choice_text from choice where thread_id = :thread_id) thread_choice
-      		    left join
-                    (select user_id, choice_text
-                       from thread_vote
-                       where thread_id = :thread_id) current_thread_vote
+        $sql = "Select choice_and_its_voters.choice_text as choice_text,
+                    total_voters,
+                    count(comment_id) as total_comments
+                from(
+                    select thread_choice.choice_text,
+                           count(user_id) as total_voters
+                    from (select choice_text from choice where thread_id = :thread_id) thread_choice
+                    left join
+                            (select user_id, choice_text
+                             from thread_vote
+                             where thread_id = :thread_id) current_thread_vote
+                    on thread_choice.choice_text = current_thread_vote.choice_text
+                    group by(thread_choice.choice_text)
+                    ) choice_and_its_voters
+                left join
 
-      		    on thread_choice.choice_text = current_thread_vote.choice_text
-                group by(thread_choice.choice_text)
+                    ( select * from thread_comment where thread_id = :thread_id ) comment_with_id
+                on comment_with_id.choice_text = choice_and_its_voters.choice_text
+                group by (choice_and_its_voters.choice_text)
+                order by total_comments desc
                     ";
         $result =  \Yii::$app->db->createCommand($sql)->
                     bindParam(':thread_id', $thread_id)->
@@ -33,7 +43,7 @@ class Choice extends ActiveRecord
     public static function getMappedChoiceAndItsVoters($thread_id){
         $thread_choice = self::getChoiceAndItsVoters($thread_id);
         //Map it in proper way
-        return ArrayHelper::map($thread_choice, 'choice_text', 'choice_text_and_total_voters');
+        return $thread_choice;
     }
 
 }

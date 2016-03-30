@@ -51,10 +51,13 @@ class ThreadController extends Controller
 			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
+
 			if($thread['thread_status'] != Thread::STATUS_BANNED){
-				return $this->render('index', ['model' => $thread, 'commentModel' => $commentModel
-					,'thread_choices' => $thread_choices, 'submitVoteModel' => $submitVoteModel,
-					'comment_providers' => $comment_providers]);
+				return $this->render('index', ['model' => $thread,
+											'commentModel' => $commentModel
+											,'thread_choices' => $thread_choices,
+											'submitVoteModel' => $submitVoteModel,
+											'comment_providers' => $comment_providers]);
 			}
 			else{
 				return $this->render('banned');

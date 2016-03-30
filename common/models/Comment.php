@@ -144,7 +144,6 @@ class Comment extends ActiveRecord
 
         //the prev $thread_choice is an associative array, convert to normal array
         //the prev $thread_chocie: e.g  ("agree" : "agree ( 0 voters), " disagree": "disagree (1 voters) " )
-        $thread_choices = array_keys($thread_choices);
 
         //initialize array
         $all_providers = array();
@@ -152,13 +151,13 @@ class Comment extends ActiveRecord
         foreach($thread_choices as $thread_choice){
             //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
             $dataProvider =new ArrayDataProvider([
-                'allModels' => self::getCommentByChoiceText($thread_id, $thread_choice),
+                'allModels' => self::getCommentByChoiceText($thread_id, $thread_choice['choice_text']),
                 'pagination' => [
                     'pageSize' =>10,
                 ],
 
             ]);
-            $all_providers[$thread_choice] = $dataProvider;
+            $all_providers[$thread_choice['choice_text'] . ' (' . $thread_choice['total_comments'] . ')' ] = $dataProvider;
         }
 
         return $all_providers;
