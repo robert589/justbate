@@ -20,28 +20,28 @@
     <?= $comment ?>
 </div>
 
-<?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => [
-    'id' => 'edit_comment_form_' . $comment_id,
-    'data-pjax' => '#edit_comment_' . $comment_id]])?>
+<div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
 
-        <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
-                <!-- Cannot use initial value if used with form -->
-                <?= \yii\redactor\widgets\Redactor::widget([
-                    'name' => 'comment',
-                    'value' => $comment,
-                    'clientOptions' => [
-                        'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
-                    ],
-                ]) ?>
+    <?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => [
+        'data-pjax' => '#edit_comment_' . $comment_id]])?>
 
-                <?= $form->field($edit_comment_form, 'parent_id')->hiddenInput(['value' => $comment_id ])->label(false) ?>
+        <!-- Cannot use initial value if used with form -->
+        <?= \yii\redactor\widgets\Redactor::widget([
+            'name' => 'comment',
+            'value' => \yii\helpers\HtmlPurifier::process($comment),
+            'clientOptions' => [
+                'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
+            ],
+        ]) ?>
 
-                <div align="right" class="row">
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
-                    <?= Html::button('Cancel', ['class' => 'btn btn-danger cancel_edit_comment', 'data-service' => $comment_id]) ?>
-                </div>
+        <?= $form->field($edit_comment_form, 'parent_id')->hiddenInput(['value' => $comment_id ])->label(false) ?>
 
+        <div align="right" class="row">
+            <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+            <?= Html::button('Cancel', ['class' => 'btn btn-danger cancel_edit_comment', 'data-service' => $comment_id]) ?>
         </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
+
+</div>
 
 <?php Pjax::end(); ?>

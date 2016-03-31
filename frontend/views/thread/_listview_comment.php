@@ -54,5 +54,5 @@ $comment_id = $model['comment_id'];
 			'belongs' => (Yii::$app->user->getId() == $model['user_id']),
 		'child_comment_form' => $child_comment_form ]) ?>
 	</div>
+
 </article>
-<hr>

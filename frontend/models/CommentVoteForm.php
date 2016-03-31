@@ -62,7 +62,7 @@ class CommentVoteForm extends Model
 				$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
 				$user = User::findOne(['id' => $comment->user_id]);
 				$user->reputation += 2 * $this->vote;
-				return $user->update();
+				return $user->update(false);
 			}
 			else{
 				return false;
@@ -83,7 +83,7 @@ class CommentVoteForm extends Model
 			$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
 			$user = User::findOne(['id' => $comment->user_id]);
 			$user->reputation += $this->vote;
-			return $user->update();
+			return $user->update(false);
 		}
 		else{
 			return false;

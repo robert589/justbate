@@ -6,7 +6,6 @@ use yii\helpers\Html;
 
 /** @var $thread_id integer */
 /** @var $total_comments integer */
-
 /** @var $comment_providers \yii\data\ArrayDataProvider */
 Pjax::begin([
     'id' => 'comment_section_' . $thread_id,

@@ -285,7 +285,7 @@ class ThreadController extends Controller
 
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
-			return $this->render('_title_description_vote',
+			return $this->renderPartial('_title_description_vote',
 				['thread_choices' => $thread_choices,
 					'submitVoteModel' => $submitVoteModel,
 					'comment_providers' => $comment_providers,
@@ -324,14 +324,11 @@ class ThreadController extends Controller
 
 		if(isset($_POST['comment']) ){
 			$edit_comment_form->comment = $_POST['comment'];
-			if($edit_comment_form->update()){
-				return $this->renderPartial('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
-																'comment' => $edit_comment_form->comment,
-																'edit_comment_form'=> new EditCommentForm()]);
-			}
-			else{
-				//Error
-			}
+			$edit_comment_form->update();
+			return $this->render('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
+															'comment' => $edit_comment_form->comment,
+															'edit_comment_form'=> new EditCommentForm()]);
+
 		}
 		else{
 			Yii::$app->end('error');

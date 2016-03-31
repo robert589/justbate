@@ -11,6 +11,24 @@
 
 /** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
 
+
+$itemsHeader = [
+    [
+        'label' => 'Description',
+        'content' => "<div id='post-description'>" . HtmlPurifier::process($description) . "</div>",
+        'active' => isset($vote_tab_active) ? false: true,
+    ],
+    [
+
+        'label' => 'Vote',
+        'content' => $this->render('_submit_vote_pjax', ['thread_id' => $thread_id,
+            'user_choice' => $user_choice,
+            'thread_choices' => $thread_choices,
+            'submitVoteModel' => $submitVoteModel]),
+        'active' => isset($vote_tab_active) ? true : false,
+    ]
+];
+
 Pjax::begin([
     'id' => 'edit_thread_pjax',
     'timeout' => false,
@@ -20,22 +38,6 @@ Pjax::begin([
     ]]
 );
 
-    $itemsHeader = [
-        [
-            'label' => 'Description',
-            'content' => "<div id='post-description'>" . HtmlPurifier::process($description) . "</div>",
-            'active' => isset($vote_tab_active) ? false: true,
-        ],
-        [
-
-            'label' => 'Vote',
-            'content' => $this->render('_submit_vote_pjax', ['thread_id' => $thread_id,
-                                                            'user_choice' => $user_choice,
-                                                            'thread_choices' => $thread_choices,
-                                                            'submitVoteModel' => $submitVoteModel]),
-            'active' => isset($vote_tab_active) ? true : false,
-        ]
-    ];
 
 ?>
 

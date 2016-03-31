@@ -2,11 +2,11 @@ $(document).ready(function(){
 //layout main
     $(document).on('pjax:send', function() {
         $('#loading-bar').show()
-    })
+    });
     $(document).on('pjax:complete', function() {
         $('#loading-bar').hide();
         console.log("fired");
-    })
+    });
     $('#loading-bar').height($(document).height());
 
 
@@ -125,6 +125,9 @@ $(document).ready(function(){
 
     });
 
+    $('#display_hide_comment_input_box').click(function(){
+    });
+
     $(".child_comment_text_area").keydown(function(event){
             var comment_id = $(this).data('service');
             if(event.keyCode == 13){
@@ -162,7 +165,8 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on('click', '.hide_comment',function(){
+
+    $(".hide_comment").click(function(){
         var comment_id = $(this).data('service');
         if($("#hide_button_" + comment_id).text() == "Hide"){
             $("#comment_part_" + comment_id).hide();
@@ -173,6 +177,7 @@ $(document).ready(function(){
             $("#hide_button_" +comment_id).text("Hide");
         }
     });
+
     $("#cancel_edit_thread_button").click(function(){
         $("#shown_part").show();
         $("#edit_part").hide();
@@ -200,7 +205,7 @@ $(document).ready(function(){
     $("#login_link").click(function(){
         beginLoginModal();
         return false;
-    })
+    });
 
     $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
@@ -210,7 +215,11 @@ $(document).ready(function(){
     $(document).on('submit', 'form[data-pjax]', function(event) {
         var services = '' + $(this).data('pjax');
         $.pjax.defaults.scrollTo = false;
-        $.pjax.submit(event,  services, {push:false});
-    })
+        if(services.indexOf("comment_section") > -1){
+            $.pjax.submit(event,  services, {push:false});
+
+        }
+        
+    });
 
 });

@@ -236,7 +236,7 @@ class SiteController extends Controller
 
 			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
 
-			return $this->renderAjax('_list_thread_comment_part', [
+			return $this->render('_list_thread_comment_part', [
 						'thread_id' => $thread_id,
 						'comment_retrieved' => true,
 						'total_comments' => $total_comments,
