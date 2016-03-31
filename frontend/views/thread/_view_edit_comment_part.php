@@ -16,12 +16,15 @@
     ]);
 ?>
 
-        <div id="comment_shown_part_<?= $comment_id ?>">
-            <?= $comment ?>
-        </div>
+<div id="comment_shown_part_<?= $comment_id ?>">
+    <?= $comment ?>
+</div>
+
+<?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => [
+    'id' => 'edit_comment_form_' . $comment_id,
+    'data-pjax' => '#edit_comment_' . $comment_id]])?>
 
         <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
-            <?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => ['data-pjax' => '#edit_comment_' . $comment_id]])?>
                 <!-- Cannot use initial value if used with form -->
                 <?= \yii\redactor\widgets\Redactor::widget([
                     'name' => 'comment',
@@ -37,8 +40,8 @@
                     <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
                     <?= Html::button('Cancel', ['class' => 'btn btn-danger cancel_edit_comment', 'data-service' => $comment_id]) ?>
                 </div>
-            <?php ActiveForm::end(); ?>
 
         </div>
+<?php ActiveForm::end(); ?>
 
 <?php Pjax::end(); ?>

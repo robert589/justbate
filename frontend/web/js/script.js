@@ -1,3 +1,15 @@
+$(document).ready(function(){
+//layout main
+    $(document).on('pjax:send', function() {
+        $('#loading-bar').show()
+    })
+    $(document).on('pjax:complete', function() {
+        $('#loading-bar').hide();
+        console.log("fired");
+    })
+    $('#loading-bar').height($(document).height());
+
+
     // some script to define the height of edit, delete, share, and comment button
     var x1 = $("#first-part").height();
     var x2 = $("#first-part").width();
@@ -42,8 +54,8 @@
     //menu bar
     $("#loginMenu").click(function(){
         $("#loginModal").modal("show")
-        .find('#loginModal')
-        .load($(this).attr("value"));
+            .find('#loginModal')
+            .load($(this).attr("value"));
     });
 
     $("div#create-thread-dropdown").click(function() {
@@ -53,7 +65,7 @@
     });
 
     // site_home
-    $("#comment_hide_list_thread_btn").click(function(){
+    $(document).on('click', '#comment_hide_list_thread_btn', function(){
         if($(this).text() == 'Comment'){
             $("#list_thread_comment_part").show();
             $('#comment_hide_list_thread_btn').text('Hide');
@@ -78,7 +90,7 @@
     });
 
     //edit comment is at
-    $('.edit_comment').click(function(e){
+    $(document).on('click', '.edit_comment',function(e){
         e.preventDefault();
         var comment_id = $(this).data('service');
         $("#comment_shown_part_" + comment_id).hide();
@@ -86,7 +98,7 @@
     });
 
     //cancel edit comment is at
-    $('.cancel_edit_comment').click(function(e){
+    $(document).on('click','.cancel_edit_comment',function(e){
         e.preventDefault();
         var comment_id = $(this).data('service');
         $("#comment_shown_part_" +  comment_id).show();
@@ -94,7 +106,7 @@
 
     });
 
-    $('#display_hide_comment_input_box').click(function(){
+    $(document).on('click', '#display_hide_comment_input_box', function(){
         if($(this).data('guest') == 0){
             beginLoginModal();
             return false;
@@ -114,24 +126,24 @@
     });
 
     $(".child_comment_text_area").keydown(function(event){
-        var comment_id = $(this).data('service');
-        if(event.keyCode == 13){
-            $("#child_comment_form_" + comment_id).submit();
-            return false;
-        }
-    })
-    .focus(function() {
+            var comment_id = $(this).data('service');
+            if(event.keyCode == 13){
+                $("#child_comment_form_" + comment_id).submit();
+                return false;
+            }
+        })
+        .focus(function() {
 
-        if (this.value == "Add comment here...") {
-            this.value = "";
-        }
-    })
-    .blur(function(){
+            if (this.value == "Add comment here...") {
+                this.value = "";
+            }
+        })
+        .blur(function(){
 
-        if(this.value==""){
-            this.value = "Add comment here...";
-        }
-    });
+            if(this.value==""){
+                this.value = "Add comment here...";
+            }
+        });
 
 
     $(document).on('click', '.home_show_hide', function(){
@@ -150,8 +162,7 @@
         }
     });
 
-
-    $(".hide_comment").click(function(){
+    $(document).on('click', '.hide_comment',function(){
         var comment_id = $(this).data('service');
         if($("#hide_button_" + comment_id).text() == "Hide"){
             $("#comment_part_" + comment_id).hide();
@@ -162,7 +173,6 @@
             $("#hide_button_" +comment_id).text("Hide");
         }
     });
-
     $("#cancel_edit_thread_button").click(function(){
         $("#shown_part").show();
         $("#edit_part").hide();
@@ -170,8 +180,8 @@
 
     function beginProfilePicModal(){
         $("#uploadProfilePicModal").modal("show")
-        .find('#uploadProfilePicModal')
-        .load($(this).attr("value"));
+            .find('#uploadProfilePicModal')
+            .load($(this).attr("value"));
     }
 
     $("li#notif-expansion").click(function() {
@@ -183,8 +193,8 @@
 
     function beginLoginModal(){
         $("#loginModal").modal("show")
-        .find('#loginModal')
-        .load($(this).attr("value"));
+            .find('#loginModal')
+            .load($(this).attr("value"));
     }
 
     $("#login_link").click(function(){
@@ -202,3 +212,5 @@
         $.pjax.defaults.scrollTo = false;
         $.pjax.submit(event,  services, {push:false});
     })
+
+});

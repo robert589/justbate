@@ -122,13 +122,20 @@ AppAsset::register($this);
     Modal::end();
     ?>
 
-    <div class="container" style="margin-top: 73px;">
+    <div class="container" style="position:relative;margin-top: 73px;">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
+        <div id="loading-bar" style="display: none">
+            <div style='position:absolute;z-index:0;left:0;top:0;width:100%;height:100%;background-color:white;opacity: 0.4;'>
+                Loading
+            </div>
+        </div>
     </div>
+
+
 
 <?php
     $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');

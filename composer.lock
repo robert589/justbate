@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.17.2",
+            "version": "3.17.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "433e03ce2d52485e6267bf9cc702ada210833768"
+                "reference": "4d70cbe397c03e84907e10436358f627aab428e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/433e03ce2d52485e6267bf9cc702ada210833768",
-                "reference": "433e03ce2d52485e6267bf9cc702ada210833768",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4d70cbe397c03e84907e10436358f627aab428e6",
+                "reference": "4d70cbe397c03e84907e10436358f627aab428e6",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-03-24 19:15:32"
+            "time": "2016-03-29 22:53:44"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -138,16 +138,16 @@
         },
         {
             "name": "bower-asset/bootstrap3-dialog",
-            "version": "v1.35.0",
+            "version": "v1.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nakupanda/bootstrap3-dialog.git",
-                "reference": "5304d56cd33da77b8c8e6e250e8f39211d191a0e"
+                "reference": "d2a240e776951bcf61ecebc0c358a7db801ca931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nakupanda/bootstrap3-dialog/zipball/5304d56cd33da77b8c8e6e250e8f39211d191a0e",
-                "reference": "5304d56cd33da77b8c8e6e250e8f39211d191a0e",
+                "url": "https://api.github.com/repos/nakupanda/bootstrap3-dialog/zipball/d2a240e776951bcf61ecebc0c358a7db801ca931",
+                "reference": "d2a240e776951bcf61ecebc0c358a7db801ca931",
                 "shasum": ""
             },
             "require": {
@@ -400,16 +400,16 @@
         },
         {
             "name": "bupy7/yii2-widget-cropbox",
-            "version": "4.0.0",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bupy7/yii2-widget-cropbox.git",
-                "reference": "e98b0bf335e5c885a67599b4f9097701836df205"
+                "reference": "25b2f417c3db9e1cba22078bf3140a79db0a4324"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bupy7/yii2-widget-cropbox/zipball/e98b0bf335e5c885a67599b4f9097701836df205",
-                "reference": "e98b0bf335e5c885a67599b4f9097701836df205",
+                "url": "https://api.github.com/repos/bupy7/yii2-widget-cropbox/zipball/25b2f417c3db9e1cba22078bf3140a79db0a4324",
+                "reference": "25b2f417c3db9e1cba22078bf3140a79db0a4324",
                 "shasum": ""
             },
             "require": {
@@ -442,7 +442,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-08-19 05:28:04"
+            "time": "2016-03-19 20:07:06"
         },
         {
             "name": "cebe/markdown",
@@ -1557,22 +1557,27 @@
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
-            "version": "v1.3.7",
+            "version": "v1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-                "reference": "ff5a97576c49a72e0480f135d9e7ce1a18c788e6"
+                "reference": "3f7b38886e334a2c8c4262f155d98812461efd36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/ff5a97576c49a72e0480f135d9e7ce1a18c788e6",
-                "reference": "ff5a97576c49a72e0480f135d9e7ce1a18c788e6",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/3f7b38886e334a2c8c4262f155d98812461efd36",
+                "reference": "3f7b38886e334a2c8c4262f155d98812461efd36",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-krajee-base": "~1.7"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "kartik\\date\\": ""
@@ -1602,7 +1607,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-10 15:14:17"
+            "time": "2016-03-29 09:44:50"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
@@ -2321,21 +2326,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kop/yii2-scroll-pager.git",
-                "reference": "08b19abb2139ff18c91d5178f17891ab2fa14316"
+                "reference": "3dedbd3203e5a05123e1a024dff2dbbce4cfca19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/08b19abb2139ff18c91d5178f17891ab2fa14316",
-                "reference": "08b19abb2139ff18c91d5178f17891ab2fa14316",
+                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/3dedbd3203e5a05123e1a024dff2dbbce4cfca19",
+                "reference": "3dedbd3203e5a05123e1a024dff2dbbce4cfca19",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0",
-                "webcreate/jquery-ias": "~2.2.0",
+                "webcreate/jquery-ias": "^2.2.1",
                 "yiisoft/yii2": "*"
-            },
-            "require-dev": {
-                "codeception/codeception": "~2.0"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -2364,24 +2366,27 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-10-19 12:44:33"
+            "time": "2016-03-29 02:46:33"
         },
         {
             "name": "mdmsoft/yii2-admin",
-            "version": "2.4",
+            "version": "2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mdmsoft/yii2-admin.git",
-                "reference": "446d95649f36d3168ab9290c51d617d9d7d14b31"
+                "reference": "855c44852ce5be73eb112b9bcf1f5541e291093d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/446d95649f36d3168ab9290c51d617d9d7d14b31",
-                "reference": "446d95649f36d3168ab9290c51d617d9d7d14b31",
+                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/855c44852ce5be73eb112b9bcf1f5541e291093d",
+                "reference": "855c44852ce5be73eb112b9bcf1f5541e291093d",
                 "shasum": ""
             },
             "require": {
-                "yiisoft/yii2": "~2.0.4"
+                "yiisoft/yii2": "~2.0.7"
+            },
+            "require-dev": {
+                "yiisoft/yii2-codeception": "~2.0"
             },
             "suggest": {
                 "yiisoft/yii2-bootstrap": "Used when using layout 'left-menu', 'right-menu' or 'top-menu'"
@@ -2391,6 +2396,10 @@
                 "branch-alias": {
                     "dev-1.0.master": "1.0.x-dev",
                     "dev-master": "2.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
                 }
             },
             "autoload": {
@@ -2415,7 +2424,7 @@
                 "rbac",
                 "yii"
             ],
-            "time": "2016-03-11 18:17:22"
+            "time": "2016-03-19 13:40:35"
         },
         {
             "name": "mtdowling/jmespath.php",

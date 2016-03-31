@@ -11,7 +11,7 @@ use yii\helpers\Html;
 Pjax::begin([
     'id' => 'comment_section_' . $thread_id,
     'enablePushState' => false,
-    'timeout' => 6000,
+    'timeout' => false,
     'options' => [
         'container' => '#comment_section_' . $thread_id
     ]

@@ -11,7 +11,6 @@
 	/** @var $thread_choices array */
 	/** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
 
-
 	$this->title =  $model['title'];
 
 	//Store this variable for javascript
@@ -111,9 +110,12 @@
 		<div id="comment-tab">
 			<?= // Ajax Tabs Above
 				TabsX::widget([
+					'id' => 'comment-tab',
 					'items'=>$content_comment,
+
 					'position'=>TabsX::POS_ABOVE,
-					'encodeLabels'=>false
+					'encodeLabels'=>false,
+					'enableStickyTabs' => true
 				])
 			?>
 		</div>

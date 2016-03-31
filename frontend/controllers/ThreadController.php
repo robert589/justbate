@@ -157,7 +157,7 @@ class ThreadController extends Controller
 				$commentModel->user_id = \Yii::$app->user->getId();
 				if($commentModel->store()){
 					if($this->updateCommentNotification($commentModel->user_id, $thread_id)){
-						return  $this->redirect(Yii::$app->request->baseUrl . '/thread/index?id=' . $thread_id );
+						return  $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id );
 					}
 				}
 				else{
@@ -325,7 +325,7 @@ class ThreadController extends Controller
 		if(isset($_POST['comment']) ){
 			$edit_comment_form->comment = $_POST['comment'];
 			if($edit_comment_form->update()){
-				return $this->renderAjax('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
+				return $this->renderPartial('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
 																'comment' => $edit_comment_form->comment,
 																'edit_comment_form'=> new EditCommentForm()]);
 			}

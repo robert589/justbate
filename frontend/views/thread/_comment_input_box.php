@@ -2,6 +2,13 @@
     use yii\widgets\ActiveForm;
     use kartik\widgets\Select2;
     use yii\helpers\Html;
+    /* @var $thread_choices array **/
+    /* @var $commentModel \frontend\models\CommentForm */
+    //prepare data
+    $choice_text = array();
+    foreach($thread_choices as $choice){
+        $choice_text[$choice['choice_text']]  = $choice['choice_text'];
+    }
 ?>
 
 
@@ -29,7 +36,7 @@
     <div class="row">
         <div class="col-xs-6">
             <?= $form->field($commentModel, 'choice_text')->widget(Select2::classname(), [
-                'data' => $thread_choices,
+                'data' => $choice_text,
                 'hideSearch' => true,
                 'options' => ['placeholder' => 'Choose your side ...'],
                 'pluginOptions' => [

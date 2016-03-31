@@ -12,12 +12,13 @@ use yii\widgets\ActiveForm;
 /** @var $model array */
 /** @var $vote integer */
 $comment_id = $model['comment_id'];
-
 ?>
 
 <article class="block-for-comment">
 	<div class="col-xs-1 image-commentator">
-		<img class="img img-rounded profile-picture-comment" src="http://www.hit4hit.org/img/login/user-icon-6.png">
+		<?php if(isset($model['photo_path'])){ ?>
+		<img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
+		<?php } ?>
 	</div>
 	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
@@ -25,7 +26,7 @@ $comment_id = $model['comment_id'];
 			['data-pjax' => 0])?>
 		</div>
 		<div class="col-xs-12 comment-created-block">
-			<div class="comment-created">xxxx-yy-zz hh:mm:ss</div>
+			<div class="comment-created"><?= $model['date_created']?></div>
 		</div>
 	</div>
 
