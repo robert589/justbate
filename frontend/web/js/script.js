@@ -1,5 +1,5 @@
 $(document).ready(function(){
-//layout main
+    //layout main
     $(document).on('pjax:send', function() {
         $('#loading-bar').show()
     });
@@ -24,9 +24,38 @@ $(document).ready(function(){
     }
 
     // on site/home
-    $("div#verify-email-dropdown").click(function() {
+    $(document).on('click',"div#verify-email-dropdown",function() {
         $("div#verify-email-form").slideToggle("fast");
     });
+
+    $(document).on('click', '#resend-unverified-email-button',function(){
+
+    });
+
+    $(document).on('click', '#change-unverified-email-button', function(){
+        if($(this).text() == 'Change'){
+            $("#resendchangeemailform-user_email").prop('readonly', false);
+            $(this).text('Confirm');
+        }
+        else if($(this).text() == 'Confirm') {
+            $("#resendchangeemailform-command").val("change");
+            //    $("#resendchangeemailform-email").val("rlimanto001@gmail.com");
+            $("#change-verify-email-form").submit();
+            $(this).text('Change');
+            $("#resendchangeemailform-user_email").prop('readonly', true);
+        }
+    });
+
+    $(document).on('pjax:send', '#change-verify-email-pjax', function(){
+        $('#resend-unverified-email-button').prop('disabled', true);
+        $('#change-unverified-email-button').prop('disabled', true);
+
+       if($("#command-change-verify-email").val() == 'change'){
+           $("#change-verify-email-status").html("Changing your email...")
+       }
+    });
+
+
 
     //on profile/index
     $("img#avatar").mouseenter(function() {
@@ -219,7 +248,7 @@ $(document).ready(function(){
             $.pjax.submit(event,  services, {push:false});
 
         }
-        
+
     });
 
 });

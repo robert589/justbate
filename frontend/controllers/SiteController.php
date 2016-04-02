@@ -3,7 +3,9 @@ namespace frontend\controllers;
 
 use common\models\Issue;
 use common\models\ThreadComment;
+use frontend\models\ChangeEmailForm;
 use frontend\models\CreateThreadForm;
+use frontend\models\ResendChangeEmailForm;
 use frontend\models\UploadProfilePicForm;
 use frontend\models\ValidateAccountForm;
 use Yii;
@@ -150,10 +152,19 @@ class SiteController extends Controller
 		$issue_list = $this->getPopularIssue();
 
 		if(!Yii::$app->user->isGuest){
-			$validated = User::findOne(['id' => \Yii::$app->user->getId()])->validated;
-
+			$user = User::findOne(['id' => Yii::$app->user->getId()]);
+			$validated = $user->validated;
+			if($validated == 1){
+				$change_email_form = null;
+			}
+			else{
+				$change_email_form = new ResendChangeEmailForm();
+				$change_email_form->user_email = $user->email;
+				$change_email_form->command = 'Yes';
+			}
 		}
 		else{
+			$change_email_form = null;
 			$validated = null;
 		}
 
@@ -161,7 +172,34 @@ class SiteController extends Controller
 									'trending_topic_list' => $trending_topic_list,
 									'list_data_provider' => $data_provider,
 									'validated' => $validated,
+									'change_email_form' => $change_email_form,
 									'create_thread_form' => $create_thread_form]);
+	}
+
+	public function actionChangeVerifyEmail(){
+		Yii::$app->end(var_dump($_POST));
+
+		$change_email_form = new ResendChangeEmailForm();
+		if($change_email_form->load(Yii::$app->request->post()) && $change_email_form->validate()){
+			if($change_email_form->change()){
+				return $this->renderPartial('_home_verify-email', [
+					'change_email_form'=> $change_email_form,
+					'message' => '']);
+			}
+
+		}
+		else{
+			if($change_email_form->hasErrors()){
+				$message = $change_email_form->getErrors()[0];
+			}
+			else{
+				$message = 'Failed to change/resend email';
+			}
+		}
+		return $this->renderPartial('_home_verify-email', [
+			'change_email_form' => $change_email_form,
+			'message' => $message]);
+
 	}
 
 	public function actionFollowee() {
