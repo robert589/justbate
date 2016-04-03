@@ -29,7 +29,8 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#resend-unverified-email-button',function(){
-
+        $("#resendchangeemailform-command").val("resend");
+        $("#change-verify-email-form").submit();
     });
 
     $(document).on('click', '#change-unverified-email-button', function(){

@@ -177,7 +177,6 @@ class SiteController extends Controller
 	}
 
 	public function actionChangeVerifyEmail(){
-		Yii::$app->end(var_dump($_POST));
 
 		$change_email_form = new ResendChangeEmailForm();
 		if($change_email_form->load(Yii::$app->request->post()) && $change_email_form->validate()){
