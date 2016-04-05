@@ -1,5 +1,5 @@
-    <?php
-use \yii\web\Request;
+<?php
+use common\components\Request;
 
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
@@ -20,9 +20,9 @@ return [
             'clients' => [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => '1681620248755767',
+                    'clientId' => '188756388177786',
                     'attributeNames' => ['id', 'name', 'email', 'first_name', 'last_name', 'picture'],
-                    'clientSecret' => '19c1e888bf719334726be35d58cff0f0',
+                    'clientSecret' => 'fb3e83d5bbdb13d5a6778f62e762ee5c',
                 ],
 
             ],
@@ -48,7 +48,7 @@ return [
             'enableAutoLogin' => true,
         ],
         'request'=>[
-            'class' => 'common\components\Request',
+            'class' => 'common\components\request',
             'web'=> '/frontend/web'
         ],
         'log' => [

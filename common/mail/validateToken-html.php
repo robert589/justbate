@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $user common\models\User */
 /* @var $validation_token string */
 
-$validate_link = Yii::$app->request->baseUrl . 'site/validate-account?token=' .$validation_token ;
+$validate_link = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $validation_token]);
 ?>
 <div class="password-reset">
     <p>Hello <?= Html::encode($user->username) ?>,</p>
