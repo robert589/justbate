@@ -52,35 +52,6 @@ div#verify-email {
     margin-left: 91%;
 }
 
-div#verify-email-mobile {
-    background: #fff;
-    padding-top: 15px;
-    margin-top: -20px;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-div#verify-email-mobile-title {
-    background: #0E5A94;
-    padding: 15px;
-    margin: -15px;
-    margin-bottom: 15px;
-}
-
-div#verify-email-dropdown-mobile {
-    background: #0E5A94;
-    margin-top: -15px;
-    width: 100%;
-}
-
-input#email-verify-input-mobile {
-    margin-top: -15px;
-    border: 0;
-    border-radius: 0;
-    width: 100%;
-    padding: 0;
-}
-
 div#verify-email-form {
     background: #fff;
     display: none;
@@ -108,7 +79,6 @@ div#verify-email-form button {
     color: #fff;
 }
 
-div#verify-email-form-mobile button#resend-button,
 div#verify-email-form button#resend-button {
     background: #91656B !important;
     border-radius: 0;
@@ -460,7 +430,16 @@ ul.dropdown-menu div.kv-spin-center {
     padding: 15px;
 }
 
+div#main-container {
+    position: relative !important;
+    margin-top: 113px !important;
+}
+
 @media screen and (max-width: 767px) {
+    div#main-container {
+        margin-top: 20px;
+    }
+
     div#left-part-of-thread {
         width: 100%;
         margin: 0;
@@ -486,11 +465,6 @@ ul.dropdown-menu div.kv-spin-center {
         width: 100%;
     }
 
-    li#notif-expansion ul.dropdown-menu {
-        margin-top: 15px;
-        margin-left: -15px;
-    }
-
     div#left-sidebar {
         display: none;
     }
@@ -498,6 +472,53 @@ ul.dropdown-menu div.kv-spin-center {
     div#main-content {
         margin-left: 0;
     }
+
+    nav#menubar {
+        margin-bottom: 0;
+    }
+
+    div.container {
+        width: 100%;
+    }
+
+    div#verify-email {
+        margin-left: 0;
+        top: 50px;
+        left: 0;
+        position: fixed;
+        width: 100% !important;
+    }
+
+    div#verify-email-dropdown {
+        width: 100% !important;
+    }
+
+    div#verify-email-form {
+        width: calc(100%);
+        padding-left: -15px;
+    }
+
+    li#notif-expansion {
+        text-align: left !important;
+    }
+
+    a#trigger_notification {
+        padding-left: 10px;
+        background: none;
+    }
+
+    a#trigger_notification:hover {
+        color: white;
+    }
+
+    li#notif-expansion ul.dropdown-menu {
+        width: 100% !important;
+        margin-top: 15px !important;
+    }
+}
+
+a#trigger_notification {
+    background: none;
 }
 
 div#main-post-desc {
@@ -511,6 +532,11 @@ div#create-thread {
     margin-top: 0px;
     width: 100% !important;
     padding:0px;
+}
+
+div#verify-email-button {
+    text-align: center;
+    text-transform: uppercase;
 }
 
 div#verify-email-dropdown,
@@ -566,7 +592,6 @@ div#login-form div.form-group label.control-label {
 li#notification-bar {
     margin: 15px 0 0 10px;
 }
-
 
 div.thread-view {
     width: 100% !important;
