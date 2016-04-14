@@ -6,6 +6,8 @@
 
 # netbeans project files
 nbproject
+environments
+phpmyadmin
 
 # zend studio for eclipse project files
 .buildpath

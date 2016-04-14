@@ -10,6 +10,7 @@
 	/** @var $comment_providers \yii\data\ArrayDataProvider */
 	/** @var $thread_choices array */
 	/** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
+	/** @var $thread_issues array all issues of the title */
 
 	$this->title =  $model['title'];
 
@@ -72,6 +73,10 @@
 <div class="col-xs-12 col-md-8" style="background-color: white">
 
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
+
+		<div style="margin: 5px;display: inline-block">
+			<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
+		</div>
 
 		<div id="thread-details" class="col-xs-12">
 			<?= $this->render('_title_description_vote', ['title' => $model['title'],

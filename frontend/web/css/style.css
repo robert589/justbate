@@ -598,10 +598,10 @@ div.thread-view {
     padding-right: -30px;
     margin-left: -15px !important;
     margin-right: -15px !important;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     box-sizing: border-box;
     padding-bottom: 30px !important;
-    padding-top: 30px !important;
+    padding-top: 10px !important;
     background: #fff;
     border-left: 3px solid #0E5A94;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;;

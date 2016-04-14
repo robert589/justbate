@@ -72,8 +72,10 @@ $this->title = "Home";
 								'itemView' => function ($model, $key, $index, $widget) {
 
 									$comment = \common\models\ThreadComment::getBestCommentFromThread($model['thread_id']);
-
-									return $this->render('_list_thread',['model' => $model, 'comment' => $comment]);
+									$thread_issues = \common\models\ThreadIssue::getIssue($model['thread_id']);
+									return $this->render('_list_thread',['model' => $model,
+										'comment' => $comment,
+										'thread_issues' => $thread_issues]);
 								}
 							])
 							?>

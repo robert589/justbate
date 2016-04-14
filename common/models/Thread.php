@@ -27,17 +27,16 @@ class Thread extends ActiveRecord
 						";
 		if($issue == null){
 			$sql =  $template_sql;
-
 			return  \Yii::$app->db->createCommand($sql)->queryAll();
-
 		}
 		else{
 			$sql =  "Select thread_info.*, count(thread_comment.comment_id) as total_comments
-					from (Select thread.*, user.* from thread, user, thread_issue
+					from (Select thread.*, user.* from thread, user, thread_issue, issue
 						  where thread.user_id = user.id and
 								thread_status = 10   and
 								thread_issue.thread_id = thread.thread_id
-								and thread_issue.issue_id = :issue_id
+								and issue.issue_name = :issue_name
+                          		and issue.issue_id = thread_issue.issue_id
 								) thread_info
 						  left join thread_comment
 						  on thread_info.thread_id = thread_comment.thread_id
@@ -47,7 +46,7 @@ class Thread extends ActiveRecord
 			";
 
 			return  \Yii::$app->db->createCommand($sql)->
-									bindParam(':issue_id', $issue)
+									bindParam(':issue_name', $issue)
 									->queryAll();
 		}
 

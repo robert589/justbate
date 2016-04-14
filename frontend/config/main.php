@@ -36,6 +36,7 @@ return [
                     'login' => 'site/login',
                     'signup' => 'site/signup',
                     'thread/<id:\d+>' => 'thread/index',
+                    'issue/<issue:[%20 a-zA-Z]+>' => 'site/home',
                     'user/<username:\w+>' => 'profile/index',
                     [
                         'pattern' => 'user/<username:\w+>/<attr:\w+>',

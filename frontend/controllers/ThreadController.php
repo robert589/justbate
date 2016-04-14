@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteThreadForm;
 use frontend\models\EditCommentForm;
@@ -45,10 +46,16 @@ class ThreadController extends Controller
 			//thread data
 			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
 			$commentModel = new CommentForm();
+
+			//thread_issue
+			$thread_issues = ThreadIssue::getIssue($thread_id);
+
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+
 			//get all comment providers
 			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
+
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
 
@@ -56,6 +63,7 @@ class ThreadController extends Controller
 				return $this->render('index', ['model' => $thread,
 											'commentModel' => $commentModel
 											,'thread_choices' => $thread_choices,
+											'thread_issues' => $thread_issues,
 											'submitVoteModel' => $submitVoteModel,
 											'comment_providers' => $comment_providers]);
 			}

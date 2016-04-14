@@ -13,6 +13,11 @@
 
 <article>
 	<div class="col-xs-12 thread-view">
+
+		<div style="margin-bottom:3px">
+			<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
+		</div>
+
 		<div class="col-xs-12 thread-link">
 			<?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'])?>
 		</div>

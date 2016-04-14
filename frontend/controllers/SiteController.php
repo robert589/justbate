@@ -129,6 +129,7 @@ class SiteController extends Controller
 		//get Issue
 		if(!empty($_GET['issue'])){
 			$result = Thread::getThreads($_GET['issue']);
+
 		}
 		else{
 			$result = Thread::getThreads();
@@ -510,7 +511,7 @@ class SiteController extends Controller
 		$mapped_category_list = array();
 		foreach($category_list as $category){
 			$mapped_category['label'] = $category['issue_name'];
-			$mapped_category['url']  = Yii::$app->request->baseUrl . '/site/home?issue=' . $category['issue_name'];
+			$mapped_category['url']  = Yii::$app->request->baseUrl . '/issue/' . $category['issue_name'];
 
 			$mapped_category_list[] = $mapped_category;
 		}
