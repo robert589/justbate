@@ -39,7 +39,7 @@ class NotificationForm extends Model
         if($this->validate()){
             $trigger_user = User::findIdentity(['user_id' => $this->trigger_id]);
             $trigger_user_full_name = $trigger_user['first_name'] . ' ' . $trigger_user['last_name'];
-            $trigger_user_link = \Yii::$app->request->baseUrl . '/profile/index?username=' . $trigger_user['username'];
+            $trigger_user_link = \Yii::$app->request->baseUrl . '/user/' . $trigger_user['username'];
             $notification = new Notification();
             $notification->user_id = $this->triggered_id;
             $notification->description = "<a data-pjax=0 href='". $trigger_user_link .  "'>$trigger_user_full_name</a> commented on your thread";
@@ -64,7 +64,7 @@ class NotificationForm extends Model
         if($this->validate()){
             $trigger_user = User::findIdentity(['user_id' => $this->trigger_id]);
             $trigger_user_full_name = $trigger_user['first_name'] . ' ' . $trigger_user['last_name'];
-            $trigger_user_link = \Yii::$app->request->baseUrl . '/profile/index?username=' . $trigger_user['username'];
+            $trigger_user_link = \Yii::$app->request->baseUrl . '/user/' . $trigger_user['username'];
 
             $notification = new Notification();
             $notification->user_id = $this->triggered_id;

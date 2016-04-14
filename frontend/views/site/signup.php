@@ -31,7 +31,6 @@ $this->title = 'Signup';
 
                 </div>
 
-                <?= $form->field($model, 'username') ?>
 
                 <?= $form->field($model, 'email') ?>
 

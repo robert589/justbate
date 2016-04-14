@@ -17,7 +17,7 @@ if(empty($redirect_from)){
 
     <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'post']) ?>
         <div class="row" id="login-form">
-            <div class="col-xs-12"><?= $form->field($login_form, 'username')->textInput(['placeholder' => 'Your Username']) ?></div>
+            <div class="col-xs-12"><?= $form->field($login_form, 'email')->textInput(['placeholder' => 'Your Username']) ?></div>
             <div class="col-xs-12"><?= $form->field($login_form, 'password')->passwordInput(['placeholder' => 'Your Password']) ?></div>
         </div>
 

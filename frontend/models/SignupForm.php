@@ -11,7 +11,6 @@ use Yii;
  */
 class SignupForm extends Model
 {
-    public $username;
     public $email;
     public $password;
     public $first_name;
@@ -29,11 +28,6 @@ class SignupForm extends Model
 
             ['photo_path', 'string'],
             ['facebook_id', 'integer'],
-
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -57,11 +51,13 @@ class SignupForm extends Model
             $user = new User();
             $user->first_name = $this->first_name;
             $user->last_name = $this->last_name;
-            $user->username = $this->username;
             $user->email = $this->email;
-            $user->photo_path = $this->photo_path;
-            $user->facebook_id = $this->facebook_id;
+            if($this->photo_path != null){
+                $user->photo_path = $this->photo_path;
+            }
 
+            $user->facebook_id = $this->facebook_id;
+            $user->username = $this->generateUsername();
             $user->setPassword($this->password);
 
             $user->generateAuthKey();
@@ -72,7 +68,6 @@ class SignupForm extends Model
                     $validation_token->user_id = $user->id;
                     $validation_token->code = ValidationToken::generateValidationToken();
                     if ($validation_token->save()) {
-
                         if(
                         \Yii::$app->mailer->compose(['html' => 'validateToken-html', 'text' => 'validateToken-text'],
                             ['user' => $user, 'validation_token' => $validation_token->code ])
@@ -97,5 +92,29 @@ class SignupForm extends Model
         }
 
         return null;
+    }
+
+    public function generateUsername(){
+
+        $base_username = strtolower($this->first_name) . '.' . strtolower($this->last_name);
+        $i = 0;
+        while(true){
+
+            if($i != 0){
+                $update_username = $base_username . '.' . $i;
+            }
+            else{
+                $update_username = $base_username;
+            }
+
+            if(User::find()->where(['username' => $update_username])->exists()){
+                $i++;
+            }
+            else{
+                //Yii::$app->end($update_username);
+                return $update_username;
+            }
+        }
+
     }
 }
