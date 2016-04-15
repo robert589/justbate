@@ -18,7 +18,7 @@
 )
 
 ?>
-<div id="verify-email">
+<div id="verify-email" style="margin-left: -15px;">
     <?php $form = \yii\widgets\ActiveForm::begin(['action' => ['site/change-verify-email'],
                                                 'method' => 'post',
                                                 'id' => 'change-verify-email-form',

@@ -118,7 +118,7 @@ nav#menubar {
     border: 0;
     font-size: 1em;
     border-radius: 0 !important;
-    text-transform: uppercase;
+    text-transform: capitalize;;
     background: #fff !important;
     border-bottom: 3px solid #0E5A94;
 }
