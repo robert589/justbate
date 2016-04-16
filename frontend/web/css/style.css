@@ -779,7 +779,7 @@ div.comment-tab div.tabs-above ul.nav-tabs {
 }
 
 div.comment-tab div.tabs-above ul.nav-tabs li {
-    width: 100%;
+    width: 25%;
     border-bottom: 1px solid #ddd;
 }
 
