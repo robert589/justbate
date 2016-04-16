@@ -56,9 +56,8 @@ Modal::end();
 ?>
 <!-- Page Content -->
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
-<div class="col-xs-12" style="background-color: white;">
+<div class="col-xs-12" id="profile-picture-main-body">
 	<div class="row">
-		<br>
 		<div class="col-xs-4 col-md-2">
 			<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>"
 			alt="Profile Picture"
@@ -66,7 +65,7 @@ Modal::end();
 			id="avatar">
 			<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 		</div>
-		<div class="col-xs-8 col-md-4" id="profile-details">
+		<div class="col-xs-6 col-md-4" id="profile-details">
 			<div id="displayName">
 				<?= $user->first_name ?> <?= $user->last_name ?>
 				<div align="right">
@@ -84,8 +83,8 @@ Modal::end();
 	<hr />
 
 	<!-- Profile Main Details -->
-	<div class="row" id="profile-sidebar">
-		<div class="col-xs-2">
+	<div id="profile-sidebar">
+		<div class="col-xs-3" id="profile-sidebar-details">
 			<ul id="profil-sidebar-nav" class="sidebar-nav">
 				<div id="profile-feed"><div>Feeds</div></div>
 				<a href="<?= $comment_link ?>"><li>Comments</li></a>
@@ -94,7 +93,7 @@ Modal::end();
 				<a href="<?= $followee_link?>"><li><div class="btn-group-horizontal" style="padding-bottom: 15px;"><button class="btn btn-default">Following</button><button class="btn btn-disabled"><?= $num_followings ?></button></div></li></a>
 			</ul>
 		</div>
-		<div class="col-xs-10 col-md-6" id="profile-history">
+		<div class="col-xs-8" id="profile-history">
 			<?php if($type == ProfileController::THREAD_STARTERS){ ?>
 				<h3>Thread Starters</h3>
 				<?= ListView::widget([

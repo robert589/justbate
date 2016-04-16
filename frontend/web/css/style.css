@@ -436,6 +436,10 @@ div#main-container {
 }
 
 @media screen and (max-width: 767px) {
+    div#profile-history {
+
+    }
+
     div#main-container {
         margin-top: 20px;
     }
@@ -482,9 +486,8 @@ div#main-container {
     }
 
     div#verify-email {
-        margin-left: 0;
+        margin-left: -45px !important;
         top: 50px;
-        left: 0;
         position: fixed;
         width: 100% !important;
     }
@@ -515,6 +518,10 @@ div#main-container {
         width: 100% !important;
         margin-top: 15px !important;
     }
+}
+
+img#profile-picture-home {
+    padding-right: 15px;
 }
 
 a#trigger_notification {
@@ -772,7 +779,7 @@ div.comment-tab div.tabs-above ul.nav-tabs {
 }
 
 div.comment-tab div.tabs-above ul.nav-tabs li {
-    width: 100px !important;
+    width: 100%;
     border-bottom: 1px solid #ddd;
 }
 
@@ -904,6 +911,16 @@ div#profile-feed {
     text-decoration: none;
 }
 
+div#profile-picture-main-body {
+    background: #fff;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+div#profile-sidebar {
+    width: 100%;
+}
+
 ul#profile-sidebar-nav {
     min-height: 350px;
     border: 1px solid #ddd;
@@ -922,8 +939,7 @@ table#bio-table {
 
 /* Profile History - Comments, Thread Starters, Following, and Followers */
 div#profile-history {
-    margin-left: 45px;
-    padding: 0;
+    margin-left: 15px;
 }
 
 div#profile-history h3 {
