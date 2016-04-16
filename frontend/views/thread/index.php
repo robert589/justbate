@@ -90,7 +90,9 @@
 
 		<div class="col-xs-12" id="action-button">
 			<?= Html::button('Comment', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?>
-			<?= Html::button('Share on facebook', ['id' => 'share_on_facebook', 'class' => 'btn']) ?>
+			<!-- Not working yet
+			 Html::button('Share on facebook', ['id' => 'share_on_facebook', 'class' => 'btn'])
+			-->
 			<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
 				<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
 				<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn','data-guest' => $guest]) ?>
@@ -98,9 +100,11 @@
 		</div>
 	</div>
 
-	<div class="col-xs-12" id="ask_to_login" style="display: none;">
-		You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
-	</div>
+	<!-- Not working yet
+		<div class="col-xs-12" id="ask_to_login" style="display: none;">
+			You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
+		</div>
+	-->
 
 	<div  id="comment_section" class="section col-xs-12" style="display:none">
 		<div class="row" >
@@ -117,7 +121,6 @@
 				TabsX::widget([
 					'id' => 'comment-tab',
 					'items'=>$content_comment,
-
 					'position'=>TabsX::POS_ABOVE,
 					'encodeLabels'=>false,
 					'enableStickyTabs' => true
