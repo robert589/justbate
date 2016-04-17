@@ -115,7 +115,7 @@ div#main-body {
 
 div#thread-issue {
     display: block;
-    padding: 15px;
+    padding: 5px;
     margin: -15px;
     background: #0E5A94;
     margin-bottom: 30px;
@@ -1018,4 +1018,20 @@ div.btn-group-horizontal button {
 
 div[class^='ias-noneleft'] {
     margin-top: 45px;
+}
+
+/*LOGIN.PHP*/
+div#social-icon {
+    padding-left: 15px;
+}
+
+div#social-icon input[type="text"] {
+    background: #0E5A94;
+    color: #fff;
+    border-radius: 0;
+    width: 29%;
+}
+
+div#social-icon i.fa-facebook {
+    color: #0E5A94;
 }
