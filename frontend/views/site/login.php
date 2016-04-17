@@ -34,14 +34,17 @@ if(empty($redirect_from)){
         </div>
     </div><hr />
     <div class="row" align="center">
-        <a href="/startUp/site/auth?authclient=facebook" data-popup-width="860" data-popup-height="480">
-            <div class="input-group" id="social-icon">
-                <span class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></span>
-                <input class="form-control" id='social-icon-text' type='text' readonly='true' value='Login with Facebook' />
-            </div>
-        </a>
+        <!-- <a href="/startUp/site/auth?authclient=facebook" data-popup-width="860" data-popup-height="480">
+        <div class="input-group" id="social-icon">
+        <span class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></span>
+        <input class="form-control" id='social-icon-text' type='text' readonly='true' value='Login with Facebook' />
     </div>
+</a> -->
+<?= yii\authclient\widgets\AuthChoice::widget([
+    'baseAuthUrl' => ['site/auth']
+    ]) ?>
+</div>
 
-    <?= Html::hiddenInput('redirect_from', $redirect_from) ?>
-    <?php ActiveForm::end() ?>
+<?= Html::hiddenInput('redirect_from', $redirect_from) ?>
+<?php ActiveForm::end() ?>
 </div>
