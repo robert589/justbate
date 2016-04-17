@@ -29,12 +29,11 @@ use common\models\CommentVote;
 </div>
 
 
-<div class="col-md-4" align="left" style="padding: 0px">
+<!-- <div class="col-md-4" align="left" style="padding: 0px">
     <?php if(!isset($retrieved)){ ?>
         <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
                                         'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]])
         ?>
-
         <div align="left">
             <?= Html::hiddenInput('comment_id', $comment_id) ?>
             <?= Html::submitButton('Comment', ['class' => 'btn btn-default']) ?>
@@ -47,7 +46,7 @@ use common\models\CommentVote;
             <?= Html::button('Hide', ['class' => 'btn btn-default hide_comment', 'data-service' =>  $comment_id ]) ?>
         </div>
     <?php } ?>
-</div>
+</div> -->
 
 <?php if(isset($retrieved)){ ?>
 
