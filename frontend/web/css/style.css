@@ -42,7 +42,7 @@ div.inline{
 
 .home-thread-list{
     margin-top: 20px;
-    padding-left:0px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
 }
 
@@ -111,6 +111,27 @@ div#left-sidebar {
 
 div#main-body {
     width: 100% !important;
+}
+
+div#thread-issue {
+    display: block;
+    padding: 15px;
+    margin: -15px;
+    background: #0E5A94;
+    margin-bottom: 30px;
+    border-left: 3px solid #0E5A94;
+}
+
+button#issue-button {
+    border: 0;
+    padding: 15px;
+    background: #FFF;
+    color: #0E5A94;
+    text-transform: uppercase;
+}
+
+button.btn {
+    border-radius: 0;
 }
 
 /* Menubar */
@@ -532,6 +553,7 @@ div#main-post-desc {
     text-align: justify;
     line-height: 30px;
     margin-left: 15px;
+    padding-left: -15px;
     padding-right: 0px !important;
 }
 
@@ -602,13 +624,13 @@ li#notification-bar {
 
 div.thread-view {
     width: 100% !important;
-    padding-right: -30px;
+    padding-left: 0 !important;
+    padding-top: 10px !important;
     margin-left: -15px !important;
     margin-right: -15px !important;
+    padding-bottom: 30px !important;
     margin-bottom: 15px;
     box-sizing: border-box;
-    padding-bottom: 30px !important;
-    padding-top: 10px !important;
     background: #fff;
     border-left: 3px solid #0E5A94;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;;

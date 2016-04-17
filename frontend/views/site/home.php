@@ -70,7 +70,6 @@ $this->title = "Home";
 									'triggerOffset' => 100
 								],
 								'itemView' => function ($model, $key, $index, $widget) {
-
 									$comment = \common\models\ThreadComment::getBestCommentFromThread($model['thread_id']);
 									$thread_issues = \common\models\ThreadIssue::getIssue($model['thread_id']);
 									return $this->render('_list_thread',['model' => $model,
