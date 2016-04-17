@@ -11,22 +11,25 @@
 
 /** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
 
+if(!isset($vote_tab_active)){
+    $vote_tab_active = true;
+}
 
 $itemsHeader = [
     [
-        'label' => 'Description',
-        'content' => "<div id='post-description'>" . HtmlPurifier::process($description) . "</div>",
-        'active' => isset($vote_tab_active) ? false: true,
-    ],
-    [
-
         'label' => 'Vote',
         'content' => $this->render('_submit_vote_pjax', ['thread_id' => $thread_id,
-            'user_choice' => $user_choice,
-            'thread_choices' => $thread_choices,
-            'submitVoteModel' => $submitVoteModel]),
-        'active' => isset($vote_tab_active) ? true : false,
-    ]
+        'user_choice' => $user_choice,
+        'thread_choices' => $thread_choices,
+        'submitVoteModel' => $submitVoteModel]),
+        'active' => $vote_tab_active ? true : false,
+    ],
+    [
+        'label' => 'Description',
+        'content' => "<div id='post-description'>" . HtmlPurifier::process($description) . "</div>",
+        'active' => $vote_tab_active ? false: true,
+    ],
+
 ];
 
 Pjax::begin([
@@ -44,7 +47,7 @@ Pjax::begin([
 
 
 <!-- Shown part-->
-<div id="shown_part">
+<div id="shown_title_description_part">
     <div class="col-xs-12 thread-title">
         <?= Html::encode($title) ?>
     </div>
@@ -60,6 +63,7 @@ Pjax::begin([
         </div>
     </div>
 </div>
+
 <!-- Edit part-->
 <div id="edit_title_description_part" style="display: none">
     <?php

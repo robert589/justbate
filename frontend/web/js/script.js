@@ -107,7 +107,7 @@ $(document).ready(function(){
     // thread
     //edit thread part
     $("#edit_thread").click(function(){
-        $("#shown_part").hide();
+        $("#shown_title_description_part").hide();
         $("#edit_title_description_part").show();
     });
     $("#delete_thread").on("click", function() {
@@ -158,25 +158,29 @@ $(document).ready(function(){
     $('#display_hide_comment_input_box').click(function(){
     });
 
-    $(".child_comment_text_area").keydown(function(event){
+    $(document).on('keydown',  ".child_comment_text_area", function(event){
             var comment_id = $(this).data('service');
+            console.log("entered");
+
             if(event.keyCode == 13){
                 $("#child_comment_form_" + comment_id).submit();
                 return false;
             }
-        })
-        .focus(function() {
+    })
+    .on('focus', '.child_comment_text_area',function() {
 
-            if (this.value == "Add comment here...") {
-                this.value = "";
-            }
-        })
-        .blur(function(){
+        if (this.value == "Add comment here...") {
+            this.value = "";
+        }
+    })
+    .on('blur', '.child_comment_text_area',function(){
 
             if(this.value==""){
                 this.value = "Add comment here...";
             }
-        });
+    }).on('pjax:send', '.child_comment_text_area', function(){
+
+    });
 
 
     $(document).on('click', '.home_show_hide', function(){
@@ -209,8 +213,8 @@ $(document).ready(function(){
     });
 
     $("#cancel_edit_thread_button").click(function(){
-        $("#shown_part").show();
-        $("#edit_part").hide();
+        $("#shown_title_description_part").show();
+        $("#edit_title_description_part").hide();
     });
 
     function beginProfilePicModal(){

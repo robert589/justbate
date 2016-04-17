@@ -22,10 +22,8 @@ use common\models\CommentVote;
 
 <div class="col-md-4">
     <?php if($belongs){ ?>
-
         <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
         <?= Html::button('Delete', ['class' => 'btn btn-danger', 'id' => 'delete_comment_' . $comment_id]) ?>
-
     <?php } ?>
 
 </div>
@@ -54,7 +52,7 @@ use common\models\CommentVote;
 <?php if(isset($retrieved)){ ?>
 
 <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
-    <div class="col-xs-12" style="margin-top: 30px;" >
+    <div class="col-xs-12" style="margin-top: 15px;" >
         <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'], 'id' => "child_comment_form_" . $comment_id,
                                                        'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
 
@@ -64,10 +62,11 @@ use common\models\CommentVote;
                                                                             'data-service' => $comment_id,
                                                                             'rows' => 1,
                                                                             'placeholder' => 'add comment box..' ])
-                                                                                ->label(false)?>
+                                                                             ->label(false)?>
 
         <?php ActiveForm::end() ?>
     </div>
+
     <div class="col-xs-12">
         <?= ListView::widget([
             'id' => 'threadList',

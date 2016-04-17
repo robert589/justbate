@@ -7,8 +7,6 @@
 	use yii\helpers\HtmlPurifier;
 	/** @var $model array */
 	/** @var $comment array */
-
-
 ?>
 
 <article>
