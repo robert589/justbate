@@ -1,6 +1,4 @@
 <?php
-use common\components\Request;
-
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -49,7 +47,7 @@ return [
             'enableAutoLogin' => true,
         ],
         'request'=>[
-            'class' => 'common\components\request',
+            'class' => \common\components\Request::className(),
             'web'=> '/frontend/web'
         ],
         'log' => [
