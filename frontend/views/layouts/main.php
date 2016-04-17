@@ -131,10 +131,8 @@ AppAsset::register($this);
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
-        <div id="loading-bar" style="display: none">
-            <div style='z-index:0;left:0;top:0;width:100%;height:100% !imporatant;background:none;opacity: 0.4;'>
-                Loading
-            </div>
+        <div id="loading-bar" style="left: 0; right: 0; display: none; margin-top: -73px; margin-left: -100%; margin-right: -18.65%; height: 100% !important;">
+            <div style='z-index:0;left:0;top:0;width:100% !important;height:100% !important;background:#ddd;opacity: 0.4;'>Loading</div>
         </div>
     </div>
 
