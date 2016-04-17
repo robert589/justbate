@@ -1,5 +1,7 @@
-<?php foreach($thread_issues as $issue){ ?>
-    <span style="padding-top: 15px !important;">
-        <button id="issue-button" class="btn btn-default"><strong><?= $issue['issue_name'] . ' ' ?></strong></button>
-    </span>
-<?php } ?>
+<span id="thread-issue-text">
+    <?php foreach($thread_issues as $issue){ ?>
+        <span style="padding-top: 15px !important;">
+            <span><?= $issue['issue_name'] . ' ' ?></span>
+        </span>
+    <?php } ?>
+</span>

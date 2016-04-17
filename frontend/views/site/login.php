@@ -11,6 +11,8 @@ if(empty($redirect_from)){
     $redirect_from = Yii::$app->request->baseUrl ;
 }
 
+// echo Yii::$app->$baseUrl;
+
 ?>
 <div class="site-login">
     <h1><?= Html::encode('Login') ?></h1>

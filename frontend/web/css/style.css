@@ -117,17 +117,16 @@ div#thread-issue {
     display: block;
     padding: 5px;
     margin: -15px;
-    background: #0E5A94;
-    margin-bottom: 30px;
+    background: #fff;
+    color: #888;
+    margin-bottom: 0;
+    margin-top: 15px;
     border-left: 3px solid #0E5A94;
 }
 
-button#issue-button {
-    border: 0;
-    padding: 15px;
-    background: #FFF;
-    color: #0E5A94;
-    text-transform: uppercase;
+span#thread-issue-text {
+    padding-left: 10px;
+    color: #888;
 }
 
 button.btn {
@@ -1034,4 +1033,9 @@ div#social-icon input[type="text"] {
 
 div#social-icon i.fa-facebook {
     color: #0E5A94;
+}
+
+/*PJAX RELATED THINGS*/
+div[id^='comment_section_'] {
+    background: none;
 }

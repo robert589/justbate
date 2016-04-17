@@ -132,7 +132,7 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
         <div id="loading-bar" style="display: none">
-            <div style='position:absolute;z-index:0;left:0;top:0;width:100%;height:100%;background-color:white;opacity: 0.4;'>
+            <div style='z-index:0;left:0;top:0;width:100%;height:100% !imporatant;background:none;opacity: 0.4;'>
                 Loading
             </div>
         </div>
