@@ -66,7 +66,6 @@ $this->title = "Home";
 							?>
 						</div><!-- div.col-xs-12 -->
 					</div> <!-- div.md-7 -->
-=======
 				<div class="col-xs-12" id="create-thread-form">
 					<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 				</div> <!-- div.col-xs-12 -->
