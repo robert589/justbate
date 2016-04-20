@@ -7,7 +7,7 @@ use yii\web\JsExpression;
 ?>
 
 
-<?php $form = ActiveForm::begin(['action' => 'site/create-thread' ,'method' => 'post']) ?>
+<?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,'method' => 'post']) ?>
 <!-- Title input box -->
 <div style="margin-left: 15px; margin-right: 15px; padding: 15px;">
     <div class="col-xs-12" style="padding: 0;">

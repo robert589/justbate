@@ -16,7 +16,7 @@ class EditThreadForm extends Model {
 		return [
 			[['thread_id'], 'integer'],
 			[['title', 'description'], 'string'],
-			[['thread_id', 'title', 'description'], 'required'],
+			[['thread_id', 'title'], 'required'],
 			['choices', 'each', 'rule' => ['string']],
 
 		];

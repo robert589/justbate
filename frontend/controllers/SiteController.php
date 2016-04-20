@@ -100,13 +100,13 @@ class SiteController extends Controller
 		$userAttributes = $client->getUserAttributes();
 		// do some thing with user data. for example with $userAttributes['email']
 		$user = User::find()->where(['facebook_id' => $userAttributes['id']])->one();
+
 		if(!empty($user)){
 			Yii::$app->user->login($user);
 		}
 		else{
 			$session = Yii::$app->session;
 			$session['attributes'] =$userAttributes;
-
 		   return $this->redirect(Url::to(['signup', 'fb' => true]));
 		}
 	}
@@ -381,10 +381,11 @@ class SiteController extends Controller
 	public function actionSignup()
 	{
 		$model = new SignupForm();
-		$loginModel = new LoginForm();
-
+		$is_sign_up_with_fb = false;
 		//if it comes from facebook
 		if(!empty($_GET['fb'])){
+			$is_sign_up_with_fb = true;
+
 			$session = Yii::$app->session;
 
 			if(isset($session['attributes']['email'])){
@@ -397,17 +398,17 @@ class SiteController extends Controller
 			$photos = file_get_contents($url);
 			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
 		}
-
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {
+
 				if (Yii::$app->getUser()->login($user)) {
 					return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
 				}
 			}
 		}
 
-		return $this->render('login', [
-			'login_form' => $loginModel,
+		return $this->render('signup', [
+			'is_sign_up_with_fb' => $is_sign_up_with_fb,
 			'model' => $model,
 		]);
 	}

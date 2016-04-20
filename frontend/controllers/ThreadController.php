@@ -165,7 +165,9 @@ class ThreadController extends Controller
 				$commentModel->user_id = \Yii::$app->user->getId();
 				if($commentModel->store()){
 					if($this->updateCommentNotification($commentModel->user_id, $thread_id)){
-						return  $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id );
+						$thread = Thread::findOne(['thread_id' => $thread_id]);
+						return  $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id . '/' .
+							str_replace(' ', '-', strtolower($thread['title'])   ));
 					}
 				}
 				else{
@@ -345,33 +347,41 @@ class ThreadController extends Controller
 	}
 
 	public function actionEditThread() {
-		$editted_thread = new EditThreadForm();
-		$editted_thread->thread_id = $_POST['thread_id'];
-		$editted_thread->title = $_POST['title'];
+
+		if(Yii::$app->request->isPjax){
+
+			$editted_thread = new EditThreadForm();
+
+			$editted_thread->description = $_POST['description'];
+
+			$editted_thread->title = $_POST['title'];
+
+			$editted_thread->thread_id = $_POST['thread_id'];
 
 
-		$editted_thread->description = $_POST['description'];
-		if($editted_thread->update()) {
-			//thread data
-			$thread = Thread::retrieveThreadById($editted_thread->thread_id, \Yii::$app->user->getId());
 
-			//get all thread_choices
-			$thread_choices = Choice::getMappedChoiceAndItsVoters($editted_thread->thread_id);
+			if($editted_thread->update()) {
+				//thread data
+				$thread = Thread::retrieveThreadById($editted_thread->thread_id, \Yii::$app->user->getId());
 
-			//get all comment providers
-			$comment_providers = Comment::getAllCommentProviders($editted_thread->thread_id, $thread_choices);
+				//get all thread_choices
+				$thread_choices = Choice::getMappedChoiceAndItsVoters($editted_thread->thread_id);
 
-			// get vote mdoels
-			$submitVoteModel = new SubmitThreadVoteForm();
+				//get all comment providers
+				$comment_providers = Comment::getAllCommentProviders($editted_thread->thread_id, $thread_choices);
 
-			return $this->render('_title_description_vote',
-				['thread_choices' => $thread_choices,
-				'submitVoteModel' => $submitVoteModel,
-				'comment_providers' => $comment_providers,
-				'user_choice' => $thread['user_choice'],
-				'thread_id' => $editted_thread->thread_id,
-				'title' => $_POST['title'],
-				'description' => $editted_thread->description]);
+				// get vote mdoels
+				$submitVoteModel = new SubmitThreadVoteForm();
+
+				return $this->render('_title_description_vote',
+					['thread_choices' => $thread_choices,
+						'submitVoteModel' => $submitVoteModel,
+						'comment_providers' => $comment_providers,
+						'user_choice' => $thread['user_choice'],
+						'thread_id' => $editted_thread->thread_id,
+						'title' => $_POST['title'],
+						'description' => $editted_thread->description]);
+			}
 		}
 	}
 
