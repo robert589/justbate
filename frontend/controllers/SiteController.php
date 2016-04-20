@@ -126,6 +126,13 @@ class SiteController extends Controller
 	*/
 	public function actionHome()
 	{
+		if(Yii::$app->user->isGuest){
+			return $this->render('login',
+				[
+					'login_form' => new LoginForm(),
+					'model' => new SignupForm()
+				]);
+		}
 		//get Issue
 		if(!empty($_GET['issue'])){
 			$result = Thread::getThreads($_GET['issue']);
@@ -243,19 +250,17 @@ class SiteController extends Controller
 		if (!\Yii::$app->user->isGuest) {
 			return $this->goHome();
 		}
+		$model = new SignupForm();
 
-		$model = new LoginForm();
-		if ($model->load(Yii::$app->request->post()) && $model->login()) {
-			if(!empty($_POST['redirect_from'])){
-			   $redirect_from = $_POST['redirect_from'];
-			   return $this->redirect($redirect_from);
-			}
-			else{
-				return $this->redirect(Yii::getAlias('@base-url'));
-			}
-		} else {
+
+		$login_model = new LoginForm();
+		if ($login_model->load(Yii::$app->request->post()) && $login_model->login()) {
+			return $this->redirect(Yii::$app->request->baseUrl);
+		}
+		else {
 			return $this->render('login', [
-				'login_form' => $model,
+				'login_form' => $login_model,
+				'model' => $model
 			]);
 		}
 	}
@@ -375,8 +380,8 @@ class SiteController extends Controller
 	 */
 	public function actionSignup()
 	{
-
 		$model = new SignupForm();
+		$loginModel = new LoginForm();
 
 		//if it comes from facebook
 		if(!empty($_GET['fb'])){
@@ -401,7 +406,8 @@ class SiteController extends Controller
 			}
 		}
 
-		return $this->render('signup', [
+		return $this->render('login', [
+			'login_form' => $loginModel,
 			'model' => $model,
 		]);
 	}
@@ -497,7 +503,8 @@ class SiteController extends Controller
 
 		foreach($trending_topic_list as $trending_topic){
 			$mapped_trending_topic['label'] = $trending_topic['title'];
-			$mapped_trending_topic['url'] = Yii::$app->request->baseUrl . '/thread/index?id=' . $trending_topic['thread_id'];
+			$mapped_trending_topic['url'] = Yii::$app->request->baseUrl . '/thread/' . $trending_topic['thread_id']. '/'
+				. str_replace(' ', '-' , strtolower($trending_topic['title']));
 
 			$mapped_trending_topic_list[] = $mapped_trending_topic;
 

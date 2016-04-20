@@ -3,6 +3,7 @@
     use yii\widgets\Pjax;
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
+    use yii\helpers\HtmlPurifier;
     /** @var $comment_id integer */
     /** @var $comment string */
     /** @var $edit_comment_form \frontend\models\EditCommentForm */
@@ -17,7 +18,7 @@
 ?>
 
 <div id="comment_shown_part_<?= $comment_id ?>">
-    <?= $comment ?>
+    <?= HtmlPurifier::process($comment) ?>
 </div>
 
 <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
@@ -25,8 +26,8 @@
     <?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => [
         'data-pjax' => '#edit_comment_' . $comment_id]])?>
 
-        <!-- Cannot use initial value if used with form -->
         <?= \yii\redactor\widgets\Redactor::widget([
+            'id' => 'edit_redactor_' . $comment_id,
             'name' => 'comment',
             'value' => \yii\helpers\HtmlPurifier::process($comment),
             'clientOptions' => [

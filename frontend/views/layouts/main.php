@@ -16,7 +16,6 @@ use yii\helpers\Url;
 //all links
 if(Yii::$app->user->isGuest){
     //all links
-    $register_link = Yii::$app->request->baseUrl . '/site/signup';
     $login_link = Yii::$app->request->baseUrl . '/site/link';
 }
 else{
@@ -74,7 +73,10 @@ AppAsset::register($this);
                             'pluginEvents' => [
                                 "select2:select" => "function(){
                                     window.location.replace(
-                                    'http://' +  document.domain  + '$temp_localhost' + '/thread/index?id=' + $('#search_box_menu').val()  );
+                                    'http://' +  document.domain  + '$temp_localhost' + '/thread/' + $('#search_box_menu').val() + '/' +
+                                    $('#search_box_menu').text().replace(
+                                    'Search','').replace(/ /g, '-').toLowerCase()
+                                    );
                                 }"
                             ],
                             'pluginOptions' => [
@@ -97,7 +99,6 @@ AppAsset::register($this);
                     </li>
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
-                        <li id="register" class="item"><a href=<?= $register_link ?>>Register</a></li>
                         <?php } else { ?>
                             <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
                             <li class="dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
@@ -117,11 +118,11 @@ AppAsset::register($this);
 
     <?php
     Modal::begin([
-        'id' => 'loginModal'
+        'id' => 'loginModal',
+        'size' => Modal::SIZE_LARGE
     ]);
-        $redirect_from = $_SERVER['REQUEST_URI'];
         $login_form = new \common\models\LoginForm();
-        echo $this->render('../site/login', ['login_form' => $login_form, 'redirect_from' => $redirect_from]);
+        echo $this->render('../site/login', ['login_form' => $login_form, 'model' => new \frontend\models\SignupForm()]);
     Modal::end();
     ?>
 

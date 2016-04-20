@@ -15,7 +15,7 @@ use yii\helpers\HtmlPurifier;
 	</div>
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
-			<?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'])?><hr />
+			<?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?><hr />
 		</div>
 		<div class="col-xs-12">
 			<?php if($comment != null || $comment != false){ ?>
