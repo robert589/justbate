@@ -29,7 +29,7 @@ class Comment extends ActiveRecord
                 on thread_comment.comment_id = comment.comment_id
                 inner join user
                 on user.id = comment.user_id
-                where thread_id = :thread_id and thread_comment.choice_text= :choice_text
+                where thread_id = :thread_id and thread_comment.choice_text= :choice_text and comment_status = 10
                ";
 
 

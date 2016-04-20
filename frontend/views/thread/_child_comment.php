@@ -6,7 +6,9 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
 use common\models\CommentVote;
+use kartik\dialog\Dialog;
 /** @var $comment_id integer */
+/** @var $thread_id  integer */
 /** @var $belongs boolean */
 
 ?>
@@ -20,10 +22,12 @@ use common\models\CommentVote;
     ]
 ]) ?>
 
+<?= Dialog::widget(); ?>
+
 <div class="col-md-4">
     <?php if($belongs){ ?>
         <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
-        <?= Html::button('Delete', ['class' => 'btn btn-danger', 'id' => 'delete_comment_' . $comment_id]) ?>
+        <?= Html::button('Delete', ['class' => 'btn btn-danger delete_comment', 'data-service' => $comment_id]) ?>
     <?php } ?>
 
 </div>
@@ -86,5 +90,11 @@ use common\models\CommentVote;
 
 <?php } ?>
 
+
+<?php $form = ActiveForm::begin(['action' => ['thread/delete-comment'], 'method' => 'post', 'id' => 'delete_comment_form_' . $comment_id]) ?>
+    <?= Html::hiddenInput('comment_id', $comment_id) ?>
+<?= Html::hiddenInput('thread_id', $thread_id) ?>
+
+<?php ActiveForm::end() ?>
 
 <?php Pjax::end() ?>

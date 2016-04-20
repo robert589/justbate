@@ -127,6 +127,20 @@ $(document).ready(function(){
         $("#comment_edit_part_" + comment_id).show();
     });
 
+    //edit comment is at
+    $(document).on('click', '.delete_comment',function(e){
+        e.preventDefault();
+        var comment_id = $(this).data('service');
+
+        krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
+            if (result) {
+                $("#delete_comment_form_" + comment_id).submit();
+                return false;
+            }
+        });
+
+    });
+
     //cancel edit comment is at
     $(document).on('click','.cancel_edit_comment',function(e){
         e.preventDefault();

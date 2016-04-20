@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
+use frontend\models\DeleteCommentForm;
 use frontend\models\DeleteThreadForm;
 use frontend\models\EditCommentForm;
 use frontend\models\NotificationForm;
@@ -311,7 +312,14 @@ class ThreadController extends Controller
 	}
 
 	public function actionDeleteComment(){
-
+		$delete_comment_form = new DeleteCommentForm();
+		if(isset($_POST['comment_id'])){
+			$delete_comment_form->comment_id = $_POST['comment_id'];
+			if($delete_comment_form->delete()){
+				$thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
+				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
+			}
+		}
 	}
 
 	public function actionDeleteThread(){
