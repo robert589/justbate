@@ -36,7 +36,7 @@
                 'readonly' => true
             ]) ?>
 
-            <?= $form->field($change_email_form, 'command')->hiddenInput() ?>
+            <?= $form->field($change_email_form, 'command')->hiddenInput()->label(false) ?>
 
             <?= Html::button('Change',['id' => 'change-unverified-email-button', 'class' => 'btn btn-default']) ?>
             <?= Html::button('Resend',['id' => 'resend-unverified-email-button', 'class' => 'btn btn-default']) ?>
