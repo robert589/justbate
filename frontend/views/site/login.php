@@ -15,10 +15,10 @@ $this->title = 'Login';
         <div class="col-xs-12 col-md-6" style="padding-right: 0;">
             <div id="signup-form">
                 <div class="col-xs-12" id="signup-title">SIGN UP</div>
-                <div class="col-xs-12" id="signup-subtitle">Please Signup to use our service</div>
+                <div class="col-xs-12" id="signup-subtitle">Signup to use our service</div>
                 <div class="col-xs-12" id="signup-table">
                     <div class="col-xs-6"><?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?></div>
-                    <div class="col-xs-6"><?= Html::a('<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="text" class="form-control" value="Sign Up with Email" readonly="true" /></div>', ['site/signup']) ?></div>
+                    <div class="col-xs-6"><?= Html::a('<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="text" class="form-control" value="Email" readonly="true" /></div>', ['site/signup']) ?></div>
                 </div>
             </div>
             </div>

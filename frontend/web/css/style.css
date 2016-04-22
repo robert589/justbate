@@ -537,6 +537,16 @@ div#main-container {
         width: 100% !important;
         margin-top: 15px !important;
     }
+
+    div.site-login div.col-xs-12 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    div.site-login div.row div#login-form {
+        padding-left: 0;
+        width: calc(100% + 15px);
+    }
 }
 
 img#profile-picture-home {
@@ -1093,7 +1103,7 @@ div#login-form button {
     padding: 15px;
     border-radius: 0;
     background: #0288F0;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 div#login-form .checkbox {
@@ -1105,7 +1115,7 @@ div#remember-me {
     padding: 15px;
     text-align: center;
     background: #1097FF;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 div#facebook-login {
@@ -1135,7 +1145,7 @@ div#signup-form div#signup-subtitle {
     padding: 15px;
     text-align: center;
     background: #032742;
-    text-transform: uppercase;
+    text-transform: capitalize;;
 }
 
 div#signup-form div#signup-subtitle {
@@ -1149,7 +1159,12 @@ div#signup-table {
 
 div#signup-table div.col-xs-6 {
     padding: 15px;
+    padding-left: 0;
+    padding-right: 0;
     text-align: center;
+}
+div#signup-table div.col-xs-6:last-child {
+    padding-left: 15px;
 }
 
 div#signup-table input[type="text"] {
