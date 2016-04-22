@@ -1039,7 +1039,6 @@ div[id^='comment_section_'] {
 div.site-login {
     color: #FFF;
     padding: 15px;
-    background: #0E5A94;
 }
 
 div.site-login form {
@@ -1048,6 +1047,11 @@ div.site-login form {
 
 div.site-login h1 {
     display: none;
+}
+
+div.site-login div.row div.col-xs-12 {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 div.form-group {
@@ -1065,9 +1069,13 @@ div.form-group p.help-block-error {
     background: rgb(255,151,16);
 }
 
+div#login-form {
+    padding: 15px;
+    padding-top: 0;
+}
+
 div#login-form input[class="form-control"] {
     border: 0;
-    color: #000;
     height: 100%;
     padding: 15px;
     border-radius: 0;
@@ -1108,6 +1116,87 @@ div#facebook-login {
 div#facebook-login ul.auth-clients {
     margin: 0;
     padding: 0;
+
+}
+div#login-label {
+    padding: 15px;
+    text-align: center;
+    background: #032742;
+}
+
+div#signup-form div.col-xs-6 {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div#signup-form div#signup-title,
+div#signup-form div#signup-subtitle {
+    padding: 15px;
+    text-align: center;
+    background: #032742;
+    text-transform: uppercase;
+}
+
+div#signup-form div#signup-subtitle {
+    background: #1097FF;
+}
+
+div#signup-table {
+    padding: 0;
+    text-align: center;
+}
+
+div#signup-table div.col-xs-6 {
+    padding: 15px;
+    text-align: center;
+}
+
+div#signup-table input[type="text"] {
+    text-align: center;
+}
+
+div#signup-label {
+    color: #000;
+    padding: 15px;
+    text-align: center;
+}
+
+span.auth-title {
+    display: none !important;
+}
+
+a.auth-link {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.auth-clients {
+    padding: 0;
+    width: 100%;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+li.auth-client {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center !important;
+}
+
+i.fa-facebook {
+    width: 100%;
+    color: #0E5A94;
+    display: inline-block;
+}
+
+a i.fa-facebook {
+    text-align: center;
+}
+
+span.fa-envelope {
+    color: #000;
 }
 
 .form-group {

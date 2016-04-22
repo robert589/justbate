@@ -9,6 +9,11 @@ $(document).ready(function(){
     });
     $('#loading-bar').height($(document).height());
 
+    // replacing facebook icon by yii2 with font-awesome
+    $("span.auth-icon").remove();
+    $("a.auth-link").removeAttr("data-popup-width");
+    $("a.auth-link").removeAttr("data-popup-height");
+    $("a.auth-link").append($('<div class="input-group"><span class="input-group-addon"><i class="fa fa-facebook"></i></span><input type="text" class="form-control" value="Sign Up with Facebook" readonly="true" /></div>'));
 
     // some script to define the height of edit, delete, share, and comment button
     var x1 = $("#first-part").height();
