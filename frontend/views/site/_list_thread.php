@@ -9,7 +9,7 @@ use yii\helpers\HtmlPurifier;
 /** @var $comment array */
 ?>
 
-<article>	
+<article>
 	<div class="col-xs-12" id="thread-issue">
 		<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
 	</div>
