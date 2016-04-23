@@ -9,6 +9,17 @@ $(document).ready(function(){
     });
     $('#loading-bar').height($(document).height());
 
+    // user vote submit when value changed
+    $(document).on('change',"select.user-vote",function() {
+        var service = $(this).data('service');
+        $("form#user_reaction_"+service+"").submit();
+    });
+
+    /* $("select.user-vote").change(function() {
+        var services = $("select.user-vote").attr("data-services");
+        alert(services);
+    }); */
+
     // replacing facebook icon by yii2 with font-awesome
     $("span.auth-icon").remove();
     $("a.auth-link").removeAttr("data-popup-width");

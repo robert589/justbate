@@ -492,6 +492,10 @@ class SiteController extends Controller
 		return $out;
 	}
 
+	public function actionSubmitVote() {
+		Yii::$app->end("Server response");
+	}
+
 
 	private function getDefaultChoice(&$create_thread_form){
 		$create_thread_form->choices = ['Agree','Disagree', 'Neutral'];
