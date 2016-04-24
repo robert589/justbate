@@ -93,7 +93,7 @@ hr#email-separator {
 
 /* Web Content */
 body {
-    background: #FFF !important;
+    background: #E6E6E6 !important;
     color: #000 !important;
     line-height: 20px !important;
     font-weight: 300;
@@ -1081,6 +1081,7 @@ div.form-group p.help-block-error {
 div#login-form {
     padding: 15px;
     padding-top: 0;
+    background: #FFF;
 }
 
 div#login-form input[class="form-control"] {
@@ -1144,9 +1145,6 @@ div#signup-form div#signup-title {
     text-align: center;
     background: #1097FF;
     text-transform: capitalize;;
-}
-
-div#signup-form div#signup-subtitle {
 }
 
 div#signup-table {
