@@ -43,7 +43,7 @@ foreach($thread_choices as $thread_choice){
             <?php if(isset($user_choice)){ ?>
                <?= Html::submitButton('Vote Again', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary', 'style' => 'bottom: 0;'])?>
             <?php } else{ ?>
-                <?= Html::submitButton('Vote', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary']) ?>
+               <?= Html::submitButton('Vote', ['id' => 'btn_submit_vote', 'class'=> 'btn btn-primary']) ?>
             <?php } ?>
         </div>
     </div>

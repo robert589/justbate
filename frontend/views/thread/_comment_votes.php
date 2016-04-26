@@ -28,31 +28,32 @@ Pjax::begin([
 <!-- The form only be used as refresh page -->
 <?= Html::beginForm(["thread/comment-vote" ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => '#comment_likes_' . $comment_id, 'class' => 'form-inline']); ?>
 
-    <?= Html::hiddenInput("comment_id", $comment_id) ?>
+    <?= Html::hiddenInput("comment_id", $comment_id, ['class' => 'hi-comment-vote-comment-id']) ?>
+
+    <?= Html::hiddenInput("vote", $vote, ['id' => 'hi-comment-vote-' . $comment_id]) ?>
+
     <?= Html::hiddenInput("user_id", Yii::$app->user->getId()) ?>
 
     <span>
         <?php if($vote_up == true) {  ?>
-                <div class="btn-group" id="button-vote-up">
-                    <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>" , [
-                        'id' => "btn_vote_up_" . $comment_id ,
-                        'class' => 'btn btn-default',
-                        'name' => 'vote',
-                        'value' => 1,
-                        'disabled' => true])
-                    ?>
-                    <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
-                </div>
+            <div class="btn-group" id="button-vote-up">
+                <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>" , [
+                    'id' => "btn_vote_up_" . $comment_id ,
+                    'class' => 'btn btn-default submit-comment-vote-button',
+                    'value' => 1,
+                    'disabled' => true])
+                ?>
+                <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
+            </div>
         <?php } else { ?>
-                <div class="btn-group" id="button-vote-up">
-                    <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>" , [
-                        'id' => "btn_vote_up_" . $comment_id ,
-                        'class' => 'btn btn-default',
-                        'name' => 'vote',
-                        'value' => 1
-                    ]) ?>
-                    <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
-                </div>
+            <div class="btn-group" id="button-vote-up">
+                <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>" , [
+                    'id' => "btn_vote_up_" . $comment_id ,
+                    'class' => 'btn btn-default submit-comment-vote-button',
+                    'value' => 1
+                ]) ?>
+                <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
+            </div>
         <?php } ?>
 
     </span>
@@ -62,8 +63,7 @@ Pjax::begin([
             <div class="btn-group" id="button-vote-down">
                 <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-down'></span>" , [
                     'id' => "btn_vote_down_" . $comment_id ,
-                    'class' => 'btn btn-default',
-                    'name' => 'vote',
+                    'class' => 'btn btn-default submit-comment-vote-button',
                     'value' => -1,
                     'disabled' => true
                 ]) ?>
@@ -73,13 +73,12 @@ Pjax::begin([
             <div class="btn-group" id="button-vote-down">
                 <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-down'></span>" , [
                     'id' => "btn_vote_down_" . $comment_id ,
-                    'class' => 'btn btn-default',
-                    'name' => 'vote',
-                    'value' => -1
+                    'value' => -1,
+                    'class' => 'btn btn-default submit-comment-vote-button',
                 ]) ?>
                 <button type="button" class="btn btn-disabled"><?= $total_dislike ?></button>
             </div>
         <?php } ?>
-</span>
-    <?= Html::endForm() ?>
+    </span>
+<?= Html::endForm() ?>
 <?php Pjax::end(); ?>

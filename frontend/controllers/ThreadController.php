@@ -184,6 +184,7 @@ class ThreadController extends Controller
 	 *
 	 */
 	public function actionCommentVote(){
+		//Yii::$app->end(var_dump($_POST));
 		if(isset($_POST['comment_id']) && isset($_POST['vote'])){
 
 			$trigger_login_form = false;
@@ -198,14 +199,16 @@ class ThreadController extends Controller
 				$comment_vote_form->vote = $vote;
 				$comment_vote_form->comment_id =  $comment_id;
 				if ($comment_vote_form->validate()) {
-
 					if ($comment_vote_form->store() == true) {
-
 					} else {
 						//error if store fail
+						Yii::$app->end('Failed to store votes');
+
 					}
 				} else {
 					//error if something is wrong
+					Yii::$app->end('Failed to validate votes');
+
 				}
 			}
 			else{
@@ -218,6 +221,9 @@ class ThreadController extends Controller
 			$vote = $comment_votes_comment['vote'];
 			return $this->renderPartial('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
 				'vote' => $vote, 'comment_id' => $comment_id, 'trigger_login_form' => $trigger_login_form]);
+		}
+		else{
+			Yii::$app->end('helo');
 		}
 		return null;
 	}

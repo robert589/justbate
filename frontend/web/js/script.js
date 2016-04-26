@@ -122,6 +122,7 @@ $(document).ready(function(){
         $("#shown_title_description_part").hide();
         $("#edit_title_description_part").show();
     });
+
     $("#delete_thread").on("click", function() {
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
             if (result) {
@@ -130,6 +131,18 @@ $(document).ready(function(){
             }
         });
     });
+
+    //comment_votes part
+    $(document).on("click",".submit-comment-vote-button", function(){
+        var vote = $(this).val();
+
+        var comment_id = $(this).closest("form").find('.hi-comment-vote-comment-id').val();
+       console.log(vote);
+
+        $("#hi-comment-vote-" + comment_id).val(vote);
+        console.log( $("#hi-comment-vote-" + comment_id).val());
+    });
+
 
     //edit comment is at
     $(document).on('click', '.edit_comment',function(e){
