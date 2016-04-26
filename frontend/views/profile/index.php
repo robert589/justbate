@@ -63,7 +63,12 @@ Modal::end();
 			alt="Profile Picture"
 			style="width:148px;height:148px;"
 			id="avatar">
-			<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
+
+			<?php if(!Yii::$app->user->isGuest && (Yii::$app->user->getId() == $user->id)){ ?>
+
+				<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
+
+			<?php } ?>
 		</div>
 		<div class="col-xs-6 col-md-4" id="profile-details">
 			<div id="displayName">

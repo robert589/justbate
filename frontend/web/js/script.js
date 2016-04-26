@@ -5,14 +5,13 @@ $(document).ready(function(){
     });
     $(document).on('pjax:complete', function() {
         $('#loading-bar').hide();
-        console.log("fired");
     });
     $('#loading-bar').height($(document).height());
 
     // user vote submit when value changed
     $(document).on('change',"select.user-vote",function() {
         var service = $(this).data('service');
-        $("form#user_reaction_"+service+"").submit();
+        $("form#form_user_vote_"+service+"").submit();
     });
 
     // replacing facebook icon by yii2 with font-awesome
@@ -137,10 +136,10 @@ $(document).ready(function(){
         var vote = $(this).val();
 
         var comment_id = $(this).closest("form").find('.hi-comment-vote-comment-id').val();
-       console.log(vote);
+      // console.log(vote);
 
         $("#hi-comment-vote-" + comment_id).val(vote);
-        console.log( $("#hi-comment-vote-" + comment_id).val());
+        //console.log( $("#hi-comment-vote-" + comment_id).val());
     });
 
 

@@ -27,8 +27,11 @@ use yii\helpers\HtmlPurifier;
 					<?php } ?><hr />
 				</div>
 				<div class="col-xs-12 home-comment-tab">
-					<?= $this->render('_list_thread_comment_part', ['thread_id' => $model['thread_id'],
-					'total_comments' => $model['total_comments']]) ?>
+					<?= $this->render('_list_thread_bottom', [
+						'user_choice_text' => $model['choice_text'],
+						'thread_id' => $model['thread_id'],
+						'thread_choice_text' => $thread_choice_text,
+						'total_comments' => $model['total_comments']]) ?>
 				</div>
-			</div>
-		</article>
+		</div>
+</article>
