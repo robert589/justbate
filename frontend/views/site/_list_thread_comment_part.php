@@ -18,7 +18,7 @@
     ])
     ?>
 
-    <div class="col-xs-3" style="padding-left: 0;">
+    <div class="col-xs-3" style="padding-left: 0; padding-right: 0;">
         <?php
         Pjax::begin([
             'id' => 'user_reaction' . $thread_id,

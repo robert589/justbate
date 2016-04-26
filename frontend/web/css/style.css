@@ -453,6 +453,10 @@ div#main-container {
 }
 
 @media screen and (max-width: 767px) {
+    body {
+        font-size: 8pt;
+    }
+
     div.home-main-section {
         margin-top: 53px;
     }
@@ -544,6 +548,10 @@ div#main-container {
     div.site-login div.row div#login-form {
         padding-left: 0;
         width: calc(100% + 15px);
+    }
+
+    div#signup-page {
+        width: 96%;
     }
 }
 
@@ -1163,6 +1171,7 @@ div#signup-table div.col-xs-6:last-child {
 }
 
 div#signup-table input[type="text"] {
+    cursor: pointer;
     text-align: center;
 }
 
@@ -1217,4 +1226,72 @@ span.fa-envelope {
 div.vote-on-thread {
     padding-left: 0;
     padding-right: 0;
+}
+
+select.user-vote {
+    border-radius: 0;
+}
+
+/*SIGNUP*/
+div#signup-page {
+    top: 50%;
+    padding: 0;
+    position: fixed;
+    background: #FFF;
+    padding-top: 15px;
+    transform: translate(0,-50%);
+}
+
+h3#signup-title {
+    margin: 0;
+    color: #FFF;
+    margin: -15px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 15px;
+    background: #1097FF;
+    text-transform: uppercase;
+}
+
+form#form-signup div[class^='col-'] {
+    padding: 0;
+}
+
+form#form-signup input.form-control,
+form#form-signup div[class^='col-'] input.form-control {
+    border: 0;
+    height: 100%;
+    padding: 15px;
+    border-radius: 0;
+    text-align: center;
+}
+
+div#signup-form {
+    padding: 0;
+    background: #FFF;
+    text-align: center;
+    position: absolute;
+}
+
+button#signup-button {
+    height: 100%;
+    padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+hr#facebook-separator {
+    margin: 0;
+    margin-top: 15px;
+}
+
+div#facebook-signup {
+    padding: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+
+div#facebook-signup input[type="text"] {
+    text-align: center;
 }

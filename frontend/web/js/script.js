@@ -15,16 +15,12 @@ $(document).ready(function(){
         $("form#user_reaction_"+service+"").submit();
     });
 
-    /* $("select.user-vote").change(function() {
-        var services = $("select.user-vote").attr("data-services");
-        alert(services);
-    }); */
-
     // replacing facebook icon by yii2 with font-awesome
     $("span.auth-icon").remove();
     $("a.auth-link").removeAttr("data-popup-width");
     $("a.auth-link").removeAttr("data-popup-height");
     $("a.auth-link").append($('<div class="input-group"><span class="input-group-addon"><i class="fa fa-facebook"></i></span><input type="text" class="form-control" value="Facebook" readonly="true" /></div>'));
+    $("div#facebook-signup input[type='text']").val("Join Us With Facebook");
 
     // some script to define the height of edit, delete, share, and comment button
     var x1 = $("#first-part").height();

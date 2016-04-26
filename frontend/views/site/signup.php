@@ -12,52 +12,18 @@ use dektrium\user\widgets\Connect;
 $this->title = 'Signup';
 ?>
 
-<div class="col-md-10 col-md-offset-1" style="background: white">
-
-    <div class="col-md-6" >
-        <h1><?= Html::encode($this->title) ?></h1>
-
-        <p>Please fill out the following fields to signup:</p>
-
-        <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <?= $form->field($model, 'first_name') ?>
-
+<div class="col-xs-12 col-md-4" id="signup-page">
+    <div class="col-xs-12" >
+        <h3 id="signup-title">Registration Form</h3>
+            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+            <div class="col-xs-6"><?= $form->field($model, 'first_name')->textInput(['placeholder' => 'First Name', 'class' => 'form-control']) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'last_name')->textInput(['placeholder' => 'Last Name', 'class' => 'form-control']) ?></div>
+            <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => 'Email Address']) ?>
+            <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => 'Your Password']) ?>
+            <div class="form-group"><?= Html::submitButton('Register', ['id' => 'signup-button' ,'class' => 'btn btn-primary form-control', 'name' => 'signup-button']) ?></div>
+            <?php ActiveForm::end(); ?>
+            <?php if($is_sign_up_with_fb != true){ ?>
+                <hr id="facebook-separator" /><div align="center" class="col-xs-12" id="facebook-signup"><?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?></div>
+                <?php } ?>
             </div>
-            <div class="col-lg-6">
-                <?= $form->field($model, 'last_name') ?>
-
-            </div>
-
         </div>
-
-
-        <?= $form->field($model, 'email') ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        <div class="form-group">
-            <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
-    </div>
-
-    <?php if($is_sign_up_with_fb != true){ ?>
-
-    <div class="col-md-6" style="border-left: 1px solid">
-        <h3 align="center">Sign up with Facebook</h3>
-        <hr>
-        <div style="margin-left: 65px">
-            <?= yii\authclient\widgets\AuthChoice::widget([
-                'baseAuthUrl' => ['site/auth']
-            ]) ?>
-        </div>
-
-    </div>
-
-    <?php } ?>
-
-</div>
