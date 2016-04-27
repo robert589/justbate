@@ -3,9 +3,11 @@ namespace frontend\controllers;
 
 use common\models\Issue;
 use common\models\ThreadComment;
+use common\models\ThreadVote;
 use frontend\models\ChangeEmailForm;
 use frontend\models\CreateThreadForm;
 use frontend\models\ResendChangeEmailForm;
+use frontend\models\SubmitThreadVoteForm;
 use frontend\models\UploadProfilePicForm;
 use frontend\models\ValidateAccountForm;
 use Yii;
@@ -133,13 +135,16 @@ class SiteController extends Controller
 					'model' => new SignupForm()
 				]);
 		}
+
+		$user_id = Yii::$app->user->getId();
+
 		//get Issue
 		if(!empty($_GET['issue'])){
-			$result = Thread::getThreads($_GET['issue']);
+			$result = Thread::getThreads($user_id, $_GET['issue']);
 
 		}
 		else{
-			$result = Thread::getThreads();
+			$result = Thread::getThreads($user_id);
 		}
 
 		$data_provider = new ArrayDataProvider([
@@ -159,22 +164,18 @@ class SiteController extends Controller
 		//get popular category
 		$issue_list = $this->getPopularIssue();
 
-		if(!Yii::$app->user->isGuest){
-			$user = User::findOne(['id' => Yii::$app->user->getId()]);
-			$validated = $user->validated;
-			if($validated == 1){
-				$change_email_form = null;
-			}
-			else{
-				$change_email_form = new ResendChangeEmailForm();
-				$change_email_form->user_email = $user->email;
-				$change_email_form->command = 'Yes';
-			}
+		//check whether he/she has validated her email
+		$user = User::findOne(['id' => $user_id]);
+		$validated = $user->validated;
+		if($validated == 1){
+			$change_email_form = null;
 		}
 		else{
-			$change_email_form = null;
-			$validated = null;
+			$change_email_form = new ResendChangeEmailForm();
+			$change_email_form->user_email = $user->email;
+			$change_email_form->command = 'Yes';
 		}
+
 
 		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
@@ -279,7 +280,7 @@ class SiteController extends Controller
 
 			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
 
-			return $this->render('_list_thread_comment_part', [
+			return $this->render('_list_thread_thread_comment', [
 						'thread_id' => $thread_id,
 						'comment_retrieved' => true,
 						'total_comments' => $total_comments,
@@ -493,7 +494,35 @@ class SiteController extends Controller
 	}
 
 	public function actionSubmitVote() {
-		Yii::$app->end("Server response");
+		if(isset($_POST['thread_id']) && isset($_POST['user_id']) && isset($_POST['user_vote'])){
+
+			$model  = new SubmitThreadVoteForm();
+			$model->thread_id = $_POST['thread_id'];
+			$model->user_id = $_POST['user_id'];
+			$model->choice_text = $_POST['user_vote'];
+
+			if($model->validate() && $model->submitVote()){
+
+				$thread_choice_text = \common\models\Choice::getChoice($model->thread_id);
+
+				return $this->render('_list_thread_thread_vote',
+					['thread_choice_text' => $thread_choice_text,
+						'thread_id' => $model->thread_id,
+						'user_choice_text' => ThreadVote::find()->where(['thread_id' => $model->thread_id])
+												->andWhere(['user_id' => $model->user_id])
+												->one()->choice_text
+					]);
+			}
+			else{
+				if($model->hasErrors()){
+					Yii::$app->end(print_r($model->getErrors()));
+
+				}
+			}
+		}
+		else{
+			Yii::$app->end(var_dump($_POST));
+		}
 	}
 
 

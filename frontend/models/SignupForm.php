@@ -71,7 +71,7 @@ class SignupForm extends Model
                         if(
                         \Yii::$app->mailer->compose(['html' => 'validateToken-html', 'text' => 'validateToken-text'],
                             ['user' => $user, 'validation_token' => $validation_token->code ])
-                            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                            ->setFrom([\Yii::$app->params['supportEmail'] => 'Justbate.com robot'])
                             ->setTo($this->email)
                             ->setSubject('Validate your email in ' . \Yii::$app->name)
                             ->send()

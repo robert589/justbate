@@ -6,9 +6,20 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 class Choice extends ActiveRecord
 {
+
     public function getTable(){
         return 'choice';
 
+    }
+
+    public static function getChoice($thread_id){
+        $sql = "SELECT choice_text from choice where thread_id = :thread_id";
+        $result =  \Yii::$app->db->createCommand($sql)->
+        bindParam(':thread_id', $thread_id)->
+        queryAll();
+
+
+        return $result;
     }
 
     public static function getChoiceAndItsVoters($thread_id){
@@ -27,12 +38,12 @@ class Choice extends ActiveRecord
                     group by(thread_choice.choice_text)
                     ) choice_and_its_voters
                 left join
-
                     ( select * from thread_comment where thread_id = :thread_id ) comment_with_id
                 on comment_with_id.choice_text = choice_and_its_voters.choice_text
                 group by (choice_and_its_voters.choice_text)
                 order by total_comments desc
-                    ";
+        ";
+
         $result =  \Yii::$app->db->createCommand($sql)->
                     bindParam(':thread_id', $thread_id)->
                     queryAll();

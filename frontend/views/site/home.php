@@ -62,9 +62,14 @@ $this->title = "Home";
 							'itemView' => function ($model, $key, $index, $widget) {
 								$comment = \common\models\ThreadComment::getBestCommentFromThread($model['thread_id']);
 								$thread_issues = \common\models\ThreadIssue::getIssue($model['thread_id']);
-								return $this->render('_list_thread',['model' => $model,
-								'comment' => $comment,
-								'thread_issues' => $thread_issues]);
+								$thread_choice_text = \common\models\Choice::getChoice($model['thread_id']);
+
+								return $this->render('_list_thread',[
+									'model' => $model,
+									'comment' => $comment,
+									'thread_choice_text' => $thread_choice_text,
+									'thread_issues' => $thread_issues]
+								);
 							}
 						])
 						?>
@@ -73,6 +78,6 @@ $this->title = "Home";
 			</div>
 		</div>
 
-		<?php if(!Yii::$app->user->isGuest){ ?>
-			<?= $this->render('_home_verify-email', ['change_email_form' => $change_email_form]) ?>
-			<?php } ?>
+<?php if(!Yii::$app->user->isGuest && \common\models\User::findOne(['id' => Yii::$app->user->getId()])->validated != 1 ){ ?>
+	<?= $this->render('_home_verify-email', ['change_email_form' => $change_email_form]) ?>
+<?php } ?>

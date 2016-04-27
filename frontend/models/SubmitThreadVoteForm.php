@@ -9,6 +9,10 @@ use common\models\ThreadVote;
 
 class SubmitThreadVoteForm extends Model
 {
+    const USER_HAS_NOT_VOTED = "B91zD8oJrm";
+
+    const USER_CHOOSE_NOT_TO_VOTE = "Z1eCMfHmNO";
+
     public $user_id;
 
     public $thread_id;
@@ -27,14 +31,35 @@ class SubmitThreadVoteForm extends Model
 
     public function submitVote()
     {
-        if($this->checkExist()){
-            return $this->updateVote();
+
+        if($this->choice_text == self::USER_CHOOSE_NOT_TO_VOTE){
+
+            return $this->deleteVote();
+        }
+        else if($this->choice_text == self::USER_HAS_NOT_VOTED){
+
+            return true;
         }
         else{
-            return $this->insertVote();
+            if($this->checkExist()){
+                return $this->updateVote();
+            }
+            else{
+                return $this->insertVote();
+            }
         }
     }
 
+    private function deleteVote(){
+        $thread_vote = ThreadVote::find()->where(['user_id' => $this->user_id])
+            ->andWhere(['thread_id' => $this->thread_id])->one();
+
+        if($thread_vote->delete()){
+            return true;
+        }
+        else{return null;}
+
+    }
 
     private function checkExist(){
         return ThreadVote::find()->where(['user_id' => $this->user_id])

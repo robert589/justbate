@@ -47,7 +47,7 @@
                 <?php } ?>
             </div>
         </div> <!-- div.col-xs-12 -->
-    <?php \yii\widgets\ActiveForm::end() ?>
+            <?php \yii\widgets\ActiveForm::end() ?>
 </div>
 
 <?php Pjax::end() ?>
