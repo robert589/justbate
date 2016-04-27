@@ -11,8 +11,7 @@ use dektrium\user\widgets\Connect;
 $this->title = 'Login';
 ?>
 <div class="site-login">
-<div class="row">
-    <div class="col-xs-12">
+    <div class="row">
         <div class="col-xs-12 col-md-6">
             <div id="signup-form">
                 <div class="col-xs-12" id="signup-title">Sign up to our service</div>
@@ -35,5 +34,4 @@ $this->title = 'Login';
             <?php ActiveForm::end() ?>
         </div>
     </div>
-</div>
 </div>
