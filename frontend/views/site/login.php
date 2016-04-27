@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -11,8 +11,9 @@ use dektrium\user\widgets\Connect;
 $this->title = 'Login';
 ?>
 <div class="site-login">
-    <div class="row">
-        <div class="col-xs-12 col-md-6" style="padding-right: 0;">
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-xs-12 col-md-6">
             <div id="signup-form">
                 <div class="col-xs-12" id="signup-title">Sign up to our service</div>
                 <div class="col-xs-12" id="signup-table">
@@ -20,7 +21,7 @@ $this->title = 'Login';
                     <div class="col-xs-6"><?= Html::a('<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="text" class="form-control" value="Email" readonly="true" /></div>', ['site/signup']) ?></div>
                 </div>
             </div>
-            </div>
+        </div>
 
         <div class="col-xs-12 col-md-6" style="padding-right: 0; padding-left: 0;">
             <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'post']) ?>
@@ -34,4 +35,5 @@ $this->title = 'Login';
             <?php ActiveForm::end() ?>
         </div>
     </div>
+</div>
 </div>
