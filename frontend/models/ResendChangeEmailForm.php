@@ -50,7 +50,7 @@ class ResendChangeEmailForm extends Model
             if($this->command == 'change'){
                 $user->email = $this->user_email;
 
-                return                 $user->update(false);
+                return  $user->update(false);
 
             }
             else if($this->command == 'resend'){
@@ -58,7 +58,7 @@ class ResendChangeEmailForm extends Model
                 if(
                 \Yii::$app->mailer->compose(['html' => 'validateToken-html', 'text' => 'validateToken-text'],
                     ['user' => $user, 'validation_token' => $validation_token->code ])
-                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                    ->setFrom([\Yii::$app->params['supportEmail'] => 'Justbate.com robot'])
                     ->setTo($this->user_email)
                     ->setSubject('Validate your email in ' . \Yii::$app->name)
                     ->send()

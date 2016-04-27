@@ -78,6 +78,6 @@ $this->title = "Home";
 			</div>
 		</div>
 
-		<?php if(!Yii::$app->user->isGuest){ ?>
-			<?= $this->render('_home_verify-email', ['change_email_form' => $change_email_form]) ?>
-			<?php } ?>
+<?php if(!Yii::$app->user->isGuest && \common\models\User::findOne(['id' => Yii::$app->user->getId()])->validated != 1 ){ ?>
+	<?= $this->render('_home_verify-email', ['change_email_form' => $change_email_form]) ?>
+<?php } ?>
