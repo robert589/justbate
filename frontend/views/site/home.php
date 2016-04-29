@@ -33,18 +33,9 @@ $this->title = "Home";
 
 			<div class="col-md-8 home-main-section" >
 				<div class="col-xs-12" id="create-thread">
-					<div class="col-xs-12" id="create-thread-dropdown">
-						<div id="create-thread-button">
-							<div class="input-group">
-								<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-								<input id="create-thread-title" type="text" class="form-control" placeholder="Your Thread Title" />
-							</div>
-						</div>
-					</div> <!-- div.col-xs-12 -->
+
+						<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 				</div>
-				<div class="col-xs-12" id="create-thread-form">
-					<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
-				</div> <!-- div.col-xs-12 -->
 				<div class="col-xs-12 home-thread-list">
 					<div class="col-xs-12" id="main-post-desc">
 						<?= ListView::widget([
