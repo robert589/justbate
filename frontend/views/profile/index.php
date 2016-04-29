@@ -90,7 +90,7 @@ Modal::end();
 	<!-- Profile Main Details -->
 	<div id="profile-sidebar">
 		<div class="col-xs-3" id="profile-sidebar-details">
-			<ul id="profil-sidebar-nav" class="sidebar-nav">
+			<ul id="profile-sidebar-nav" class="sidebar-nav">
 				<div id="profile-feed"><div>Feeds</div></div>
 				<a href="<?= $comment_link ?>"><li>Comments</li></a>
 				<a href="<?= $thread_starter_link ?>"><li>Thread Starters</li></a>
@@ -98,7 +98,7 @@ Modal::end();
 				<a href="<?= $followee_link?>"><li><div class="btn-group-horizontal" style="padding-bottom: 15px;"><button class="btn btn-default">Following</button><button class="btn btn-disabled"><?= $num_followings ?></button></div></li></a>
 			</ul>
 		</div>
-		<div class="col-xs-8" id="profile-history">
+		<div class="col-xs-9" id="profile-history">
 			<?php if($type == ProfileController::THREAD_STARTERS){ ?>
 				<h3>Thread Starters</h3>
 				<?= ListView::widget([

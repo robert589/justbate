@@ -105,6 +105,7 @@ div#left-sidebar {
     padding-left:0px;
     padding-right: 0px;
     font-size:13px;
+    line-height: 18px;
 }
 
 div#main-body {
@@ -461,6 +462,10 @@ div#main-container {
         margin-top: 53px;
     }
 
+    div.container {
+        padding-left: 0;
+    }
+
     div#main-container {
         margin-top: 20px;
     }
@@ -507,7 +512,7 @@ div#main-container {
     }
 
     div#verify-email {
-        margin-left: -30px !important;
+        margin-left: -15px !important;
         top: 50px;
         position: fixed;
         width: 100% !important;
@@ -560,6 +565,20 @@ div#main-container {
 
     div#signup-page {
         width: 96%;
+    }
+
+    /*PROFILE RESPONSIVE*/
+    div#profile-picture-main-body {
+        margin-top: 0 !important;
+    }
+
+    div#profile-history {
+        float: right;
+        padding-left: 30px;
+    }
+
+    ul#profile-sidebar-nav {
+        margin-left: -15px !important;
     }
 }
 
@@ -953,8 +972,8 @@ div#profile-feed {
 
 div#profile-picture-main-body {
     background: #fff;
-    margin-top: 20px;
-    padding-top: 20px;
+    padding-top: 15px;
+    min-height: 465px;
 }
 
 div#profile-sidebar {
@@ -962,7 +981,7 @@ div#profile-sidebar {
 }
 
 ul#profile-sidebar-nav {
-    min-height: 350px;
+    margin-left: 0;
     border: 1px solid #ddd;
     border-right: 1px solid #ddd;
 }
@@ -978,10 +997,6 @@ table#bio-table {
 }
 
 /* Profile History - Comments, Thread Starters, Following, and Followers */
-div#profile-history {
-    margin-left: 15px;
-}
-
 div#profile-history h3 {
     text-transform: uppercase;
     font-weight: bolder;
@@ -1035,6 +1050,7 @@ div.btn-group-horizontal button {
 }
 
 div[class^='ias-noneleft'] {
+    padding: 15px;
     margin-top: 45px;
 }
 
@@ -1272,6 +1288,7 @@ form#form-signup input.form-control,
 form#form-signup div[class^='col-'] input.form-control {
     border: 0;
     height: 100%;
+    padding: 15px;
     border-radius: 0;
     text-align: center;
 }
@@ -1291,7 +1308,6 @@ button#signup-button {
 
 hr#facebook-separator {
     margin: 0;
-    margin-top: 15px;
 }
 
 div#facebook-signup {
