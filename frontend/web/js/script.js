@@ -37,6 +37,8 @@ $(document).ready(function(){
     // on site/home
     $(document).on('click',"div#verify-email-dropdown",function() {
         $("div#verify-email-form").slideToggle("fast");
+        $("span.glyphicon-chevron-up").toggleClass("glyphicon-chevron-down");
+        $("span.glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
     });
 
     $(document).on('click', '#resend-unverified-email-button',function(){
@@ -62,9 +64,9 @@ $(document).ready(function(){
         $('#resend-unverified-email-button').prop('disabled', true);
         $('#change-unverified-email-button').prop('disabled', true);
 
-       if($("#command-change-verify-email").val() == 'change'){
-           $("#change-verify-email-status").html("Changing your email...")
-       }
+        if($("#command-change-verify-email").val() == 'change'){
+            $("#change-verify-email-status").html("Changing your email...")
+        }
     });
 
 
@@ -88,15 +90,15 @@ $(document).ready(function(){
     });
     $("#upload-image").click(function(){
         $("#uploadProfilePicModal").modal("show")
-            .find('#uploadProfilePicModal')
-            .load($(this).attr("value"));
+        .find('#uploadProfilePicModal')
+        .load($(this).attr("value"));
     });
 
     //menu bar
     $("#loginMenu").click(function(){
         $("#loginModal").modal("show")
-            .find('#loginModal')
-            .load($(this).attr("value"));
+        .find('#loginModal')
+        .load($(this).attr("value"));
     });
 
     $("div#create-thread-dropdown").click(function() {
@@ -136,7 +138,7 @@ $(document).ready(function(){
         var vote = $(this).val();
 
         var comment_id = $(this).closest("form").find('.hi-comment-vote-comment-id').val();
-      // console.log(vote);
+        // console.log(vote);
 
         $("#hi-comment-vote-" + comment_id).val(vote);
         //console.log( $("#hi-comment-vote-" + comment_id).val());
@@ -197,13 +199,13 @@ $(document).ready(function(){
     });
 
     $(document).on('keydown',  ".child_comment_text_area", function(event){
-            var comment_id = $(this).data('service');
-            console.log("entered");
+        var comment_id = $(this).data('service');
+        console.log("entered");
 
-            if(event.keyCode == 13){
-                $("#child_comment_form_" + comment_id).submit();
-                return false;
-            }
+        if(event.keyCode == 13){
+            $("#child_comment_form_" + comment_id).submit();
+            return false;
+        }
     })
     .on('focus', '.child_comment_text_area',function() {
 
@@ -213,9 +215,9 @@ $(document).ready(function(){
     })
     .on('blur', '.child_comment_text_area',function(){
 
-            if(this.value==""){
-                this.value = "Add comment here...";
-            }
+        if(this.value==""){
+            this.value = "Add comment here...";
+        }
     }).on('pjax:send', '.child_comment_text_area', function(){
 
     });
@@ -257,8 +259,8 @@ $(document).ready(function(){
 
     function beginProfilePicModal(){
         $("#uploadProfilePicModal").modal("show")
-            .find('#uploadProfilePicModal')
-            .load($(this).attr("value"));
+        .find('#uploadProfilePicModal')
+        .load($(this).attr("value"));
     }
 
     $("li#notif-expansion").click(function() {
@@ -270,8 +272,8 @@ $(document).ready(function(){
 
     function beginLoginModal(){
         $("#loginModal").modal("show")
-            .find('#loginModal')
-            .load($(this).attr("value"));
+        .find('#loginModal')
+        .load($(this).attr("value"));
     }
 
     $("#login_link").click(function(){

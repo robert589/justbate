@@ -39,7 +39,6 @@ div.inline{
 }
 
 .home-thread-list{
-    margin-top: 20px;
     padding-left: 0px !important;
     padding-right: 0px !important;
 }
@@ -73,7 +72,6 @@ div#verify-email-form button {
     border-radius: 0;
     margin-bottom: 15px;
     width: 44%;
-    /*display: none;*/
     color: #fff;
 }
 
@@ -97,6 +95,12 @@ body {
     color: #000 !important;
     line-height: 20px !important;
     font-weight: 300;
+}
+
+div#home-container {
+    padding: 0;
+    position: relative;
+    margin-top: 73px;
 }
 
 div#left-sidebar {
@@ -453,135 +457,6 @@ div#main-container {
     margin-top: 113px !important;
 }
 
-@media screen and (max-width: 767px) {
-    body {
-        font-size: 8pt;
-    }
-
-    div.home-main-section {
-        margin-top: 53px;
-    }
-
-    div.container {
-        padding-left: 0;
-    }
-
-    div#main-container {
-        margin-top: 20px;
-    }
-
-    div#left-part-of-thread {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    div#action-button-thing button {
-        font-size: 16px;
-        width: 25%;
-        padding-top: 15px !important;
-        padding-bottom: 15px !important;
-        margin-bottom: 20px;
-        color: #fff;
-        border-radius: 0;
-        background: #1097FF;
-    }
-
-    li#notif-expansion a.dropdown-toggle {
-        margin-left: -10px !important;
-    }
-
-    li#search-box {
-        width: 100%;
-    }
-
-    div#left-sidebar {
-        display: none;
-    }
-
-    div#main-content {
-        margin-left: 0;
-    }
-
-    nav#menubar {
-        margin-bottom: 0;
-    }
-
-    div.container {
-        width: 100%;
-    }
-
-    div#verify-email {
-        margin-left: -15px !important;
-        top: 50px;
-        position: fixed;
-        width: 100% !important;
-    }
-
-    div#verify-email-dropdown {
-        width: 100% !important;
-    }
-
-    div#verify-email-form {
-        width: calc(100%);
-        padding-left: -15px;
-    }
-
-    li#notif-expansion {
-        text-align: left !important;
-    }
-
-    a#trigger_notification {
-        padding-left: 10px;
-        background: none;
-    }
-
-    a#trigger_notification:hover {
-        color: white;
-    }
-
-    li#notif-expansion ul.dropdown-menu {
-        width: 100% !important;
-        margin-top: 15px !important;
-    }
-
-    div.site-login div.col-xs-12 {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-
-    div.site-login div.row {
-        padding-left: 15px;
-    }
-
-    div.site-login div.row div#signup-form {
-        padding-left: 0;
-        padding-right: 15px;
-    }
-
-    div.site-login div.row div#login-form {
-        padding-left: 0;
-    }
-
-    div#signup-page {
-        width: 96%;
-    }
-
-    /*PROFILE RESPONSIVE*/
-    div#profile-picture-main-body {
-        margin-top: 0 !important;
-    }
-
-    div#profile-history {
-        float: right;
-        padding-left: 30px;
-    }
-
-    ul#profile-sidebar-nav {
-        margin-left: -15px !important;
-    }
-}
-
 img#profile-picture-home {
     padding-right: 15px;
 }
@@ -599,6 +474,7 @@ div#main-post-desc {
 }
 
 div#create-thread {
+    z-index: 0;
     margin-top: 0px;
     width: 100% !important;
     padding:0px;
@@ -616,6 +492,30 @@ div#create-thread-dropdown {
     padding: 15px;
     margin-left: 15px !important;
     width: calc(100% - 15px);
+}
+
+div#create-thread-dropdown {
+    background: none;
+    padding: 0;
+}
+
+div#create-thread-dropdown span.input-group-addon {
+    border-radius: 0;
+    border: 1px solid #ccc;
+    border-right: 0;
+}
+
+input[type="text"]#create-thread-title {
+    color: #000;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    border-radius: 0;
+    border: 1px solid #ccc;
+}
+
+ul.redactor-toolbar {
+    z-index: 0 !important;
 }
 
 div#create-thread-form {
@@ -659,6 +559,7 @@ li#notification-bar {
     margin: 15px 0 0 10px;
 }
 
+/*THREAD*/
 div.thread-view {
     width: 100% !important;
     padding-left: 0 !important;
@@ -732,8 +633,13 @@ div#shown_part + div.row {
 }
 
 div#action-button {
+    padding-left: 0;
     padding-right: 0;
-    margin-top: 20px;
+}
+
+div.empty {
+    padding: 15px;
+    padding-left: 0;
 }
 
 div#vote {
@@ -793,6 +699,18 @@ div#first-part div.tabs-above div.tab-content div#post-description p {
 
 div#first-part div.col-xs-12:first-child {
     padding: 0;
+}
+
+div.input-multiselect {
+    margin: 0;
+    padding: 15px;
+    margin-top: 0;
+    border-top: 0;
+    border-radius: 0;
+}
+
+ul#comment-tab li {
+    width: 25% !important;
 }
 
 .nav-tabs > li {
@@ -1329,4 +1247,150 @@ input[type="text"]#give-comment-text,
 select#give-comment-select {
     border: 1px solid #ccc;
     border-radius: 0;
+}
+
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 8pt;
+    }
+
+    a.navbar-brand img {
+        padding-left: 15px;
+    }
+
+    div.home-main-section {
+        margin-top: 53px;
+    }
+
+    div.container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /*THREAD */
+    div.thread-title {
+        padding: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: calc(100%+30px);
+    }
+
+    div#first-part {
+        margin-top: 0;
+    }
+
+    div#main-container {
+        margin-top: 20px;
+    }
+
+    div#left-part-of-thread {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    div#action-button-thing button {
+        font-size: 16px;
+        width: 25%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        color: #fff;
+        border-radius: 0;
+        background: #1097FF;
+    }
+
+    li#notif-expansion a.dropdown-toggle {
+        margin-left: -10px;
+    }
+
+    li#search-box {
+        width: 100%;
+    }
+
+    div#left-sidebar {
+        display: none;
+    }
+
+    div#main-content {
+        margin-left: 0;
+    }
+
+    nav#menubar {
+        margin-bottom: 0;
+    }
+
+    div.container {
+        width: 100%;
+    }
+
+    div#verify-email {
+        margin-left: -15px;
+        top: 50px;
+        position: fixed;
+        width: 100%;
+    }
+
+    div#verify-email-dropdown {
+        width: 100%;
+    }
+
+    div#verify-email-form {
+        width: calc(100%);
+        padding-left: -15px;
+    }
+
+    li#notif-expansion {
+        text-align: left;
+    }
+
+    a#trigger_notification {
+        padding-left: 10px;
+        background: none;
+    }
+
+    a#trigger_notification:hover {
+        color: white;
+    }
+
+    li#notif-expansion ul.dropdown-menu {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    div.site-login div.col-xs-12 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    div.site-login div.row {
+        padding-left: 15px;
+    }
+
+    div.site-login div.row div#signup-form {
+        padding-left: 0;
+        padding-right: 15px;
+    }
+
+    div.site-login div.row div#login-form {
+        padding-left: 0;
+    }
+
+    div#signup-page {
+        width: 96%;
+    }
+
+    /*PROFILE RESPONSIVE*/
+    div#profile-picture-main-body {
+        margin-top: 0;
+    }
+
+    div#profile-history {
+        float: right;
+        padding-left: 30px;
+    }
+
+    ul#profile-sidebar-nav {
+        margin-left: -15px;
+    }
 }

@@ -70,11 +70,9 @@
 
 <?= Dialog::widget(); ?>
 
-<div class="col-xs-12 col-md-8" style="background-color: white">
-
+<div class="col-xs-12 col-md-8" id="thread-main-body" style="background: white">
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
-
-		<div style="margin: 5px;display: inline-block">
+		<div style="padding: 15px;">
 			<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
 		</div>
 

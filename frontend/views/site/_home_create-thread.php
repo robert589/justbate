@@ -9,12 +9,12 @@ use yii\web\JsExpression;
 
 <?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,'method' => 'post']) ?>
 <!-- Title input box -->
-<div style="margin-left: 15px; margin-right: 15px; padding: 15px;">
-    <div class="col-xs-12" style="padding: 0;">
+<div style="margin-left: 15px; margin-right: 15px; padding-top: 15px; padding-bottom: 15px;">
+    <!-- <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'title')->textInput(['placeholder' => 'Post Title',
         'class' => 'form-control',
          ])->label(false) ?>
-    </div> <!--- div.col-xs-12 -->
+    </div> --> <!--- div.col-xs-12 -->
 
     <div class="col-xs-12" style="padding: 0;">
         <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),

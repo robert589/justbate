@@ -126,7 +126,7 @@ AppAsset::register($this);
     Modal::end();
     ?>
 
-    <div class="container" style="position:relative;margin-top: 73px;">
+    <div class="container" id="home-container" style="">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

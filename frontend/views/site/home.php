@@ -34,8 +34,11 @@ $this->title = "Home";
 			<div class="col-md-8 home-main-section" >
 				<div class="col-xs-12" id="create-thread">
 					<div class="col-xs-12" id="create-thread-dropdown">
-						<div id="create-thread-button">Click Here to Start Make a Thread
-							<span style="float: right;" id="icon-dropdown" class="glyphicon glyphicon-chevron-down"></span>
+						<div id="create-thread-button">
+							<div class="input-group">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
+								<input id="create-thread-title" type="text" class="form-control" placeholder="Your Thread Title" />
+							</div>
 						</div>
 					</div> <!-- div.col-xs-12 -->
 				</div>
