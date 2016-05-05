@@ -102,7 +102,7 @@ $(document).ready(function(){
     });
 
     $("div#create-thread-dropdown").click(function() {
-        $("div#create-thread-form").slideToggle("fast");
+        $("div#create-thread-main-form").slideToggle("fast");
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });

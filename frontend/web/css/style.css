@@ -104,11 +104,8 @@ div#home-container {
 }
 
 div#left-sidebar {
-    margin-left: -25px;
-    margin-right: 0px;
-    padding-left:0px;
-    padding-right: 0px;
-    font-size:13px;
+    margin-right: -15px;
+    padding-left: 0px;
     line-height: 18px;
 }
 
@@ -480,6 +477,19 @@ div#create-thread {
     padding:0px;
 }
 
+div#create-thread-wrapper {
+    padding: 15px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: -15px;
+}
+
+div#create-thread-main-form {
+    padding: 15px;
+    display: none;
+    background: #FFF;
+}
+
 div#verify-email-button {
     text-align: center;
     text-transform: uppercase;
@@ -495,44 +505,33 @@ div#create-thread-dropdown {
 }
 
 div#create-thread-dropdown {
-    background: none;
     padding: 0;
+    width: 100%;
+    background: none;
+    margin-left: 0 !important;
+    border-bottom: 3px solid #eee;
 }
 
 div#create-thread-dropdown span.input-group-addon {
+    border: 0;
     border-radius: 0;
-    border: 1px solid #ccc;
-    border-right: 0;
+}
+
+input {
+    border-radius: 0 !important;
 }
 
 input[type="text"]#create-thread-title {
+    border: 0;
     color: #000;
-    width: 100%;
     height: 100%;
     padding: 15px;
     border-radius: 0;
-    border: 1px solid #ccc;
+    width: calc(100% + 0.5px);
 }
 
 ul.redactor-toolbar {
     z-index: 0 !important;
-}
-
-div#create-thread-form {
-    display: none;
-    background: #fff;
-    padding: 0;
-    margin-left: 15px;
-    margin-right: 30px;
-    width: calc(100% - 15px);
-}
-
-div#create-thread-form input,
-div#create-thread-form select,
-div#create-thread-form span.select2-selection--multiple,
-div#create-thread-form li.select2-selection__choice {
-    border: 0 !important;
-    border-radius: 0;
 }
 
 div#submit-thread {
@@ -603,6 +602,10 @@ div#threadList div.ias-trigger,
 div#threadList div.ias-noneleft {
     margin: 0;
     width: calc(100% - 15px);
+}
+
+div.thread-view {
+    padding-right: 0;
 }
 
 div#threadList div.item article div#commentator-moderate {
@@ -1256,6 +1259,10 @@ select#give-comment-select {
 
     a.navbar-brand img {
         padding-left: 15px;
+    }
+
+    div.navbar-header button {
+        padding-right: 15px;
     }
 
     div.home-main-section {
