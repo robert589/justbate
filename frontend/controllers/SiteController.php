@@ -316,7 +316,7 @@ class SiteController extends Controller
 
 		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
 			if($thread_id = $create_thread_form->create()){
-				return $this->redirect(Yii::$app->request->baseUrl . '/thread/index?id=' . $thread_id);
+				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id . '/' . $create_thread_form->title);
 			}
 		}
 		else{

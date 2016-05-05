@@ -6,7 +6,6 @@ use yii\db\Expression;
 use yii\web\JsExpression;
 ?>
 
-
 <?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,'method' => 'post', 'id' => 'form-action']) ?>
 <!-- Title input box -->
 
