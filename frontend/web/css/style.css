@@ -124,9 +124,14 @@ div#thread-issue {
     border-left: 3px solid #0E5A94;
 }
 
+div#thread-issue-wrapper {
+    margin: 15px;
+    margin-left: 0;
+}
+
 span#thread-issue-text {
-    padding-left: 10px;
-    color: #888;
+    padding: 15px;
+    padding-left: 0;
 }
 
 button.btn {
@@ -670,19 +675,19 @@ div#title-part {
 
 div.thread-title {
     margin: 0;
-    padding: 30px;
+    padding: 15px;
     text-align: center !important;
     font-weight: bold;
     font-size: 16pt;
 }
 
+div.thread-details {
+    padding-left: 0;
+    padding-right: 0;
+}
 
 div#shown_part {
     display: block;
-}
-
-div#first-part {
-    margin-bottom: 20px;
 }
 
 div#first-part div.tabs-above li {
@@ -1262,7 +1267,7 @@ select#give-comment-select {
     }
 
     div.navbar-header button {
-        padding-right: 15px;
+        margin-right: 30px;
     }
 
     div.home-main-section {
@@ -1274,12 +1279,28 @@ select#give-comment-select {
         padding-right: 0;
     }
 
+    div[class^='comment-tab'] {
+        background: #000 !important;
+        margin-left: -25% !important;
+    }
+
     /*THREAD */
     div.thread-title {
         padding: 0;
+        margin-top: 15px;
         padding-top: 15px;
         padding-bottom: 15px;
-        width: calc(100%+30px);
+        width: calc(100%+30px) !important;
+    }
+
+    div#thread-main-body {
+        margin-top: -18px;
+    }
+
+    span#thread-issue-text {
+        padding: 15px;
+        padding-left: 0;
+        margin-top: 15px;
     }
 
     div#first-part {

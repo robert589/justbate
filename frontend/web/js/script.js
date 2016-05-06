@@ -37,8 +37,8 @@ $(document).ready(function(){
     // on site/home
     $(document).on('click',"div#verify-email-dropdown",function() {
         $("div#verify-email-form").slideToggle("fast");
-        $("span.glyphicon-chevron-up").toggleClass("glyphicon-chevron-down");
-        $("span.glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
+        $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
+        $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
 
     $(document).on('click', '#resend-unverified-email-button',function(){
@@ -103,8 +103,6 @@ $(document).ready(function(){
 
     $("div#create-thread-dropdown").click(function() {
         $("div#create-thread-main-form").slideToggle("fast");
-        $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
-        $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
 
     // site_home
