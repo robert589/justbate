@@ -100,16 +100,23 @@ class SiteController extends Controller
 	public function oAuthSuccess($client) {
 		// get user data from client
 		$userAttributes = $client->getUserAttributes();
-		// do some thing with user data. for example with $userAttributes['email']
-		$user = User::find()->where(['facebook_id' => $userAttributes['id']])->one();
 
+		// do some thing with user data. for example with $userAttributes['email']
 		if(!empty($user)){
 			Yii::$app->user->login($user);
 		}
 		else{
-			$session = Yii::$app->session;
-			$session['attributes'] =$userAttributes;
-		   return $this->redirect(Url::to(['signup', 'fb' => true]));
+			$model = new SignupForm();
+			$model->facebook_id = $userAttributes['id'];
+			$model->first_name = $userAttributes['first_name'];
+			$model->last_name = $userAttributes['last_name'];
+			$url = "https://graph.facebook.com/". $userAttributes['id'] . "/picture?width=150";
+			$photos = file_get_contents($url);
+			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
+
+			if($user = $model->signup()){
+				Yii::$app->getUser()->login($user);
+			}
 		}
 	}
 
@@ -166,21 +173,16 @@ class SiteController extends Controller
 
 		//check whether he/she has validated her email
 		$user = User::findOne(['id' => $user_id]);
-		$validated = $user->validated;
-		if($validated == 1){
-			$change_email_form = null;
-		}
-		else{
-			$change_email_form = new ResendChangeEmailForm();
-			$change_email_form->user_email = $user->email;
-			$change_email_form->command = 'Yes';
-		}
 
+		$change_email_form = new ResendChangeEmailForm();
+		if($user->email != ''){
+			$change_email_form->user_email = $user->email;
+		}
 
 		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
 									'list_data_provider' => $data_provider,
-									'validated' => $validated,
+									'user' => $user,
 									'change_email_form' => $change_email_form,
 									'create_thread_form' => $create_thread_form]);
 	}
@@ -316,7 +318,7 @@ class SiteController extends Controller
 
 		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
 			if($thread_id = $create_thread_form->create()){
-				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id . '/' . $create_thread_form->title);
+				return $this->redirect(Yii::$app->request->baseUrl . '/thread/index?id=' . $thread_id);
 			}
 		}
 		else{
@@ -383,6 +385,7 @@ class SiteController extends Controller
 	{
 		$model = new SignupForm();
 		$is_sign_up_with_fb = false;
+		/*
 		//if it comes from facebook
 		if(!empty($_GET['fb'])){
 			$is_sign_up_with_fb = true;
@@ -399,12 +402,20 @@ class SiteController extends Controller
 			$photos = file_get_contents($url);
 			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
 		}
+		*/
+
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {
-
 				if (Yii::$app->getUser()->login($user)) {
 					return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
 				}
+				else{
+					Yii::$app->end("User" . print_r($user));
+				}
+			}
+			else{
+				Yii::$app->end("Model error: " . var_dump($user));
+
 			}
 		}
 

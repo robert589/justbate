@@ -21,7 +21,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-class ValidationToken extends ActiveRecord
+class EmailValidationToken extends ActiveRecord
 {
 
     /**
@@ -29,7 +29,7 @@ class ValidationToken extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%validation_token}}';
+        return '{{%email_validation_token}}';
     }
 
 
