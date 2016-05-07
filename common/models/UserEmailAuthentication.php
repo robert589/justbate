@@ -51,4 +51,5 @@ class UserEmailAuthentication extends ActiveRecord
 
 
 
+
 }

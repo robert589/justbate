@@ -14,7 +14,7 @@ class Thread extends ActiveRecord
 		return 'thread';
 	}
 
-	public static function getThreads($user_id, $issue = null) {
+	public static function getThreads($user_id, $issue_name = null) {
 		$template_sql = "
 						Select parent_thread_info.* , thread_vote.choice_text from(
 							Select thread_info.*, count(thread_comment.comment_id) as total_comments
@@ -32,7 +32,7 @@ class Thread extends ActiveRecord
 						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
 
 						";
-		if($issue == null){
+		if($issue_name == null){
 			$sql =  $template_sql;
 			return  \Yii::$app->db->createCommand($sql)->
 					bindParam(':user_id', $user_id)
@@ -48,13 +48,12 @@ class Thread extends ActiveRecord
 								  thread_status = 10 and
 								thread_issue.thread_id = thread.thread_id
 								and issue.issue_name = :issue_name
-                          		and issue.issue_id = thread_issue.issue_id
+								and issue.issue_name = thread_issue.issue_name
 							) thread_info
 							left join thread_comment
 							on thread_info.thread_id = thread_comment.thread_id
 							group by thread_info.thread_id
 							order by (date_created) desc
-
 						) parent_thread_info
 						left join thread_vote
 						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
@@ -62,7 +61,7 @@ class Thread extends ActiveRecord
 			";
 
 			return  \Yii::$app->db->createCommand($sql)->
-									bindParam(':issue_name', $issue)->
+									bindParam(':issue_name', $issue_name)->
 									bindParam(':user_id', $user_id)
 									->queryAll();
 		}

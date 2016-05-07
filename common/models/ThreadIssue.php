@@ -14,9 +14,8 @@ class ThreadIssue extends ActiveRecord{
     public static function getIssue($thread_id){
         $sql = "
             SELECT issue_name
-            from thread_issue inner join issue
-            on thread_issue.issue_id = issue.issue_id
-            and thread_issue.thread_id = :thread_id
+            from thread_issue
+            where thread_issue.thread_id = :thread_id
         ";
 
         return  \Yii::$app->db->createCommand($sql)->

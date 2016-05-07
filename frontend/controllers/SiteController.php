@@ -4,11 +4,13 @@ namespace frontend\controllers;
 use common\models\Issue;
 use common\models\ThreadComment;
 use common\models\ThreadVote;
+use common\models\UserFollowedIssue;
 use frontend\models\ChangeEmailForm;
 use frontend\models\CreateThreadForm;
 use frontend\models\ResendChangeEmailForm;
 use frontend\models\SubmitThreadVoteForm;
 use frontend\models\UploadProfilePicForm;
+use frontend\models\UserFollowIssueForm;
 use frontend\models\ValidateAccountForm;
 use Yii;
 use frontend\models\PasswordResetRequestForm;
@@ -19,21 +21,14 @@ use common\models\Thread;
 use common\models\Choice;
 use common\models\Comment;
 use common\models\User;
-use common\models\FollowerRelation;
 use frontend\models\ContactForm;
-use frontend\models\FilterHomeForm;
-use yii\authclient\ClientInterface;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Json;
-use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\SqlDataProvider;
-use yii\helpers\ArrayHelper;
-use yii\helpers\StringHelper;
 
 /**
  * Site controller
@@ -131,7 +126,7 @@ class SiteController extends Controller
 	}
 
 	/**
-	* Generate Home page include Trending Issue, Trending Topic, and newest Topic
+	* Generate Home page include Followed Issue, Trending Topic, and newest Topic
 	*/
 	public function actionHome()
 	{
@@ -147,10 +142,16 @@ class SiteController extends Controller
 
 		//get Issue
 		if(!empty($_GET['issue'])){
+			$issue_name = $_GET['issue'];
+			$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($issue_name);
+			$user_is_follower = UserFollowedIssue::isFollower($user_id, $issue_name);
 			$result = Thread::getThreads($user_id, $_GET['issue']);
 
 		}
 		else{
+			$issue_name = '';
+			$user_is_follower = false;
+			$issue_num_followers = -1;
 			$result = Thread::getThreads($user_id);
 		}
 
@@ -163,13 +164,14 @@ class SiteController extends Controller
 
 		//Create form
 		$create_thread_form  = new CreateThreadForm();
+
 		$this->getDefaultChoice($create_thread_form);
 
 		//retrieve trending topic
 		$trending_topic_list = $this->getTredingTopicList();
 
 		//get popular category
-		$issue_list = $this->getPopularIssue();
+		$issue_list = UserFollowedIssue::getFollowedIssue($user_id);
 
 		//check whether he/she has validated her email
 		$user = User::findOne(['id' => $user_id]);
@@ -183,9 +185,13 @@ class SiteController extends Controller
 									'trending_topic_list' => $trending_topic_list,
 									'list_data_provider' => $data_provider,
 									'user' => $user,
+									'issue_name' => $issue_name,
+									'issue_num_followers' => $issue_num_followers,
+									'user_is_follower' => $user_is_follower,
 									'change_email_form' => $change_email_form,
 									'create_thread_form' => $create_thread_form]);
 	}
+
 
 	public function actionChangeVerifyEmail(){
 
@@ -210,6 +216,43 @@ class SiteController extends Controller
 			'change_email_form' => $change_email_form,
 			'message' => $message]);
 
+	}
+
+	public function actionFollowIssue(){
+		if(isset($_POST['issue_name']) && isset($_POST['user_id']) && isset($_POST['command'])){
+
+			$command = $_POST['command'];
+
+			$user_follow_issue_form = new UserFollowIssueForm();
+
+			$user_follow_issue_form->issue_name = $_POST['issue_name'];
+			$user_follow_issue_form->user_id = $_POST['user_id'];
+
+			if($command == 'follow_issue'){
+				$success = $user_follow_issue_form->followIssue();
+			}
+			else{
+				$success = $user_follow_issue_form->unfollowIssue();
+			}
+
+			if($success == true){
+				$user_is_follower = UserFollowedIssue::isFollower($user_follow_issue_form->user_id, $user_follow_issue_form->issue_name);
+				$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($user_follow_issue_form->issue_name);
+				return $this->renderPartial('_home_issue-header', ['issue_name' => $user_follow_issue_form->issue_name,
+					'issue_num_followers' => $issue_num_followers,
+					'user_is_follower' => $user_is_follower]);
+			}
+			else{
+				if($user_follow_issue_form->hasErrors()){
+					Yii::$app->end($user_follow_issue_form->getErrors());
+				}
+			}
+		}
+		else{
+
+		}
+
+		return null;
 	}
 
 	public function actionFollowee() {
@@ -557,6 +600,11 @@ class SiteController extends Controller
 		return $mapped_trending_topic_list;
 	}
 
+	/**
+	 * Status: Not used anymore, replace by followed issue
+	 *
+	 * @return array
+	 */
 	private function getPopularIssue(){
 		$category_list = Issue::getPopularCategory();
 

@@ -153,14 +153,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->getAuthKey() === $authKey;
-    }
-
-    /**
      * Validates password
      *
      * @param string $password password to validate
@@ -169,6 +161,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
     }
 
 

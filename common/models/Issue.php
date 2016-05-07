@@ -32,7 +32,8 @@ class Issue extends ActiveRecord{
     }
 
     /**
-     * WRONGGGG, MOTHERFUCKER WRONG, CHANGE PLEASE
+     * Status: Terminated (it is replaced by followed issue)-
+     * To get popular issue
      */
     public static function getPopularCategory(){
         $sql = "SELECT issue_name
@@ -47,4 +48,5 @@ class Issue extends ActiveRecord{
     public static function checkExist($issue){
         return Self::find()->where([self::ID => $issue])->exists();
     }
+
 }

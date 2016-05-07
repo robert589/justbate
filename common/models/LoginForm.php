@@ -73,7 +73,8 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = UserEmailAuthentication::findOne(['email' => $this->email]);
+            $this->_user = User::find()->select('user.*')->innerJoin('user_email_authentication', 'user.id = user_email_authentication.user_id')
+                            ->where(['user_email_authentication.email' => $this->email])->one();
         }
 
         return $this->_user;

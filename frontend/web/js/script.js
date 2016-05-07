@@ -1,10 +1,10 @@
 $(document).ready(function(){
     //layout main
     $(document).on('pjax:send', function() {
-        $('#loading-bar').show()
+       // $('#loading-bar').show()
     });
     $(document).on('pjax:complete', function() {
-        $('#loading-bar').hide();
+       // $('#loading-bar').hide();
     });
     $('#loading-bar').height($(document).height());
 
