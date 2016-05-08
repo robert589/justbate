@@ -1,10 +1,10 @@
 $(document).ready(function(){
     //layout main
     $(document).on('pjax:send', function() {
-       // $('#loading-bar').show()
+        // $('#loading-bar').show()
     });
     $(document).on('pjax:complete', function() {
-       // $('#loading-bar').hide();
+        // $('#loading-bar').hide();
     });
     $('#loading-bar').height($(document).height());
 
@@ -12,6 +12,19 @@ $(document).ready(function(){
     $(document).on('change',"select.user-vote",function() {
         var service = $(this).data('service');
         $("form#form_user_vote_"+service+"").submit();
+    });
+
+    // toggling form on comment
+    $("button.give_comment").click(function() {
+        var service = $(this).data('service');
+        var all_comment = "div#home_comment_section_" + service + " div#w3-container";
+        if ($("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display").toLowerCase() == "none") {
+            $("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display", "block");
+            $("#comment_part_" + service).hide();
+        } else {
+            $("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display", "none");
+            $("#comment_part_" + service).show();
+        }
     });
 
     // replacing facebook icon by yii2 with font-awesome
@@ -113,10 +126,12 @@ $(document).ready(function(){
     // site_home
     $(document).on('click', '#comment_hide_list_thread_btn', function(){
         if($(this).text() == 'Comment'){
-            $("#list_thread_comment_part").show();
+            // $("#list_thread_comment_part").show();
+            $("#list_thread_comment_part").css("display", "block");
             $('#comment_hide_list_thread_btn').text('Hide');
         } else {
-            $("#list_thread_comment_part").hide();
+            // $("#list_thread_comment_part").hide();
+            $("#list_thread_comment_part").css("display", "none");
             $('#comment_hide_list_thread_btn').text('Comment');
         }
     });
@@ -250,6 +265,7 @@ $(document).ready(function(){
             $("#hide_button_" + comment_id).text("Show");
         }
         else{
+            $("div._list_thread_form_"+comment_id+" form#comment-form div.col-xs-12").slideToggle();
             $("#comment_part_" + comment_id).show();
             $("#hide_button_" +comment_id).text("Hide");
         }

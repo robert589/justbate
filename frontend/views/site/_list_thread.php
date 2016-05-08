@@ -15,9 +15,11 @@ use yii\helpers\HtmlPurifier;
 	</div>
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
-			<?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?><hr />
+			<div class="col-xs-6"><?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?></div>
+			<div class="col-xs-6" style="font-size: 12pt; text-align: right;"><span class="label label-primary"><span class="fa fa-facebook"></span></span></div>
 		</div>
 		<div class="col-xs-12">
+			<hr />
 			<?php if($comment != null || $comment != false){ ?>
 				<div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name']  ?> </div> &nbsp; chooses <b><?= $comment['choice_text'] ?></b> and says <br>
 				<br />

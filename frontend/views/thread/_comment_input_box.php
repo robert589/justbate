@@ -6,18 +6,22 @@
     /* @var $commentModel \frontend\models\CommentForm */
     //prepare data
     $choice_text = array();
+
+    // dummy data START
+    $thread_choices = [];
+    $commentModel = new \frontend\models\CommentForm();
+    $thread_id = 75;
+    // dummy data END
+
     foreach($thread_choices as $choice){
         $choice_text[$choice['choice_text']]  = $choice['choice_text'];
     }
+
 ?>
 
 
 <!--Comment Input Part-->
 <?php $form =ActiveForm::begin(['action' => ['thread/submit-comment'], 'id' => 'comment-form']) ?>
-
-<div align="center">
-    <h3>Give your comment</h3>
-</div>
 
 <div class="col-xs-12">
     <div class="row">
