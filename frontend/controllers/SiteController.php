@@ -97,7 +97,8 @@ class SiteController extends Controller
 		$userAttributes = $client->getUserAttributes();
 
 		// do some thing with user data. for example with $userAttributes['email']
-		if(!empty($user)){
+		if(User::find()->where(['facebook_id' => $userAttributes['id']])->exists()){
+			$user = User::find()->where(['facebook_id' => $userAttributes['id']])->one();
 			Yii::$app->user->login($user);
 		}
 		else{
@@ -172,7 +173,7 @@ class SiteController extends Controller
 
 		//get popular category
 		$issue_list = UserFollowedIssue::getFollowedIssue($user_id);
-
+		//Yii::$app->end(var_dump($issue_list));
 		//check whether he/she has validated her email
 		$user = User::findOne(['id' => $user_id]);
 
@@ -187,6 +188,7 @@ class SiteController extends Controller
 									'user' => $user,
 									'issue_name' => $issue_name,
 									'issue_num_followers' => $issue_num_followers,
+									'add_issue_form' => new UserFollowIssueForm(),
 									'user_is_follower' => $user_is_follower,
 									'change_email_form' => $change_email_form,
 									'create_thread_form' => $create_thread_form]);
@@ -215,6 +217,20 @@ class SiteController extends Controller
 		return $this->renderPartial('_home_verify-email', [
 			'change_email_form' => $change_email_form,
 			'message' => $message]);
+
+	}
+
+	public function actionAddIssue(){
+		$add_issue_form = new UserFollowIssueForm();
+		if($add_issue_form->load(Yii::$app->request->post()) && $add_issue_form->validate()){
+			if($add_issue_form->followIssue()){
+				$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
+				return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => new UserFollowIssueForm()]);
+			}
+		}
+
+		$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
+		return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => $add_issue_form]);
 
 	}
 
@@ -419,6 +435,16 @@ class SiteController extends Controller
 		echo Json::encode($out);
 	}
 
+	public function actionSearchIssue($q =null){
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		$out = ['results' => ['id' => '', 'text' => '']];
+		if ($q != null || $q != '') {
+			$data = Issue::getIssueBySearch($q);
+			$out['results'] = array_values($data);
+		}
+
+		echo Json::encode($out);
+	}
 	/**
 	 * Signs user up.
 	 *
@@ -605,13 +631,13 @@ class SiteController extends Controller
 	 *
 	 * @return array
 	 */
-	private function getPopularIssue(){
-		$category_list = Issue::getPopularCategory();
+	private function getFollowedIssue($user_id){
+		$issue_list = UserFollowedIssue::getFollowedIssue($user_id);
 
 		$mapped_category_list = array();
-		foreach($category_list as $category){
-			$mapped_category['label'] = $category['issue_name'];
-			$mapped_category['url']  = Yii::$app->request->baseUrl . '/issue/' . $category['issue_name'];
+		foreach($issue_list as $issue){
+			$mapped_category['label'] = $issue['issue_name'];
+			$mapped_category['url']  = Yii::$app->request->baseUrl . '/issue/' . $issue['issue_name'];
 
 			$mapped_category_list[] = $mapped_category;
 		}
