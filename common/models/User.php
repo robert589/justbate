@@ -235,4 +235,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function checkUsernameExist(){
         return $this->find()->where(['username' => $this->username])->exists();
     }
+
+
 }

@@ -41,6 +41,11 @@ $(document).ready(function(){
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
 
+    $(document).on('click', '#home-add-issue-button', function(){
+        $("#home-add-issue-button-div").hide();
+        $("#home-add-issue-form-div").show();
+    });
+
     $(document).on('click', '#resend-unverified-email-button',function(){
         $("#resendchangeemailform-command").val("resend");
         $("#change-verify-email-form").submit();

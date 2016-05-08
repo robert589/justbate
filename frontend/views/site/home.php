@@ -12,20 +12,16 @@ use yii\helpers\Html;
 /** @var $issue_name string optional */
 /** @var $issue_num_followers integer optional */
 /** @var $user_is_follower boolean optional */
-
+/** @var $add_issue_form \frontend\models\UserFollowIssueForm */
 /** @var $change_email_form \frontend\models\ChangeEmailForm */
 
 $this->title = "Home";
 ?>
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
-		<div class="col-xs-12">
-			<?= SideNav::widget([
-				'type' => SideNav::TYPE_DEFAULT,
-				'heading' => 'Followed issue',
-				'items' => $issue_list,
-				]) ?>
-		</div><!-- div.col-xs-12 -->
+
+		<?= $this->render('_home_sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => $add_issue_form]) ?>
+
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([

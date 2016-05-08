@@ -47,8 +47,8 @@ class UserFollowedIssue extends ActiveRecord
         $mapped_issue_list = array();
         foreach($results as $result){
             $mapped_issue['label'] = $result['issue_name'];
-            $mapped_issue['url']  = Yii::$app->request->baseUrl . '/issue/' . $result['issue_name'];
-
+            $mapped_issue['url']  = Yii::$app->request->baseUrl . '/issue/' . $result['issue_name'] ;
+            $mapped_issue['linkTemplate'] = '<a href="{url}" data-pjax="0">{icon}{label}</a>';
             $mapped_issue_list[] = $mapped_issue;
         }
 

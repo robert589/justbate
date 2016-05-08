@@ -49,4 +49,14 @@ class Issue extends ActiveRecord{
         return Self::find()->where([self::ID => $issue])->exists();
     }
 
+    public static function getIssueBySearch($q){
+        $q = '%' . $q . '%';
+        $sql = "Select issue_name as id, issue_name as text from issue where issue_name like :query";
+
+        return \Yii::$app->db
+            ->createCommand($sql)
+            ->bindParam(':query', $q)
+            ->queryAll();
+    }
+
 }
