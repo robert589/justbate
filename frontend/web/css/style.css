@@ -21,7 +21,7 @@ div.inline{
 /**section, give margin to every new section **/
 .section{
     padding: 0px !important;
-    margin-left: 0px;
+    margin-left: -15px;
     margin-top: 15px;
 }
 
@@ -131,7 +131,6 @@ div#thread-issue {
     color: #888;
     margin-bottom: 0;
     margin-top: 15px;
-    border-left: 3px solid #0E5A94;
 }
 
 div#thread-issue-wrapper {
@@ -156,6 +155,11 @@ nav#menubar {
     text-transform: capitalize;;
     background: #fff !important;
     border-bottom: 3px solid #0E5A94;
+}
+
+ul.navbar-nav {
+    width: 60%;
+    float: right;
 }
 
 div.navbar-header a,
@@ -324,9 +328,9 @@ button#upload-image {
     opacity: 0;
 }
 
-li#search-box {
+li#search-box.item {
     padding: 7px;
-    width: 450px;
+    width: 25%;
 }
 
 li#notification {
@@ -338,8 +342,15 @@ li#notification {
 /* removing the border for search form */
 span.select2-selection--single,
 span#select2-search_box_menu-container {
+    margin-left: 15px;
     color: black;
+    width: 100%;
     border: 0 !important;
+}
+
+span.select2-selection__arrow {
+    float: left;
+    display: none;
 }
 
 /* removing the description label */
@@ -588,7 +599,6 @@ div.thread-view {
     margin-bottom: 15px;
     box-sizing: border-box;
     background: #fff;
-    border-left: 3px solid #0E5A94;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;;
 }
 
@@ -888,6 +898,10 @@ div.commentator-moderate {
 
 
 /* on profile page */
+div#profile-sidebar-nav {
+    display: none;
+}
+
 div#profile-feed {
     text-transform: uppercase;
     text-align: center;
@@ -921,7 +935,12 @@ div#profile-sidebar {
     width: 100%;
 }
 
+div#profile-sidebar-nav {
+    width: 12.5% !important;
+}
+
 ul#profile-sidebar-nav {
+    width: 25%;
     margin-left: 0;
     border: 1px solid #ddd;
     border-right: 1px solid #ddd;
@@ -938,6 +957,11 @@ table#bio-table {
 }
 
 /* Profile History - Comments, Thread Starters, Following, and Followers */
+div#profile-history {
+    float: right;
+    padding-left: 30px;
+}
+
 div#profile-history h3 {
     text-transform: uppercase;
     font-weight: bolder;
@@ -1273,6 +1297,12 @@ select#give-comment-select {
     border-radius: 0;
 }
 
+@media screen and (max-width: 995px) {
+    div#left-sidebar {
+        display: none;
+    }
+}
+
 /*MEDIA SCREEN FOR 767PX*/
 @media screen and (max-width: 767px) {
     body {
@@ -1301,7 +1331,11 @@ select#give-comment-select {
     }
 
     div#home-container {
-        margin-top: 53px !important;
+        margin-top: 73px !important;
+        margin-left: -15px;
+        width: calc(100% + 30px);
+        padding-left: 0;
+        padding-right: 0;
     }
 
     div[class^='comment-tab'] {
@@ -1328,8 +1362,31 @@ select#give-comment-select {
         margin-top: 15px;
     }
 
+    .section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    div#thread-details {
+        padding-left: 0;
+        width: calc(100% - 15px);
+    }
+
+    div#comment-tab {
+        width: 100%;
+        margin-left: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    div#action-button,
+    div#thread-issue-wrapper span#thread-issue-text {
+        padding-left: 15px !important;
+    }
+
     div#first-part {
         margin-top: 0;
+        margin-left: 15px;
     }
 
     div#main-container {
@@ -1351,6 +1408,7 @@ select#give-comment-select {
         color: #fff;
         border-radius: 0;
         background: #1097FF;
+        padding-left: 15px;
     }
 
     li#notif-expansion a.dropdown-toggle {
@@ -1359,10 +1417,6 @@ select#give-comment-select {
 
     li#search-box {
         width: 100%;
-    }
-
-    div#left-sidebar {
-        display: none;
     }
 
     div#main-content {
@@ -1378,7 +1432,7 @@ select#give-comment-select {
     }
 
     div#verify-email {
-        margin-left: -15px;
+        margin-left: 0;
         top: 50px;
         position: fixed;
         width: 100%;
@@ -1386,6 +1440,7 @@ select#give-comment-select {
 
     div#verify-email-dropdown {
         width: 100%;
+        margin-left: -30px;
     }
 
     div#verify-email-form {
@@ -1437,7 +1492,10 @@ select#give-comment-select {
 
     /*PROFILE RESPONSIVE*/
     div#profile-picture-main-body {
-        margin-top: 0;
+        margin-top: -20px;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: calc(100% - 30px);
     }
 
     div#profile-history {
@@ -1447,6 +1505,11 @@ select#give-comment-select {
 
     ul#profile-sidebar-nav {
         margin-left: -15px;
+    }
+
+    ul#profile-sidebar-nav,
+    div#profile-feed {
+        width: 100%;
     }
 }
 

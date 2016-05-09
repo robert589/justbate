@@ -68,95 +68,95 @@ Modal::end();
 
 				<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 
-			<?php } ?>
-		</div>
-		<div class="col-xs-6 col-md-4" id="profile-details">
-			<div id="displayName">
-				<?= $user->first_name ?> <?= $user->last_name ?>
-				<div align="right">
-					<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
-				</div>
+				<?php } ?>
 			</div>
-			<hr>
-			<table id="bio-table" class="table table-responsive">
-				<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
-				<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
-			</table>
+			<div class="col-xs-6 col-md-4" id="profile-details">
+				<div id="displayName">
+					<?= $user->first_name ?> <?= $user->last_name ?>
+					<div align="right">
+						<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
+					</div>
+				</div>
+				<hr>
+				<table id="bio-table" class="table table-responsive">
+					<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
+					<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
+				</table>
+			</div>
 		</div>
-	</div>
 
-	<hr />
+		<hr />
 
-	<!-- Profile Main Details -->
-	<div id="profile-sidebar">
-		<div class="col-xs-3" id="profile-sidebar-details">
-			<ul id="profile-sidebar-nav" class="sidebar-nav">
-				<div id="profile-feed"><div>Feeds</div></div>
-				<a href="<?= $comment_link ?>"><li>Comments</li></a>
-				<a href="<?= $thread_starter_link ?>"><li>Thread Starters</li></a>
-				<a href="<?= $follower_link?>"><li><div class="btn-group-horizontal"><button class="btn btn-default">Followers</button><button class="btn btn-disabled"><?= $num_followers ?></button></div></li></a>
-				<a href="<?= $followee_link?>"><li><div class="btn-group-horizontal" style="padding-bottom: 15px;"><button class="btn btn-default">Following</button><button class="btn btn-disabled"><?= $num_followings ?></button></div></li></a>
-			</ul>
-		</div>
-		<div class="col-xs-9" id="profile-history">
-			<?php if($type == ProfileController::THREAD_STARTERS){ ?>
-				<h3>Thread Starters</h3>
-				<?= ListView::widget([
-					'id' => 'thread_starter_list_view_1',
-					'dataProvider' => $model_provider,
-					'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
-					'summary' => false,
-					'itemOptions' => ['class' => 'item'],
-					'layout' => "{summary}\n{items}\n{pager}",
-					'itemView' => function ($model, $key, $index, $widget) {
-						return $this->render('_list_starters',['model' => $model]);
-					}
-				])
-				?>
-				<?php }else if($type == ProfileController::COMMENTS){ ?>
-					<h3>Comments</h3>
-					<?= ListView::widget([
-						'id' => 'thread_starter_list_view_2',
-						'dataProvider' => $model_provider,
-						'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
-						'summary' => false,
-						'itemOptions' => ['class' => 'item'],
-						'layout' => "{summary}\n{items}\n{pager}",
-						'itemView' => function ($model, $key, $index, $widget) {
-							return $this->render('_list_comments',['model' => $model]);
-						}
-					])
-					?>
-
-					<?php }else if($type == ProfileController::FOLLOWERS){ ?>
-						<h3>Followers</h3>
+		<!-- Profile Main Details -->
+			<div id="profile-sidebar" class="col-xs-12">
+				<div class="col-xs-3" id="profile-sidebar-details">
+					<ul id="profile-sidebar-nav" class="sidebar-nav">
+						<div id="profile-feed"><div>Feeds</div></div>
+						<a href="<?= $comment_link ?>"><li>Comments</li></a>
+						<a href="<?= $thread_starter_link ?>"><li>Thread Starters</li></a>
+						<a href="<?= $follower_link?>"><li><div class="btn-group-horizontal"><button class="btn btn-default">Followers</button><button class="btn btn-disabled"><?= $num_followers ?></button></div></li></a>
+						<a href="<?= $followee_link?>"><li><div class="btn-group-horizontal" style="padding-bottom: 15px;"><button class="btn btn-default">Following</button><button class="btn btn-disabled"><?= $num_followings ?></button></div></li></a>
+					</ul>
+				</div>
+				<div class="col-xs-9" id="profile-history">
+					<?php if($type == ProfileController::THREAD_STARTERS){ ?>
+						<h3>Thread Starters</h3>
 						<?= ListView::widget([
-							'id' => 'thread_starter_list_view',
+							'id' => 'thread_starter_list_view_1',
 							'dataProvider' => $model_provider,
 							'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 							'summary' => false,
 							'itemOptions' => ['class' => 'item'],
 							'layout' => "{summary}\n{items}\n{pager}",
 							'itemView' => function ($model, $key, $index, $widget) {
-								return $this->render('_list_follower',['model' => $model]);
+								return $this->render('_list_starters',['model' => $model]);
 							}
 						])
 						?>
-						<?php } else if($type == ProfileController::FOLLOWEES ){ ?>
-							<h3>Followees</h3>
+						<?php }else if($type == ProfileController::COMMENTS){ ?>
+							<h3>Comments</h3>
 							<?= ListView::widget([
-								'id' => 'thread_starter_list_view',
+								'id' => 'thread_starter_list_view_2',
 								'dataProvider' => $model_provider,
 								'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
 								'summary' => false,
 								'itemOptions' => ['class' => 'item'],
 								'layout' => "{summary}\n{items}\n{pager}",
 								'itemView' => function ($model, $key, $index, $widget) {
-									return $this->render('_list_follower',['model' => $model]);
+									return $this->render('_list_comments',['model' => $model]);
 								}
 							])
 							?>
+
+							<?php }else if($type == ProfileController::FOLLOWERS){ ?>
+								<h3>Followers</h3>
+								<?= ListView::widget([
+									'id' => 'thread_starter_list_view',
+									'dataProvider' => $model_provider,
+									'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+									'summary' => false,
+									'itemOptions' => ['class' => 'item'],
+									'layout' => "{summary}\n{items}\n{pager}",
+									'itemView' => function ($model, $key, $index, $widget) {
+										return $this->render('_list_follower',['model' => $model]);
+									}
+								])
+							?>
+							<?php } else if($type == ProfileController::FOLLOWEES ){ ?>
+								<h3>Followees</h3>
+								<?= ListView::widget([
+									'id' => 'thread_starter_list_view',
+									'dataProvider' => $model_provider,
+									'pager' => ['class' => \kop\y2sp\ScrollPager::className()],
+									'summary' => false,
+									'itemOptions' => ['class' => 'item'],
+									'layout' => "{summary}\n{items}\n{pager}",
+									'itemView' => function ($model, $key, $index, $widget) {
+										return $this->render('_list_follower',['model' => $model]);
+									}
+								])
+								?>
 							<?php } ?>
+							</div>
 						</div>
 					</div>
-				</div>
