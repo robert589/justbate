@@ -54,6 +54,7 @@ $this->title = "Home";
 					'dataProvider' => $list_data_provider,
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
+
 					'pager' => [
 						'class' => ScrollPager::class,
 						'enabledExtensions' => [
@@ -62,7 +63,7 @@ $this->title = "Home";
 							ScrollPager::EXTENSION_NONE_LEFT,
 							ScrollPager::EXTENSION_PAGING,
 						],
-						'triggerOffset' => 100
+						'triggerOffset' => 100,
 					],
 					'itemView' => function ($model, $key, $index, $widget) {
 						$comment = \common\models\ThreadComment::getBestCommentFromThread($model['thread_id']);

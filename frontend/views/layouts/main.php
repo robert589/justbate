@@ -26,6 +26,7 @@ else{
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/bootstrap-social.css');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
+$this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery-ias.min.js');
 
 $temp_localhost = Yii::$app->request->baseUrl;
 AppAsset::register($this);

@@ -42,7 +42,23 @@ class Comment extends ActiveRecord
 
 	}
 
+    public static function getCommentByCommentId($comment_id){
+        $sql=  "SELECT  comment.* , thread_comment.*, user.*
+                from thread_comment
+                inner join comment
+                on thread_comment.comment_id = comment.comment_id
+                inner join user
+                on user.id = comment.user_id
+                where thread_comment.comment_id = :comment_id
+               ";
 
+
+
+        return \Yii::$app->db
+            ->createCommand($sql)
+            ->bindValues([':comment_id' => $comment_id])
+            ->queryOne();
+    }
 
 	public static function countComment($thread_id, $choice_text){
 		$sql = "

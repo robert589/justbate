@@ -277,7 +277,7 @@ div.modal-body button#sign-up {
 }
 
 /* thread */
-form[id^='get_comment_form_'] {
+form[id^='retrieve_comment_form_'] {
     padding-bottom: 15px;
 }
 
@@ -427,7 +427,7 @@ li#dropdown-menu-settings li.item a:hover {
 
 li#notif-expansion:hover {
     color: #fff;
-    transition: 0;
+    transition:0;
     background: #0E5A94 !important;
 }
 
@@ -849,9 +849,6 @@ div#list_thread_comment_part {
     width: 100%;
 }
 
-div[class^='_list_thread_form_'] form#comment-form div.col-xs-12 {
-    display: none;
-}
 
 /* _listview_comment.php */
 
@@ -1318,7 +1315,7 @@ select#give-comment-select {
         margin-top: 15px;
         padding-top: 15px;
         padding-bottom: 15px;
-        width: calc(100%+30px) !important;
+        width: calc(100%+ 30px) !important;
     }
 
     div#thread-main-body {

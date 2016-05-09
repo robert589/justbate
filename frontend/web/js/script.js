@@ -1,11 +1,12 @@
 $(document).ready(function(){
     //layout main
+    /*
     $(document).on('pjax:send', function() {
         // $('#loading-bar').show()
     });
     $(document).on('pjax:complete', function() {
         // $('#loading-bar').hide();
-    });
+    });*/
     $('#loading-bar').height($(document).height());
 
     // user vote submit when value changed
@@ -14,18 +15,6 @@ $(document).ready(function(){
         $("form#form_user_vote_"+service+"").submit();
     });
 
-    // toggling form on comment
-    $("button.give_comment").click(function() {
-        var service = $(this).data('service');
-        var all_comment = "div#home_comment_section_" + service + " div#w3-container";
-        if ($("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display").toLowerCase() == "none") {
-            $("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display", "block");
-            $("#comment_part_" + service).hide();
-        } else {
-            $("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display", "none");
-            $("#comment_part_" + service).show();
-        }
-    });
 
     // replacing facebook icon by yii2 with font-awesome
     $("span.auth-icon").remove();
@@ -123,7 +112,6 @@ $(document).ready(function(){
         $("div#create-thread-main-form").slideToggle("fast");
     });
 
-    // site_home
     $(document).on('click', '#comment_hide_list_thread_btn', function(){
         if($(this).text() == 'Comment'){
             // $("#list_thread_comment_part").show();
@@ -136,6 +124,35 @@ $(document).ready(function(){
         }
     });
     // thread
+    $(document).on('click', '.retrieve-comment-btn', function(){
+        var thread_id = $(this).data('service');
+        if($("#home_comment_section_" + thread_id).length == 1){
+            if($("#home_comment_section_" + thread_id).is(":visible")){
+                $("#home_comment_section_" + thread_id).hide();
+            }
+            else{
+                $("#home_comment_section_" + thread_id).show();
+            }
+        }
+        else{
+            $("#retrieve_comment_form_"  + thread_id).submit();
+        }
+    });
+
+    $(document).on('click', '.give_comment', function(event){
+        var thread_id = $(this).data('service');
+        if($("#redactor_box_" + thread_id ).length == 1){
+            event.preventDefault();
+            if($("#comment_input_box_section_" + thread_id ).is(":visible")){
+                $("#comment_input_box_section_" + thread_id).hide();
+            }
+            else{
+                $("#comment_input_box_section_" + thread_id).show();
+            }
+        }
+
+    });
+
     //edit thread part
     $("#edit_thread").click(function(){
         $("#shown_title_description_part").hide();
@@ -300,6 +317,7 @@ $(document).ready(function(){
         return false;
     });
 
+
     $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
     });
@@ -308,11 +326,14 @@ $(document).ready(function(){
     $(document).on('submit', 'form[data-pjax]', function(event) {
         var services = '' + $(this).data('pjax');
         $.pjax.defaults.scrollTo = false;
+
+        //if your pjx and form are not in the same place
         if(services.indexOf("comment_section") > -1){
             $.pjax.submit(event,  services, {push:false});
-
         }
-
+        else if(services.indexOf("comment_input") > -1){
+            $.pjax.submit(event,  services, {push:false});
+        }
     });
 
 });

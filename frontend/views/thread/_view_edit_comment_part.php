@@ -8,11 +8,12 @@
     /** @var $comment string */
     /** @var $edit_comment_form \frontend\models\EditCommentForm */
     Pjax::begin([
-        'id' => 'edit_comment_' . $comment_id,
+        'id' => 'edit_comment_pjax_' . $comment_id,
+
         'timeout' => false,
         'enablePushState' => false,
         'clientOptions'=>[
-            'container' => '#edit_comment_' . $comment_id,
+            'container' => '#edit_comment_data_pjax_' . $comment_id,
         ]
     ]);
 ?>
@@ -24,7 +25,7 @@
 <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
 
     <?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => [
-        'data-pjax' => '#edit_comment_' . $comment_id]])?>
+        'data-pjax' => '#edit_comment_data_pjax_' . $comment_id]])?>
 
         <?= \yii\redactor\widgets\Redactor::widget([
             'id' => 'edit_redactor_' . $comment_id,
