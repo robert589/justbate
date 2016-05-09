@@ -1,5 +1,4 @@
 <?php
-
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
@@ -10,14 +9,13 @@ use yii\widgets\Pjax;
 /** @var $comment_input_retrieved boolean */
 
 Pjax::begin([
-    'id' => 'comment-input-box-pjax-' . $thread_id,
+    'id' => 'comment_input_' . $thread_id,
     'enablePushState' => false,
     'timeout' => false,
     'options' => [
-        'container' => '#submit_comment_input_box_' . $thread_id
+        'container' => '#comment_input_' . $thread_id
     ]
 ]);
-
 
 if(isset($comment_input_retrieved)) {
 //prepare data
@@ -35,7 +33,7 @@ if(isset($comment_input_retrieved)) {
         'options' => ['class' => 'comment-form',
                     'data-pjax' => '#submit_comment_input_box_' . $thread_id]]) ?>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12" id="comment_input_box_section_<?= $thread_id ?>">
         <div class="row">
             <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>">
 
@@ -80,6 +78,10 @@ if(isset($comment_input_retrieved)) {
 
 <?php ActiveForm::end(); ?>
 
-<?php Pjax::end() ;
-        }
+<?php
+
+}
+
+Pjax::end() ;
+
 ?>

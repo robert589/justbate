@@ -22,10 +22,6 @@ Pjax::begin([
 <?php
     if(isset($comment_retrieved)){ ?>
 
-        <?php // Html::button('Hide', ['class' => 'btn btn-primary home_show_hide inline',
-                //'id' => 'home_show_hide_' . $thread_id,
-                //'data-service' =>  $thread_id, 'style' => 'margin-left:15px' ]) ?>
-
         <?= Html::hiddenInput('total_comments',$total_comments, ['id' => 'hi_total_comments_' . $thread_id]) ?>
 
         <div class="col-xs-12 comment-tab section" id= <?="home_comment_section_" . $thread_id?>>

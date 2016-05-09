@@ -14,18 +14,19 @@ use yii\helpers\Html;
 
 <!-- Retrieve comment input -->
 
+
     <?php
-        $form = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
+    $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
         'method' => 'post',
         'id' => 'retrieve_comment_input_box_form_' . $thread_id,
-        'options' => [ 'data-pjax' => '#submit_comment_input_box_' . $thread_id]]);
+        'options' => [ 'data-pjax' => '#comment_input_' . $thread_id]]);
     ?>
 
         <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
         <div class="col-xs-2" style="padding: 0; margin-right: 30px;">
-            <?= Html::button('Give Comment', ['class' => 'btn btn-default give_comment',
-                                            'data-service' => $thread_id]) ?>
+            <?= Html::submitButton('Give Comment', ['class' => 'btn btn-default give_comment',
+                'data-service' => $thread_id]) ?>
         </div>
 
     <?php  ActiveForm::end();  ?>
@@ -50,12 +51,11 @@ use yii\helpers\Html;
 
     <?php ActiveForm::end(); ?>
 
-
 </div>
 
 <!-- Comment input box-->
 <div style="margin-left: -15px; margin-right: -15px;">
-    <?= $this->render('/thread/_comment_input_box', ['thread_choices' => $thread_choice_text,
+    <?= $this->render('../thread/_comment_input_box', ['thread_choices' => $thread_choice_text,
                                             'thread_id' => $thread_id,
                                             'commentModel' => new \frontend\models\CommentForm()])?>
 </div>

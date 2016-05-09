@@ -236,11 +236,12 @@ class SiteController extends Controller
 	}
 
 	public function actionRetrieveCommentInput(){
-		if(isset($_POST['thread_id'])){
+		if(isset($_POST['thread_id']) && Yii::$app->request->isPjax){
 			$thread_id = $_POST['thread_id'];
 
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-			return $this->renderPartial('../thread/_comment_input_box', ['thread_choices' => $thread_choices, 'thread_id' => $thread_id,
+
+			return $this->renderAjax('../thread/_comment_input_box', ['thread_choices' => $thread_choices, 'thread_id' => $thread_id,
 													'comment_input_retrieved' => true, 'commentModel' => new CommentForm()]);
 
 		}

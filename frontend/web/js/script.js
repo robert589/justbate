@@ -15,12 +15,6 @@ $(document).ready(function(){
         $("form#form_user_vote_"+service+"").submit();
     });
 
-    // toggling form on comment
-    $(document).on('click', "button.give_comment", function() {
-        var service = $(this).data('service');
-        //var all_comment = "div#home_comment_section_" + service + " div#w3-container";
-        $("#retrieve_comment_input_box_form_" + service).submit();
-    });
 
     // replacing facebook icon by yii2 with font-awesome
     $("span.auth-icon").remove();
@@ -143,6 +137,20 @@ $(document).ready(function(){
         else{
             $("#retrieve_comment_form_"  + thread_id).submit();
         }
+    });
+
+    $(document).on('click', '.give_comment', function(event){
+        var thread_id = $(this).data('service');
+        if($("#redactor_box_" + thread_id ).length == 1){
+            event.preventDefault();
+            if($("#comment_input_box_section_" + thread_id ).is(":visible")){
+                $("#comment_input_box_section_" + thread_id).hide();
+            }
+            else{
+                $("#comment_input_box_section_" + thread_id).show();
+            }
+        }
+
     });
 
     //edit thread part
@@ -309,6 +317,7 @@ $(document).ready(function(){
         return false;
     });
 
+
     $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
     });
@@ -317,11 +326,14 @@ $(document).ready(function(){
     $(document).on('submit', 'form[data-pjax]', function(event) {
         var services = '' + $(this).data('pjax');
         $.pjax.defaults.scrollTo = false;
-        /*
+
+        //if your pjx and form are not in the same place
         if(services.indexOf("comment_section") > -1){
             $.pjax.submit(event,  services, {push:false});
-        }*/
-
+        }
+        else if(services.indexOf("comment_input") > -1){
+            $.pjax.submit(event,  services, {push:false});
+        }
     });
 
 });
