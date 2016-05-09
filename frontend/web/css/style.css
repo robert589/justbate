@@ -267,7 +267,7 @@ div.modal-body button#sign-up {
 }
 
 /* thread */
-form[id^='get_comment_form_'] {
+form[id^='retrieve_comment_form_'] {
     padding-bottom: 15px;
 }
 
@@ -839,7 +839,7 @@ div#list_thread_comment_part {
     width: 100%;
 }
 
-div[class^='_list_thread_form_'] form#comment-form div.col-xs-12 {
+form.comment-form div.col-xs-12 {
     display: none;
 }
 

@@ -1,11 +1,12 @@
 $(document).ready(function(){
     //layout main
+    /*
     $(document).on('pjax:send', function() {
         // $('#loading-bar').show()
     });
     $(document).on('pjax:complete', function() {
         // $('#loading-bar').hide();
-    });
+    });*/
     $('#loading-bar').height($(document).height());
 
     // user vote submit when value changed
@@ -15,16 +16,10 @@ $(document).ready(function(){
     });
 
     // toggling form on comment
-    $("button.give_comment").click(function() {
+    $(document).on('click', "button.give_comment", function() {
         var service = $(this).data('service');
-        var all_comment = "div#home_comment_section_" + service + " div#w3-container";
-        if ($("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display").toLowerCase() == "none") {
-            $("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display", "block");
-            $("#comment_part_" + service).hide();
-        } else {
-            $("div._list_thread_form_"+service+" form#comment-form div.col-xs-12").css("display", "none");
-            $("#comment_part_" + service).show();
-        }
+        //var all_comment = "div#home_comment_section_" + service + " div#w3-container";
+        $("#retrieve_comment_input_box_form_" + service).submit();
     });
 
     // replacing facebook icon by yii2 with font-awesome
@@ -123,7 +118,6 @@ $(document).ready(function(){
         $("div#create-thread-main-form").slideToggle("fast");
     });
 
-    // site_home
     $(document).on('click', '#comment_hide_list_thread_btn', function(){
         if($(this).text() == 'Comment'){
             // $("#list_thread_comment_part").show();
@@ -136,6 +130,21 @@ $(document).ready(function(){
         }
     });
     // thread
+    $(document).on('click', '.retrieve-comment-btn', function(){
+        var thread_id = $(this).data('service');
+        if($("#home_comment_section_" + thread_id).length == 1){
+            if($("#home_comment_section_" + thread_id).is(":visible")){
+                $("#home_comment_section_" + thread_id).hide();
+            }
+            else{
+                $("#home_comment_section_" + thread_id).show();
+            }
+        }
+        else{
+            $("#retrieve_comment_form_"  + thread_id).submit();
+        }
+    });
+
     //edit thread part
     $("#edit_thread").click(function(){
         $("#shown_title_description_part").hide();
@@ -308,10 +317,10 @@ $(document).ready(function(){
     $(document).on('submit', 'form[data-pjax]', function(event) {
         var services = '' + $(this).data('pjax');
         $.pjax.defaults.scrollTo = false;
+        /*
         if(services.indexOf("comment_section") > -1){
             $.pjax.submit(event,  services, {push:false});
-
-        }
+        }*/
 
     });
 

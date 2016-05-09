@@ -48,7 +48,7 @@ class CommentForm extends Model
                 $thread_comment->choice_text = $this->choice_text;
                 $thread_comment->thread_id = $this->thread_id;
                 if($thread_comment->save()){
-                    return true;
+                    return $thread_comment->comment_id;
                 }
             }
 

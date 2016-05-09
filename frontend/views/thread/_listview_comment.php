@@ -11,6 +11,9 @@ use common\models\Comment;
 use yii\widgets\ActiveForm;
 /** @var $model array */
 /** @var $vote integer */
+/** @var $total_like integer */
+/** @var $total_dislike integer
+/**  @var $comment_id integer */
 $comment_id = $model['comment_id'];
 ?>
 

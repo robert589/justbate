@@ -6,6 +6,7 @@ use common\models\ThreadComment;
 use common\models\ThreadVote;
 use common\models\UserFollowedIssue;
 use frontend\models\ChangeEmailForm;
+use frontend\models\CommentForm;
 use frontend\models\CreateThreadForm;
 use frontend\models\ResendChangeEmailForm;
 use frontend\models\SubmitThreadVoteForm;
@@ -232,6 +233,17 @@ class SiteController extends Controller
 		$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
 		return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => $add_issue_form]);
 
+	}
+
+	public function actionRetrieveCommentInput(){
+		if(isset($_POST['thread_id'])){
+			$thread_id = $_POST['thread_id'];
+
+			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+			return $this->renderPartial('../thread/_comment_input_box', ['thread_choices' => $thread_choices, 'thread_id' => $thread_id,
+													'comment_input_retrieved' => true, 'commentModel' => new CommentForm()]);
+
+		}
 	}
 
 	public function actionFollowIssue(){

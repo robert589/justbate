@@ -2,6 +2,9 @@
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
+/** @var $comment_model \frontend\models\CommentForm */
+
 ?>
 
 

@@ -78,6 +78,7 @@ class ThreadController extends Controller
 	}
 
 
+
 	public function actionGetChildComment(){
 		if(isset($_POST['comment_id'])){
 			$comment_id = $_POST['comment_id'];
@@ -158,21 +159,45 @@ class ThreadController extends Controller
 	 * POST DATA: Comment Model;
 	 */
 	public function actionSubmitComment(){
-		if(!Yii::$app->user->isGuest){
+		if(!Yii::$app->user->isGuest && isset($_POST['thread_id'])){
 			$commentModel = new CommentForm();
-			if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate() && isset($_POST['thread_id']) ) {
-				$thread_id = $_POST['thread_id'];
+			$thread_id = $_POST['thread_id'];
+			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+
+			if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate()  ) {
+
 				$commentModel->thread_id =  $thread_id;
 				$commentModel->user_id = \Yii::$app->user->getId();
-				if($commentModel->store()){
+				if($comment_id = $commentModel->store()){
 					if($this->updateCommentNotification($commentModel->user_id, $thread_id)){
-						$thread = Thread::findOne(['thread_id' => $thread_id]);
-						return  $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id . '/' .
-							str_replace(' ', '-', strtolower($thread['title'])   ));
+						//$thread = Thread::findOne(['thread_id' => $thread_id]);
+						$model = Comment::getCommentByCommentId($comment_id);
+						$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($comment_id, Yii::$app->getUser()->getId());
+						if (Yii::$app->user->isGuest) {
+							$belongs = 0;
+						}
+						else {
+							if(Yii::$app->user->getId()== $model['user_id']){
+								$belongs = 1;
+							} else {
+								$belongs = 0;
+							}
+						}
+
+						//return $this->render('_comment_input_box', ['thread_id' => $thread_id, 'commentModel' => $commentModel]);
+
+
+						return  $this->renderAjax('_listview_comment', ['model' => $model,
+										'belongs' => $belongs,
+										'comment_id' => $comment_id,
+										'child_comment_form' => new ChildCommentForm(),
+										'total_like' => $comment_vote_comment['total_like'],
+										'total_dislike' => $comment_vote_comment['total_dislike'],
+										'vote' => $comment_vote_comment['vote']									]);
 					}
 				}
 				else{
-
+					return $this->renderAjax('_comment_input_box', ['commentModel' => $commentModel, 'thread_id' => $thread_id, 'thread_choices' => $thread_choices]);
 				}
 			}
 		}
