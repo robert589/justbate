@@ -37,9 +37,9 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
     <!-- retrieve comment -->
 <?php
     $form = ActiveForm::begin(['action' =>['site/get-comment'],
-    'method' => 'get',
+    'method' => 'GET',
     'id' => 'retrieve_comment_form_' . $thread_id,
-    'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]);
+    'options' => [ 'data-pjax' => '#comment_section_' . $thread_id, 'enctype' => 'multipart/form-data']]);
 ?>
 
     <?= Html::hiddenInput('thread_id', $thread_id) ?>
@@ -51,6 +51,10 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
 
 <?php ActiveForm::end(); ?>
 
+</div>
+
+<div  align="center" class="col-xs-12" >
+    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif', ['style' => 'display:none;max-height:50px' , 'id' => 'list_thread_loading_gif_' . $thread_id ]) ?>
 </div>
 
 <!-- Comment input box-->

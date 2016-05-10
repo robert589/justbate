@@ -13,6 +13,8 @@ Pjax::begin([
     'enablePushState' => false,
     'timeout' => false,
     'options' => [
+        'class' => 'comment_input_pjax',
+        'data-service' => $thread_id,
         'container' => '#comment_input_' . $thread_id
     ]
 ]);

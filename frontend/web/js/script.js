@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     //layout main
     $('#loading-bar').height($(document).height());
 
@@ -36,6 +37,7 @@ $(document).ready(function(){
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
+
 
     $(document).on('click', '#home-add-issue-button', function(){
         $("#home-add-issue-button-div").hide();
@@ -167,6 +169,26 @@ $(document).ready(function(){
                 $("#comment_input_box_section_" + thread_id).show();
             }
         }
+
+    });
+
+    $(document).on('pjax:send','.comment_input_pjax', function(){
+
+        var thread_id = $(this).data('service');
+        $('#list_thread_loading_gif_' + thread_id).show();
+    }).on('pjax:complete', '.comment_input_pjax', function(){
+        var thread_id = $(this).data('service');
+        $('#list_thread_loading_gif_' + thread_id).hide();
+
+    });
+
+    $(document).on('pjax:send','.comment_section_pjax', function(){
+
+        var thread_id = $(this).data('service');
+        $('#list_thread_loading_gif_' + thread_id).show();
+    }).on('pjax:complete', '.comment_section_pjax', function(){
+        var thread_id = $(this).data('service');
+        $('#list_thread_loading_gif_' + thread_id).hide();
 
     });
 
@@ -343,6 +365,7 @@ $(document).ready(function(){
 
         //if your pjx and form are not in the same place
         if(services.indexOf("comment_section") > -1){
+
             $.pjax.submit(event,  services, {push:false});
         }
         else if(services.indexOf("comment_input") > -1){
@@ -350,9 +373,5 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on('pjax:error', 'pjax', function(event){
-        alert('failed to load page');
-        event.preventDefault();
-    });
 
 });
