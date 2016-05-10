@@ -59,10 +59,10 @@ class CommentVoteForm extends Model
 		if($comment_votes->vote != $this->vote){
 			$comment_votes->vote = $this->vote;
 			if( $comment_votes->update()){
-				$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
-				$user = User::findOne(['id' => $comment->user_id]);
-				$user->reputation += 2 * $this->vote;
-				return $user->update(false);
+		//		$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
+		//		$user = User::findOne(['id' => $comment->user_id]);
+//				$user->reputation += 2 * $this->vote;
+				return true;
 			}
 			else{
 				return false;
@@ -80,10 +80,8 @@ class CommentVoteForm extends Model
 		$comment_votes->comment_id = $this->comment_id;
 
 		if($comment_votes->save()){
-			$comment = Comment::findOne(['comment_id' => $comment_votes->comment_id]);
-			$user = User::findOne(['id' => $comment->user_id]);
-			$user->reputation += $this->vote;
-			return $user->update(false);
+
+			return true;
 		}
 		else{
 			return false;

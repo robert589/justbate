@@ -1,6 +1,6 @@
 <?php
 
-// rendered from
+// rendered from _listview_comment
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\widgets\ListView;
@@ -10,6 +10,9 @@ use kartik\dialog\Dialog;
 /** @var $comment_id integer */
 /** @var $thread_id  integer */
 /** @var $belongs boolean */
+/** @var $retrieved boolean */
+/** @var $child_comment_form \frontend\models\ChildCommentForm */
+/** @var $child_comment_provider \yii\data\ArrayDataProvider */
 
 ?>
 
@@ -24,50 +27,38 @@ use kartik\dialog\Dialog;
 
 <?= Dialog::widget(); ?>
 
-<div class="col-md-4">
+<div class="col-md-8">
     <?php if($belongs){ ?>
-        <?= Html::button('Edit', ['class' => 'btn btn-primary edit_comment', 'data-service' => $comment_id]) ?>
-        <?= Html::button('Delete', ['class' => 'btn btn-danger delete_comment', 'data-service' => $comment_id]) ?>
+
+    <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment', 'data-service' => $comment_id]) ?>
+    <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment', 'data-service' => $comment_id]) ?>
+
     <?php } ?>
+
+    <?= Html::button('Comment', ['class' => 'btn btn-primary inline retrieve-child-comment-btn',
+                                'data-service' => $comment_id]) ?>
+
+    <!-- Form for retrieve comment -->
+    <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
+        'method' => 'get',
+    'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id],
+    'id' => 'retrieve-child-comment-form-' . $comment_id])
+    ?>
+        <?= Html::hiddenInput('comment_id', $comment_id) ?>
+        <?= Html::hiddenInput('thread_id', $thread_id) ?>;
+
+    <?php ActiveForm::end() ?>
 
 </div>
 
 
-<!-- <div class="col-md-4" align="left" style="padding: 0px">
-    <?php if(!isset($retrieved)){ ?>
-        <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
-                                        'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]])
-        ?>
-        <div align="left">
-            <?= Html::hiddenInput('comment_id', $comment_id) ?>
-            <?= Html::submitButton('Comment', ['class' => 'btn btn-default']) ?>
-        </div>
 
-        <?php ActiveForm::end() ?>
 
-    <?php } else { ?>
-        <div align="left">
-            <?= Html::button('Hide', ['class' => 'btn btn-default hide_comment', 'data-service' =>  $comment_id ]) ?>
-        </div>
-    <?php } ?>
-</div> -->
-
-<?php if(isset($retrieved)){ ?>
+<?php if($retrieved){ ?>
 
 <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
     <div class="col-xs-12" style="margin-top: 15px;" >
-        <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'], 'id' => "child_comment_form_" . $comment_id,
-                                                       'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id]]) ?>
-
-            <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
-            <?= Html::hiddenInput('parent_id' , $comment_id) ?>
-            <?= $form->field($child_comment_form, 'child_comment')->textarea(['class' => 'child_comment_text_area',
-                                                                            'data-service' => $comment_id,
-                                                                            'rows' => 1,
-                                                                            'placeholder' => 'add comment box..' ])
-                                                                             ->label(false)?>
-
-        <?php ActiveForm::end() ?>
+        <?= $this->render('_child_comment_input_box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
     </div>
 
     <div class="col-xs-12">
@@ -93,7 +84,7 @@ use kartik\dialog\Dialog;
 
 <?php $form = ActiveForm::begin(['action' => ['thread/delete-comment'], 'method' => 'post', 'id' => 'delete_comment_form_' . $comment_id]) ?>
     <?= Html::hiddenInput('comment_id', $comment_id) ?>
-<?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
 <?php ActiveForm::end() ?>
 

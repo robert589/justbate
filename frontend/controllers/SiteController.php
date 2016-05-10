@@ -334,7 +334,7 @@ class SiteController extends Controller
 		}
 		else {
 			return $this->render('login', [
-				'login_form' => $login_model,
+				'log	in_form' => $login_model,
 				'model' => $model
 			]);
 		}
@@ -344,8 +344,10 @@ class SiteController extends Controller
 	 *
 	 */
 	public function actionGetComment(){
-		if(!empty($_POST['thread_id']) && Yii::$app->request->isPjax){
-			$thread_id = $_POST['thread_id'];
+		if(Yii::$app->request->isPjax && isset($_GET['thread_id'])){
+
+
+			$thread_id = $_GET['thread_id'];
 
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
@@ -354,7 +356,7 @@ class SiteController extends Controller
 
 			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
 
-			return $this->render('_list_thread_thread_comment', [
+			return $this->renderPartial('_list_thread_thread_comment', [
 						'thread_id' => $thread_id,
 						'comment_retrieved' => true,
 						'total_comments' => $total_comments,

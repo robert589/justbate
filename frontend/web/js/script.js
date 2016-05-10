@@ -1,15 +1,9 @@
 $(document).ready(function(){
     //layout main
-    /*
-    $(document).on('pjax:send', function() {
-        // $('#loading-bar').show()
-    });
-    $(document).on('pjax:complete', function() {
-        // $('#loading-bar').hide();
-    });*/
     $('#loading-bar').height($(document).height());
 
     // user vote submit when value changed
+
     $(document).on('change',"select.user-vote",function() {
         var service = $(this).data('service');
         $("form#form_user_vote_"+service+"").submit();
@@ -53,6 +47,10 @@ $(document).ready(function(){
         $("#change-verify-email-form").submit();
     });
 
+    /**
+     *
+     *
+     */
     $(document).on('click', '#change-unverified-email-button', function(){
         if($(this).text() == 'Change'){
             $("#resendchangeemailform-user_email").prop('readonly', false);
@@ -127,6 +125,7 @@ $(document).ready(function(){
     $(document).on('click', '.retrieve-comment-btn', function(){
         var thread_id = $(this).data('service');
         if($("#home_comment_section_" + thread_id).length == 1){
+
             if($("#home_comment_section_" + thread_id).is(":visible")){
                 $("#home_comment_section_" + thread_id).hide();
             }
@@ -136,6 +135,24 @@ $(document).ready(function(){
         }
         else{
             $("#retrieve_comment_form_"  + thread_id).submit();
+        }
+    });
+
+    $(document).on('click', '.retrieve-child-comment-btn', function(){
+        var comment_id = $(this).data('service');
+        if($("#comment_part_" + comment_id).length == 1){
+            console.log(comment_id);
+            if($("#comment_part_" + comment_id).is(":visible")){
+                $("#comment_part_" + comment_id).hide();
+            }
+            else{
+                $("#comment_part" + comment_id).show();
+            }
+        }
+        else{
+            console.log("!" + comment_id);
+
+            $("#retrieve-child-comment-form-"  + comment_id).submit();
         }
     });
 
@@ -228,9 +245,6 @@ $(document).ready(function(){
             }
         }
 
-    });
-
-    $('#display_hide_comment_input_box').click(function(){
     });
 
     $(document).on('keydown',  ".child_comment_text_area", function(event){
@@ -334,6 +348,11 @@ $(document).ready(function(){
         else if(services.indexOf("comment_input") > -1){
             $.pjax.submit(event,  services, {push:false});
         }
+    });
+
+    $(document).on('pjax:error', 'pjax', function(event){
+        alert('failed to load page');
+        event.preventDefault();
     });
 
 });

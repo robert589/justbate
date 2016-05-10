@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\data\SqlDataProvider;
 use yii\db\ActiveRecord;
 use yii\data\ArrayDataProvider;
 
@@ -30,6 +31,7 @@ class Comment extends ActiveRecord
                 inner join user
                 on user.id = comment.user_id
                 where thread_id = :thread_id and thread_comment.choice_text= :choice_text and comment_status = 10
+
                ";
 
 
@@ -164,16 +166,18 @@ class Comment extends ActiveRecord
         //initialize array
         $all_providers = array();
 
+        $limit = 5;
         foreach($thread_choices as $thread_choice){
             //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
             $dataProvider =new ArrayDataProvider([
                 'allModels' => self::getCommentByChoiceText($thread_id, $thread_choice['choice_text']),
                 'pagination' => [
-                    'pageSize' =>10,
+                    'pageSize' =>$limit,
+
                 ],
 
             ]);
-            $all_providers[$thread_choice['choice_text'] . ' (' . $thread_choice['total_comments'] . ')' ] = $dataProvider;
+            $all_providers[$thread_choice[  'choice_text'] . ' (' . $thread_choice['total_comments'] . ')' ] = $dataProvider;
         }
 
         return $all_providers;

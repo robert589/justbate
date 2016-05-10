@@ -80,8 +80,9 @@ class ThreadController extends Controller
 
 
 	public function actionGetChildComment(){
-		if(isset($_POST['comment_id'])){
-			$comment_id = $_POST['comment_id'];
+		if(isset($_GET['comment_id']) && isset($_GET['thread_id'])){
+			$comment_id = $_GET['comment_id'];
+			$thread_id = $_GET['thread_id'];
 			$result =  ChildCOmment::getAllChildCommentsByCommentId($comment_id);
 
 			$child_comment_provider = new \yii\data\ArrayDataProvider([
@@ -98,11 +99,13 @@ class ThreadController extends Controller
 				$belongs = 1;
 			}
 			else{
+
 				$belongs = 0;
 			}
 
-			$this->renderAjax('_child_comment', ['child_comment_provider' => $child_comment_provider,
+			return $this->renderAjax('_child_comment', ['child_comment_provider' => $child_comment_provider,
 												'comment_id' => $comment_id,
+												'thread_id' => $thread_id,
 												'belongs' => $belongs,
 												'retrieved' => true,
 												'child_comment_form' => $child_comment_form]);
@@ -139,8 +142,11 @@ class ThreadController extends Controller
 							]
 						]);
 
-						return $this->render('_child_comment', ['comment_id' => $parent_id,
-							'retrieved' => true, 'child_comment_provider' => $child_comment_provider, 'child_comment_form' => $child_comment_form]);
+						return $this->render('_child_comment_input_box',
+							['comment_id' => $parent_id,
+							'retrieved' => true,
+							'child_comment_provider' => $child_comment_provider,
+							'child_comment_form' => $child_comment_form]);
 
 					}
 				}
@@ -227,11 +233,20 @@ class ThreadController extends Controller
 					if ($comment_vote_form->store() == true) {
 					} else {
 						//error if store fail
-						Yii::$app->end('Failed to store votes');
+						//error if something is wrong
+						if($comment_vote_form->hasErrors()){
+							Yii::$app->end(var_dump($comment_vote_form->getErrors()))	;
+
+						}
+					//	Yii::$app->end('Failed to store votes');
 
 					}
 				} else {
 					//error if something is wrong
+					if($comment_vote_form->hasErrors()){
+						Yii::$app->end(var_dump($comment_vote_form->getErrors()))	;
+
+					}
 					Yii::$app->end('Failed to validate votes');
 
 				}

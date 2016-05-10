@@ -15,41 +15,41 @@ use yii\helpers\Html;
 <!-- Retrieve comment input -->
 
 
-    <?php
-    $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
-        'method' => 'post',
-        'id' => 'retrieve_comment_input_box_form_' . $thread_id,
-        'options' => [ 'data-pjax' => '#comment_input_' . $thread_id]]);
-    ?>
+<?php
+$form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
+    'method' => 'post',
+    'id' => 'retrieve_comment_input_box_form_' . $thread_id,
+    'options' => [ 'data-pjax' => '#comment_input_' . $thread_id]]);
+?>
 
-        <?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
-        <div class="col-xs-2" style="padding: 0; margin-right: 30px;">
-            <?= Html::submitButton('Give Comment', ['class' => 'btn btn-default give_comment',
-                'data-service' => $thread_id]) ?>
-        </div>
+    <div class="col-xs-2" style="padding: 0; margin-right: 30px;">
+        <?= Html::submitButton('Give Comment', ['class' => 'btn btn-default give_comment',
+            'data-service' => $thread_id]) ?>
+    </div>
 
-    <?php  ActiveForm::end();  ?>
+<?php  ActiveForm::end();  ?>
 
     <!-- Voting -->
-    <?= $this->render('_list_thread_thread_vote', ['thread_choice_text' => $thread_choice_text, 'user_choice_text' => $user_choice_text, 'thread_id' => $thread_id]) ?>
+<?= $this->render('_list_thread_thread_vote', ['thread_choice_text' => $thread_choice_text, 'user_choice_text' => $user_choice_text, 'thread_id' => $thread_id]) ?>
 
     <!-- retrieve comment -->
-    <?php
-        $form = ActiveForm::begin(['action' =>['site/get-comment'],
-        'method' => 'post',
-        'id' => 'retrieve_comment_form_' . $thread_id,
-        'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]);
-    ?>
+<?php
+    $form = ActiveForm::begin(['action' =>['site/get-comment'],
+    'method' => 'get',
+    'id' => 'retrieve_comment_form_' . $thread_id,
+    'options' => [ 'data-pjax' => '#comment_section_' . $thread_id]]);
+?>
 
-        <?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
-        <?= Html::button('Comment (' . $total_comments . ')',
-            ['class' => 'btn btn-primary inline retrieve-comment-btn',
-                'data-service' => $thread_id,
-                'style' => 'margin-left:15px' ]) ?>
+    <?= Html::button('Comment (' . $total_comments . ')',
+        ['class' => 'btn btn-primary inline retrieve-comment-btn',
+            'data-service' => $thread_id,
+            'style' => 'margin-left:15px' ]) ?>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 </div>
 

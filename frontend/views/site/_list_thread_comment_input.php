@@ -4,7 +4,8 @@ use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 /** @var $comment_model \frontend\models\CommentForm */
-
+/** @var $thread_id integer */
+/** @var $thread_choices array */
 ?>
 
 
