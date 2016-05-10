@@ -16,7 +16,7 @@ use yii\helpers\HtmlPurifier;
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
 			<div class="col-xs-10 thread-title-list"><?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?></div>
-			<div class="col-xs-2" style="font-size: 12pt; text-align: right;"><span class="label label-primary"><span class="fa fa-facebook"></span></span></div>
+			<div class="col-xs-2" style="font-size: 12pt; text-align: right;"><?=  \kartik\social\FacebookPlugin::widget(['type'=>\kartik\social\FacebookPlugin::SHARE, 'settings' => ['layout'=>'box_count']])  ?></div>
 			<hr />
 		</div>
 		<div class="col-xs-12">
