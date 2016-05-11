@@ -3,6 +3,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
+/** @var $model array **/
+
 $comment_id = $model['comment_id'];
 //if the person is not guests
 if(!empty(\Yii::$app->user->isGuest)){
@@ -27,7 +29,7 @@ else{
 
 <article>
     <div class="col-xs-3">
-        <img class="img img-rounded profile-picture-comment" src="http://www.hit4hit.org/img/login/user-icon-6.png">
+        <img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
     </div>
     <div class="col-xs-9">
         <div class="col-xs-12" id="commentator-name">

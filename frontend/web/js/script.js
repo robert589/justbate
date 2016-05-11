@@ -1,6 +1,16 @@
 $(document).ready(function(){
 
-    //layout main
+    //facebook
+    (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+        //layout main
     $('#loading-bar').height($(document).height());
 
     // user vote submit when value changed
@@ -118,11 +128,13 @@ $(document).ready(function(){
             $('#comment_hide_list_thread_btn').text('Comment');
         }
     });
+
+
     // thread
-    $(document).on('click', '.retrieve-comment-btn', function(){
+    $(document).on('click', '.retrieve-comment-link', function(event){
         var thread_id = $(this).data('service');
         if($("#home_comment_section_" + thread_id).length == 1){
-
+            event.preventDefault();
             if($("#home_comment_section_" + thread_id).is(":visible")){
                 $("#home_comment_section_" + thread_id).hide();
             }
@@ -131,7 +143,8 @@ $(document).ready(function(){
             }
         }
         else{
-            $("#retrieve_comment_form_"  + thread_id).submit();
+            $.pjax.defaults.scrollTo = false;
+            $.pjax.click(event,{container: "#comment_section_" + thread_id, push:false});
         }
     });
 
@@ -164,6 +177,9 @@ $(document).ready(function(){
                 $("#comment_input_box_section_" + thread_id).show();
             }
         }
+        else{
+
+        }
 
     });
 
@@ -184,6 +200,9 @@ $(document).ready(function(){
     }).on('pjax:complete', '.comment_section_pjax', function(){
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).hide();
+
+    }).on('pjax:timeout', '.comment_section_pjax', function(event){
+        event.preventDefault();
 
     });
 
@@ -358,13 +377,10 @@ $(document).ready(function(){
         var services = '' + $(this).data('pjax');
         $.pjax.defaults.scrollTo = false;
 
-        //if your pjx and form are not in the same place
-        if(services.indexOf("comment_section") > -1){
 
+        if(services.indexOf("comment_input") > -1){
             $.pjax.submit(event,  services, {push:false});
-        }
-        else if(services.indexOf("comment_input") > -1){
-            $.pjax.submit(event,  services, {push:false});
+
         }
     });
 

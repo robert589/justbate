@@ -132,6 +132,30 @@ class SiteController extends Controller
 	*/
 	public function actionHome()
 	{
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:type',
+			'content' => 'website'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:image',
+			'content' => Yii::$app->request->baseUrl. '/frontend/web/img/logo.png'
+		]);
+
+
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:url',
+			'content' => 'justbate.com'
+		]);
+
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:title',
+			'content' => 'Justbate, Social Media For debate'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:description',
+			'content' => 'Building healthier debating community together'
+		]);
+
 		if(Yii::$app->user->isGuest){
 			return $this->render('login',
 				[

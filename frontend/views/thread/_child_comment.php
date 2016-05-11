@@ -61,6 +61,7 @@ use kartik\dialog\Dialog;
         <?= $this->render('_child_comment_input_box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
     </div>
 
+
     <div class="col-xs-12">
         <?= ListView::widget([
             'id' => 'threadList',

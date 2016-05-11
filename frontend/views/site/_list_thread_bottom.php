@@ -35,21 +35,15 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
 <?= $this->render('_list_thread_thread_vote', ['thread_choice_text' => $thread_choice_text, 'user_choice_text' => $user_choice_text, 'thread_id' => $thread_id]) ?>
 
     <!-- retrieve comment -->
-<?php
-    $form = ActiveForm::begin(['action' =>['site/get-comment'],
-    'method' => 'GET',
-    'id' => 'retrieve_comment_form_' . $thread_id,
-    'options' => [ 'data-pjax' => '#comment_section_' . $thread_id, 'enctype' => 'multipart/form-data']]);
-?>
 
-    <?= Html::hiddenInput('thread_id', $thread_id) ?>
+<div>
+    <?= Html::a("Comment ( $total_comments )",
+        Yii::$app->request->baseUrl . '/site/get-comment?thread_id=' . $thread_id ,
+        ['class' => 'btn btn-primary inline retrieve-comment-link',
+            'data-pjax' => "comment_section_$thread_id",
+        'data-service' => $thread_id, 'style' => 'margin-left:15px']) ?>
+</div>
 
-    <?= Html::button('Comment (' . $total_comments . ')',
-        ['class' => 'btn btn-primary inline retrieve-comment-btn',
-            'data-service' => $thread_id,
-            'style' => 'margin-left:15px' ]) ?>
-
-<?php ActiveForm::end(); ?>
 
 </div>
 

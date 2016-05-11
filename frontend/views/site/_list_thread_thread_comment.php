@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
         Pjax::begin([
             'id' => 'comment_section_' . $thread_id,
             'enablePushState' => false,
-            'timeout' => 7000,
+            'timeout' => 70000,
             'options' => [
                 'class' => 'comment_section_pjax',
                 'data-service' => $thread_id,

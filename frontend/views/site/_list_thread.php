@@ -16,7 +16,13 @@ use yii\helpers\HtmlPurifier;
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
 			<div class="col-xs-10 thread-title-list"><?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?></div>
-			<div class="col-xs-2" style="font-size: 12pt; text-align: right;"><?=  \kartik\social\FacebookPlugin::widget(['type'=>\kartik\social\FacebookPlugin::SHARE, 'settings' => ['layout'=>'box_count']])  ?></div>
+			<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
+				<!-- Your share button code -->
+				<div class="fb-share-button"
+					 data-href="http://justbate.com/thread/<?= $model['thread_id'] ?>/<?= str_replace(' ' , '-', strtolower($model['title'])) ?>"
+					 data-layout="button_count">
+				</div>
+			</div>
 			<hr />
 		</div>
 		<div class="col-xs-12">
