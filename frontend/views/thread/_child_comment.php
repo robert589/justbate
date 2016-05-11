@@ -21,6 +21,8 @@ use kartik\dialog\Dialog;
     'id' => 'child_comment_'  . $comment_id,
     'enablePushState' => false,
     'clientOptions'=>[
+        'class' => 'child_comment_pjax',
+        'data-service' => $comment_id,
         'container'=>'#child_comment_' . $comment_id,
     ]
 ]) ?>
@@ -35,20 +37,17 @@ use kartik\dialog\Dialog;
 
     <?php } ?>
 
-    <?= Html::button('Comment', ['class' => 'btn btn-primary inline retrieve-child-comment-btn',
-                                'data-service' => $comment_id]) ?>
 
-    <!-- Form for retrieve comment -->
-    <?php $form = ActiveForm::begin(['action' => ['thread/get-child-comment'],
-        'method' => 'get',
-    'options' =>[ 'data-pjax' => '#child_comment_' . $comment_id],
-    'id' => 'retrieve-child-comment-form-' . $comment_id])
-    ?>
-        <?= Html::hiddenInput('comment_id', $comment_id) ?>
-        <?= Html::hiddenInput('thread_id', $thread_id) ?>;
+    <?= Html::a("Comment",
+        Yii::$app->request->baseUrl . '/thread/get-child-comment?thread_id=' . $thread_id . '&comment_id=' . $comment_id ,
+        ['class' => 'btn btn-primary inline retrieve-child-comment-link',
+            'data-pjax' => "#child_comment_$thread_id",
+            'data-service' => $comment_id, 'style' => 'margin-left:15px']) ?>
 
-    <?php ActiveForm::end() ?>
 
+
+    <?= Html::hiddenInput('child_comment_url', \yii\helpers\Url::to(['thread/get-sse-child-comment', 'comment_id' => $comment_id,
+        'last_time' =>  time() , ['id' => 'child_comment_url_' . $comment_id]   ])) ?>
 </div>
 
 
@@ -63,6 +62,11 @@ use kartik\dialog\Dialog;
 
 
     <div class="col-xs-12">
+
+        <div id="child_comment_sse_<?= $comment_id ?>" >
+
+        </div>
+
         <?= ListView::widget([
             'id' => 'threadList',
             'dataProvider' => $child_comment_provider,

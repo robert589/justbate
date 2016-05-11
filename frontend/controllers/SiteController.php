@@ -388,8 +388,9 @@ class SiteController extends Controller
 						'comment_providers' => $comment_providers]);
 		}
 		else{
+
 			//retry
-			//return $this->redirect(Yii::$app->request->baseUrl . '/site/get-comment?thread_id=' . $_GET['thread_id'] );
+			return $this->redirect(Yii::$app->request->baseUrl . '/site/home' );
 		}
 	}
 

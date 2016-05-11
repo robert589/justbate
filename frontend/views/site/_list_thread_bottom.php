@@ -19,7 +19,10 @@ use yii\helpers\Html;
 $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
     'method' => 'post',
     'id' => 'retrieve_comment_input_box_form_' . $thread_id,
-    'options' => [ 'data-pjax' => '#comment_input_' . $thread_id]]);
+
+    'options' => [ 'data-pjax' => '#comment_input_' . $thread_id,
+                'class' => 'retrieve_comment_input_box_form']
+]);
 ?>
 
     <?= Html::hiddenInput('thread_id', $thread_id) ?>

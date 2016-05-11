@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
 /** @var $total_like integer */
 /** @var $total_dislike integer
 /**  @var $comment_id integer */
+/** @var $child_comment_form \frontend\models\ChildCommentForm */
 $comment_id = $model['comment_id'];
 ?>
 
@@ -29,7 +30,7 @@ $comment_id = $model['comment_id'];
 			['data-pjax' => 0])?>
 		</div>
 		<div class="col-xs-12 comment-created-block">
-			<div class="comment-created"><?= $model['date_created']?></div>
+			<div class="comment-created"><?= $model['created_at']?></div>
 		</div>
 	</div>
 

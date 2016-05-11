@@ -48,7 +48,7 @@ $this->title = "Home";
 	<?php } ?>
 
 		<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
-		
+
 
 		<div class="col-xs-12 home-thread-list">
 

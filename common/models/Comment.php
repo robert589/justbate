@@ -183,4 +183,13 @@ class Comment extends ActiveRecord
         return $all_providers;
     }
 
+    public static function checkNewChildComment($comment_id, $latest_time){
+        return self::find()->where(['child_comment.comment_id = comment.comment_id'])
+                    ->andWhere(["child_comment.parent_id = $comment_id"])
+                    ->andWhere(["comment.created_at < $latest_time"])->exists();
+    }
+
+    public static function getLatestChildComment($comment_id, $latest_time){
+
+    }
 }

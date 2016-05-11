@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\components\ChildCommentSSE;
 use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
@@ -76,8 +77,27 @@ class ThreadController extends Controller
 
 		return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 	}
+	/*
+	public function actionGetSSEChildComment(){
+		if($_GET['latest_time'] && $_GET['comment_id']) {
+			$comment_id = $_GET['comment_id'];
+			$latest_time = $_GET['latest_time'];
 
+			$sse = new ChildCommentSSE();
 
+			while (1) {
+
+				sleep(1);
+
+				if(Comment::checkNewChildComment($comment_id, $latest_time)){
+					$message = Comment::getLatestChildComment($comment_id, $latest_time);
+					return $sse->sendMessage($message);
+				}
+
+				$latest_time =  time();
+			}
+		}
+	}*/
 
 	public function actionGetChildComment(){
 		if(isset($_GET['comment_id']) && isset($_GET['thread_id'])){
@@ -142,7 +162,7 @@ class ThreadController extends Controller
 							]
 						]);
 
-						return $this->render('_child_comment_input_box',
+						return $this->renderAjax('_child_comment_input_box',
 							['comment_id' => $parent_id,
 							'retrieved' => true,
 							'child_comment_provider' => $child_comment_provider,
@@ -153,10 +173,9 @@ class ThreadController extends Controller
 			}
 		}
 		else{
-			return null;
+			return $this->renderAjax('error');
 		}
 
-		return null;
 	}
 
 
@@ -259,13 +278,12 @@ class ThreadController extends Controller
 			$total_like  = $comment_votes_comment['total_like'];
 			$total_dislike = $comment_votes_comment['total_dislike'];
 			$vote = $comment_votes_comment['vote'];
-			return $this->renderPartial('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
+			return $this->renderAjax('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
 				'vote' => $vote, 'comment_id' => $comment_id, 'trigger_login_form' => $trigger_login_form]);
 		}
 		else{
 			Yii::$app->end('helo');
 		}
-		return null;
 	}
 
 	/**
