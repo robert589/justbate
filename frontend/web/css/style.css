@@ -3,7 +3,6 @@
     border:none;
     padding:0!important;
     font: inherit;
-    /*border is optional*/
     border-bottom:1px solid #444;
     cursor: pointer;
 }
@@ -21,7 +20,6 @@ div.inline{
 /**section, give margin to every new section **/
 .section{
     padding: 0px !important;
-    margin-left: -15px;
     margin-top: 15px;
 }
 
@@ -158,8 +156,7 @@ nav#menubar {
 }
 
 ul.navbar-nav {
-    width: 60%;
-    float: right;
+    width: 64%;
 }
 
 div.navbar-header a,
@@ -290,7 +287,7 @@ div#submitThreadVote div#form-control input[type="radio"] {
 }
 
 div.field-submitthreadvoteform-choice_text label.control-label {
-    display: none;
+    display: none !important;
     margin: 0;
 }
 
@@ -1297,9 +1294,38 @@ select#give-comment-select {
     border-radius: 0;
 }
 
-@media screen and (max-width: 995px) {
+@media (max-width: 1200px) {
     div#left-sidebar {
         display: none;
+    }
+
+    .navbar-header {
+        float: none;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-fixed-top .navbar-collapse,
+    .navbar-static-top .navbar-collapse,
+    .navbar-fixed-bottom .navbar-collapse {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+
+    .navbar-collapse.collapse.in {
+        display: block!important;
+        margin-top: 0px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .navbar-header {
+        float: left;
     }
 }
 
@@ -1363,8 +1389,9 @@ select#give-comment-select {
     }
 
     .section {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: -15px;
     }
 
     div#thread-details {
@@ -1512,5 +1539,3 @@ select#give-comment-select {
         width: 100%;
     }
 }
-
-/*MEDIA SCREEN FOR 645px*/
