@@ -11,24 +11,19 @@ $(document).ready(function(){
     });
 
 
-    // replacing facebook icon by yii2 with font-awesome
+    // replacing fb icon with font-awesome
     $("span.auth-icon").remove();
     $("a.auth-link").removeAttr("data-popup-width");
     $("a.auth-link").removeAttr("data-popup-height");
     $("a.auth-link").append($('<div class="input-group"><span class="input-group-addon"><i class="fa fa-facebook"></i></span><input type="text" class="form-control" value="Facebook" readonly="true" /></div>'));
     $("div#facebook-signup input[type='text']").val("Join Us With Facebook");
 
-    // some script to define the height of edit, delete, share, and comment button
-    var x1 = $("#first-part").height();
-    var x2 = $("#first-part").width();
-    var xTab = $("#first-part  div.col-xs-12 li");
-    var y = $("div#comment-tab div.tabs-above ul.nav-tabs");
-    var yChild = $("div#comment-tab div.tabs-above ul.nav-tabs li");
-    yChild.width(xTab.width());
-    var w1 = ($("div#first-part").width()/(y.children.length+1));
-    if ($(window).innerWidth() < 768) {
-        // DOM style for description and vote
-        $("div#action-button-thing").width($("div#first-part").width()/4);
+    // define width on thread/index.php
+    var total_width = $('div#first-part').width();
+    var sum_of_children = $("div#comment-tab ul#comment-tab").children().length;
+    if ($(window).innerWidth() < 767) {
+        $("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width", (total_width/sum_of_children) + "px");
+        alert($("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width"));
     }
 
     // on site/home
