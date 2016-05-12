@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     //facebook
     (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -193,8 +192,7 @@ $(document).ready(function(){
         }
         else{
             console.log('retrieve child comment link');
-            $.pjax.defaults.scrollTo = false;
-            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false});
+            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false, scrollTo : false});
         }
     });
 
@@ -212,34 +210,43 @@ $(document).ready(function(){
 
     });
 
-    $(document).on('click', '.submit-child-comment-button', function(event){
-        event.preventDefault();
-        var comment_id = $(this).data('service');
-        console.log('submit');
-        $('#submit-child-comment-button-' + comment_id).prop('disabled', true);
-        $("#child_comment_form_" + comment_id).submit();
-
-        return false;
-    });
 
 
     $(document).on('pjax:complete', '.child_comment_input_box_pjax', function(){
-        event.preventDefault();
+     //   event.preventDefault();
+        console.log('Complete child comment input box');
+        //return false;
     });
     $(document).on('pjax:send', '.child_comment_input_box_pjax', function(){
-        event.preventDefault();
-        return false;
+       // event.preventDefault();
+        console.log('Sent child comment input box');
+        //return false;
     });
+
     $(document).on('pjax:timeout', '.child_comment_input_box_pjax', function(){
        console.log('timeout');
-        event.preventDefault();
-        return false;
+      //  event.preventDefault();
+       // return false;
     });
 
     $(document).on('pjax:error', '.child_comment_input_box_pjax', function(){
         console.log('error');
         event.preventDefault();
-    });
+    })
+
+    .on('submit', '.submit_child_comment_form', function(event){
+        event.preventDefault();
+
+        var comment_id = $(this).data('service');
+
+        $.pjax.submit(event, $(this).data('pjax') ,{'push' : false, 'replace' : false, 'timeout' : false, skipOuterContainers:true});
+    })
+
+        .on('submit', '.submit-vote-form', function(event){
+            event.preventDefault();
+
+            $.pjax.submit(event, $(this).data('pjax'), {'push' : false, 'replace' : false, 'timeout' : false, skipOuterContainers:true})
+        });
 
 
     $(document).on('click', '.give_comment', function(event){
@@ -295,7 +302,6 @@ $(document).ready(function(){
         console.log('comment_section_pjax completed')
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).hide();
-
     }).on('pjax:timeout', '.comment_section_pjax', function(event){
 
         event.preventDefault();

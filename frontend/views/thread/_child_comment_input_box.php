@@ -6,11 +6,11 @@
     /** @var $child_comment_form \frontend\models\ChildCommentForm */
 ?>
 <?php Pjax::begin([
-    'id' => 'child_comment_input_box_'  . $comment_id . uniqid(),
-    'enableReplaceState' => false,
+    'id' => 'child_comment_input_box_'  . $comment_id ,
     'enablePushState' => false,
-    'timeout' => 100000,
+    'timeout' => false,
     'clientOptions'=>[
+
         'container'=>'#child_comment_input_box_' . $comment_id,
         'data-service' => $comment_id,
         'class' => 'child_comment_input_box_pjax',
@@ -19,9 +19,12 @@
 
 
 <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'],
-                                             'enableAjaxValidation' => false,
+                                            'id' => 'submit_child_comment_form_' . $comment_id,
                                             'options' =>[ 'data-pjax' => '#child_comment_input_box_' . $comment_id,
-                                            'class' => 'submit_child_comment_form']]) ?>
+                                                            'class' => 'submit_child_comment_form',
+                                                            'data-service' => $comment_id]
+                                ])
+?>
 
     <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
     <?= Html::hiddenInput('parent_id' , $comment_id) ?>
@@ -32,8 +35,9 @@
         'placeholder' => 'add comment box..' ])
         ->label(false)?>
 
-    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary inline ', 'data-pjax' => 0
-                               ]) ?>
+    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary inline submit-child-comment-form-button',
+        'data-service' => $comment_id,'id' => 'submit-child-comment-form-button-'  . $comment_id
+    ]) ?>
 
 <?php ActiveForm::end() ?>
 

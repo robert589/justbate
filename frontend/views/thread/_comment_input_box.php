@@ -32,7 +32,7 @@ if(isset($comment_input_retrieved)) {
 
 <!--Comment Input Part-->
 <?php $form = ActiveForm::begin(['action' => ['thread/submit-comment'],
-        'options' => ['class' => 'comment-form',
+                    'options' => ['class' => 'comment-form',
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
 
     <div class="col-xs-12" id="comment_input_box_section_<?= $thread_id ?>">

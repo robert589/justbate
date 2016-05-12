@@ -150,27 +150,19 @@ class ThreadController extends Controller
 			$child_comment_form->parent_id = $parent_id;
 
 			if($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate()){
+
 				if($child_comment_form->store()){
 					if($this->updateChildCommentNotification($user_id, $parent_id)){
 
 						$child_comment_form = new ChildCommentForm();
-						$result =  ChildCOmment::getAllChildCommentsByCommentId($parent_id);
-						$child_comment_provider = new \yii\data\ArrayDataProvider([
-							'allModels' => $result,
-							'pagination' => [
-								'pageSize' => 5,
-							]
-						]);
-
-						return $this->renderAjax('_child_comment_input_box',
-							['comment_id' => $parent_id,
-							'retrieved' => true,
-							'child_comment_provider' => $child_comment_provider,
-							'child_comment_form' => $child_comment_form]);
-
 					}
 				}
 			}
+			return $this->renderAjax('_child_comment_input_box',
+				['comment_id' => $parent_id,
+					'retrieved' => true,
+					'child_comment_form' => $child_comment_form]);
+
 		}
 		else{
 			return $this->renderAjax('error');

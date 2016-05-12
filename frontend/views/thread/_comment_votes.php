@@ -26,7 +26,10 @@ Pjax::begin([
 
 <!-- The vote -->
 <!-- The form only be used as refresh page -->
-<?= Html::beginForm(["thread/comment-vote" ], 'post', ['id' => 'submitvote-form-' . $comment_id, 'data-pjax' => '#comment_likes_' . $comment_id, 'class' => 'form-inline']); ?>
+<?= Html::beginForm(["thread/comment-vote" ], 'post', [
+    'id' => 'submit-vote-form-' . $comment_id,
+    'data-pjax' => '#comment_likes_' . $comment_id,
+    'class' => 'form-inline submit-vote-form']); ?>
 
     <?= Html::hiddenInput("comment_id", $comment_id, ['class' => 'hi-comment-vote-comment-id']) ?>
 
