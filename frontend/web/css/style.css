@@ -1,9 +1,9 @@
 .button-like-link{
-    background:none!important;
-    border:none;
-    padding:0!important;
+    background: none !important;
+    border: none;
+    color: #337ab7;
+    padding: 0!important;
     font: inherit;
-    border-bottom:1px solid #444;
     cursor: pointer;
 }
 
@@ -33,6 +33,11 @@ div.inline{
 .thread-link{
     font-size:20px;
     font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.thread-link hr {
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 
@@ -156,20 +161,13 @@ nav#menubar {
 }
 
 ul.navbar-nav {
-    width: 64%;
+    width: 75%;
 }
 
 div.navbar-header a,
 li.item a,
 .navbar-collapse {
     color: #000 !important;
-}
-
-input[type="text"]#search {
-    border: 1px solid black;
-    color: black;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 ul.dropdown {
@@ -327,7 +325,7 @@ button#upload-image {
 
 li#search-box.item {
     padding: 7px;
-    width: 25%;
+    width: 35%;
 }
 
 li#notification {
@@ -374,26 +372,28 @@ li.item {
     text-decoration: none;
 }
 
+li.item a[href$='home'] {
+    margin-right: -30px;
+    margin-left: 15px;
+}
+
 li#notification-bar:hover,
 li#notification-bar div#notifbar:hover {
     color: #fff !important;
 }
 
-li#dropdown-menu-setings:hover,
-li.item:hover {
+li#dropdown-menu-setings:hover {
     background: #545249;
-}
-
-/* thread things */
-blockquote#quote-on-thread {
-    background: rgba(37,110,93,0.25);
-    margin: 0;
-
 }
 
 div.tab-content {
     height: 100%;
     padding: 0px;
+}
+
+li#search-box {
+    display: inline-table;
+    vertical-align: middle;
 }
 
 li#search-box:hover {
@@ -403,8 +403,10 @@ li#search-box:hover {
 li#notif-expansion {
     text-align: center;
     background: none !important;
-    margin-left: -10px;
     padding: 15px;
+    padding-left: 15px;
+    padding-right: 0;
+    margin-left: 15px;
     margin-top: -15px;
 }
 
@@ -486,6 +488,7 @@ img#profile-picture-home {
 }
 
 a#trigger_notification {
+    margin-left: 0 !important;
     background: none;
 }
 
@@ -1301,7 +1304,6 @@ select#give-comment-select {
 
     a.dropdown-toggle {
         padding-left: 15px !important;
-        margin-left: 15px !important;
     }
 
     form[id^='form_user_vote'] div.inline {

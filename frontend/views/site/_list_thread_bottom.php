@@ -27,8 +27,8 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
 
     <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
-    <div class="col-xs-2 give-comment-button" style="padding: 0; margin-right: 30px;">
-        <?= Html::submitButton('Give Comment', ['class' => 'btn btn-default give_comment',
+    <div class="col-xs-2 give-comment-button button-like-link" style="padding: 0; margin-right: 30px;">
+        <?= Html::submitButton('Give Comment', ['class' => 'button-like-link',
             'data-service' => $thread_id]) ?>
     </div>
 
@@ -42,7 +42,7 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
 <div>
     <?= Html::a("Comment ( $total_comments )",
         Yii::$app->request->baseUrl . '/site/get-comment?thread_id=' . $thread_id ,
-        ['class' => 'btn btn-primary inline retrieve-comment-link',
+        ['class' => 'btn btn-primary btn-like-link inline retrieve-comment-link',
             'data-pjax' => "comment_section_$thread_id",
         'data-service' => $thread_id, 'style' => 'margin-left:15px']) ?>
 </div>

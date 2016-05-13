@@ -33,9 +33,9 @@ use yii\widgets\Pjax;
 
         <div align="right" class="col-xs-6">
             <?= Html::hiddenInput('thread_id', $thread_id) ?>
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'width: 100%;'])?>
+            <?= Html::submitButton('Submit', ['class' => 'button-like-link', 'style' => 'width: 100%;'])?>
         </div>
-        
+
     </div>
 
 </div>
