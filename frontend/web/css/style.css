@@ -160,10 +160,6 @@ nav#menubar {
     border-bottom: 3px solid #0E5A94;
 }
 
-ul.navbar-nav {
-    width: 75%;
-}
-
 div.navbar-header a,
 li.item a,
 .navbar-collapse {
@@ -323,9 +319,17 @@ button#upload-image {
     opacity: 0;
 }
 
+li#search-box {
+    width: 200px;
+}
+
 li#search-box.item {
     padding: 7px;
-    width: 35%;
+}
+
+li#search-box.user_item {
+    padding: 7px;
+    margin-left: -50%;
 }
 
 li#notification {
@@ -367,12 +371,14 @@ a.dropdown-toggle span.glyphicon {
 }
 
 li#dropdown-menu-setings ,
-li.item {
+li.item,
+li.user_item {
     color: #fff;
     text-decoration: none;
 }
 
-li.item a[href$='home'] {
+li.item a[href$='home'],
+li.user_item a[href$='home'] {
     margin-right: -30px;
     margin-left: 15px;
 }

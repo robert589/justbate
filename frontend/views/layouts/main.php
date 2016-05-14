@@ -101,10 +101,10 @@ AppAsset::register($this);
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <?php } else { ?>
-                            <li class="item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
-                            <li class="dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
-                            <li class="item"><a href="<?= $profile_link ?>"><img id="profile-picture-home" src=<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?> height="20px;" /><?= User::findOne(Yii::$app->getUser()->id)->first_name ?></a></li>
-                            <li class="dropdown" id="dropdown-menu-settings">
+                            <li class="user_item item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                            <li class="user_item dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
+                            <li class="user_item item"><a href="<?= $profile_link ?>"><img id="profile-picture-home" src=<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?> height="20px;" /><?= User::findOne(Yii::$app->getUser()->id)->first_name ?></a></li>
+                            <li class="user_item dropdown item" id="dropdown-menu-settings">
                                 <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
                                 <ul class="dropdown-menu">
                                     <li class="item"><a href="#">Settings</a></li>
