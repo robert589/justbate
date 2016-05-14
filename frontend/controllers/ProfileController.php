@@ -28,6 +28,7 @@ class ProfileController extends Controller
 	const FOLLOWERS = 'followers';
 	const FOLLOWEES = 'followees';
 	const NOTHING = '';
+
 	public function actionIndex()
 	{
 		if(isset($_GET['username'])){

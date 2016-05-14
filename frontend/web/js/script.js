@@ -316,15 +316,21 @@ $(document).ready(function(){
 
     $(document).on('pjax:send','.comment_section_pjax', function(event){
         event.preventDefault();
+
         console.log('comment_section_pjax sent');
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).show();
 
+        return false;
+
     }).on('pjax:complete', '.comment_section_pjax', function(event){
         event.preventDefault();
+
         console.log('comment_section_pjax completed')
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).hide();
+
+        return false;
     }).on('pjax:timeout', '.comment_section_pjax', function(event){
 
         event.preventDefault();

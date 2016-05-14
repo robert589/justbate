@@ -22,8 +22,6 @@ class UploadProfilePicForm extends Model
      */
     public $imageFile;
 
-    public $crop_info;
-
     public function rules()
     {
         return [
@@ -33,7 +31,6 @@ class UploadProfilePicForm extends Model
                 'extensions' => ['jpg', 'jpeg', 'png', 'gif'],
                 'mimeTypes' => ['image/jpeg', 'image/pjpeg', 'image/png', 'image/gif'],
             ],
-            ['crop_info', 'safe'],
         ];
     }
     
@@ -43,32 +40,14 @@ class UploadProfilePicForm extends Model
 
             $extension = $this->imageFile->getExtension();
 
-            // open image
-            $this->imageFile = Image::getImagine()->open($this->imageFile->tempName);
-
-            // rendering information about crop of ONE option
-            $crop_info = Json::decode($this->crop_info)[0];
-            $crop_info['dWidth'] = (int)$crop_info['dWidth']; //new width image
-            $crop_info['dHeight'] = (int)$crop_info['dHeight']; //new height image
-           // $crop_info['x'] = $crop_info['x']; //begin position of frame crop by X
-            //$crop_info['y'] = $crop_info['y']; //begin position of frame crop by Y
 
             $uniqId = uniqid();
             $user_id = Yii::$app->user->getId();
             $dir = $this->getDirectory();
             $file_name = $uniqId . '_' . $dir . '_'  . $user_id . '.' . $extension;
             $total_path  = $dir . '/' . $file_name;
-            //saving thumbnail
-            $newSizeThumb = new Box($crop_info['dWidth'], $crop_info['dHeight']);
-            $cropSizeThumb = new Box(200, 200); //frame size of crop
-            $cropPointThumb = new Point($crop_info['x'], $crop_info['y']);
-            //profile save
-            $pathThumbImage = Yii::getAlias('@image_dir_local')
-                . '/' . $dir . '/' . $file_name;
 
-            $this->imageFile->resize($newSizeThumb)
-                ->crop($cropPointThumb, $cropSizeThumb)
-                ->save($pathThumbImage, ['quality' => 100]);
+            $this->imageFile->saveAs(Yii::getAlias('@image_dir_local') . '/' . $total_path);
 
             if($this->updateToUserProfile($total_path)){
                 return true;

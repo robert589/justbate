@@ -30,15 +30,15 @@ Modal::begin([
 	'id' => 'editModal',
 	'size' => 'modal-lg'
 ]);
-$editProfileModel = new \frontend\models\EditProfileForm();
-$editUser = new User();
-// $editUser->id = \Yii::$app->user->identity->getId();
-$user_data = $editUser->getUser();
-// pass data
-$editProfileModel->occupation = $user_data['occupation'];
-$editProfileModel->birthday = $user_data['birthday'];
-$editProfileModel->first_name = $user_data['first_name'];
-$editProfileModel->last_name = $user_data['last_name'];
+	$editProfileModel = new \frontend\models\EditProfileForm();
+	$editUser = new User();
+	// $editUser->id = \Yii::$app->user->identity->getId();
+	$user_data = $editUser->getUser();
+	// pass data
+	$editProfileModel->occupation = $user_data['occupation'];
+	$editProfileModel->birthday = $user_data['birthday'];
+	$editProfileModel->first_name = $user_data['first_name'];
+	$editProfileModel->last_name = $user_data['last_name'];
 echo $this->render('edit', ['model' => $editProfileModel]);
 Modal::end();
 ?>
@@ -60,8 +60,8 @@ Modal::end();
 	<div class="row">
 		<div class="col-xs-4 col-md-2">
 			<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>"
-			alt="Profile Picture"
-			style="width:148px;height:148px;"
+				alt="Profile Picture"
+				style="width:148px;height:148px;"
 			id="avatar">
 
 			<?php if(!Yii::$app->user->isGuest && (Yii::$app->user->getId() == $user->id)){ ?>

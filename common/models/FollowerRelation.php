@@ -50,7 +50,7 @@ class FollowerRelation extends ActiveRecord
 		$table_name = self::tableName();
 
 		return (new \yii\db\Query())
-			->select(['first_name', 'last_name'])
+			->select(['*'])
 			->from($table_name)
 			->join('INNER JOIN', 'user', "user.id = $table_name.follower_id")
 			->where("followee_id = $followee_id")
@@ -59,7 +59,7 @@ class FollowerRelation extends ActiveRecord
 
 	public static function getFollowees($follower_id) {
 		return (new \yii\db\Query())
-			->select(['first_name', 'last_name'])
+			->select(['*'])
 			->from(self::tableName())
 			->join('INNER JOIN', 'user', "user.id = followee_id")
 			->where("follower_id = $follower_id")

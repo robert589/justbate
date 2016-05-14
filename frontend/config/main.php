@@ -35,11 +35,10 @@ return [
                     'signup' => 'site/signup',
                     'thread/<id:\d+>/<title:(.*)>' => 'thread/index',
                     'issue/<issue:[%20 a-zA-Z]+>' => 'site/home',
+                    'user/<username:(.*)>/<attr:\w+>' => 'profile/index',
                     'user/<username:(.*)>' => 'profile/index',
-                    [
-                        'pattern' => 'user/<username:\w+>/<attr:\w+>',
-                        'route' => 'profile/index'
-                    ],
+
+
                 ]
         ],
         'user' => [

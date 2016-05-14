@@ -1,7 +1,7 @@
 <article>
     <div class="row">
         <div style="font-size: 20px">
-            <?= \yii\helpers\Html::a($model['title'], Yii::$app->request->baseUrl . '/thread/'  . $model['thread_id']) ?>
+            <?= \yii\helpers\Html::a($model['title'], Yii::$app->request->baseUrl . '/thread/'  . $model['thread_id'] . '/' . $model['title']) ?>
         </div>
         <br>
         <?= $model['comment'] ?>
