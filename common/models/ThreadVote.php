@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use Yii;
@@ -9,6 +10,15 @@ use Yii;
 class ThreadVote extends ActiveRecord{
     // $agree, $user_id, $thread_id
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 
     public static function tableName()
     {

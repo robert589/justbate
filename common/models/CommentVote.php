@@ -2,12 +2,24 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 class CommentVote extends ActiveRecord
 {
 	public function getTable(){
 		return 'comment_vote';
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		return [
+			TimestampBehavior::className(),
+		];
 	}
 
 	public static function getCommentVotesOfComment($comment_id, $user_id){

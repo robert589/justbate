@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use Yii;
@@ -10,6 +11,17 @@ class ThreadIssue extends ActiveRecord{
     {
         return 'thread_issue';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
 
     public static function getIssue($thread_id){
         $sql = "

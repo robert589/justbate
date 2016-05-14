@@ -24,6 +24,17 @@ use yii\web\IdentityInterface;
 class EmailValidationToken extends ActiveRecord
 {
 
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * @inheritdoc
      */

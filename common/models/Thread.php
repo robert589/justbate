@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -14,18 +15,29 @@ class Thread extends ActiveRecord
 		return 'thread';
 	}
 
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		return [
+			TimestampBehavior::className(),
+		];
+	}
+
 	public static function getThreads($user_id, $issue_name = null) {
 		$template_sql = "
 						Select parent_thread_info.* , thread_vote.choice_text from(
 							Select thread_info.*, count(thread_comment.comment_id) as total_comments
-							from (Select thread.*, user.* from thread, user
+							from (Select thread.*, user.id, user.first_name, user.last_name
+								  from thread, user
 								  where thread.user_id = user.id and
 								  thread_status = 10
 							) thread_info
 							left join thread_comment
 							on thread_info.thread_id = thread_comment.thread_id
 							group by thread_info.thread_id
-							order by (date_created) desc
+							order by (created_at) desc
 
 						) parent_thread_info
 						left join thread_vote
@@ -43,7 +55,7 @@ class Thread extends ActiveRecord
 
 						Select parent_thread_info.* , thread_vote.choice_text from(
 							Select thread_info.*, count(thread_comment.comment_id) as total_comments
-							from (Select thread.*, user.* from thread, user, thread_issue, issue
+							from (Select thread.*, user.id, user.first_name, user.last_name from thread, user, thread_issue, issue
 								  where thread.user_id = user.id and
 								  thread_status = 10 and
 								thread_issue.thread_id = thread.thread_id
@@ -53,7 +65,7 @@ class Thread extends ActiveRecord
 							left join thread_comment
 							on thread_info.thread_id = thread_comment.thread_id
 							group by thread_info.thread_id
-							order by (date_created) desc
+							order by (created_at) desc
 						) parent_thread_info
 						left join thread_vote
 						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
@@ -79,9 +91,7 @@ class Thread extends ActiveRecord
 		$sql = "SELECT T.thread_id, TT.participants, title from thread T
 				left join
 				(SELECT thread_id, COUNT(user_id) as participants
-						from (SELECT distinct user_id, thread_id from thread_rate
-									union
-								 SELECT distinct user_id, thread_id from thread_comment inner join comment on thread_comment.comment_id = comment.comment_id where thread_id is not null)  P
+						from (SELECT distinct user_id, thread_id from thread_comment inner join comment on thread_comment.comment_id = comment.comment_id where thread_id is not null)  P
 						group by thread_id
 						order by participants desc
 						limit 10 ) TT
@@ -95,7 +105,7 @@ class Thread extends ActiveRecord
 
 
 	public static function retrieveAll() {
-		return Self::find()->all();
+		return self::find()->all();
 	}
 
 	public static function retrieveThreadById($thread_id, $user_id) {
@@ -103,12 +113,9 @@ class Thread extends ActiveRecord
 			$user_id = 0;
 		}
 
-		$sql = "SELECT (SELECT avg(rate) from thread_rate where thread_id = :thread_id) as avg_rating,
-									(SELECT count(*) from thread_rate where thread_id = :thread_id) as total_raters,
-									TU.*,
-									(SELECT choice_text from thread_vote where thread_id = :thread_id and user_id = :user_id) as user_choice,
-									(SELECT count(*) from thread_rate where thread_id = :thread_id and user_id = :user_id) as has_rate
-					FROM (SELECT * from thread inner join user on thread.user_id = user.id) TU
+		$sql = "SELECT TU.*,
+					(SELECT choice_text from thread_vote where thread_id = :thread_id and user_id = :user_id) as user_choice
+				  	FROM (SELECT thread.*, user.id, user.first_name, user.last_name from thread inner join user on thread.user_id = user.id) TU
 					where thread_id = :thread_id";
 
 		$result =  \Yii::$app->db->createCommand($sql)->

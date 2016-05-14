@@ -10,6 +10,7 @@ class ThreadComment extends ActiveRecord
         return 'thread_comment';
     }
 
+
     /**
      * Although it seems better to put everything in a single big chunk query together
      * with Thread::getThread(), i decided to split it for the sake of readability

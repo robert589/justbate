@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\Query;
 use yii\db\ActiveRecord;
 
@@ -12,6 +13,18 @@ class FollowerRelation extends ActiveRecord
 	public static function getTable(){
 		return 'follower_relation';
 	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		return [
+			TimestampBehavior::className(),
+		];
+	}
+
 	// Returns integer
 	public static function getNumFollowers($followee_id) {
 		return self::find()

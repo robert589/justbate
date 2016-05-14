@@ -69,7 +69,7 @@ class SignupForm extends Model
             }
 
             $user->username = $this->generateUsername();
-
+            
             //$user->setPassword($this->password);
 
             $user->generateAuthKey();
@@ -85,7 +85,6 @@ class SignupForm extends Model
                     }
 
                     if($user_email_auth->save()){
-
                         if (!EmailValidationToken::find()->where(['user_id' => $user->id])->exists()) {
                             $validation_token = new EmailValidationToken();
                             $validation_token->user_id = $user->id;

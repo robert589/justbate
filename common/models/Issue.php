@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -19,6 +20,16 @@ class Issue extends ActiveRecord{
         return self::TABLE_NAME;
     }
 
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 
     public static function getIssueList($q){
         $sql = "SELECT issue_id as id, issue_name as text

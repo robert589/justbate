@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\Issue;
 use common\models\ThreadComment;
 use common\models\ThreadVote;
+use common\models\UserEmailAuthentication;
 use common\models\UserFollowedIssue;
 use frontend\models\ChangeEmailForm;
 use frontend\models\CommentForm;
@@ -200,17 +201,18 @@ class SiteController extends Controller
 		$issue_list = UserFollowedIssue::getFollowedIssue($user_id);
 		//Yii::$app->end(var_dump($issue_list));
 		//check whether he/she has validated her email
-		$user = User::findOne(['id' => $user_id]);
+		$user_email_auth = UserEmailAuthentication::findOne(['user_id' => $user_id]);
 
 		$change_email_form = new ResendChangeEmailForm();
-		if($user->email != ''){
-			$change_email_form->user_email = $user->email;
+		if($user_email_auth != null && $user_email_auth->validated == 0){
+			$change_email_form->user_email = $user_email_auth->email;
 		}
+
 
 		return $this->render('home', ['issue_list' => $issue_list,
 									'trending_topic_list' => $trending_topic_list,
 									'list_data_provider' => $data_provider,
-									'user' => $user,
+									'user_email_auth' => $user_email_auth,
 									'issue_name' => $issue_name,
 									'issue_num_followers' => $issue_num_followers,
 									'add_issue_form' => new UserFollowIssueForm(),
@@ -461,10 +463,16 @@ class SiteController extends Controller
 		return $this->render('about');
 	}
 
+	/**
+	 * @return string
+	 */
 	public function actionEditInterest(){
 		return $this->render('edit-interest');
 	}
 
+	/**
+	 * @param null $q
+	 */
 	public function actionSearchInNotif($q = null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
@@ -476,6 +484,9 @@ class SiteController extends Controller
 		echo Json::encode($out);
 	}
 
+	/**
+	 * @param null $q
+	 */
 	public function actionSearchIssue($q =null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];

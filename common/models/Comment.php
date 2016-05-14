@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
 use yii\data\SqlDataProvider;
 use yii\db\ActiveRecord;
 use yii\data\ArrayDataProvider;
@@ -15,6 +16,17 @@ class Comment extends ActiveRecord
     public function getTable(){
 		return 'comment';
 	}
+
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 
     /**
      * WEAKNESS: THE total_like, total_dislike, and vote is not working, it causes us need to put it into two queries

@@ -13,7 +13,7 @@ use yii\helpers\Html;
 /** @var $issue_num_followers integer optional */
 /** @var $user_is_follower boolean optional */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
-/** @var $change_email_form \frontend\models\ChangeEmailForm */
+/** @var $change_email_form \frontend\models\ResendChangeEmailForm */
 
 $this->title = "Home";
 ?>
@@ -88,6 +88,6 @@ $this->title = "Home";
 	</div>
 </div>
 
-<?php if(!Yii::$app->user->isGuest && \common\models\User::findOne(['id' => Yii::$app->user->getId()])->validated != 1 ){ ?>
+<?php if(!Yii::$app->user->isGuest && $change_email_form->user_email != null ){ ?>
 	<?= $this->render('_home_verify-email', ['change_email_form' => $change_email_form]) ?>
 <?php } ?>

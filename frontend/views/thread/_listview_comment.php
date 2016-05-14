@@ -9,6 +9,7 @@ use yii\bootstrap\Modal;
 use frontend\models\EditCommentForm;
 use common\models\Comment;
 use yii\widgets\ActiveForm;
+use common\components\DateTimeFormatter;
 /** @var $model array */
 /** @var $vote integer */
 /** @var $total_like integer */
@@ -30,7 +31,7 @@ $comment_id = $model['comment_id'];
 			['data-pjax' => 0])?>
 		</div>
 		<div class="col-xs-12 comment-created-block">
-			<div class="comment-created"><?= $model['created_at']?></div>
+			<div class="comment-created"><?= DateTimeFormatter::getTimeByTimestampAndOffset($model['created_at']) ?></div>
 		</div>
 	</div>
 

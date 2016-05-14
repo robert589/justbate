@@ -6,6 +6,7 @@ use yii\widgets\ListView;
 /** @var $model array **/
 
 $comment_id = $model['comment_id'];
+
 //if the person is not guests
 if(!empty(\Yii::$app->user->isGuest)){
     $guest = "1";
@@ -41,8 +42,10 @@ else{
         </div>
 
         <div class="col-xs-12" id="commentator-moderate">
-                <?= $this->render('_comment_votes', ['comment_id' => $comment_id, 'total_like' => $total_like,
-                'total_dislike' =>$total_dislike, 'vote'=> $vote]) ?>
+                <?= $this->render('_comment_votes', ['comment_id' => $comment_id,
+                                                    'total_like' => $total_like,
+                                                    'total_dislike' =>$total_dislike,
+                                                    'vote'=> $vote]) ?>
         </div>
     </div>
 </article>

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 class Choice extends ActiveRecord
@@ -10,6 +11,17 @@ class Choice extends ActiveRecord
     public function getTable(){
         return 'choice';
 
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 
     public static function getChoice($thread_id){
