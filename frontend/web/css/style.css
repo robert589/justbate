@@ -1,7 +1,7 @@
 .button-like-link{
     background: none !important;
     border: none;
-    color: #337ab7;
+    color: #000;
     padding: 0!important;
     font: inherit;
     cursor: pointer;
@@ -420,7 +420,6 @@ li#dropdown-menu-settings a[data-toggle='dropdown'] span.glyphicon-chevron-down 
     color: #000 !important;
 }
 
-
 li#dropdown-menu-setings ul.dropdown-menu {
     background: #0E5A94 !important;
 }
@@ -680,6 +679,10 @@ div.empty {
     padding-left: 0;
 }
 
+select {
+    border: 0 !important;
+}
+
 div#vote {
     padding: 0;
 }
@@ -781,6 +784,10 @@ div#action-button-thing button {
     margin-right: 0;
     background: #1097FF;
     margin-bottom: 20px;
+}
+
+div.home-comment-tab div.col-xs-12:last-child {
+    padding-left: 0;
 }
 
 div[id^='comment_edit_part'] form[method='POST'] div.row {
@@ -1171,6 +1178,11 @@ div#signup-label {
     text-align: center;
 }
 
+hr.separator {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 span.auth-title {
     display: none !important;
 }
@@ -1314,10 +1326,6 @@ select#give-comment-select {
 
     form[id^='form_user_vote'] div.inline {
         margin-left: 45px;
-    }
-
-    div.give-comment-button {
-        margin-right: 15px !important;
     }
 
     .navbar-header {

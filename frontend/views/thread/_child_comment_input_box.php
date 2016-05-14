@@ -35,7 +35,7 @@
         'placeholder' => 'add comment box..' ])
         ->label(false)?>
 
-    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary inline submit-child-comment-form-button',
+    <?= Html::submitButton('Submit', ['class' => 'button-like-link inline submit-child-comment-form-button',
         'data-service' => $comment_id,'id' => 'submit-child-comment-form-button-'  . $comment_id
     ]) ?>
 

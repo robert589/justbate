@@ -32,11 +32,18 @@ use kartik\dialog\Dialog;
 
 <div class="col-md-8">
     <?php if($belongs){ ?>
+
+    <?= Html::button('Edit', ['class' => 'button-like-link inline edit_comment', 'data-service' => $comment_id]) ?>
+    <?= Html::button('Delete', ['class' => 'button-like-link inline delete_comment', 'data-service' => $comment_id]) ?>
         <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment', 'data-service' => $comment_id]) ?>
         <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment', 'data-service' => $comment_id]) ?>
     <?php } ?>
 
     <?= Html::a("Comment",
+        Yii::$app->request->baseUrl . '/thread/get-child-comment?thread_id=' . $thread_id . '&comment_id=' . $comment_id ,
+        ['class' => 'button-like-link inline retrieve-child-comment-link',
+            'data-pjax' => "#child_comment_$thread_id",
+            'data-service' => $comment_id, 'style' => 'margin-left:15px'])
             Yii::$app->request->baseUrl . '/thread/get-child-comment?thread_id=' . $thread_id . '&comment_id=' . $comment_id ,
             ['class' => 'btn btn-primary inline retrieve-child-comment-link',
                         'data-pjax' => "#child_comment_$thread_id",
