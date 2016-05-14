@@ -49,7 +49,7 @@ use kartik\dialog\Dialog;
 
 
 <div  align="center" class="col-xs-12" >
-    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif', ['style' => 'display:none;max-height:50px' , 'id' => 'child_comment_loading_gif_' . $thread_id ]) ?>
+    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif', ['style' => 'display:none;max-height:50px' , 'id' => 'child_comment_loading_gif_' . $comment_id ]) ?>
 </div>
 
 

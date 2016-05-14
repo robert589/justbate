@@ -200,7 +200,8 @@ $(document).ready(function(){
     $(document).on('pjax:send', '.child_comment_pjax', function(event){
         event.preventDefault();
         console.log("child comment pjax sent");
-        $('#child_comment_loading_gif_' + thread_id).show();
+        var comment_id = $(this).data('service');
+        $('#child_comment_loading_gif_' + comment_id).show();
 
 
 //         var evtSource= new EventSource(url);
@@ -217,11 +218,12 @@ $(document).ready(function(){
     $(document).on('pjax:complete', '.child_comment_pjax', function(event){
         event.preventDefault();
         console.log("child comment pjax completed");
-        $('#child_comment_loading_gif_' + thread_id).show();
 
         var comment_id = $(this).data('service');
 
-        var url = $("child_comment_url_" + comment_id).val();
+        $('#child_comment_loading_gif_' + comment_id).hide();
+
+     //   var url = $("child_comment_url_" + comment_id).val();
         /*
         var evtSource= new EventSource(url);
 
