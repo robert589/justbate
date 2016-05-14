@@ -33,16 +33,26 @@ class Comment extends ActiveRecord
      * PERFORMANCE PROBLEM
      * @return string
      */
-	public static function getCommentByChoiceText($thread_id, $choice_text){
+	public static function getCommentByChoiceText($thread_id, $choice_text, $user_id ){
 
 
-		$sql=  "SELECT  comment.* , thread_comment.*, user.*
-                from thread_comment
-                inner join comment
-                on thread_comment.comment_id = comment.comment_id
-                inner join user
-                on user.id = comment.user_id
-                where thread_id = :thread_id and thread_comment.choice_text= :choice_text and comment_status = 10
+                $sql=  "SELECT comments.*,
+                                COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
+                                COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
+                                COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
+                        FROM (
+                            SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, user.last_name, user.username
+                            from thread_comment,comment, user
+                            where thread_id = :thread_id and
+                            thread_comment.choice_text= :choice_text and
+                            thread_comment.comment_id = comment.comment_id 			and user.id = comment.user_id and
+                            comment_status = 10
+                            ) comments
+                        LEFT JOIN comment_vote
+                        on comment_vote.comment_id = comments.comment_id
+                        group by comments.comment_id
+                        order by total_like desc
+
 
                ";
 
@@ -52,18 +62,28 @@ class Comment extends ActiveRecord
                     ->createCommand($sql)
                     ->bindValues([':thread_id' => $thread_id])
                     ->bindValues([':choice_text' => $choice_text] )
+                    ->bindValue(':user_id', $user_id)
                     ->queryAll();
 
 	}
 
     public static function getCommentByCommentId($comment_id){
-        $sql=  "SELECT  comment.* , thread_comment.*, user.*
-                from thread_comment
-                inner join comment
-                on thread_comment.comment_id = comment.comment_id
-                inner join user
-                on user.id = comment.user_id
-                where thread_comment.comment_id = :comment_id
+            $sql=  "Select * ,
+                          COALESCE (count(case comment_vote.user_id when 2 then vote else null end), 0 ) as vote,
+                          COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
+                          COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
+                    from(
+                        SELECT  comment.* ,
+                                thread_comment.thread_id,
+                                user.first_name, user.last_name,user.username
+                        from thread_comment, comment, user
+                        where thread_comment.comment_id = :comment_id and
+                              thread_comment.comment_id = comment.comment_id and
+                              user.id = comment.user_id
+                        ) comments
+                    left join comment_vote
+                    on comment_vote.comment_id = comments.comment_id
+
                ";
 
 
@@ -170,26 +190,26 @@ class Comment extends ActiveRecord
     }
 
 
-    public static function getAllCommentProviders($thread_id, $thread_choices){
+    public static function getAllCommentProviders($thread_id, $thread_choices, $user_id = 0){
 
         //the prev $thread_choice is an associative array, convert to normal array
         //the prev $thread_chocie: e.g  ("agree" : "agree ( 0 voters), " disagree": "disagree (1 voters) " )
 
         //initialize array
         $all_providers = array();
-
         $limit = 5;
         foreach($thread_choices as $thread_choice){
             //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
+            $allModels = self::getCommentByChoiceText($thread_id, $thread_choice['choice_text'], $user_id);
             $dataProvider =new ArrayDataProvider([
-                'allModels' => self::getCommentByChoiceText($thread_id, $thread_choice['choice_text']),
+                'allModels' => $allModels,
                 'pagination' => [
                     'pageSize' =>$limit,
 
                 ],
 
             ]);
-            $all_providers[$thread_choice[  'choice_text'] . ' (' . $thread_choice['total_comments'] . ')' ] = $dataProvider;
+            $all_providers[$thread_choice[  'choice_text'] . ' (' . count($allModels) . ')' ] = $dataProvider;
         }
 
         return $all_providers;

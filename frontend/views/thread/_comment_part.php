@@ -15,12 +15,10 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
         'layout' => "{summary}\n{items}\n{pager}",
         'itemView' => function ($model, $key, $index, $widget) {
             $childCommentForm = new \frontend\models\ChildCommentForm();
-            $comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+
             return $this->render('_listview_comment',['model' => $model,
-                                                      'child_comment_form' => $childCommentForm,
-                                                      'total_like' => $comment_vote_comment['total_like'],
-                                                      'total_dislike' => $comment_vote_comment['total_dislike'],
-                                                      'vote' => $comment_vote_comment['vote']]);
+                                                      'child_comment_form' => $childCommentForm
+                                                     ]);
         }
     ]);
     if ($first == 1) {

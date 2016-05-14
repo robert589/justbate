@@ -36,7 +36,8 @@ if($user_choice_text != null){
 $action = ActiveForm::begin(['action' =>['site/submit-vote'],
     'method' => 'post',
     'id' => 'form_user_vote_' . $thread_id,
-    'options' => [ 'data-pjax' => '#pjax_user_vote_' . $thread_id]])
+    'options' => [ 'data-pjax' => '#pjax_user_vote_' . $thread_id,
+                'class' => 'form_user_thread_vote']])
 ?>
     <?= Html::hiddenInput('user_id' , Yii::$app->user->getId()) ?>
 

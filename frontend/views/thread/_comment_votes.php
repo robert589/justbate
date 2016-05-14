@@ -2,7 +2,6 @@
 //Rendered from: _listview_child_comment
 use yii\widgets\Pjax;
 use yii\helpers\Html;
-
 /** @var $vote */
 if(!isset($total_like)){
     $total_like = 0;

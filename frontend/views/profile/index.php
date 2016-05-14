@@ -6,7 +6,7 @@
 /** @var $model_provider \yii\data\ArrayDataProvider */
 /** @var $num_followings integer */
 /** @var $num_followers integer */
-
+/** @var $is_following boolean */
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use frontend\controllers\ProfileController;
@@ -78,10 +78,6 @@ Modal::end();
 					</div>
 				</div>
 				<hr>
-				<table id="bio-table" class="table table-responsive">
-					<tr><td>Birthday</td><td><?= $user->birthday ?></td></tr>
-					<tr><td>Occupation</td><td><?= $user->occupation ?></td></tr>
-				</table>
 			</div>
 		</div>
 

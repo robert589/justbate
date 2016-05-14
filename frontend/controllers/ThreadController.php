@@ -207,10 +207,7 @@ class ThreadController extends Controller
 						return  $this->renderAjax('_listview_comment', ['model' => $model,
 										'belongs' => $belongs,
 										'comment_id' => $comment_id,
-										'child_comment_form' => new ChildCommentForm(),
-										'total_like' => $comment_vote_comment['total_like'],
-										'total_dislike' => $comment_vote_comment['total_dislike'],
-										'vote' => $comment_vote_comment['vote']									]);
+										'child_comment_form' => new ChildCommentForm()]);
 					}
 				}
 				else{

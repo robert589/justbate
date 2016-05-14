@@ -372,15 +372,16 @@ class SiteController extends Controller
 	public function actionGetComment(){
 		if(Yii::$app->request->isPjax && isset($_GET['thread_id'])){
 
-
 			$thread_id = $_GET['thread_id'];
 
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
 			//get all comment providers
-			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
+
+			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices, Yii::$app->user->getId());
 
 			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
+
 
 			return $this->renderPartial('_list_thread_thread_comment', [
 						'thread_id' => $thread_id,

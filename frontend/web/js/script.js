@@ -1,4 +1,17 @@
+function setTimezoneToCookie(){
+    if (navigator.cookieEnabled) {
+        console.log('heelo');
+        document.cookie = "tzo=" + (- new Date().getTimezoneOffset());
+    }
+
+}
+
 $(document).ready(function(){
+
+
+    //save timezone to cookie
+    setTimezoneToCookie();
+
     //facebook
     (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -16,9 +29,15 @@ $(document).ready(function(){
 
     $(document).on('change',"select.user-vote",function() {
         var service = $(this).data('service');
-        $("form#form_user_vote_"+service+"").submit();
+        $("form#form_user_vote_"+service).submit();
     });
 
+    $(document).on('submit', '.form_user_thread_vote', function(event){
+        var data_pjax = $(this).data('pjax');
+
+        $.pjax.submit(event, data_pjax ,{'push' : false, 'replace' : false, 'timeout' : false, skipOuterContainers:true, scrollTo:false});
+
+    });
 
     // replacing fb icon with font-awesome
     $("span.auth-icon").remove();
