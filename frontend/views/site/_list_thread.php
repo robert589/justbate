@@ -18,17 +18,12 @@ use yii\helpers\HtmlPurifier;
 			<div class="col-xs-10 thread-title-list"><?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?></div>
 			<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
 				<!-- Your share button code -->
-				<div class="fb-share-button"
-					 data-href="http://justbate.com/thread/<?= $model['thread_id'] ?>/<?= str_replace(' ' , '-', strtolower($model['title'])) ?>"
-					 data-layout="button_count">
-				</div>
+				<div class="fb-share-button" data-href="http://justbate.com/thread/<?= $model['thread_id'] ?>/<?= str_replace(' ' , '-', strtolower($model['title'])) ?>" data-layout="button_count"></div>
 			</div>
-			<hr />
 		</div>
 		<div class="col-xs-12">
 			<?php if($comment != null || $comment != false){ ?>
-				<div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name']  ?> </div> &nbsp; chooses <b><?= $comment['choice_text'] ?></b> and says <br>
-				<br />
+				<div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name']  ?> </div> &nbsp; chooses <b><?= $comment['choice_text'] ?></b><hr class="separator" />
 				<?= HtmlPurifier::process($comment['comment']) ?>
 				<?php }else{ ?>
 					<?= HtmlPurifier::process($model['description']) ?>
