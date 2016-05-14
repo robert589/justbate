@@ -569,6 +569,10 @@ ul.redactor-toolbar {
     z-index: 0 !important;
 }
 
+div.input-group {
+    width: 100% !important;
+}
+
 div#submit-thread {
     vertical-align: middle;
     text-align: center;
