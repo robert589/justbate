@@ -1,9 +1,11 @@
 <?php
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 use kartik\widgets\Select2;
 use yii\db\Expression;
 use yii\web\JsExpression;
+
+/** @var $create_thread_form \frontend\models\CreateThreadForm */
 ?>
 
 <?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,'method' => 'post', 'id' => 'form-action']) ?>
@@ -14,8 +16,8 @@ use yii\web\JsExpression;
         <div class="col-xs-12" id="create-thread-dropdown">
             <div id="create-thread-button">
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-                    <input id="create-thread-title" name="CreateThreadForm[title]" type="text" class="form-control" placeholder="Your Thread Title" />
+                    <?= $form->field($create_thread_form, 'title',   [ 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-pencil"></i>']]]
+                                 )->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Topic title"]) ?>
                 </div>
             </div>
         </div> <!-- div.col-xs-12 -->
@@ -58,9 +60,9 @@ use yii\web\JsExpression;
                     'minimumInputLength' => 1,
                     'allowClear' => true,
                     'ajax' => [
-                        'url' => \yii\helpers\Url::to(['issue-list']),
+                        'url' => \yii\helpers\Url::to(['search-issue']),
                         'dataType' => 'json',
-                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                           'data' => new JsExpression('function(params) { return {q:params.term}; }')
                     ],
                     'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                     'templateResult' => new JsExpression('function(topic_name) { return topic_name.text; }'),
@@ -76,7 +78,7 @@ use yii\web\JsExpression;
         <!-- Create Button -->
         <div id="submit-thread" class="col-xs-6">
             <button type="submit" id="create-button" class="btn btn-primary">
-                <span id="create-button-label">CREATE</span>
+                <span id="create-button-label">Create</span>
             </button>
         </div> <!-- div.col-xs-6 -->
     </div>

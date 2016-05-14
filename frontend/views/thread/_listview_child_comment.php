@@ -33,6 +33,7 @@ else{
         <img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
     </div>
     <div class="col-xs-9">
+
         <div class="col-xs-12" id="commentator-name">
            <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), Yii::$app->request->baseUrl . "/user/" . $model['username'] )?>
         </div>

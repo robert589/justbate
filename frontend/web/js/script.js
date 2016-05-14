@@ -32,7 +32,7 @@ $(document).ready(function(){
     var sum_of_children = $("div#comment-tab ul#comment-tab").children().length;
     if ($(window).innerWidth() < 767) {
         $("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width", (total_width/sum_of_children) + "px");
-        alert($("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width"));
+    //        alert($("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width"));
     }
 
     // on site/home
@@ -181,13 +181,14 @@ $(document).ready(function(){
 
 
         var comment_id = $(this).data('service');
+
         if($("#comment_part_" + comment_id).length == 1){
             event.preventDefault();
             if($("#comment_part_" + comment_id).is(":visible")){
                 $("#comment_part_" + comment_id).hide();
             }
             else{
-                $("#comment_part" + comment_id).show();
+                $("#comment_part_" + comment_id).show();
             }
         }
         else{
@@ -196,17 +197,39 @@ $(document).ready(function(){
         }
     });
 
+    $(document).on('pjax:send', '.child_comment_pjax', function(event){
+        event.preventDefault();
+        console.log("child comment pjax sent");
+        $('#child_comment_loading_gif_' + thread_id).show();
+
+
+//         var evtSource= new EventSource(url);
+
+         /*
+         evtSource.onmessage = function(e){
+         console.log(e.data);
+         }*/
+        return false;
+
+    });
+
+
     $(document).on('pjax:complete', '.child_comment_pjax', function(event){
+        event.preventDefault();
         console.log("child comment pjax completed");
+        $('#child_comment_loading_gif_' + thread_id).show();
+
         var comment_id = $(this).data('service');
 
         var url = $("child_comment_url_" + comment_id).val();
-
+        /*
         var evtSource= new EventSource(url);
 
+        /*
         evtSource.onmessage = function(e){
             console.log(e.data);
-        }
+        }*/
+        return false;
 
     });
 
@@ -367,20 +390,13 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#display_hide_comment_input_box', function(){
-        if($(this).data('guest') == 0){
-            beginLoginModal();
-            return false;
-            $("#ask_to_login").show();
+
+        if(!$("#comment_section").is(':visible')){
+            $("#comment_section").show();
         }
         else{
-            if($(this).html() == "Comment"){
-                $("#comment_section").show();
-                $("#display_hide_comment_input_box").html("<span class=\"glyphicon glyphicon-menu-up\"></span>");
-            }
-            else{
-                $("#comment_section").hide();
-                $("#display_hide_comment_input_box").html("Comment");
-            }
+
+            $("#comment_section").hide();
         }
 
     });

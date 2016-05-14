@@ -360,7 +360,7 @@ class SiteController extends Controller
 		}
 		else {
 			return $this->render('login', [
-				'log	in_form' => $login_model,
+				'login_form' => $login_model,
 				'model' => $model
 			]);
 		}
@@ -420,7 +420,7 @@ class SiteController extends Controller
 
 		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
 			if($thread_id = $create_thread_form->create()){
-				return $this->redirect(Yii::$app->request->baseUrl . '/thread/index?id=' . $thread_id);
+				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id . '/' . $create_thread_form->title);
 			}
 		}
 		else{
@@ -534,10 +534,7 @@ class SiteController extends Controller
 					Yii::$app->end("User" . print_r($user));
 				}
 			}
-			else{
-				Yii::$app->end("Model error: " . var_dump($user));
 
-			}
 		}
 
 		return $this->render('signup', [
@@ -613,17 +610,6 @@ class SiteController extends Controller
 		}
 	}
 
-	public function actionIssueList(){
-		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		$out = ['results' => ['id' => '', 'text' => '']];
-		if (!empty($_GET['q'])) {
-			$q = $_GET['q'];
-			$topicList = Issue::getIssueList($q);
-			$out['results'] = array_values($topicList);
-		}
-
-		return $out;
-	}
 
 	public function actionSubmitVote() {
 		if(isset($_POST['thread_id']) && isset($_POST['user_id']) && isset($_POST['user_vote'])){

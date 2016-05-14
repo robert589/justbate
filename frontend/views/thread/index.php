@@ -108,6 +108,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 	<div class="row" >
 		<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,
 		'thread_choices' => $thread_choices,
+			'comment_input_retrieved' => true,
 		'thread_id' => $model['thread_id']]) ?>
 	</div>
 </div>

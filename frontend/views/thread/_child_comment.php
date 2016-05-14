@@ -17,37 +17,38 @@ use kartik\dialog\Dialog;
 ?>
 
 <?php Pjax::begin([
-    'timeout' => false,
     'id' => 'child_comment_'  . $comment_id,
-    'enablePushState' => false,
-    'clientOptions'=>[
+
+    'options'=>[
         'class' => 'child_comment_pjax',
         'data-service' => $comment_id,
         'container'=>'#child_comment_' . $comment_id,
-    ]
+    ],
+
+
 ]) ?>
 
 <?= Dialog::widget(); ?>
 
 <div class="col-md-8">
     <?php if($belongs){ ?>
-
-    <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment', 'data-service' => $comment_id]) ?>
-    <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment', 'data-service' => $comment_id]) ?>
-
+        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment', 'data-service' => $comment_id]) ?>
+        <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment', 'data-service' => $comment_id]) ?>
     <?php } ?>
 
-
     <?= Html::a("Comment",
-        Yii::$app->request->baseUrl . '/thread/get-child-comment?thread_id=' . $thread_id . '&comment_id=' . $comment_id ,
-        ['class' => 'btn btn-primary inline retrieve-child-comment-link',
-            'data-pjax' => "#child_comment_$thread_id",
-            'data-service' => $comment_id, 'style' => 'margin-left:15px']) ?>
-
-
+            Yii::$app->request->baseUrl . '/thread/get-child-comment?thread_id=' . $thread_id . '&comment_id=' . $comment_id ,
+            ['class' => 'btn btn-primary inline retrieve-child-comment-link',
+                        'data-pjax' => "#child_comment_$thread_id",
+                        'data-service' => $comment_id, 'style' => 'margin-left:15px']) ?>
 
     <?= Html::hiddenInput('child_comment_url', \yii\helpers\Url::to(['thread/get-sse-child-comment', 'comment_id' => $comment_id,
         'last_time' =>  time() , ['id' => 'child_comment_url_' . $comment_id]   ])) ?>
+</div>
+
+
+<div  align="center" class="col-xs-12" >
+    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif', ['style' => 'display:none;max-height:50px' , 'id' => 'child_comment_loading_gif_' . $thread_id ]) ?>
 </div>
 
 

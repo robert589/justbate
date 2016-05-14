@@ -22,9 +22,12 @@ $comment_id = $model['comment_id'];
 <article class="block-for-comment">
 	<div class="col-xs-1 image-commentator">
 		<?php if(isset($model['photo_path'])){ ?>
-		<img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
+
+			<img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
+
 		<?php } ?>
 	</div>
+
 	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
 			<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'],
@@ -38,18 +41,19 @@ $comment_id = $model['comment_id'];
 	<div class="col-xs-12 commentator-moderate">
 		<div class="col-xs-12 commentator-comment">
 			<?= $this->render('_view_edit_comment_part', ['comment' => $model['comment'],
-			'edit_comment_form' => new EditCommentForm(),
-			'comment_id' => $comment_id]) ?>
+							'edit_comment_form' => new EditCommentForm(),
+							'comment_id' => $comment_id]) ?>
 		</div>
 
 		<div class="col-xs-4" class="comment-votes">
 			<!-- Votes part-->
 			<?= $this->render('_comment_votes', [  'comment_id' => $comment_id,
-			'vote' => $vote,
-			'thread_id' => $model['thread_id'],
-			'total_like' => $total_like ,
-			'total_dislike' => $total_dislike])
+												'vote' => $vote,
+												'thread_id' => $model['thread_id'],
+												'total_like' => $total_like ,
+												'total_dislike' => $total_dislike])
 			?>
+
 		</div>
 
 		<!-- Child commetn and the button, must be started with col-md-6  -->

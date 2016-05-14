@@ -28,7 +28,7 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
     <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
     <div class="col-xs-2 give-comment-button button-like-link" style="padding: 0; margin-right: 30px;">
-        <?= Html::submitButton('Give Comment', ['class' => 'button-like-link',
+        <?= Html::submitButton('Give Comment', ['class' => 'button-like-link give_comment',
             'data-service' => $thread_id]) ?>
     </div>
 

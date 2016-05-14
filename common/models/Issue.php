@@ -31,16 +31,6 @@ class Issue extends ActiveRecord{
         ];
     }
 
-    public static function getIssueList($q){
-        $sql = "SELECT issue_id as id, issue_name as text
-                   from issue
-                   where issue_name like concat('%', :q,'%')
-                   limit 10";
-
-        return Yii::$app->db->createCommand($sql)->
-        bindParam(":q", $q)->
-        queryAll();
-    }
 
     /**
      * Status: Terminated (it is replaced by followed issue)-
