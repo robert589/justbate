@@ -52,7 +52,6 @@ class CommentForm extends Model
                 }
             }
 
-            return null;
         }
 
         return null;

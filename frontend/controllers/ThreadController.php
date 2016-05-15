@@ -113,7 +113,6 @@ class ThreadController extends Controller
 			]);
 
 			$child_comment_form = new ChildCommentForm();
-
 			$whose_comment = Comment::findOne(['comment_id' => $comment_id]);
 			if(\Yii::$app->getUser()->id == $whose_comment->user_id){
 				$belongs = 1;
@@ -178,18 +177,21 @@ class ThreadController extends Controller
 	public function actionSubmitComment(){
 		if(!Yii::$app->user->isGuest && isset($_POST['thread_id'])){
 			$commentModel = new CommentForm();
+
 			$thread_id = $_POST['thread_id'];
+
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
 
 			if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate()  ) {
 
 				$commentModel->thread_id =  $thread_id;
+
 				$commentModel->user_id = \Yii::$app->user->getId();
+
 				if($comment_id = $commentModel->store()){
 					if($this->updateCommentNotification($commentModel->user_id, $thread_id)){
 						//$thread = Thread::findOne(['thread_id' => $thread_id]);
-						$model = Comment::getCommentByCommentId($comment_id);
-						$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($comment_id, Yii::$app->getUser()->getId());
+						$model = Comment::getCommentByCommentId($comment_id, $commentModel->user_id);
 						if (Yii::$app->user->isGuest) {
 							$belongs = 0;
 						}
@@ -200,13 +202,11 @@ class ThreadController extends Controller
 								$belongs = 0;
 							}
 						}
+											//return $this->render('_comment_input_box', ['thread_id' => $thread_id, 'commentModel' => $commentModel]);
 
-						//return $this->render('_comment_input_box', ['thread_id' => $thread_id, 'commentModel' => $commentModel]);
-
-
-						return  $this->renderAjax('_listview_comment', ['model' => $model,
+						return  $this->renderAjax('_listview_comment', [
+										'model' => $model,
 										'belongs' => $belongs,
-										'comment_id' => $comment_id,
 										'child_comment_form' => new ChildCommentForm()]);
 					}
 				}

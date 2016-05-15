@@ -35,7 +35,7 @@ class Comment extends ActiveRecord
      */
 	public static function getCommentByChoiceText($thread_id, $choice_text, $user_id ){
 
-    
+
                 $sql=  "SELECT comments.*,
                                 COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
                                 COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
@@ -67,9 +67,9 @@ class Comment extends ActiveRecord
 
 	}
 
-    public static function getCommentByCommentId($comment_id){
-            $sql=  "Select * ,
-                          COALESCE (count(case comment_vote.user_id when 2 then vote else null end), 0 ) as vote,
+    public static function getCommentByCommentId($comment_id, $user_id = 0){
+            $sql=  "Select comments.* ,
+                          COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
                           COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
                           COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
                     from(
@@ -91,6 +91,7 @@ class Comment extends ActiveRecord
         return \Yii::$app->db
             ->createCommand($sql)
             ->bindValues([':comment_id' => $comment_id])
+            ->bindValue(':user_id' , $user_id)
             ->queryOne();
     }
 
