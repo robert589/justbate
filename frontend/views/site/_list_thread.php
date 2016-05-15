@@ -25,7 +25,7 @@ use common\models\User;
 		<div class="user-comment-reaction col-xs-12">
 			<?php if($comment != null || $comment != false){ ?>
 						<div class="col-xs-1" style="margin-left: -15px; margin-bottom: 10px; margin-right: -15px;" style="padding-left: 0; padding-right: 0;"><img src="<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?>" class="img img-circle" height="50px" width="50px" /></div>
-						<div class="col-xs-offset-1 col-xs-11" style="margin-top: -68px; margin-left: 55px;"><div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name'] ?> &nbsp; chooses <?= $comment['choice_text'] ?></div></div>
+						<div class="col-xs-offset-1 col-xs-11" style="margin-top: -68px; margin-left: 55px;"><div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name'] ?> &nbsp; choose <?= $comment['choice_text'] ?></div></div>
 						<div class="col-xs-offset-1 col-xs-11" style="padding-left: 0; margin-left: 70px; margin-top: -40px;" ><?= HtmlPurifier::process($comment['comment']) ?></div>
 				<?php }else{ ?>
 					<div class="col-xs-11" style="margin-bottm: 10px;"><?= HtmlPurifier::process($model['description']) ?></div>

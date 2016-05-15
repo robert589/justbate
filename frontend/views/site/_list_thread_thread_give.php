@@ -6,20 +6,15 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 $form = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
-    'method' => 'post',
-    'id' => 'retrieve_comment_input_' . $thread_id,
-    'options' => [ 'data-pjax' => '#submit_comment_input_' . $thread_id]])
+'method' => 'post',
+'id' => 'retrieve_comment_input_' . $thread_id,
+'options' => [ 'data-pjax' => '#submit_comment_input_' . $thread_id]])
 
 ?>
-
-    <?= Html::hiddenInput('thread_id', $thread_id) ?>
-
-
-    <div class="col-xs-2" style="padding: 0;">
-        <button type="submit" data-service="<?= $thread_id?>" class="button-like-link give_comment">Give Comment</button>
-    </div>
-
-
+<?= Html::hiddenInput('thread_id', $thread_id) ?>
+<div class="col-xs-12">
+    <button type="submit" data-service="<?= $thread_id?>" class="button-like-link give_comment">Give Comment</button>
+</div>
 <?php
-    ActiveForm::end();
+ActiveForm::end();
 ?>
