@@ -29,7 +29,7 @@ class Thread extends ActiveRecord
 		$template_sql = "
 						Select parent_thread_info.* , thread_vote.choice_text from(
 							Select thread_info.*, count(thread_comment.comment_id) as total_comments
-							from (Select thread.*, user.id, user.first_name, user.last_name
+							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
 								  from thread, user
 								  where thread.user_id = user.id and
 								  thread_status = 10
@@ -55,7 +55,7 @@ class Thread extends ActiveRecord
 
 						Select parent_thread_info.* , thread_vote.choice_text from(
 							Select thread_info.*, count(thread_comment.comment_id) as total_comments
-							from (Select thread.*, user.id, user.first_name, user.last_name from thread, user, thread_issue, issue
+							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path from thread, user, thread_issue, issue
 								  where thread.user_id = user.id and
 								  thread_status = 10 and
 								thread_issue.thread_id = thread.thread_id
