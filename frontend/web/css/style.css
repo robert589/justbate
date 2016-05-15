@@ -719,6 +719,12 @@ div#title-part {
     margin-bottom: 15px;
 }
 
+ul.pagination {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 div.thread-title {
     margin: 0;
     padding: 15px;

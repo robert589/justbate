@@ -60,29 +60,22 @@ use kartik\dialog\Dialog;
 <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
     <div class="col-xs-12" style="margin-top: 15px;" >
         <?= $this->render('_child_comment_input_box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
-    </div>
-
-
-    <div class="col-xs-12">
-
-        <div id="child_comment_sse_<?= $comment_id ?>" >
-
+            <div class="col-xs-12 text-center">
+                <div id="child_comment_sse_<?= $comment_id ?>" ></div>
+                <?= ListView::widget([
+                    'id' => 'threadList',
+                    'dataProvider' => $child_comment_provider,
+                    'summary' => false,
+                    'itemOptions' => ['class' => 'item'],
+                    'layout' => "{summary}\n{items}\n{pager}",
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        $comment_vote_form = CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
+                        return $this->render('_listview_child_comment',['model' => $model, 'total_like' => $comment_vote_form['total_like'],
+                                        'total_dislike' => $comment_vote_form['total_dislike'], 'vote' => $comment_vote_form['vote']]);
+                    }
+                ]) ?>
+            </div>
         </div>
-
-        <?= ListView::widget([
-            'id' => 'threadList',
-            'dataProvider' => $child_comment_provider,
-            'summary' => false,
-            'itemOptions' => ['class' => 'item'],
-            'layout' => "{summary}\n{items}\n{pager}",
-            'itemView' => function ($model, $key, $index, $widget) {
-                $comment_vote_form = CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
-                return $this->render('_listview_child_comment',['model' => $model, 'total_like' => $comment_vote_form['total_like'],
-                                'total_dislike' => $comment_vote_form['total_dislike'], 'vote' => $comment_vote_form['vote']]);
-            }
-
-        ]) ?>
-    </div>
 </div>
 
 
