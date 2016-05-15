@@ -11,12 +11,12 @@ use common\models\Comment;
 use yii\widgets\ActiveForm;
 use common\components\DateTimeFormatter;
 /** @var $model array */
-/** @var $vote integer */
-/** @var $total_like integer */
-/** @var $total_dislike integer
 /**  @var $comment_id integer */
 /** @var $child_comment_form \frontend\models\ChildCommentForm */
 $comment_id = $model['comment_id'];
+$total_like = $model['total_like'];
+$total_dislike = $model['total_dislike'];
+$vote = $model['vote'];
 ?>
 
 <article class="block-for-comment">
