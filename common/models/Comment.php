@@ -35,13 +35,13 @@ class Comment extends ActiveRecord
      */
 	public static function getCommentByChoiceText($thread_id, $choice_text, $user_id ){
 
-
+    
                 $sql=  "SELECT comments.*,
                                 COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
                                 COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
                                 COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
                         FROM (
-                            SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, user.last_name, user.username
+                            SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, user.last_name, user.username, user.photo_path
                             from thread_comment,comment, user
                             where thread_id = :thread_id and
                             thread_comment.choice_text= :choice_text and
@@ -75,7 +75,7 @@ class Comment extends ActiveRecord
                     from(
                         SELECT  comment.* ,
                                 thread_comment.thread_id,
-                                user.first_name, user.last_name,user.username
+                                user.first_name, user.last_name,user.username, user.photo_path
                         from thread_comment, comment, user
                         where thread_comment.comment_id = :comment_id and
                               thread_comment.comment_id = comment.comment_id and
