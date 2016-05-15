@@ -102,7 +102,7 @@ class SiteController extends Controller
 		// do some thing with user data. for example with $userAttributes['email']
 		if(User::find()->where(['facebook_id' => $userAttributes['id']])->exists()){
 			$user = User::find()->where(['facebook_id' => $userAttributes['id']])->one();
-			Yii::$app->user->login($user);
+			Yii::$app->user->login($user,3600 * 24 * 30 );
 		}
 		else{
 			$model = new SignupForm();
@@ -114,7 +114,7 @@ class SiteController extends Controller
 			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
 
 			if($user = $model->signup()){
-				Yii::$app->getUser()->login($user);
+				Yii::$app->getUser()->login($user, 3600 * 24 * 30);
 			}
 		}
 	}
@@ -381,8 +381,8 @@ class SiteController extends Controller
 			//get all thread_choices
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
 			//get all comment providers
-
 			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices, Yii::$app->user->getId());
+
 
 			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
 
@@ -394,7 +394,7 @@ class SiteController extends Controller
 						'thread_choices' => $thread_choices,
 						'comment_providers' => $comment_providers]);
 		}
-		else{
+		else	{
 
 			//retry
 			return $this->redirect(Yii::$app->request->baseUrl . '/site/home' );

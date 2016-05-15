@@ -37,7 +37,7 @@ class Comment extends ActiveRecord
 
 
                 $sql=  "SELECT comments.*,
-                                COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
+                                (case comment_vote.user_id when :user_id then vote else null end) as vote,
                                 COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
                                 COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
                         FROM (
@@ -52,11 +52,7 @@ class Comment extends ActiveRecord
                         on comment_vote.comment_id = comments.comment_id
                         group by comments.comment_id
                         order by total_like desc
-
-
                ";
-
-
 
                 return \Yii::$app->db
                     ->createCommand($sql)
@@ -179,7 +175,7 @@ class Comment extends ActiveRecord
   }
 
     public static function getRecentCommentActivity($username){
-       $sql = "SELECT user1.*, comment.*, thread.* , user2.first_name as parent_first_name , user2.last_name as parent_last_name         from comment, user user1, thread, user user2
+       $sql = "SELECT user1.*, comment.*, thread.* , user.first_name as parent_first_name , user2.last_name as parent_last_name         from comment, user user1, thread, user user2
                 where comment.user_id = user1.id and user1.username = :username and comment.thread_id = thread.thread_id and comment.parent_id = user2.id
 
                 order by comment.date_created desc";

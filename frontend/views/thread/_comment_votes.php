@@ -9,7 +9,6 @@ if(!isset($total_like)){
 if(!isset($total_dislike)){
     $total_dislike = 0;
 }
-
 $vote_up = ($vote == 1);
 $vote_down = ($vote == -1);
 

@@ -58,7 +58,7 @@ class ThreadController extends Controller
 			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
 
 			//get all comment providers
-			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
+			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices, \Yii::$app->user->getId());
 
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
