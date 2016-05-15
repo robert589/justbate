@@ -651,6 +651,10 @@ div#threadList div.item article div#commentator-moderate {
     padding-bottom: 15px;
 }
 
+div.user-comment-reaction {
+    padding-top: 15px;
+}
+
 div.user-comment-reaction div.col-xs-11 hr {
     margin-top: 5px !important;
     margin-bottom: 5px !important;
