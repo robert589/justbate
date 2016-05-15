@@ -43,7 +43,7 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
         Yii::$app->request->baseUrl . '/site/get-comment?thread_id=' . $thread_id ,
         ['class' => 'button-like-link inline retrieve-comment-link',
             'data-pjax' => "comment_section_$thread_id",
-        'data-service' => $thread_id, 'style' => 'margin-left:15px']) ?>
+        'data-service' => $thread_id, 'style' => 'margin-left:15px; padding: 10px !important;']) ?>
 </div>
 
 

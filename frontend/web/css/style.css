@@ -1,9 +1,10 @@
 .button-like-link{
     border: none;
-    background: #EEE;
-    color: #000;
+    background: rgba(170,196,222,.25);
+    color: #001E70;
     padding: 0!important;
     font: inherit;
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -1336,11 +1337,12 @@ div#facebook-signup input[type="text"] {
 }
 
 button.give_comment {
-    padding: 0 5px 0 5px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 }
 
-div#give-comment-form div[class^='col-'] {
-    padding: 0;
+div.give-comment-button {
+    width: 20%;
 }
 
 input[type="text"]#give-comment-text,
