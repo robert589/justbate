@@ -15,6 +15,7 @@ Pjax::begin([
     'id' => 'follow-issue-pjax',
     'timeout' => false,
     'enablePushState' => false,
+    'scrollTo' => false,
     'clientOptions' => [
         'container' => '#follow-issue'
     ]

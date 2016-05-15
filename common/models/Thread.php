@@ -88,16 +88,13 @@ class Thread extends ActiveRecord
 	 */
 	public static function getTop10TrendingTopic() {
 		//Retrieve top 10 trending topic which counted from participants
-		$sql = "SELECT T.thread_id, TT.participants, title from thread T
-				left join
-				(SELECT thread_id, COUNT(user_id) as participants
-						from (SELECT distinct user_id, thread_id from thread_comment inner join comment on thread_comment.comment_id = comment.comment_id where thread_id is not null)  P
-						group by thread_id
-						order by participants desc
-						limit 10 ) TT
-						on T.thread_id = TT.thread_id
-						where thread_status = 10
-						limit 10
+		$sql = "SELECT count( distinct comment.user_id)  as total_user, thread.* from thread, thread_comment, comment
+				where thread.thread_id = thread_comment.thread_id and
+					comment.comment_id = thread_comment.comment_id and
+					WEEKOFYEAR(from_unixtime(comment.created_at)) = WEEKOFYEAR(now())
+				group by thread.thread_id
+				order by total_user desc
+				limit 10
 		";
 
 		return \Yii::$app->db->createCommand($sql)->queryAll();
@@ -160,7 +157,7 @@ class Thread extends ActiveRecord
 
 	public static function getThreadBySearch($q){
 		$q = '%' . $q . '%';
-		$sql = "Select thread_id as id, title as text from thread where title like :query";
+		$sql = "Select thread_id as id, title as text from thread where title like :query and thread.thread_status = 10";
 
 		return \Yii::$app->db
 			->createCommand($sql)

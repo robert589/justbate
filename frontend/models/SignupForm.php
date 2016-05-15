@@ -56,9 +56,6 @@ class SignupForm extends Model
             $user->first_name = $this->first_name;
             $user->last_name = $this->last_name;
 
-            if($this->email != null){
-                $user->email = $this->email;
-            }
 
             if($this->photo_path != null){
                 $user->photo_path = $this->photo_path;

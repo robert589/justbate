@@ -49,11 +49,11 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 			$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
 			return $this->render('_listview_comment',['model' => $model,
-			'belongs' => $belongs,
-			'child_comment_form' => $childCommentForm,
-			'total_like' => $comment_vote_comment['total_like'],
-			'total_dislike' => $comment_vote_comment['total_dislike'],
-			'vote' => $comment_vote_comment['vote']]);
+									'belongs' => $belongs,
+									'child_comment_form' => $childCommentForm,
+									'total_like' => $comment_vote_comment['total_like'],
+									'total_dislike' => $comment_vote_comment['total_dislike'],
+									'vote' => $comment_vote_comment['vote']]);
 		}
 	]);
 	if($first == 1){
@@ -69,6 +69,10 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 ?>
 
 <?= Dialog::widget(); ?>
+<?php if(Yii::$app->user->isGuest){ ?>
+	<label> Please login before doing any action. Otherwise, it will not work </label>
+	<?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
+<?php } ?>
 
 <div class="col-xs-12 col-md-8" id="thread-main-body" style="background: white">
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
