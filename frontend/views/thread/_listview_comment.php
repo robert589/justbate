@@ -11,31 +11,29 @@ use common\models\Comment;
 use yii\widgets\ActiveForm;
 use common\components\DateTimeFormatter;
 /** @var $model array */
+/** @var $vote integer */
+/** @var $total_like integer */
+/** @var $total_dislike integer
 /**  @var $comment_id integer */
 /** @var $child_comment_form \frontend\models\ChildCommentForm */
 $comment_id = $model['comment_id'];
-$total_like = $model['total_like'];
-$total_dislike = $model['total_dislike'];
-$vote = $model['vote'];
 ?>
 
 <article class="block-for-comment">
 	<div class="col-xs-1 image-commentator">
 		<?php if(isset($model['photo_path'])){ ?>
-
 			<img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
-
 		<?php } ?>
 	</div>
 
 	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
-			<?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'],
-			['data-pjax' => 0])?>
+			<span><?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'], ['data-pjax' => 0])?></span> - 
+			<span class="comment-created"><?= DateTimeFormatter::getTimeByTimestampAndOffset($model['created_at']) ?></span>
 		</div>
-		<div class="col-xs-12 comment-created-block">
+		<!-- <div class="col-xs-12 comment-created-block">
 			<div class="comment-created"><?= DateTimeFormatter::getTimeByTimestampAndOffset($model['created_at']) ?></div>
-		</div>
+		</div> -->
 	</div>
 
 	<div class="col-xs-12 commentator-moderate">

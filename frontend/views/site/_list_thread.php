@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\helpers\HtmlPurifier;
+use common\models\User;
 /** @var $model array */
 /** @var $comment array */
 ?>
@@ -21,13 +22,14 @@ use yii\helpers\HtmlPurifier;
 				<div class="fb-share-button" data-href="http://justbate.com/thread/<?= $model['thread_id'] ?>/<?= str_replace(' ' , '-', strtolower($model['title'])) ?>" data-layout="button_count"></div>
 			</div>
 		</div>
-		<div class="col-xs-12">
+		<div class="user-comment-reaction col-xs-12">
 			<?php if($comment != null || $comment != false){ ?>
-				<div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name']  ?> </div> &nbsp; chooses <b><?= $comment['choice_text'] ?></b><hr class="separator" />
+						<div class="col-xs-1" style="width: 50px; margin-left: -15px; margin-bottom: 10px;" style="padding-left: 0; padding-right: 0;"><img src="<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?>" height="20px;" /></div>
+						<div class="col-xs-11" style="margin-bottom: 10px;"><div class="name-link inline"><?= $comment['first_name'] . ' '. $comment['last_name']  ?> &nbsp; chooses <b><?= $comment['choice_text'] ?></b></div></div>
 				<?= HtmlPurifier::process($comment['comment']) ?>
 				<?php }else{ ?>
 					<?= HtmlPurifier::process($model['description']) ?>
-					<?php } ?><hr />
+					<?php } ?><hr style="margin-top: 5px; margin-bottom: 5px;" />
 				</div>
 				<div class="col-xs-12 home-comment-tab">
 					<?= $this->render('_list_thread_bottom', [
