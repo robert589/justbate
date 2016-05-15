@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\LinkConstructor;
 use common\models\Issue;
 use common\models\ThreadComment;
 use common\models\ThreadVote;
@@ -133,30 +134,7 @@ class SiteController extends Controller
 	*/
 	public function actionHome()
 	{
-		\Yii::$app->view->registerMetaTag([
-			'property' => 'og:type',
-			'content' => 'website'
-		]);
-		\Yii::$app->view->registerMetaTag([
-			'property' => 'og:image',
-			'content' => Yii::$app->request->baseUrl. '/frontend/web/img/logo.png'
-		]);
-
-
-		\Yii::$app->view->registerMetaTag([
-			'property' => 'og:url',
-			'content' => 'justbate.com'
-		]);
-
-		\Yii::$app->view->registerMetaTag([
-			'property' => 'og:title',
-			'content' => 'Justbate, Social Media For debate'
-		]);
-		\Yii::$app->view->registerMetaTag([
-			'property' => 'og:description',
-			'content' => 'Building healthier debating community together'
-		]);
-
+		$this->setMetaTag();
 		if(Yii::$app->user->isGuest){
 			return $this->render('login',
 				[
@@ -219,6 +197,32 @@ class SiteController extends Controller
 									'user_is_follower' => $user_is_follower,
 									'change_email_form' => $change_email_form,
 									'create_thread_form' => $create_thread_form]);
+	}
+
+	private function setMetaTag(){
+
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:type',
+			'content' => 'website'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:image',
+			'content' => Yii::$app->request->baseUrl. '/frontend/web/img/logo.png'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:url',
+			'content' => 'justbate.com'
+		]);
+
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:title',
+			'content' => 'Justbate, Social Media For debate'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:description',
+			'content' => 'Building healthier debating community together'
+		]);
+
 	}
 
 
@@ -421,7 +425,7 @@ class SiteController extends Controller
 
 		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
 			if($thread_id = $create_thread_form->create()){
-				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $thread_id . '/' . $create_thread_form->title);
+				return $this->redirect(LinkConstructor::threadLinkConstructor($thread_id, $create_thread_form->title));
 			}
 		}
 		else{
@@ -507,24 +511,7 @@ class SiteController extends Controller
 	{
 		$model = new SignupForm();
 		$is_sign_up_with_fb = false;
-		/*
-		//if it comes from facebook
-		if(!empty($_GET['fb'])){
-			$is_sign_up_with_fb = true;
 
-			$session = Yii::$app->session;
-
-			if(isset($session['attributes']['email'])){
-				$model->email = $session['attributes']['email'];
-			}
-			$model->facebook_id = $session['attributes']['id'];
-			$model->first_name = $session['attributes']['first_name'];
-			$model->last_name = $session['attributes']['last_name'];
-			$url = "https://graph.facebook.com/". $session['attributes']['id'] . "/picture?width=150";
-			$photos = file_get_contents($url);
-			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
-		}
-		*/
 
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {

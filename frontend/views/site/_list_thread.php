@@ -8,6 +8,7 @@ use yii\helpers\HtmlPurifier;
 use common\models\User;
 /** @var $model array */
 /** @var $comment array */
+/** @var $thread_issues array */
 ?>
 
 <article data-service="<?=$model['thread_id'] ?>">
@@ -16,7 +17,7 @@ use common\models\User;
 	</div>
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
-			<div class="col-xs-10 thread-title-list"><?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . '/thread/' . $model['thread_id'] . '/' . str_replace(' ' , '-', strtolower($model['title'])))?></div>
+			<div class="col-xs-10 thread-title-list"><?= Html::a(Html::encode($model['title']), \common\components\LinkConstructor::threadLinkConstructor($model['thread_id'], $model['title']))?></div>
 			<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
 				<div class="fb-share-button" data-href="http://justbate.com/thread/<?= $model['thread_id'] ?>/<?= str_replace(' ' , '-', strtolower($model['title'])) ?>" data-layout="button_count"></div>
 			</div>

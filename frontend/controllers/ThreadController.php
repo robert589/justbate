@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use app\components\ChildCommentSSE;
+use common\components\LinkConstructor;
 use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
@@ -44,6 +45,7 @@ class ThreadController extends Controller
 
 		if(!empty($_GET['id'])){
 
+
 			$thread_id = $_GET['id'];
 			//thread data
 			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
@@ -60,6 +62,8 @@ class ThreadController extends Controller
 
 			// get vote mdoels
 			$submitVoteModel = new SubmitThreadVoteForm();
+
+			$this->setMetaTag($thread_id, $thread['title'], $thread['description']);
 
 			if($thread['thread_status'] != Thread::STATUS_BANNED){
 				return $this->render('index', ['model' => $thread,
@@ -217,6 +221,31 @@ class ThreadController extends Controller
 		}
 
 		return null;
+	}
+
+	private function setMetaTag($thread_id, $thread_title, $thread_description){
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:type',
+			'content' => 'website'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:image',
+			'content' => Yii::$app->request->baseUrl. '/frontend/web/img/logo.png'
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:url',
+			'content' => LinkConstructor::threadLinkConstructor($thread_id,$thread_title)
+		]);
+
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:title',
+			'content' => $thread_title
+		]);
+		\Yii::$app->view->registerMetaTag([
+			'property' => 'og:description',
+			'content' => $thread_description
+		]);
+
 	}
 
 	/**
