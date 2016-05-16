@@ -50,7 +50,8 @@ class Choice extends ActiveRecord
                     group by(thread_choice.choice_text)
                     ) choice_and_its_voters
                 left join
-                    ( select * from thread_comment where thread_id = :thread_id ) comment_with_id
+                    ( select thread_comment.* from thread_comment,comment where thread_id = :thread_id and
+                     comment.comment_id = thread_comment.comment_id and comment.comment_status = 10) comment_with_id
                 on comment_with_id.choice_text = choice_and_its_voters.choice_text
                 group by (choice_and_its_voters.choice_text)
                 order by total_comments desc

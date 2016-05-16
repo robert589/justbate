@@ -218,17 +218,9 @@ $(document).ready(function(){
 
     $(document).on('pjax:send', '.child_comment_pjax', function(event){
         event.preventDefault();
-        console.log("child comment pjax sent");
         var comment_id = $(this).data('service');
         $('#child_comment_loading_gif_' + comment_id).show();
 
-
-//         var evtSource= new EventSource(url);
-
-         /*
-         evtSource.onmessage = function(e){
-         console.log(e.data);
-         }*/
         return false;
 
     });
@@ -236,20 +228,11 @@ $(document).ready(function(){
 
     $(document).on('pjax:complete', '.child_comment_pjax', function(event){
         event.preventDefault();
-        console.log("child comment pjax completed");
 
         var comment_id = $(this).data('service');
 
         $('#child_comment_loading_gif_' + comment_id).hide();
 
-     //   var url = $("child_comment_url_" + comment_id).val();
-        /*
-        var evtSource= new EventSource(url);
-
-        /*
-        evtSource.onmessage = function(e){
-            console.log(e.data);
-        }*/
         return false;
 
     });
@@ -312,7 +295,7 @@ $(document).ready(function(){
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).show();
 
-    }).on('pjax:complete', '.comment_input_pjax', function(){
+    }).on('pjax:complete', '.comment_input_pjax', function(event){
         event.preventDefault();
         console.log('comment input pjax completed');
         var thread_id = $(this).data('service');

@@ -14,6 +14,7 @@ use frontend\models\SubmitThreadVoteForm;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\helpers\HtmlPurifier;
 use yii\web\Controller;
 use yii\data\Pagination;
 
@@ -230,7 +231,7 @@ class ThreadController extends Controller
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:image',
-			'content' => Yii::$app->request->baseUrl. '/frontend/web/img/logo.png'
+			'content' => Yii::getAlias('@img_dir_local') . '/logo.png'
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:url',
@@ -243,7 +244,7 @@ class ThreadController extends Controller
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:description',
-			'content' => $thread_description
+			'content' => HtmlPurifier::process($thread_description)
 		]);
 
 	}
