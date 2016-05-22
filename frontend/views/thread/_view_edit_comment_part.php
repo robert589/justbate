@@ -4,12 +4,18 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
     use yii\helpers\HtmlPurifier;
-    /** @var $comment_id integer */
+    /** @var $thread_comment \common\entity\ThreadCommentEntity */
     /** @var $comment string */
     /** @var $edit_comment_form \frontend\models\EditCommentForm */
+
+/**
+ * USED VARIABLE
+ */
+$comment_id = $thread_comment->getCommentId();
+$comment = $thread_comment->getComment();
+
     Pjax::begin([
         'id' => 'edit_comment_pjax_' . $comment_id,
-
         'timeout' => false,
         'enablePushState' => false,
         'clientOptions'=>[

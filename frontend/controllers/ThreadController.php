@@ -3,6 +3,13 @@ namespace frontend\controllers;
 
 use app\components\ChildCommentSSE;
 use common\components\LinkConstructor;
+use common\creator\CommentCreator;
+use common\creator\CreatorFactory;
+use common\creator\ThreadCommentCreator;
+use common\creator\ThreadCreator;
+use common\entity\CommentEntity;
+use common\entity\ThreadCommentEntity;
+use common\entity\ThreadEntity;
 use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
@@ -13,6 +20,7 @@ use frontend\models\SubmitRateThreadForm;
 use frontend\models\SubmitThreadVoteForm;
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\HtmlPurifier;
 use yii\web\Controller;
@@ -41,103 +49,76 @@ use common\models\ThreadVote;
  */
 class ThreadController extends Controller
 {
-
+	/**
+	 * @return string|\yii\web\Response
+	 */
 	public function actionIndex(){
+		/** @var ThreadCreator $creator */
 
-		if(!empty($_GET['id'])){
-
-
-			$thread_id = $_GET['id'];
-			//thread data
-			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
-			$commentModel = new CommentForm();
-
-			//thread_issue
-			$thread_issues = ThreadIssue::getIssue($thread_id);
-
-			//get all thread_choices
-			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-
-			//get all comment providers
-			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices, \Yii::$app->user->getId());
-
-			// get vote mdoels
-			$submitVoteModel = new SubmitThreadVoteForm();
-
-			$this->setMetaTag($thread_id, $thread['title'], $thread['description']);
-
-			if($thread['thread_status'] != Thread::STATUS_BANNED){
-				return $this->render('index', ['model' => $thread,
-											'commentModel' => $commentModel
-											,'thread_choices' => $thread_choices,
-											'thread_issues' => $thread_issues,
-											'submitVoteModel' => $submitVoteModel,
-											'comment_providers' => $comment_providers]);
-			}
-			else{
-				return $this->render('banned');
-			}
+		if(empty($_GET['id'])) {
+			return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 		}
 
+		$thread_entity = new ThreadEntity($_GET['id'], Yii::$app->user->getId());
 
-		return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
-	}
-	/*
-	public function actionGetSSEChildComment(){
-		if($_GET['latest_time'] && $_GET['comment_id']) {
-			$comment_id = $_GET['comment_id'];
-			$latest_time = $_GET['latest_time'];
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR,$thread_entity);
 
-			$sse = new ChildCommentSSE();
+		$needs = [ThreadCreator::NEED_THREAD_INFO,
+			      ThreadCreator::NEED_THREAD_CHOICE,
+			      ThreadCreator::NEED_THREAD_ISSUE,
+				  ThreadCreator::NEED_THREAD_COMMENTS];
 
-			while (1) {
+		$thread = $creator->get($needs);
 
-				sleep(1);
+		$commentModel = new CommentForm();
 
-				if(Comment::checkNewChildComment($comment_id, $latest_time)){
-					$message = Comment::getLatestChildComment($comment_id, $latest_time);
-					return $sse->sendMessage($message);
-				}
+		// get vote mdoels
+		$submit_vote_form = new SubmitThreadVoteForm();
 
-				$latest_time =  time();
-			}
+		$this->setMetaTag($thread->getThreadId(),
+						  $thread->getTitle(),
+						  $thread->getDescription());
+
+		if($thread->getThreadStatus() === Thread::STATUS_BANNED) {
+			return $this->render('banned');
 		}
-	}*/
 
+		return $this->render('index', ['thread' => $thread,
+			                           'comment_model' => $commentModel,
+									   'submit_vote_form' => $submit_vote_form,
+		                               ]);
+
+
+}
+
+	/**
+	 * @return string
+	 * @throws \yii\base\ExitException
+	 */
 	public function actionGetChildComment(){
-		if(isset($_GET['comment_id']) && isset($_GET['thread_id'])){
-			$comment_id = $_GET['comment_id'];
-			$thread_id = $_GET['thread_id'];
-			$result =  ChildCOmment::getAllChildCommentsByCommentId($comment_id);
-
-			$child_comment_provider = new \yii\data\ArrayDataProvider([
-				'allModels' => $result,
-				'pagination' => [
-					'pageSize' => 5,
-				]
-			]);
-
-			$child_comment_form = new ChildCommentForm();
-			$whose_comment = Comment::findOne(['comment_id' => $comment_id]);
-			if(\Yii::$app->getUser()->id == $whose_comment->user_id){
-				$belongs = 1;
-			}
-			else{
-
-				$belongs = 0;
-			}
-
-			return $this->renderAjax('_child_comment', ['child_comment_provider' => $child_comment_provider,
-												'comment_id' => $comment_id,
-												'thread_id' => $thread_id,
-												'belongs' => $belongs,
-												'retrieved' => true,
-												'child_comment_form' => $child_comment_form]);
-		}
-
-		else{
+		if(!(isset($_GET['comment_id']) && isset($_GET['thread_id']))) {
 			Yii::$app->end('comment_id not poster');
 		}
+
+		$comment_id = $_GET['comment_id'];
+
+		$thread_id = $_GET['thread_id'];
+
+		$thread_comment = new ThreadCommentEntity($comment_id, Yii::$app->user->getId());
+
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $thread_comment);
+
+		$thread_comment = $creator->get([ThreadCommentCreator::NEED_CHILD_COMMENTS]);
+
+		$thread_comment->setThreadId($thread_id);
+
+		$child_comment_form = new ChildCommentForm();
+
+
+		return $this->renderAjax('_child_comment', ['thread_comment' => $thread_comment,
+											'retrieved' => true,
+											'child_comment_form' => $child_comment_form]);
+
 	}
 
 	/**
@@ -180,51 +161,45 @@ class ThreadController extends Controller
 	 * POST DATA: Comment Model;
 	 */
 	public function actionSubmitComment(){
-		if(!Yii::$app->user->isGuest && isset($_POST['thread_id'])){
-			$commentModel = new CommentForm();
+		if(Yii::$app->user->isGuest || !isset($_POST['thread_id'])) {
+			Yii::$app->end('You should login before submitting the comment');
+		}
+		$comment_model = new CommentForm();
 
-			$thread_id = $_POST['thread_id'];
+		$thread_id = $_POST['thread_id'];
 
-			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+		$thread_entity = new ThreadEntity($thread_id, Yii::$app->user->getId());
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
+		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE]);
 
-			if($commentModel->load(Yii::$app->request->post()) && $commentModel->validate()  ) {
-
-				$commentModel->thread_id =  $thread_id;
-
-				$commentModel->user_id = \Yii::$app->user->getId();
-
-				if($comment_id = $commentModel->store()){
-					if($this->updateCommentNotification($commentModel->user_id, $thread_id)){
-						//$thread = Thread::findOne(['thread_id' => $thread_id]);
-						$model = Comment::getCommentByCommentId($comment_id, $commentModel->user_id);
-						if (Yii::$app->user->isGuest) {
-							$belongs = 0;
-						}
-						else {
-							if(Yii::$app->user->getId()== $model['user_id']){
-								$belongs = 1;
-							} else {
-								$belongs = 0;
-							}
-						}
-											//return $this->render('_comment_input_box', ['thread_id' => $thread_id, 'commentModel' => $commentModel]);
-
-						return  $this->renderAjax('_listview_comment', [
-										'model' => $model,
-										'belongs' => $belongs,
-										'child_comment_form' => new ChildCommentForm()]);
-					}
-				}
-				else{
-					return $this->renderAjax('_comment_input_box', ['commentModel' => $commentModel, 'thread_id' => $thread_id, 'thread_choices' => $thread_choices]);
-				}
-			}
+		if(!($comment_model->load(Yii::$app->request->post()) && $comment_model->validate())) {
+			return $this->renderAjax('_comment_input_box', ['commentModel' => $comment_model, 'thread' => $thread_entity]);
 		}
 
-		return null;
+		$comment_model->thread_id =  $thread_id;
+
+		$comment_model->user_id = \Yii::$app->user->getId();
+
+		if(!($comment_id = $comment_model->store())) {
+			//error
+		}
+
+		if($this->updateCommentNotification($comment_model->user_id, $thread_id)){
+			//$thread = Thread::findOne(['thread_id' => $thread_id]);
+			$comment_entity = new ThreadCommentEntity($comment_id, $comment_model->user_id);
+			$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
+			$comment_entity = $creator->get([ThreadCommentCreator::NEED_COMMENT_INFO]);
+
+
+			return  $this->renderAjax('_listview_comment', [
+							'thread_comment' => $comment_entity,
+							'child_comment_form' => new ChildCommentForm()]);
+		}
+
 	}
 
 	private function setMetaTag($thread_id, $thread_title, $thread_description){
+
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:type',
 			'content' => 'website'
@@ -254,89 +229,37 @@ class ThreadController extends Controller
 	 */
 	public function actionCommentVote(){
 		//Yii::$app->end(var_dump($_POST));
-		if(isset($_POST['comment_id']) && isset($_POST['vote'])){
-
-			$trigger_login_form = false;
-			if(isset($_POST['user_id'])) {
-				$comment_id = $_POST['comment_id'];
-				$user_id = $_POST['user_id'];
-				$vote = $_POST['vote'];
-
-
-				$comment_vote_form = new CommentVoteForm();
-				$comment_vote_form->user_id = $user_id;
-				$comment_vote_form->vote = $vote;
-				$comment_vote_form->comment_id =  $comment_id;
-				if ($comment_vote_form->validate()) {
-					if ($comment_vote_form->store() == true) {
-					} else {
-						//error if store fail
-						//error if something is wrong
-						if($comment_vote_form->hasErrors()){
-							Yii::$app->end(var_dump($comment_vote_form->getErrors()))	;
-
-						}
-					//	Yii::$app->end('Failed to store votes');
-
-					}
-				} else {
-					//error if something is wrong
-					if($comment_vote_form->hasErrors()){
-						Yii::$app->end(var_dump($comment_vote_form->getErrors()))	;
-
-					}
-					Yii::$app->end('Failed to validate votes');
-
-				}
-			}
-			else{
-				$trigger_login_form = true;
-			}
-
-			$comment_votes_comment  = CommentVote::getCommentVotesOfComment($comment_id, $user_id);
-			$total_like  = $comment_votes_comment['total_like'];
-			$total_dislike = $comment_votes_comment['total_dislike'];
-			$vote = $comment_votes_comment['vote'];
-			return $this->renderAjax('_comment_votes', ['total_like' => $total_like, 'total_dislike' => $total_dislike,
-				'vote' => $vote, 'comment_id' => $comment_id, 'trigger_login_form' => $trigger_login_form]);
+		if(!(isset($_POST['comment_id']) && isset($_POST['vote']))) {
+			Yii::$app->end('Fail to like: Contact Admin');
 		}
-		else{
-			Yii::$app->end('helo');
+
+		if(!isset($_POST['user_id'])) {
+			$trigger_login_form = true;
 		}
-	}
 
-	/**
-	 * POST DATA: $_POST['userThreadRate'] and $_POST['thread_id']
-	 * OTHER DATA: user_id
-	 * @return bool|string
-	 */
-	public function actionSubmitRate(){
-		if(!empty($_POST['userThreadRate']) && !empty($_POST['thread_id'])){
-			$trigger_login_form = false;
-			$userThreadRate = $_POST['userThreadRate'];
-			$thread_id = $_POST['thread_id'];
+		$trigger_login_form = false;
 
-			if(!Yii::$app->user->isGuest){
-				$rateModel = new SubmitRateThreadForm();
-				$rateModel->rate = $userThreadRate;
-				$rateModel->thread_id = $thread_id;
-				$rateModel->user_id = \Yii::$app->user->getId();
+		$comment_vote_form = new CommentVoteForm();
+		$comment_vote_form->user_id = $_POST['user_id'];
+		$comment_vote_form->vote = $_POST['vote'];
+		$comment_vote_form->comment_id =  $_POST['comment_id'];
 
-				if(!$rateModel->insertRating()){
-					//db exception
-					return false;
-				}
-			}
-			else{$trigger_login_form = true;}
-
-
-			$avg_rating = ThreadRate::getAverageRate($thread_id);
-
-			$total_raters = ThreadRate::getTotalRaters($thread_id);
-			return $this->renderPartial('_submit_rate_pjax', ['trigger_login_form' => $trigger_login_form,
-				'thread_id' => $thread_id,'total_raters' => $total_raters, 'avg_rating' => $avg_rating ]);
-
+		if (!$comment_vote_form->validate()) {
+			Yii::$app->end('Failed to validate votes');
 		}
+
+		if ($comment_vote_form->store() !== true) {
+			Yii::$app->end('Failed to store votes');
+		}
+
+		//use thread comment entity, although it is child comment entity
+		//bad practice, use it for a while
+
+		$comment_entity = new ThreadCommentEntity($comment_vote_form->comment_id, $comment_vote_form->user_id);
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
+		$comment_entity =$creator->get([CommentCreator::NEED_COMMENT_VOTE]);
+
+		return $this->renderAjax('_comment_votes', ['comment' => $comment_entity, 'trigger_login_form' => $trigger_login_form]);
 	}
 
 	/**
@@ -349,66 +272,77 @@ class ThreadController extends Controller
 		$trigger_login_form = false;
 		$thread_vote_form = new SubmitThreadVoteForm();
 
-		if( (isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
-			$thread_id = $_POST['thread_id'];
-			//only person that is looged in can submit vote
-			if (!Yii::$app->user->isGuest) {
-				//loading thread_vote_form
-				if ((isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
-					$thread_vote_form->thread_id = $thread_id;
-					//user id retrieved in controller
-					$thread_vote_form->user_id = \Yii::$app->user->getId();
-					if (!$thread_vote_form->submitVote()) {
-						//if the submission fail
-					}
+		if( !(isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
+			//error if the thread_id is not posted and thread_vote_Form failed
+		}
+		$thread_id = $_POST['thread_id'];
+		//only person that is looged in can submit vote
+		if (!Yii::$app->user->isGuest) {
+			//loading thread_vote_form
+			if ((isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
+				$thread_vote_form->thread_id = $thread_id;
+				//user id retrieved in controller
+				$thread_vote_form->user_id = \Yii::$app->user->getId();
+				if (!$thread_vote_form->submitVote()) {
+					//if the submission fail
 				}
 			}
-			else {
-				$trigger_login_form = true;
-			}
-
-
-			$submitVoteModel = new SubmitThreadVoteForm();
-			$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
-
-			//get all thread_choices
-			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-
-			//get all comment providers
-			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
-
-			// get vote mdoels
-			$submitVoteModel = new SubmitThreadVoteForm();
-			return $this->renderPartial('_title_description_vote',
-				['thread_choices' => $thread_choices,
-					'submitVoteModel' => $submitVoteModel,
-					'comment_providers' => $comment_providers,
-					'user_choice' => $thread['user_choice'],
-					'vote_tab_active' => true,
-					'thread_id' => $thread_id,
-					'title' => $thread['title'],
-					'description' => $thread['description']]);
 		}
-		else{
-			//if thread_id is not passed
+		else {
+			$trigger_login_form = true;
 		}
+
+
+		$submitVoteModel = new SubmitThreadVoteForm();
+		$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
+
+		//get all thread_choices
+		$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
+
+		//get all comment providers
+		$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
+
+		// get vote mdoels
+		$submitVoteModel = new SubmitThreadVoteForm();
+		return $this->renderPartial('_title_description_vote',
+			['thread_choices' => $thread_choices,
+				'submitVoteModel' => $submitVoteModel,
+				'comment_providers' => $comment_providers,
+				'user_choice' => $thread['user_choice'],
+				'vote_tab_active' => true,
+				'thread_id' => $thread_id,
+				'title' => $thread['title'],
+				'description' => $thread['description']]);
+
 	}
 
+	/**
+	 * @return \yii\web\Response
+	 */
 	public function actionDeleteComment(){
-		$delete_comment_form = new DeleteCommentForm();
 		if(isset($_POST['comment_id'])){
+			$delete_comment_form = new DeleteCommentForm();
+
 			$delete_comment_form->comment_id = $_POST['comment_id'];
+
 			if($delete_comment_form->delete()){
+
 				$thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
+
 				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
 			}
 		}
 	}
 
+	/**
+	 * @return \yii\web\Response
+	 */
 	public function actionDeleteThread(){
-		$delete_thread_form = new DeleteThreadForm();
 		if(isset($_POST['thread_id'])){
+			$delete_thread_form = new DeleteThreadForm();
+
 			$delete_thread_form->thread_id = $_POST['thread_id'];
+
 			if($delete_thread_form->delete()){
 				return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
 			}
@@ -425,7 +359,9 @@ class ThreadController extends Controller
 
 		if(isset($_POST['comment']) ){
 			$edit_comment_form->comment = $_POST['comment'];
+
 			$edit_comment_form->update();
+
 			return $this->render('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
 															'comment' => $edit_comment_form->comment,
 															'edit_comment_form'=> new EditCommentForm()]);
@@ -437,6 +373,9 @@ class ThreadController extends Controller
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	public function actionEditThread() {
 
 		if(Yii::$app->request->isPjax){
@@ -476,6 +415,11 @@ class ThreadController extends Controller
 		}
 	}
 
+	/**
+	 * @param $trigger_id
+	 * @param $thread_id
+	 * @return bool
+	 */
 	private function updateCommentNotification($trigger_id, $thread_id){
 		$notification_form = new NotificationForm();
 		$notification_form->trigger_id = $trigger_id;
@@ -484,6 +428,11 @@ class ThreadController extends Controller
 		}
 	}
 
+	/**
+	 * @param $trigger_id
+	 * @param $comment_id
+	 * @return bool
+	 */
 	private function updateChildCommentNotification($trigger_id, $comment_id){
 		$notification_form = new NotificationForm();
 		$notification_form->trigger_id = $trigger_id;

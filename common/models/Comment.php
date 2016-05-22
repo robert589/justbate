@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\entity\ThreadCommentEntity;
 use yii\behaviors\TimestampBehavior;
 use yii\data\SqlDataProvider;
 use yii\db\ActiveRecord;
@@ -31,35 +32,47 @@ class Comment extends ActiveRecord
     /**
      * WEAKNESS: THE total_like, total_dislike, and vote is not working, it causes us need to put it into two queries
      * PERFORMANCE PROBLEM
-     * @return string
+     * @return array
      */
 	public static function getCommentByChoiceText($thread_id, $choice_text, $user_id ){
 
 
-                $sql=  "SELECT comments.*,
-                                (case comment_vote.user_id when :user_id then vote else null end) as vote,
-                                COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
-                                COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
-                        FROM (
-                            SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, user.last_name, user.username, user.photo_path
-                            from thread_comment,comment, user
-                            where thread_id = :thread_id and
-                            thread_comment.choice_text= :choice_text and
-                            thread_comment.comment_id = comment.comment_id 			and user.id = comment.user_id and
-                            comment_status = 10
-                            ) comments
-                        LEFT JOIN comment_vote
-                        on comment_vote.comment_id = comments.comment_id
-                        group by comments.comment_id
-                        order by total_like desc
-               ";
+        $sql=  "SELECT comments.*,
+                        (case comment_vote.user_id when :user_id then vote else null end) as vote,
+                        COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
+                        COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
+                FROM (
+                    SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, user.last_name, user.username, user.photo_path
+                    from thread_comment,comment, user
+                    where thread_id = :thread_id and
+                    thread_comment.choice_text= :choice_text and
+                    thread_comment.comment_id = comment.comment_id 			and user.id = comment.user_id and
+                    comment_status = 10
+                    ) comments
+                LEFT JOIN comment_vote
+                on comment_vote.comment_id = comments.comment_id
+                group by
+                 comments.comment_id
+                order by total_like desc
+       ";
 
-                return \Yii::$app->db
-                    ->createCommand($sql)
-                    ->bindValues([':thread_id' => $thread_id])
-                    ->bindValues([':choice_text' => $choice_text] )
-                    ->bindValue(':user_id', $user_id)
-                    ->queryAll();
+        $results = \Yii::$app->db
+            ->createCommand($sql)
+            ->bindValues([':thread_id' => $thread_id])
+            ->bindValues([':choice_text' => $choice_text] )
+            ->bindValue(':user_id', $user_id)
+            ->queryAll();
+
+        //mapped data
+        $thread_comment_list = array();
+
+        foreach($results as $result){
+            $thread_comment_entity = new ThreadCommentEntity($result['comment_id'], $result['user_id']);
+            $thread_comment_entity->setDataFromArray($result);
+
+            $thread_comment_list[] = $thread_comment_entity;
+        }
+        return $thread_comment_list;
 
 	}
 

@@ -5,27 +5,21 @@ use kartik\tabs\TabsX;
 use kartik\dialog\Dialog;
 use yii\widgets\ActiveForm;
 
-/** @var $model array */
-/** @var $commentModel \frontend\models\CommentForm */
-/** @var $comment_providers \yii\data\ArrayDataProvider */
-/** @var $thread_choices array */
-/** @var $submitVoteModel \frontend\models\SubmitThreadVoteForm */
-/** @var $thread_issues array all issues of the title */
+/** @var $thread \common\entity\ThreadEntity */
+/** @var $comment_model \frontend\models\CommentForm */
+/** @var $submit_vote_form \frontend\models\SubmitThreadVoteForm */
 
-$this->title =  $model['title'];
-
-//Store this variable for javascript
-if(!empty(\Yii::$app->user->isGuest)){
-	$guest = "1";
-}
-else{
-	$guest = "0";
-}
-
-
+//variable used in this page
+$this->title =  $thread->getTitle();
+$guest  = $thread->isGuest();
+$thread_belongs_to_current_user = $thread->belongToCurrentUser();
+$comment_providers = $thread->getCommentList();
+$thread_issues= $thread->getThreadIssues();
 $content_comment = array();
-
+$choices_in_thread = $thread->getChoices();
+$thread_id = $thread->getThreadId();
 $first = 1;
+
 foreach($comment_providers as $thread_choice_item => $comment_provider){
 	$content_comment_item['label'] = $thread_choice_item;
 	$content_comment_item['content'] =  ListView::widget([
@@ -33,27 +27,16 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 		'summary' => false,
 		'itemOptions' => ['class' => 'item'],
 		'layout' => "{summary}\n{items}\n{pager}",
-		'itemView' => function ($model, $key, $index, $widget) {
-			$childCommentForm = new \frontend\models\ChildCommentForm();
+		'itemView' => function ($thread_comment, $key, $index, $widget) {
+			$child_comment_form = new \frontend\models\ChildCommentForm();
+			$creator = (new \common\creator\CreatorFactory())->getCreator(
+												\common\creator\CreatorFactory::THREAD_COMMENT_CREATOR,
+												$thread_comment);
+			$thread_comment = $creator->get([\common\creator\ThreadCommentCreator::NEED_COMMENT_VOTE]);
 
-			if (Yii::$app->user->isGuest) {
-				$belongs = 0;
-			}
-			else {
-				if(Yii::$app->user->getId()== $model['user_id']){
-					$belongs = 1;
-				} else {
-					$belongs = 0;
-				}
-			}
-
-			$comment_vote_comment = \common\models\CommentVote::getCommentVotesOfComment($model['comment_id'], Yii::$app->getUser()->getId());
-			return $this->render('_listview_comment',['model' => $model,
-									'belongs' => $belongs,
-									'child_comment_form' => $childCommentForm,
-									'total_like' => $comment_vote_comment['total_like'],
-									'total_dislike' => $comment_vote_comment['total_dislike'],
-									'vote' => $comment_vote_comment['vote']]);
+			return $this->render('_listview_comment',['thread_comment' => $thread_comment,
+						                  			'child_comment_form' => $child_comment_form,
+									]);
 		}
 	]);
 	if($first == 1){
@@ -66,23 +49,28 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 	$content_comment[] = $content_comment_item;
 }
+
+//start of html
 ?>
 
 <?= Dialog::widget(); ?>
+
 <?php if(Yii::$app->user->isGuest){ ?>
-	<label> Please login before doing any action. Otherwise, it will not work </label>
-	<?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
+
+<label> Please login before doing any action. Otherwise, it will not work </label>
+
+<?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
+
 <?php } ?>
 
 <div class="col-xs-12 col-md-8" id="thread-main-body" style="background: white">
+
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
+
 		<div id="thread-details" class="col-xs-12">
-			<?= $this->render('_title_description_vote', ['title' => $model['title'],
-			'description' => $model['description'],
-			'thread_choices' => $thread_choices,
-			'thread_id' => $model['thread_id'],
-			'user_choice' => $model['user_choice'],
-			'submitVoteModel' => $submitVoteModel])
+			<?= $this->render('_title_description_vote',
+				['thread' => $thread ,
+				 'submit_vote_form' => $submit_vote_form])
 			?>
 		</div>
 
@@ -92,49 +80,50 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 		<div class="col-xs-12" id="action-button">
 			<?= Html::button('Comment', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?>
-			<!-- Not working yet
-			Html::button('Share on facebook', ['id' => 'share_on_facebook', 'class' => 'btn'])
-		-->
-		<?php if($model['user_id'] == \Yii::$app->user->id) { ?>
+
+			<?php if($thread_belongs_to_current_user) { ?>
+
 			<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
+
 			<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn','data-guest' => $guest]) ?>
+
 			<?php } ?>
+
 		</div>
 	</div>
 
-	<!-- Not working yet
-	<div class="col-xs-12" id="ask_to_login" style="display: none;">
-	You need to login to perform this action,  click <?= Html::a('Login','', ['id' => 'login_link']) ?>
-</div>
--->
 
-<div  id="comment_section" class="section col-xs-12" style="display:none">
-	<div class="row" >
-		<?= $this->render('_comment_input_box', ['commentModel' => $commentModel,
-		'thread_choices' => $thread_choices,
-			'comment_input_retrieved' => true,
-		'thread_id' => $model['thread_id']]) ?>
+	<div  id="comment_section" class="section col-xs-12" style="display:none">
+
+		<div class="row" >
+			<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
+													'thread' => $thread,
+													'comment_input_retrieved' => true,
+													]) ?>
+		</div>
+
 	</div>
-</div>
 
 
-<div class="col-xs-12 section">
-	<div id="comment-tab">
-		<?= // Ajax Tabs Above
-		TabsX::widget([
-			'id' => 'comment-tab',
-			'items'=>$content_comment,
-			'position'=>TabsX::POS_ABOVE,
-			'encodeLabels'=>false,
-			'enableStickyTabs' => true
-		])
-		?>
+	<div class="col-xs-12 section">
+
+		<div id="comment-tab">
+			<?= // Ajax Tabs Above
+			TabsX::widget([
+				'id' => 'comment-tab',
+				'items'=>$content_comment,
+				'position'=>TabsX::POS_ABOVE,
+				'encodeLabels'=>false,
+				'enableStickyTabs' => true
+			])
+			?>
+		</div>
+
 	</div>
-</div>
 
 
 </div>
 
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
-<?= Html::hiddenInput('thread_id', $model['thread_id']) ?>
+	<?= Html::hiddenInput('thread_id', $thread_id) ?>
 <?php ActiveForm::end() ?>

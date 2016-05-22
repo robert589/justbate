@@ -1,5 +1,4 @@
 <?php
-
 use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,55 +9,46 @@ use frontend\models\EditCommentForm;
 use common\models\Comment;
 use yii\widgets\ActiveForm;
 use common\components\DateTimeFormatter;
-/** @var $model array */
-/**  @var $comment_id integer */
+/** @var $thread_comment \common\entity\ThreadCommentEntity */
 /** @var $child_comment_form \frontend\models\ChildCommentForm */
-$comment_id = $model['comment_id'];
-$total_like = $model['total_like'];
-$total_dislike = $model['total_dislike'];
-$vote = $model['vote'];
+
+//used variable
+$comment_id = $thread_comment->getCommentId();
+$current_user_vote = $thread_comment->getCurrentUserVote();
+$comment_creator_full_name = $thread_comment->getFullName();
+$comment_creator_user_id = $thread_comment->getCommentCreatorId();
+$commentator_user_profile_link = $thread_comment->getCommentatorUserProfileLink();
+$commentator_user_photo_path_link = $thread_comment->getCommentatorPhotoLink();
+$comment_created_at = $thread_comment->getDateCreated();
+$comment_thread_id = $thread_comment->getThreadId();
 ?>
 
 <article class="block-for-comment">
 	<div class="col-xs-1 image-commentator">
-		<?php if(isset($model['photo_path'])){ ?>
-			<img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
-		<?php } ?>
+		<img class="img img-rounded profile-picture-comment" src=<?= $commentator_user_photo_path_link ?>>
 	</div>
 
 	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
-			<span><?= Html::a($model['first_name'] . ' ' . $model['last_name'], Yii::$app->request->baseUrl . "/user/" . $model['username'], ['data-pjax' => 0])?></span> - 
-			<span class="comment-created"><?= DateTimeFormatter::getTimeByTimestampAndOffset($model['created_at']) ?></span>
+			<span><?= Html::a($comment_creator_full_name, $commentator_user_profile_link, ['data-pjax' => 0])?></span> -
+			<span class="comment-created"><?= $comment_created_at ?></span>
 		</div>
-		<!-- <div class="col-xs-12 comment-created-block">
-			<div class="comment-created"><?= DateTimeFormatter::getTimeByTimestampAndOffset($model['created_at']) ?></div>
-		</div> -->
 	</div>
 
 	<div class="col-xs-12 commentator-moderate">
 		<div class="col-xs-12 commentator-comment">
-			<?= $this->render('_view_edit_comment_part', ['comment' => $model['comment'],
+			<?= $this->render('_view_edit_comment_part', ['thread_comment' => $thread_comment,
 							'edit_comment_form' => new EditCommentForm(),
 							'comment_id' => $comment_id]) ?>
 		</div>
 
+		<!-- Votes part-->
 		<div class="col-xs-4" class="comment-votes">
-			<!-- Votes part-->
-			<?= $this->render('_comment_votes', [  'comment_id' => $comment_id,
-												'vote' => $vote,
-												'thread_id' => $model['thread_id'],
-												'total_like' => $total_like ,
-												'total_dislike' => $total_dislike])
-			?>
-
+			<?= $this->render('_comment_votes', [ 'comment' => $thread_comment ])?>
 		</div>
 
-		<!-- Child commetn and the button, must be started with col-md-6  -->
-		<?= $this->render('_child_comment', ['comment_id' => $comment_id,
-											'thread_id' => $model['thread_id'],
-											'user_id' => $model['user_id'],
-											'belongs' => (Yii::$app->user->getId() == $model['user_id']),
+		<!-- Child commetn and the button  -->
+		<?= $this->render('_child_comment', ['thread_comment' => $thread_comment,
 											'retrieved' => false,
 											'child_comment_form' => $child_comment_form ]) ?>
 	</div>

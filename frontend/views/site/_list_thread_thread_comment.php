@@ -5,10 +5,12 @@ use yii\widgets\Pjax;
 use yii\bootstrap\Html;
 use yii\widgets\ActiveForm;
 
-/** @var $thread_id integer */
+/** @var $thread \common\entity\ThreadEntity */
 /** @var $total_comments integer */
 /** @var $comment_providers \yii\data\ArrayDataProvider */
 /** @var $comment_retrieved boolean */
+$thread_id = $thread->getThreadId();
+
 Pjax::begin([
     'id' => 'comment_section_' . $thread_id,
     'enablePushState' => false,

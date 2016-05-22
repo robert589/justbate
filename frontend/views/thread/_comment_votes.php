@@ -2,15 +2,15 @@
 //Rendered from: _listview_child_comment
 use yii\widgets\Pjax;
 use yii\helpers\Html;
-/** @var $vote */
-if(!isset($total_like)){
-    $total_like = 0;
-}
-if(!isset($total_dislike)){
-    $total_dislike = 0;
-}
+/** @var $comment \common\entity\CommentEntity */
+
+$total_like = $comment->getTotalLike();
+$comment_id = $comment->getCommentId();
+$total_dislike = $comment->getTotalDislike();
+$vote = $comment->getCurrentUserVote();
 $vote_up = ($vote == 1);
 $vote_down = ($vote == -1);
+$current_user_login_id = $comment->getCurrentUserLoginId();
 
 Pjax::begin([
     'id' => 'comment_likes_' . $comment_id,
@@ -34,7 +34,7 @@ Pjax::begin([
 
     <?= Html::hiddenInput("vote", $vote, ['id' => 'hi-comment-vote-' . $comment_id]) ?>
 
-    <?= Html::hiddenInput("user_id", Yii::$app->user->getId()) ?>
+    <?= Html::hiddenInput("user_id",$current_user_login_id) ?>
 
     <span>
         <?php if($vote_up == true) {  ?>

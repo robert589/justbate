@@ -24,13 +24,13 @@ use yii\web\JsExpression;
     </div>
 
     <div class="col-xs-12" id="create-thread-main-form">
+
         <div class="col-xs-12" style="padding: 0;">
             <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
             [
                 'clientOptions' => [
                     'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
                 ],
-
              ]) ?>
         </div> <!-- div.col-xs-12 -->
 
@@ -81,6 +81,7 @@ use yii\web\JsExpression;
                 <span id="create-button-label">Create</span>
             </button>
         </div> <!-- div.col-xs-6 -->
+
     </div>
 </div>
 

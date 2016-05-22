@@ -2,20 +2,28 @@
 namespace common\components;
 
 
+/**
+ * Class DateTimeFormatter
+ * @package common\components
+ */
 class DateTimeFormatter{
 
-    public static function getTimeByTimestampAndOffset($timestamp){
-        $original       = new \DateTime(date("Y-m-d H:i:s", $timestamp));
+    const DEFAULT_DATE_FORMAT = "Y-m-d H:i:s";
+
+    const DEFAULT_TIMEZONE_OFFSET = 8;
+
+
+    public static function getTimeByTimestampAndTimezoneOffset($timestamp){
+        $original       = new \DateTime(date(self::DEFAULT_DATE_FORMAT, $timestamp));
 
         if(isset($_COOKIE['tzo'])){
-
             $timezoneName = timezone_name_from_abbr("", $_COOKIE['tzo']*60, false);
         }
         else{
-
-            $timezoneName = timezone_name_from_abbr("", 8*3600, false);
+            $timezoneName = timezone_name_from_abbr("", self::DEFAULT_TIMEZONE_OFFSET*3600, false);
         }
-        return $original->setTimezone(new \DateTimezone($timezoneName))->format("Y-m-d H:i");
+
+        return $original->setTimezone(new \DateTimezone($timezoneName))->format(self::DEFAULT_DATE_FORMAT);
 
     }
 }

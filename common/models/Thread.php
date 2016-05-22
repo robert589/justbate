@@ -5,11 +5,19 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
+/**
+ * Class Thread
+ * @package common\models
+ */
 class Thread extends ActiveRecord
 {
 	const STATUS_DELETED = 0;
 	const STATUS_ACTIVE = 10;
 	const STATUS_BANNED = 11;
+
+	const PREFIX = "thread_";
+
+
 
 	public static function tableName() {
 		return 'thread';
@@ -105,6 +113,12 @@ class Thread extends ActiveRecord
 		return self::find()->all();
 	}
 
+	/**
+	 *
+	 * @param $thread_id
+	 * @param $user_id
+	 * @return array|false
+	 */
 	public static function retrieveThreadById($thread_id, $user_id) {
 		if(empty($user_id)) {
 			$user_id = 0;
@@ -119,6 +133,8 @@ class Thread extends ActiveRecord
 			bindParam(':thread_id', $thread_id)->
 			bindParam(':user_id', $user_id)->
 			queryOne();
+
+
 
 		return $result;
 	}

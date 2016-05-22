@@ -3,50 +3,37 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
-/** @var $model array **/
+/** @var $child_comment \common\entity\ChildCommentEntity **/
 
-$comment_id = $model['comment_id'];
 
-//if the person is not guests
-if(!empty(\Yii::$app->user->isGuest)){
-    $guest = "1";
-    $belongs = "0";
-}
-else{
-    if(!empty(\Yii::$app->user->getId())){
-        $user_id = \Yii::$app->user->getId();
-        //the belongs variable will be used in javascript
-        //to set whether edit and delete button will be shown
-        if($user_id == $model['user_id']){
-            $belongs = "1";
-        }
-        else{
-            $belongs = "0";
-        }
-    }
-    $guest = "0";
-}
+$comment_id = $child_comment->getCommentId();
+$guest = Yii::$app->user->isGuest;
+$belongs_to_current_user = $child_comment->isBelongToCurrentUser();
+$comment_creator_full_name = $child_comment->getFullName();
+$comment_creator_user_id = $child_comment->getCommentCreatorId();
+$commentator_user_profile_link = $child_comment->getCommentatorUserProfileLink();
+$commentator_user_photo_path_link = $child_comment->getCommentatorPhotoLink();
+$comment_created_at = $child_comment->getDateCreated();
+$comment = Html::encode($child_comment->getComment());
+
 ?>
 
 <article>
     <div class="col-xs-3">
-        <img class="img img-rounded profile-picture-comment" src=<?= Yii::getAlias('@image_dir') . '/' . $model['photo_path'] ?>>
+        <img class="img img-rounded profile-picture-comment" src=<?= $commentator_user_photo_path_link ?>>
     </div>
     <div class="col-xs-9">
 
         <div class="col-xs-12" id="commentator-name">
-           <?= Html::a(Html::encode($model['first_name'] . ' ' . $model['last_name']), Yii::$app->request->baseUrl . "/user/" . $model['username'] )?>
+           <?= Html::a(Html::encode($comment_creator_full_name), $commentator_user_profile_link )?>
         </div>
 
         <div class="col-xs-12" id="commentator-comment">
-           <?= Html::encode($model['comment'])?>
+           <?= $comment ?>
         </div>
 
         <div class="col-xs-12" id="commentator-moderate">
-                <?= $this->render('_comment_votes', ['comment_id' => $comment_id,
-                                                    'total_like' => $total_like,
-                                                    'total_dislike' =>$total_dislike,
-                                                    'vote'=> $vote]) ?>
+                <?= $this->render('_comment_votes', ['comment' => $child_comment]) ?>
         </div>
     </div>
 </article>

@@ -3,10 +3,15 @@ use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-/* @var $thread_choices array **/
-/* @var $commentModel \frontend\models\CommentForm */
-/** @var  $thread_id integer */
+/* @var $thread \common\entity\ThreadEntity **/
+/* @var $comment_model \frontend\models\CommentForm */
 /** @var $comment_input_retrieved boolean */
+
+/**
+ * Variable Used
+ */
+$thread_id = $thread->getThreadId();
+$thread_choices = $thread->getChoices();
 
 Pjax::begin([
     'id' => 'comment_input_' . $thread_id,
@@ -20,12 +25,13 @@ Pjax::begin([
 ]);
 
 if(isset($comment_input_retrieved)) {
-//prepare data
-        $choice_text = array();
 
-        foreach ($thread_choices as $choice) {
-            $choice_text[$choice['choice_text']] = $choice['choice_text'];
-        }
+    //prepare data
+    $choice_text = array();
+
+    foreach ($thread_choices as $choice) {
+        $choice_text[$choice['choice_text']] = $choice['choice_text'];
+    }
 
 ?>
 
@@ -41,7 +47,7 @@ if(isset($comment_input_retrieved)) {
 
 
                 <?=
-                    $form->field($commentModel, 'comment', ['selectors' => ['input' => '#comment-input-' . $thread_id]])->widget(\yii\redactor\widgets\Redactor::className(),
+                    $form->field($comment_model, 'comment', ['selectors' => ['input' => '#comment-input-' . $thread_id]])->widget(\yii\redactor\widgets\Redactor::className(),
                     [
                         'options' => [
                             'id' => 'comment-input-' . $thread_id,
@@ -57,7 +63,7 @@ if(isset($comment_input_retrieved)) {
         <div class="row">
             <div class="col-xs-6">
 
-                <?= $form->field($commentModel, 'choice_text')->widget(Select2::classname(), [
+                <?= $form->field($comment_model, 'choice_text')->widget(Select2::classname(), [
                     'data' => $choice_text,
                     'hideSearch' => true,
                     'options' => ['placeholder' => 'Choose your side ...',

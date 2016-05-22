@@ -3,17 +3,20 @@ use yii\widgets\ListView;
 use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
 use yii\helpers\Html;
-
-/** @var $list_data_provider \yii\data\ArrayDataProvider */
-/** @var $issue_list array */
-/** @var $trending_topic_list array */
+/** @var $home \common\entity\HomeEntity */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
-/** @var $user_email string */
-/** @var $issue_name string optional */
-/** @var $issue_num_followers integer optional */
-/** @var $user_is_follower boolean optional */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
 /** @var $change_email_form \frontend\models\ResendChangeEmailForm */
+/**
+ * Variable used
+ */
+$issue_followed_by_user = $home->getUserFollowedIssueList();
+$trending_topic_list = $home->getTrendingTopicList();
+$user_follow_issue = $home->isUserFollowedIssue();
+$num_followers_of_issue = $home->getIssueNumFollowers();
+$has_issue = $home->hasIssue();
+$issue_name = $home->getIssueName();
+$thread_list_provider = $home->getThreadList();
 
 $this->title = "Home";
 ?>
@@ -23,8 +26,8 @@ $this->title = "Home";
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
 
-		<?= $this->render('_home_sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => $add_issue_form]) ?>
-
+		<?= $this->render('_home_sidenav-issue', ['issue_list' => $issue_followed_by_user,
+													'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([
@@ -37,15 +40,15 @@ $this->title = "Home";
 
 	<div class="col-xs-12 col-md-8 home-main-section">
 
-	<!-- Issue header if exist-->
-	<?php if($issue_name != ''){ ?>
+		<!-- Issue header if exist-->
+		<?php if($has_issue){ ?>
 
 		<div class="col-xs-12" style="margin-bottom: 15px;background-color: white">
-			<?= $this->render('_home_issue-header', ['issue_name' => $issue_name, 'issue_num_followers' => $issue_num_followers,
-													'user_is_follower' => $user_is_follower]) ?>
+			<?= $this->render('_home_issue-header', ['issue_name' => $issue_name, 'issue_num_followers' => $num_followers_of_issue,
+													'user_is_follower' => $user_follow_issue]) ?>
 		</div>
 
-	<?php } ?>
+		<?php } ?>
 
 		<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 
@@ -55,7 +58,7 @@ $this->title = "Home";
 			<div class="col-xs-12" id="main-post-desc">
 				<?= ListView::widget([
 					'id' => 'threadList',
-					'dataProvider' => $list_data_provider,
+					'dataProvider' => $thread_list_provider,
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
 
@@ -69,16 +72,10 @@ $this->title = "Home";
 						],
 						'triggerOffset' => 100,
 					],
-					'itemView' => function ($model, $key, $index, $widget) {
-						$comment = \common\models\ThreadComment::getBestCommentFromThread($model['thread_id']);
-						$thread_issues = \common\models\ThreadIssue::getIssue($model['thread_id']);
-						$thread_choice_text = \common\models\Choice::getChoice($model['thread_id']);
+					'itemView' => function ($thread, $key, $index, $widget) {
 
 						return $this->render('_list_thread',[
-							'model' => $model,
-							'comment' => $comment,
-							'thread_choice_text' => $thread_choice_text,
-							'thread_issues' => $thread_issues]
+							'thread' => $thread]
 						);
 					}
 				])

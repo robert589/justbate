@@ -2,6 +2,9 @@
 namespace frontend\controllers;
 
 use common\components\LinkConstructor;
+use common\creator\CreatorFactory;
+use common\creator\HomeCreator;
+use common\entity\HomeEntity;
 use common\models\Issue;
 use common\models\ThreadComment;
 use common\models\ThreadVote;
@@ -135,6 +138,7 @@ class SiteController extends Controller
 	public function actionHome()
 	{
 		$this->setMetaTag();
+
 		if(Yii::$app->user->isGuest){
 			return $this->render('login',
 				[
@@ -145,57 +149,32 @@ class SiteController extends Controller
 
 		$user_id = Yii::$app->user->getId();
 
-		//get Issue
-		if(!empty($_GET['issue'])){
-			$issue_name = $_GET['issue'];
-			$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($issue_name);
-			$user_is_follower = UserFollowedIssue::isFollower($user_id, $issue_name);
-			$result = Thread::getThreads($user_id, $_GET['issue']);
+		$home_entity = new HomeEntity($user_id);
 
-		}
-		else{
-			$issue_name = '';
-			$user_is_follower = false;
-			$issue_num_followers = -1;
-			$result = Thread::getThreads($user_id);
+		if(isset($_GET['issue'])){
+			$home_entity->setIssueName($_GET['issue']);
 		}
 
-		$data_provider = new ArrayDataProvider([
-			'allModels' => $result,
-			'pagination' => [
-				'pageSize' =>10,
-			],
-		]);
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::HOME_CREATOR, $home_entity);
+		$home_entity = $creator->get([HomeCreator::NEED_THREAD_LISTS,
+									  HomeCreator::NEED_ISSUE_NUM_FOLLOWERS,
+									  HomeCreator::NEED_USER_FOLLOWED_ISSUE,
+									  HomeCreator::NEED_TRENDING_TOPIC_LIST,
+									  HomeCreator::NEED_USER_FOLLOWED_ISSUE_LIST,
+									  HomeCreator::NEED_USER_EMAIL])	;
 
-		//Create form
-		$create_thread_form  = new CreateThreadForm();
+		$create_thread_form = new CreateThreadForm();
 
 		$this->getDefaultChoice($create_thread_form);
 
-		//retrieve trending topic
-		$trending_topic_list = $this->getTredingTopicList();
 
-		//get popular category
-		$issue_list = UserFollowedIssue::getFollowedIssue($user_id);
-		//Yii::$app->end(var_dump($issue_list));
-		//check whether he/she has validated her email
-		$user_email_auth = UserEmailAuthentication::findOne(['user_id' => $user_id]);
-
-		$change_email_form = new ResendChangeEmailForm();
+		/*
 		if($user_email_auth != null && $user_email_auth->validated == 0){
 			$change_email_form->user_email = $user_email_auth->email;
-		}
+		}*/
 
-
-		return $this->render('home', ['issue_list' => $issue_list,
-									'trending_topic_list' => $trending_topic_list,
-									'list_data_provider' => $data_provider,
-									'user_email_auth' => $user_email_auth,
-									'issue_name' => $issue_name,
-									'issue_num_followers' => $issue_num_followers,
-									'add_issue_form' => new UserFollowIssueForm(),
-									'user_is_follower' => $user_is_follower,
-									'change_email_form' => $change_email_form,
+		return $this->render('home', ['home' => $home_entity,
+									'change_email_form' => new ResendChangeEmailForm(),
 									'create_thread_form' => $create_thread_form]);
 	}
 
@@ -634,42 +613,8 @@ class SiteController extends Controller
 
 
 	private function getDefaultChoice(&$create_thread_form){
-		$create_thread_form->choices = ['Agree','Disagree', 'Neutral'];
+		$create_thread_form->choices = ['Agree','Disagree'];
 	}
 
-	private function getTredingTopicList(){
-		$trending_topic_list = Thread::getTop10TrendingTopic();
 
-		$mapped_trending_topic_list = array();
-
-		foreach($trending_topic_list as $trending_topic){
-			$mapped_trending_topic['label'] = $trending_topic['title'];
-			$mapped_trending_topic['url'] = Yii::$app->request->baseUrl . '/thread/' . $trending_topic['thread_id']. '/'
-				. str_replace(' ', '-' , strtolower($trending_topic['title']));
-
-			$mapped_trending_topic_list[] = $mapped_trending_topic;
-
-		}
-		return $mapped_trending_topic_list;
-	}
-
-	/**
-	 * Status: Not used anymore, replace by followed issue
-	 *
-	 * @return array
-	 */
-	private function getFollowedIssue($user_id){
-		$issue_list = UserFollowedIssue::getFollowedIssue($user_id);
-
-		$mapped_category_list = array();
-		foreach($issue_list as $issue){
-			$mapped_category['label'] = $issue['issue_name'];
-			$mapped_category['url']  = Yii::$app->request->baseUrl . '/issue/' . $issue['issue_name'];
-
-			$mapped_category_list[] = $mapped_category;
-		}
-
-
-		return $mapped_category_list;
-	}
 }

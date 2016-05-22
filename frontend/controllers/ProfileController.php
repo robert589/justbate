@@ -29,6 +29,9 @@ class ProfileController extends Controller
 	const FOLLOWEES = 'followees';
 	const NOTHING = '';
 
+	/**
+	 * @return string
+	 */
 	public function actionIndex()
 	{
 		if(isset($_GET['username'])){
@@ -48,6 +51,7 @@ class ProfileController extends Controller
 				$is_following = FollowerRelation::isFollowing(Yii::$app->getUser()->id, $user_info['id']);
 
 				$model_provider = null;
+
 				if(isset($_GET['attr'])) {
 					$attr = $_GET['attr'];
 					if ($attr == self::THREAD_STARTERS) {
@@ -65,6 +69,7 @@ class ProfileController extends Controller
 
 					$type = $attr;
 				}
+
 				else{
 					$type = self::COMMENTS;
 					$model_provider = $this->getComments($user_info['id']);
@@ -90,6 +95,9 @@ class ProfileController extends Controller
 
 	}
 
+	/**
+	 * @return string|\yii\web\Response
+	 */
 	public function actionEdit(){
 		$editForm = new EditProfileForm();
 		if($editForm->load(\Yii::$app->request->post()) && $editForm->validate()){
@@ -123,7 +131,6 @@ class ProfileController extends Controller
 				//error
 			}
 		}
-
 		return null;
 	}
 

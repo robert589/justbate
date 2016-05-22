@@ -20,9 +20,8 @@ class ChildComment extends ActiveRecord
                 on user.id = comment.user_id
                 where parent_id = :thread_comment_id";
 
-        $result =  \Yii::$app->db->createCommand($sql)->
-        bindParam(':thread_comment_id', $thread_comment_id)->
-        queryAll();
+            $result =  \Yii::$app->db->createCommand($sql)->
+        bindParam(':thread_comment_id', $thread_comment_id)->queryAll();
 
         return $result;
     }
@@ -40,7 +39,9 @@ class ChildComment extends ActiveRecord
     }
 
     public static function getComment($comment_id){
-        $sql = "SELECT * from child_comment inner join comment on child_comment.comment_id = comment.comment_id
+        $sql = "SELECT * from child_comment
+                inner join comment
+                on child_comment.comment_id = comment.comment_id
                 where child_comment.comment_id = :comment_id";
 
         return  \Yii::$app->db->createCommand($sql)->bindParam(':comment_id', $comment_id)->queryOne();

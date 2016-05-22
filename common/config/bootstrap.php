@@ -5,7 +5,7 @@ Yii::setAlias('backend', dirname(dirname(__DIR__)) . '/backend');
 Yii::setAlias('console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('frontend-web', dirname(dirname(__DIR__)) . '/frontend/web');
 //Yii::setAlias('image_dir', dirname(dirname(__DIR__)) . '/frontend/web/photos');
-Yii::setAlias('image_dir', '/frontend/web/photos');
+Yii::setAlias('image_dir', '/startUp/frontend/web/photos');
 Yii::setAlias('image_dir_local', dirname(dirname(__DIR__)) . '/frontend/web/photos');
 Yii::setAlias('img_dir_local', dirname(dirname(__DIR__)) . '/frontend/web/img');
 
