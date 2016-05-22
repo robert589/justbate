@@ -386,6 +386,7 @@ class ThreadEntity implements Entity{
         $this->thread_status = isset($array['thread_status']) ? $array['thread_status'] : null;
         $this->anonymous = isset($array['anonymous']) ? $array['anonymous'] : null;
         $this->description = isset($array['description']) ? $array['description'] : null;
+        $this->total_comment = isset($array['total_comments']) ? $array['total_comments'] : null;
 
     }
 

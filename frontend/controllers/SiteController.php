@@ -4,7 +4,10 @@ namespace frontend\controllers;
 use common\components\LinkConstructor;
 use common\creator\CreatorFactory;
 use common\creator\HomeCreator;
+use common\creator\ThreadCreator;
 use common\entity\HomeEntity;
+use common\entity\ThreadCommentEntity;
+use common\entity\ThreadEntity;
 use common\models\Issue;
 use common\models\ThreadComment;
 use common\models\ThreadVote;
@@ -167,12 +170,6 @@ class SiteController extends Controller
 
 		$this->getDefaultChoice($create_thread_form);
 
-
-		/*
-		if($user_email_auth != null && $user_email_auth->validated == 0){
-			$change_email_form->user_email = $user_email_auth->email;
-		}*/
-
 		return $this->render('home', ['home' => $home_entity,
 									'change_email_form' => new ResendChangeEmailForm(),
 									'create_thread_form' => $create_thread_form]);
@@ -244,16 +241,26 @@ class SiteController extends Controller
 
 	}
 
+	/**
+	 * @return string
+	 * @throws \yii\base\ExitException
+	 */
 	public function actionRetrieveCommentInput(){
-		if(isset($_POST['thread_id']) && Yii::$app->request->isPjax){
-			$thread_id = $_POST['thread_id'];
-
-			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-
-			return $this->renderAjax('../thread/_comment_input_box', ['thread_choices' => $thread_choices, 'thread_id' => $thread_id,
-													'comment_input_retrieved' => true, 'commentModel' => new CommentForm()]);
-
+		if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
+			Yii::$app->end('Something went wrong, we will fix it as soon as possible');
 		}
+
+		$thread_entity = new ThreadEntity($_POST['thread_id'], Yii::$app->user->getId());
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
+		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
+										])	;
+
+		return $this->renderAjax('../thread/_comment_input_box',
+								['thread' => $thread_entity,
+								 'comment_input_retrieved' => true,
+								 'comment_model' => new CommentForm()]);
+
+
 	}
 
 	public function actionFollowIssue(){
@@ -276,9 +283,11 @@ class SiteController extends Controller
 			if($success == true){
 				$user_is_follower = UserFollowedIssue::isFollower($user_follow_issue_form->user_id, $user_follow_issue_form->issue_name);
 				$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($user_follow_issue_form->issue_name);
-				return $this->renderPartial('_home_issue-header', ['issue_name' => $user_follow_issue_form->issue_name,
-					'issue_num_followers' => $issue_num_followers,
-					'user_is_follower' => $user_is_follower]);
+				return $this->renderPartial('_home_issue-header',
+											['issue_name' => $user_follow_issue_form->issue_name,
+											 'issue_num_followers' => $issue_num_followers,
+											 'user_is_follower' => $user_is_follower]
+											);
 			}
 			else{
 				if($user_follow_issue_form->hasErrors()){
@@ -293,36 +302,6 @@ class SiteController extends Controller
 		return null;
 	}
 
-	public function actionFollowee() {
-		if(\Yii::$app->user->isGuest) {
-			return $this->render('login');
-		}
-
-		//initial data without filter
-		$result = Thread::retrieveThreadFromFollowee(\Yii::$app->user->id);
-
-		$dataProvider = new ArrayDataProvider([
-			'allModels' => $result,
-			'pagination' => [
-				'pageSize' =>10,
-			],
-
-		]);
-
-		//Create form
-		$create_thread_form  = new CreateThreadForm();
-		$this->getDefaultChoice($create_thread_form);
-		//retrieve trending topic
-		$trending_topic_list = $this->getTredingTopicList();
-
-		//get popular category
-		$issue_list = $this->getPopularIssue();
-
-		return $this->render('home', ['issue_list' => $issue_list,
-									'trending_topic_list' => $trending_topic_list,
-									'listDataProvider' => $dataProvider,
-									'create_thread_form' => $create_thread_form]);
-	}
 
 	/**
 	 * Logs in a user.
@@ -353,32 +332,19 @@ class SiteController extends Controller
 	 *
 	 */
 	public function actionGetComment(){
-		if(Yii::$app->request->isPjax && isset($_GET['thread_id'])){
-
-			$thread_id = $_GET['thread_id'];
-
-			//get all thread_choices
-			$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-			//get all comment providers
-
-			$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices, Yii::$app->user->getId());
-
-
-			$total_comments = ThreadComment::getTotalThreadComments($thread_id);
-
-
-			return $this->renderPartial('_list_thread_thread_comment', [
-						'thread_id' => $thread_id,
-						'comment_retrieved' => true,
-						'total_comments' => $total_comments,
-						'thread_choices' => $thread_choices,
-						'comment_providers' => $comment_providers]);
+		if(!(Yii::$app->request->isPjax && isset($_GET['thread_id']))) {
+			Yii::$app->end("Failed to store votes: " . Yii::$app->request->isPjax . '&' . isset($_GET['thread_id']) );
 		}
-		else	{
 
-			//retry
-			return $this->redirect(Yii::$app->request->baseUrl . '/site/home' );
-		}
+		$thread_entity = new ThreadEntity($_GET['thread_id'], Yii::$app->user->getId() );
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
+		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
+										ThreadCreator::NEED_THREAD_COMMENTS,
+										ThreadCreator::NEED_TOTAL_COMMENTS
+										]);
+
+		return $this->renderPartial('_list_thread_thread_comment', ['thread' => $thread_entity,'comment_retrieved' => true]);
+
 	}
 
 	/**
@@ -594,7 +560,8 @@ class SiteController extends Controller
 				return $this->render('_list_thread_thread_vote',
 					['thread_choice_text' => $thread_choice_text,
 						'thread_id' => $model->thread_id,
-						'user_choice_text' => ThreadVote::find()->where(['thread_id' => $model->thread_id])
+						'user_choice_text' => ThreadVote::find()
+												->where(['thread_id' => $model->thread_id])
 												->andWhere(['user_id' => $model->user_id])
 												->one()->choice_text
 					]);

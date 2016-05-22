@@ -17,10 +17,7 @@ $thread_total_comments = $thread->getTotalComment();
 ?>
 
 <div class="col-xs-12" style="padding-left: 0; padding-right: 0;">
-
-<!-- Retrieve comment input -->
-
-
+    <!-- Retrieve comment input -->
     <?php
     $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
         'method' => 'post',
@@ -37,33 +34,45 @@ $thread_total_comments = $thread->getTotalComment();
                 'data-service' => $thread_id]) ?>
         </div>
 
-    <?php  ActiveForm::end();  ?>
+    <?php
+
+    ActiveForm::end();
+
+    ?>
 
 
     <!-- retrieve comment -->
 
     <div>
         <?= Html::a("Comment ( $thread_total_comments )",
-            $comment_request_url,
-            ['class' => 'button-like-link inline retrieve-comment-link',
-                'data-pjax' => "comment_section_$thread_id",
-            'data-service' => $thread_id, 'style' => 'margin-left:15px; padding: 10px !important;']) ?>
+                    $comment_request_url,
+                    ['class' => 'button-like-link inline retrieve-comment-link',
+                     'data-pjax' => "#comment_section_$thread_id",
+                     'data-service' => $thread_id,
+                     'style' => 'margin-left:15px; padding: 10px !important;'
+                    ])
+        ?>
     </div>
-
-
 </div>
 
 <div  align="center" class="col-xs-12" >
-    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif', ['style' => 'display:none;max-height:50px' , 'id' => 'list_thread_loading_gif_' . $thread_id ]) ?>
+    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
+        ['style' => 'display:none;max-height:50px' ,
+         'id' => 'list_thread_loading_gif_' . $thread_id ])
+    ?>
 </div>
 
 <!-- Comment input box-->
 <div style="margin-left: -15px; margin-right: -15px;">
-    <?= $this->render('../thread/_comment_input_box', ['thread' => $thread,
-                                            'commentModel' => new \frontend\models\CommentForm()])?>
+    <?= $this->render('../thread/_comment_input_box',
+                        ['thread' => $thread,
+                         'comment_model' => new \frontend\models\CommentForm()])
+    ?>
 </div>
 
 <!-- Thread comment -->
 <div class="col-xs-12" style="width: 100%">
-    <?= $this->render('_list_thread_thread_comment', ['thread' => $thread  ]) ?>
+    <?= $this->render('_list_thread_thread_comment',
+                    ['thread' => $thread  ])
+    ?>
 </div>

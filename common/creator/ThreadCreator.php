@@ -5,6 +5,8 @@ use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
 use common\models\Choice;
 use common\models\Comment;
+use common\models\Thread;
+use common\models\ThreadComment;
 use common\models\ThreadIssue;
 use yii\base\Exception;
 
@@ -20,6 +22,7 @@ class ThreadCreator implements CreatorInterface{
 
     const NEED_THREAD_COMMENTS = 5;
 
+    const NEED_TOTAL_COMMENTS = 6;
     /**
      * @var ThreadEntity
      */
@@ -57,6 +60,9 @@ class ThreadCreator implements CreatorInterface{
                     break;
                 case self::NEED_THREAD_COMMENTS:
                     $this->getThreadComments();
+                    break;
+                case self::NEED_TOTAL_COMMENTS:
+                    $this->getTotalComment();
                     break;
                 default:
                     break;
@@ -116,6 +122,11 @@ class ThreadCreator implements CreatorInterface{
         $thread_comment->setDataFromArray($result);
 
         $this->thread->setChosenComment($thread_comment);
+    }
+
+    private function getTotalComment(){
+        $result = ThreadComment::getTotalThreadComments($this->thread->getThreadId());
+        $this->thread->setTotalComment($result);
     }
 
 }

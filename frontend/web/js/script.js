@@ -190,17 +190,12 @@ $(document).ready(function(){
             }
         }
         else{
-            console.log('retrieve comment-link');
-            $.pjax.defaults.scrollTo = false;
-            $.pjax.click(event,{container: "#comment_section_" + thread_id, push:false});
+            $.pjax.click(event,{container: "#comment_section_" + thread_id,push:false, scrollTo:false, timeout:6000 });
         }
     });
 
     $(document).on('click', '.retrieve-child-comment-link', function(event){
-
-
         var comment_id = $(this).data('service');
-
         if($("#comment_part_" + comment_id).length == 1){
             event.preventDefault();
             if($("#comment_part_" + comment_id).is(":visible")){
@@ -308,21 +303,26 @@ $(document).ready(function(){
      */
     $(document).on('submit', '.retrieve_comment_input_box_form', function(event) {
         event.preventDefault();
+
         console.log('retrieve comment input box form submitted');
+
         var services = '' + $(this).data('pjax');
+
         $.pjax.defaults.scrollTo = false;
+
         $.pjax.submit(event,  services, {push:false});
+
         return false;
 
     });
-
-
 
     $(document).on('pjax:send','.comment_section_pjax', function(event){
         event.preventDefault();
 
         console.log('comment_section_pjax sent');
+
         var thread_id = $(this).data('service');
+
         $('#list_thread_loading_gif_' + thread_id).show();
 
         return false;
@@ -331,14 +331,16 @@ $(document).ready(function(){
         event.preventDefault();
 
         console.log('comment_section_pjax completed')
+
         var thread_id = $(this).data('service');
+
         $('#list_thread_loading_gif_' + thread_id).hide();
 
         return false;
+
     }).on('pjax:timeout', '.comment_section_pjax', function(event){
-
         event.preventDefault();
-
+        console.log('timeout');
     });
 
     //edit thread part

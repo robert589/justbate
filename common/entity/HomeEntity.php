@@ -82,7 +82,7 @@ class HomeEntity implements Entity{
     }
 
     /**
-     * @param array $thread_list
+     * @param ArrayDataProvider $thread_list
      */
     public function setThreadList($thread_list)
     {

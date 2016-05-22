@@ -13,11 +13,14 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
         'summary' => false,
         'itemOptions' => ['class' => 'item'],
         'layout' => "{summary}\n{items}\n{pager}",
-        'itemView' => function ($model, $key, $index, $widget) {
-            $childCommentForm = new \frontend\models\ChildCommentForm();
+        'itemView' => function ($thread_comment, $key, $index, $widget) {
+            $creator = (new \common\creator\CreatorFactory())->getCreator(
+                \common\creator\CreatorFactory::THREAD_COMMENT_CREATOR,
+                $thread_comment);
+            $thread_comment = $creator->get([\common\creator\ThreadCommentCreator::NEED_COMMENT_VOTE]);
 
-            return $this->render('_listview_comment',['model' => $model,
-                                                      'child_comment_form' => $childCommentForm
+            return $this->render('_listview_comment',['thread_comment' => $thread_comment,
+                                                      'child_comment_form' => new \frontend\models\ChildCommentForm()
                                                      ]);
         }
     ]);

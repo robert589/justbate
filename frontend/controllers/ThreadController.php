@@ -10,6 +10,7 @@ use common\creator\ThreadCreator;
 use common\entity\CommentEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
+use common\models\ThreadComment;
 use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
@@ -181,20 +182,22 @@ class ThreadController extends Controller
 		$comment_model->user_id = \Yii::$app->user->getId();
 
 		if(!($comment_id = $comment_model->store())) {
-			//error
+			//error, notify admin
 		}
 
-		if($this->updateCommentNotification($comment_model->user_id, $thread_id)){
-			//$thread = Thread::findOne(['thread_id' => $thread_id]);
-			$comment_entity = new ThreadCommentEntity($comment_id, $comment_model->user_id);
-			$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
-			$comment_entity = $creator->get([ThreadCommentCreator::NEED_COMMENT_INFO]);
-
-
-			return  $this->renderAjax('_listview_comment', [
-							'thread_comment' => $comment_entity,
-							'child_comment_form' => new ChildCommentForm()]);
+		if(!$this->updateCommentNotification($comment_model->user_id, $thread_id)){
+			//error, notify admin
 		}
+
+		$comment_entity = new ThreadCommentEntity($comment_id, $comment_model->user_id);
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
+		$comment_entity = $creator->get([ThreadCommentCreator::NEED_COMMENT_INFO,
+										 ThreadCommentCreator::NEED_COMMENT_VOTE
+										]);
+
+		return  $this->renderAjax('_listview_comment', [
+			'thread_comment' => $comment_entity,
+			'child_comment_form' => new ChildCommentForm()]);
 
 	}
 

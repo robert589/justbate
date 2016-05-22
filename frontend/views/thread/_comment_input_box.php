@@ -37,41 +37,46 @@ if(isset($comment_input_retrieved)) {
 
 
 <!--Comment Input Part-->
-<?php $form = ActiveForm::begin(['action' => ['thread/submit-comment'],
+<?php
+    $form = ActiveForm::begin(['action' => ['thread/submit-comment'],
                     'options' => ['class' => 'comment-form',
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
 
     <div class="col-xs-12" id="comment_input_box_section_<?= $thread_id ?>">
+
         <div class="row">
             <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>">
-
-
-                <?=
-                    $form->field($comment_model, 'comment', ['selectors' => ['input' => '#comment-input-' . $thread_id]])->widget(\yii\redactor\widgets\Redactor::className(),
-                    [
-                        'options' => [
-                            'id' => 'comment-input-' . $thread_id,
-                        ],
-                        'clientOptions' => [
-                            'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
-                        ],
-                    ])->label(false) ?>
+                <?=  $form->field($comment_model,
+                                  'comment',
+                                  [
+                                      'selectors' => ['input' => '#comment-input-' . $thread_id]
+                                  ])
+                          ->widget(\yii\redactor\widgets\Redactor::className(),
+                                  [
+                                       'options' => [
+                                           'id' => 'comment-input-' . $thread_id,
+                                       ],
+                                       'clientOptions' => [
+                                           'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
+                                       ],
+                                   ])->label(false)
+                ?>
 
             </div>
-
         </div>
+
         <div class="row">
             <div class="col-xs-6">
-
-                <?= $form->field($comment_model, 'choice_text')->widget(Select2::classname(), [
-                    'data' => $choice_text,
-                    'hideSearch' => true,
-                    'options' => ['placeholder' => 'Choose your side ...',
-                        'id' => 'comment_choice_text_' . $thread_id],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ])->label(false) ?>
+                <?= $form->field($comment_model, 'choice_text')
+                         ->widget(Select2::classname(),
+                                ['data' => $choice_text,
+                                 'hideSearch' => true,
+                                 'options' => ['placeholder' => 'Choose your side ...',
+                                              'id' => 'comment_choice_text_' . $thread_id],
+                                 'pluginOptions' => [
+                                    'allowClear' => true
+                                ]])
+                         ->label(false) ?>
             </div>
 
             <div align="right" class="col-xs-6">
@@ -84,10 +89,8 @@ if(isset($comment_input_retrieved)) {
 
     </div>
 
-<?php ActiveForm::end(); ?>
-
 <?php
-
+    ActiveForm::end();
 }
 
 Pjax::end() ;
