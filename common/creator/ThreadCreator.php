@@ -8,6 +8,7 @@ use common\models\Comment;
 use common\models\Thread;
 use common\models\ThreadComment;
 use common\models\ThreadIssue;
+use common\models\ThreadVote;
 use yii\base\Exception;
 
 class ThreadCreator implements CreatorInterface{
@@ -23,6 +24,8 @@ class ThreadCreator implements CreatorInterface{
     const NEED_THREAD_COMMENTS = 5;
 
     const NEED_TOTAL_COMMENTS = 6;
+
+    const NEED_USER_CHOICE_ON_THREAD_ONLY = 7;
     /**
      * @var ThreadEntity
      */
@@ -64,6 +67,9 @@ class ThreadCreator implements CreatorInterface{
                 case self::NEED_TOTAL_COMMENTS:
                     $this->getTotalComment();
                     break;
+                case self::NEED_USER_CHOICE_ON_THREAD_ONLY:
+                    $this->getUserChoiceOnly();
+                    break;
                 default:
                     break;
             }
@@ -85,7 +91,6 @@ class ThreadCreator implements CreatorInterface{
 
     private function getThreadInfo(){
         $thread_info = \common\models\Thread::retrieveThreadById($this->thread->getThreadId(), $this->thread->getCurrentUserLoginId());
-
         //mapping
         $this->thread->setTitle(($thread_info['title']));
         $this->thread->setDescription(($thread_info['description']));
@@ -111,7 +116,7 @@ class ThreadCreator implements CreatorInterface{
     }
 
     private function getOneComment(){
-        $result = \common\models\ThreadComment::getBestCommentFromThread($this->thread->getThreadId());
+        $result = ThreadComment::getBestCommentFromThread($this->thread->getThreadId());
 
         if($result === false){
             return null;
@@ -121,12 +126,29 @@ class ThreadCreator implements CreatorInterface{
 
         $thread_comment->setDataFromArray($result);
 
+        $creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $thread_comment);
+        $thread_comment = $creator->get([ThreadCommentCreator::NEED_COMMENT_VOTE]);
+
         $this->thread->setChosenComment($thread_comment);
     }
 
     private function getTotalComment(){
         $result = ThreadComment::getTotalThreadComments($this->thread->getThreadId());
         $this->thread->setTotalComment($result);
+    }
+
+    private  function getUserChoiceOnly(){
+        $result = ThreadVote::find()
+            ->where(['thread_id' => $this->thread->getThreadId()])
+            ->andWhere(['user_id' => $this->thread->getCurrentUserLoginId()])
+            ->one();
+
+        if($result !== null){
+            $this->thread->setCurrentUserChoice(  $result->choice_text   );
+        }
+
+
+
     }
 
 }

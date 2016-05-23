@@ -95,8 +95,8 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
         'method' => 'post',
         'id' => 'delete_comment_form_' . $comment_id]) ?>
 
-    <?= Html::hiddenInput('comment_id', $comment_id) ?>
-    <?= Html::hiddenInput('thread_id', $thread_id) ?>
+        <?= Html::hiddenInput('comment_id', $comment_id) ?>
+        <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
     <?php ActiveForm::end() ?>
 

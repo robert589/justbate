@@ -33,7 +33,7 @@ $comment = Html::encode($child_comment->getComment());
         </div>
 
         <div class="col-xs-12" id="commentator-moderate">
-                <?= $this->render('_comment_votes', ['comment' => $child_comment]) ?>
+           <?= $this->render('_comment_votes', ['comment' => $child_comment]) ?>
         </div>
     </div>
 </article>

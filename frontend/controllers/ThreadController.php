@@ -232,7 +232,7 @@ class ThreadController extends Controller
 	 */
 	public function actionCommentVote(){
 		//Yii::$app->end(var_dump($_POST));
-		if(!(isset($_POST['comment_id']) && isset($_POST['vote']))) {
+		if(!(isset($_POST['comment_id']) && isset($_POST['vote']) && isset($_POST['is_thread_comment']))) {
 			Yii::$app->end('Fail to like: Contact Admin');
 		}
 
@@ -262,7 +262,10 @@ class ThreadController extends Controller
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
 		$comment_entity =$creator->get([CommentCreator::NEED_COMMENT_VOTE]);
 
-		return $this->renderAjax('_comment_votes', ['comment' => $comment_entity, 'trigger_login_form' => $trigger_login_form]);
+		return $this->renderAjax('_comment_votes',
+			['comment' => $comment_entity,
+			'trigger_login_form' => $trigger_login_form,
+			'is_thread_comment' => $_POST['is_thread_comment']]);
 	}
 
 	/**
@@ -307,6 +310,7 @@ class ThreadController extends Controller
 
 		// get vote mdoels
 		$submitVoteModel = new SubmitThreadVoteForm();
+
 		return $this->renderPartial('_title_description_vote',
 			['thread_choices' => $thread_choices,
 				'submitVoteModel' => $submitVoteModel,

@@ -27,7 +27,7 @@ $(document).ready(function(){
 
     // user vote submit when value changed
 
-    $(document).on('change',"select.user-vote",function() {
+    $(document).on('change',".user-vote",function() {
         var service = $(this).data('service');
         $("form#form_user_vote_"+service).submit();
     });

@@ -101,8 +101,10 @@ class HomeCreator implements CreatorInterface{
 
             //load other data
             $creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread);
-            $thread = $creator->get([ThreadCreator::NEED_CHOOSE_ONE_COMMENT, ThreadCreator::NEED_THREAD_CHOICE,
-                        ThreadCreator::NEED_THREAD_ISSUE]);
+            $thread = $creator->get([ThreadCreator::NEED_CHOOSE_ONE_COMMENT,
+                                     ThreadCreator::NEED_THREAD_CHOICE,
+                                     ThreadCreator::NEED_THREAD_ISSUE,
+                                     ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY]);
             $thread_list[] = $thread;
         }
 

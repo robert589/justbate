@@ -546,36 +546,26 @@ class SiteController extends Controller
 
 
 	public function actionSubmitVote() {
-		if(isset($_POST['thread_id']) && isset($_POST['user_id']) && isset($_POST['user_vote'])){
+		$submit_thread_vote_form  = new SubmitThreadVoteForm();
+		$submit_thread_vote_form->user_id = Yii::$app->user->getId();
 
-			$model  = new SubmitThreadVoteForm();
-			$model->thread_id = $_POST['thread_id'];
-			$model->user_id = $_POST['user_id'];
-			$model->choice_text = $_POST['user_vote'];
-
-			if($model->validate() && $model->submitVote()){
-
-				$thread_choice_text = \common\models\Choice::getChoice($model->thread_id);
-
-				return $this->render('_list_thread_thread_vote',
-					['thread_choice_text' => $thread_choice_text,
-						'thread_id' => $model->thread_id,
-						'user_choice_text' => ThreadVote::find()
-												->where(['thread_id' => $model->thread_id])
-												->andWhere(['user_id' => $model->user_id])
-												->one()->choice_text
-					]);
+		if($submit_thread_vote_form->load(Yii::$app->request->post()) && $submit_thread_vote_form->validate()) {
+			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
+			if(!$submit_thread_vote_form->submitVote()){
+				Yii::$app->end("Failed to store votes, please try again later ");
 			}
-			else{
-				if($model->hasErrors()){
-					Yii::$app->end(print_r($model->getErrors()));
+			$submit_thread_vote_form = new SubmitThreadVoteForm();
+		}
+		else {
+			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
+		}
 
-				}
-			}
-		}
-		else{
-			Yii::$app->end(var_dump($_POST));
-		}
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread);
+		$thread = $creator->get([ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY, ThreadCreator::NEED_THREAD_CHOICE]);
+
+		return $this->renderAjax('_list_thread_thread_vote',
+			['thread' => $thread, 'submit_thread_vote_form' => $submit_thread_vote_form]);
+
 	}
 
 

@@ -3,7 +3,7 @@
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 /** @var $comment \common\entity\CommentEntity */
-
+/** @var $is_thread_comment boolean */
 $total_like = $comment->getTotalLike();
 $comment_id = $comment->getCommentId();
 $total_dislike = $comment->getTotalDislike();
@@ -11,6 +11,15 @@ $vote = $comment->getCurrentUserVote();
 $vote_up = ($vote == 1);
 $vote_down = ($vote == -1);
 $current_user_login_id = $comment->getCurrentUserLoginId();
+
+if(($is_thread_comment)){
+    $upvote = "Pro";
+    $downvote = "Against";
+}
+else{
+    $upvote = "<span class='glyphicon glyphicon-thumbs-up'></span>";
+    $downvote = "<span class='glyphicon glyphicon-thumbs-down'></span>";
+}
 
 Pjax::begin([
     'id' => 'comment_likes_' . $comment_id,
@@ -34,12 +43,14 @@ Pjax::begin([
 
     <?= Html::hiddenInput("vote", $vote, ['id' => 'hi-comment-vote-' . $comment_id]) ?>
 
+    <?= Html::hiddenInput("is_thread_comment", $is_thread_comment) ?>
+
     <?= Html::hiddenInput("user_id",$current_user_login_id) ?>
 
     <span>
         <?php if($vote_up == true) {  ?>
             <div class="btn-group" id="button-vote-up">
-                <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>" , [
+                <?= Html::submitButton($upvote , [
                     'id' => "btn_vote_up_" . $comment_id ,
                     'class' => 'btn btn-default submit-comment-vote-button',
                     'value' => 1,
@@ -49,7 +60,7 @@ Pjax::begin([
             </div>
         <?php } else { ?>
             <div class="btn-group" id="button-vote-up">
-                <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-up'></span>" , [
+                <?= Html::submitButton($upvote , [
                     'id' => "btn_vote_up_" . $comment_id ,
                     'class' => 'btn btn-default submit-comment-vote-button',
                     'value' => 1
@@ -63,7 +74,7 @@ Pjax::begin([
     <span>
         <?php if($vote_down) {  ?>
             <div class="btn-group" id="button-vote-down">
-                <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-down'></span>" , [
+                <?= Html::submitButton($downvote , [
                     'id' => "btn_vote_down_" . $comment_id ,
                     'class' => 'btn btn-default submit-comment-vote-button',
                     'value' => -1,
@@ -73,7 +84,7 @@ Pjax::begin([
             </div>
         <?php } else { ?>
             <div class="btn-group" id="button-vote-down">
-                <?= Html::submitButton("<span class='glyphicon glyphicon-thumbs-down'></span>" , [
+                <?= Html::submitButton($downvote , [
                     'id' => "btn_vote_down_" . $comment_id ,
                     'value' => -1,
                     'class' => 'btn btn-default submit-comment-vote-button',
