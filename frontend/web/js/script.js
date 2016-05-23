@@ -8,6 +8,7 @@ function setTimezoneToCookie(){
 
 $(document).ready(function(){
 
+    $.pjax.defaults.scrollTo = false;
 
     //save timezone to cookie
     setTimezoneToCookie();
@@ -314,7 +315,6 @@ $(document).ready(function(){
 
         var services = '' + $(this).data('pjax');
 
-        $.pjax.defaults.scrollTo = false;
 
         $.pjax.submit(event,  services, {push:false});
 

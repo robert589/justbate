@@ -16,6 +16,8 @@ $thread_issues= $thread->getThreadIssues();
 $content_comment = array();
 $choices_in_thread = $thread->getChoices();
 $thread_id = $thread->getThreadId();
+$thread_belongs_to_current_user = $thread->belongToCurrentUser();
+$guest = $thread->isGuest();
 
 $first = 1;
 
@@ -78,12 +80,22 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 		<!-- First tab part -->
 		<div class="row" id="first-part">
-			<div class="col-xs-12">
+			<div class="col-xs-12" style="margin-bottom:12px">
 				<?=	$this->render('_thread_vote', ['thread' => $thread,'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
 				?>
+
 			</div>
+
 			<div class="col-xs-12">
 				<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
+
+				<?php if($thread_belongs_to_current_user) { ?>
+
+					<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
+
+					<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn','data-guest' => $guest]) ?>
+
+				<?php } ?>
 			</div>
 		</div>
 	</div>

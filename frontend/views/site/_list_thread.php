@@ -68,17 +68,13 @@ $has_chosen_comment = $thread->hasChosenComment();
 			$comment  = $chosen_comment->getComment();
 		?>
 
-			<div class="col-xs-1"  style="padding-left: 0; padding-right: 0;">
-				<img src="<?= $commentator_user_profile_pic_link ?>" class="img img-circle" height="50px" width="50px" />
+			<div class="col-xs-1"  style=" padding-right: 0;">
+				<img src="<?= $commentator_user_profile_pic_link ?>" class="img img-circle" height="40px" width="40px" />
 			</div>
-			<div class="col-xs-offset-1 col-xs-11" style="margin-top: -68px; margin-left: 55px;">
+			<div class="col-xs-11" style="margin-top: -40px; margin-left: 55px;margin-bottom: 20px">
 				<div class="name-link inline">
 					<?= $commentator_full_name ?> chose <?= $commentator_choice ?>
 				</div>
-			</div>
-
-			<div class="col-xs-offset-1 col-xs-11" style="padding-left: 0; margin-left: 70px; margin-top: -40px;" >
-				<?= HtmlPurifier::process($comment) ?>
 			</div>
 
 			<div class="home-comment-tab" style="margin-left:0; padding-left: 0">

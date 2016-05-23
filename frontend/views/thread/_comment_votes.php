@@ -27,7 +27,7 @@ Pjax::begin([
     'enablePushState' => false,
     'clientOptions'=>[
         'container'=>'#comment_likes_' . $comment_id,
-    ]
+    ],
 ]);
 
 ?>
