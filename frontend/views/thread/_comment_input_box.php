@@ -12,7 +12,8 @@ use yii\widgets\Pjax;
  */
 $thread_id = $thread->getThreadId();
 $thread_choices = $thread->getChoices();
-
+$current_user_choice = $thread->getCurrentUserChoice();
+$comment_model->choice_text = $current_user_choice;
 Pjax::begin([
     'id' => 'comment_input_' . $thread_id,
     'enablePushState' => false,
@@ -66,22 +67,22 @@ if(isset($comment_input_retrieved)) {
         </div>
 
         <div class="row">
-            <div class="col-xs-6">
-                <?= $form->field($comment_model, 'choice_text')
-                         ->widget(Select2::classname(),
-                                ['data' => $choice_text,
-                                 'hideSearch' => true,
-                                 'options' => ['placeholder' => 'Choose your side ...',
-                                              'id' => 'comment_choice_text_' . $thread_id],
-                                 'pluginOptions' => [
-                                    'allowClear' => true
-                                ]])
-                         ->label(false) ?>
+            <div class="col-xs-6" align="center">
+                <b>You chose for </b>
+
+                <div id="choice-text-comment-input-box-<?= $thread_id ?>" >
+                    <?= $comment_model->choice_text ?>
+                </div>
+
+                <?= $form->field($comment_model, 'choice_text')->hiddenInput(['value' => $thread->getCurrentUserChoice()])->label(false) ?>
             </div>
 
             <div align="right" class="col-xs-6">
+
                 <?= Html::hiddenInput('thread_id', $thread_id) ?>
+
                 <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'width: 100%;']) ?>
+
             </div>
 
 

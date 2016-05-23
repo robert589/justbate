@@ -20,24 +20,6 @@ $description = $thread->getDescription();
 $title = $thread->getTitle();
 $thread_id = $thread->getThreadId();
 
-$itemsHeader = [
-    [
-        'label' => 'Vote',
-        'content' => $this->render('_submit_vote_pjax',
-            ['thread_id' => $thread_id,
-            'user_choice' => $current_user_choice,
-            'thread_choices' => $choices_in_thread,
-            'submitVoteModel' => $submit_vote_form]),
-        'active' => $vote_tab_active ? true : false,
-    ],
-    [
-        'label' => 'Description',
-        'content' => "<div id='post-description'>" . HtmlPurifier::process($description) . "</div>",
-        'active' => $vote_tab_active ? false: true,
-    ],
-
-];
-
 Pjax::begin([
     'id' => 'edit_thread_pjax',
     'timeout' => false,
@@ -53,30 +35,21 @@ Pjax::begin([
         <div class="col-xs-12 thread-title">
             <?= Html::encode($title) ?>
         </div>
-        <!-- First tab part -->
-        <div class="row" id="first-part">
-            <div class="col-xs-12">
-                <?= // Ajax Tabs Above
-                TabsX::widget([
-                    'items'=>$itemsHeader,
-                    'position'=>TabsX::POS_ABOVE,
-                    'encodeLabels'=>false
-                ]) ?>
-            </div>
+        <div id='post-description' align="center">
+            <?= HtmlPurifier::process($description)  ?>
         </div>
-    </div>
 
+    </div>
     <!-- Edit part-->
     <div id="edit_title_description_part" style="display: none">
-        <?php
-            $form = ActiveForm::begin([
-                'action' => ['thread/edit-thread'],
-                'method' => 'post',
-                'options' => ['data-pjax' => '#edit_thread']
-            ])
-        ?>
-        <br><br>
-        <br><br>
+
+<?php
+    $form = ActiveForm::begin([
+        'action' => ['thread/edit-thread'],
+        'method' => 'post',
+        'options' => ['data-pjax' => '#edit_thread']
+    ])
+?>
 
         <?= Html::hiddenInput('thread_id', $thread_id ) ?>
 
@@ -99,7 +72,12 @@ Pjax::begin([
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
         </div>
 
-        <?php   ActiveForm::end() ?>
+<?php
+    ActiveForm::end();
+?>
+
     </div>
 
-<?php Pjax::end() ?>
+<?php
+    Pjax::end();
+

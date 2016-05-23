@@ -23,22 +23,29 @@ $has_chosen_comment = $thread->hasChosenComment();
 
 <article data-service="<?= $thread_id ?>">
 	<div class="col-xs-12" id="thread-issue">
-		<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
+		<?= $this->render('../thread/_thread_issues', ['thread_issues' => $thread_issues]) ?>
 	</div>
 	<br>
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link">
-			<div class="col-xs-10 thread-title-list"><?= Html::a(Html::encode($thread_title), $link_to_thread)?></div>
-			<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
-				<div class="fb-share-button" data-href="<?= $link_to_thread ?>" data-layout="button_count"></div>
+			<div class="col-xs-10 thread-title-list" align="center">
+				<?= Html::a(Html::encode($thread_title), $link_to_thread)?>
 			</div>
+			<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
+				<div class="fb-share-button" data-href="<?= $link_to_thread ?>" data-layout="button_count">
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-11" style="margin-bottom: 10px;" align="left">
+			<?= HtmlPurifier::process($thread_description) ?>
 		</div>
 
 		<br>
 
-		<div>
+		<div align="center">
 		<!-- Voting -->
-			<?= $this->render('_list_thread_thread_vote',
+			<?= $this->render('../thread/_thread_vote',
 							 ['thread' => $thread,
 							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])
 			?>
@@ -46,7 +53,9 @@ $has_chosen_comment = $thread->hasChosenComment();
 		</div>
 
 		<div class="user-comment-reaction col-xs-12">
+
 		<?php
+
 		if($has_chosen_comment){
 			/**
 			 * Used Variable
@@ -72,32 +81,23 @@ $has_chosen_comment = $thread->hasChosenComment();
 				<?= HtmlPurifier::process($comment) ?>
 			</div>
 
-			<div class="col-xs-12 home-comment-tab" style="margin-left:0; padding-left: 0">
-				<br>
-
-				<?= $this->render('../thread/_listview_comment_bottom', [
-					'thread_comment' => $chosen_comment , 'is_thread_comment' => true]) ?>
+			<div class="home-comment-tab" style="margin-left:0; padding-left: 0">
+				<?= $this->render('../thread/_listview_comment_bottom',
+								['thread_comment' => $chosen_comment ,
+								 'is_thread_comment' => true]) ?>
 			</div>
 
 		<?php
 		}
 		else{
 		?>
-
-			<div class="col-xs-11" style="margin-bottom: 10px;">
-				<?= HtmlPurifier::process($thread_description) ?>
-			</div>
-
-			<div class="col-xs-12 home-comment-tab">
+			<div class="home-comment-tab">
 				<?= $this->render('_list_thread_bottom', [
 					'thread' => $thread]) ?>
 			</div>
-
-
 		<?php
 		}
 		?>
-
 		</div>
 	</div>
 </article>

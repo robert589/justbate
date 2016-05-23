@@ -462,4 +462,8 @@ class ThreadEntity implements Entity{
         return  \Yii::$app->request->baseUrl . '/site/get-comment?thread_id=' . $this->thread_id ;
 
     }
+
+    public function hasVote(){
+        return ($this->current_user_choice !== null);
+    }
 }

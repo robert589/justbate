@@ -11,13 +11,12 @@ use yii\widgets\ActiveForm;
 
 //variable used in this page
 $this->title =  $thread->getTitle();
-$guest  = $thread->isGuest();
-$thread_belongs_to_current_user = $thread->belongToCurrentUser();
 $comment_providers = $thread->getCommentList();
 $thread_issues= $thread->getThreadIssues();
 $content_comment = array();
 $choices_in_thread = $thread->getChoices();
 $thread_id = $thread->getThreadId();
+
 $first = 1;
 
 foreach($comment_providers as $thread_choice_item => $comment_provider){
@@ -66,6 +65,10 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
 
+		<div id="thread-issue-wrapper">
+			<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
+		</div>
+
 		<div id="thread-details" class="col-xs-12">
 			<?= $this->render('_title_description_vote',
 				['thread' => $thread ,
@@ -73,31 +76,25 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 			?>
 		</div>
 
-		<div id="thread-issue-wrapper">
-			<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
-		</div>
-
-		<div class="col-xs-12" id="action-button">
-			<?= Html::button('Comment', [ 'id' => 'display_hide_comment_input_box', 'class' => 'btn']) ?>
-
-			<?php if($thread_belongs_to_current_user) { ?>
-
-			<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
-
-			<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn','data-guest' => $guest]) ?>
-
-			<?php } ?>
-
+		<!-- First tab part -->
+		<div class="row" id="first-part">
+			<div class="col-xs-12">
+				<?=	$this->render('_thread_vote', ['thread' => $thread,'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
+				?>
+			</div>
+			<div class="col-xs-12">
+				<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
+			</div>
 		</div>
 	</div>
 
 
-	<div  id="comment_section" class="section col-xs-12" style="display:none">
+	<div  id="comment_section" class="section col-xs-12">
 
 		<div class="row" >
+
 			<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
-										'thread' => $thread,
-													'comment_input_retrieved' => true,
+													'thread' => $thread,
 													]) ?>
 		</div>
 

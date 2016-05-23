@@ -708,7 +708,7 @@ div#left-part-of-thread {
 div#first-part {
     margin-top: 20px;
     background: #fff;
-    min-height: 250px;
+    min-height: 180px;
 }
 
 div#title-part {

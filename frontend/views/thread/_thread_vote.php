@@ -15,6 +15,8 @@ Pjax::begin([
     'enablePushState' => false,
     'timeout' => false,
     'options' => [
+        'class' => 'pjax_user_vote',
+        'data-service' => $thread_id,
         'container' => '#pjax_user_vote_' . $thread_id
     ]
 ]);
@@ -35,7 +37,7 @@ foreach($thread_choices as $item){
 
 
     //Start form
-    $form = ActiveForm::begin(['action' =>['site/submit-vote'],
+    $form = ActiveForm::begin(['action' =>['thread/submit-vote'],
         'method' => 'post',
         'id' => 'form_user_vote_' . $thread_id,
         'options' => [ 'data-pjax' => '#pjax_user_vote_' . $thread_id,

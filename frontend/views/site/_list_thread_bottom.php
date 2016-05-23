@@ -13,35 +13,12 @@ use yii\helpers\Html;
 $comment_request_url = $thread->getCommentRequestUrl();
 $thread_id = $thread->getThreadId();
 $thread_total_comments = $thread->getTotalComment();
-
+$current_user_has_vote = $thread->hasVote();
 ?>
 
 <div class="col-xs-12" style="padding-left: 0; padding-right: 0;">
     <!-- Retrieve comment input -->
-    <?php
-
-    $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
-        'method' => 'post',
-        'id' => 'retrieve_comment_input_box_form_' . $thread_id,
-        'options' => [ 'data-pjax' => '#comment_input_' . $thread_id,
-                    'class' => 'retrieve_comment_input_box_form']
-    ]);
-
-    ?>
-
-        <?= Html::hiddenInput('thread_id', $thread_id) ?>
-
-        <div class="col-xs-3 give-comment-button" style="padding: 0;">
-            <?= Html::submitButton('Give Comment', ['class' => 'button-like-link give_comment',
-                'data-service' => $thread_id]) ?>
-        </div>
-
-    <?php
-
-    ActiveForm::end();
-
-    ?>
-
+    <?= $this->render('../thread/_retrieve_comment_button', ['thread' => $thread]) ?>
 
     <!-- retrieve comment -->
 
@@ -59,8 +36,8 @@ $thread_total_comments = $thread->getTotalComment();
 
 <div  align="center" class="col-xs-12" >
     <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
-        ['style' => 'display:none;max-height:50px' ,
-         'id' => 'list_thread_loading_gif_' . $thread_id ])
+                ['style' => 'display:none;max-height:50px' ,
+                 'id' => 'list_thread_loading_gif_' . $thread_id ])
     ?>
 </div>
 

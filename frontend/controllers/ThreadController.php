@@ -67,7 +67,8 @@ class ThreadController extends Controller
 		$needs = [ThreadCreator::NEED_THREAD_INFO,
 			      ThreadCreator::NEED_THREAD_CHOICE,
 			      ThreadCreator::NEED_THREAD_ISSUE,
-				  ThreadCreator::NEED_THREAD_COMMENTS];
+				  ThreadCreator::NEED_THREAD_COMMENTS,
+				  ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY];
 
 		$thread = $creator->get($needs);
 
@@ -118,6 +119,7 @@ class ThreadController extends Controller
 
 		return $this->renderAjax('_child_comment', ['thread_comment' => $thread_comment,
 											'retrieved' => true,
+											'is_thread_comment' => false,
 											'child_comment_form' => $child_comment_form]);
 
 	}
@@ -269,57 +271,29 @@ class ThreadController extends Controller
 	}
 
 	/**
-	 * POST DATA: SubmitThreadVoteForm['choice_text'], thread_id (inserted to submitthreadvoteform)
-	 * OTHER DATA: user_id (retrieved in controller)
-	 * WEAKNESS: Query needs to be two times for choice, and user_vote
-	 * @return string|\yii\web\Response
+	 * @return string
+	 * @throws \yii\base\ExitException
 	 */
-	public function actionSubmitVote(){
-		$trigger_login_form = false;
-		$thread_vote_form = new SubmitThreadVoteForm();
+	public function actionSubmitVote() {
+		$submit_thread_vote_form  = new SubmitThreadVoteForm();
+		$submit_thread_vote_form->user_id = Yii::$app->user->getId();
 
-		if( !(isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
-			//error if the thread_id is not posted and thread_vote_Form failed
-		}
-		$thread_id = $_POST['thread_id'];
-		//only person that is looged in can submit vote
-		if (!Yii::$app->user->isGuest) {
-			//loading thread_vote_form
-			if ((isset($_POST['thread_id'])) && $thread_vote_form->load(Yii::$app->request->post())) {
-				$thread_vote_form->thread_id = $thread_id;
-				//user id retrieved in controller
-				$thread_vote_form->user_id = \Yii::$app->user->getId();
-				if (!$thread_vote_form->submitVote()) {
-					//if the submission fail
-				}
+		if($submit_thread_vote_form->load(Yii::$app->request->post()) && $submit_thread_vote_form->validate()) {
+			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
+			if(!$submit_thread_vote_form->submitVote()){
+				Yii::$app->end("Failed to store votes, please try again later ");
 			}
+			$submit_thread_vote_form = new SubmitThreadVoteForm();
 		}
 		else {
-			$trigger_login_form = true;
+			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
 		}
 
+		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread);
+		$thread = $creator->get([ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY, ThreadCreator::NEED_THREAD_CHOICE]);
 
-		$submitVoteModel = new SubmitThreadVoteForm();
-		$thread = Thread::retrieveThreadById($thread_id, \Yii::$app->user->getId());
-
-		//get all thread_choices
-		$thread_choices = Choice::getMappedChoiceAndItsVoters($thread_id);
-
-		//get all comment providers
-		$comment_providers = Comment::getAllCommentProviders($thread_id, $thread_choices);
-
-		// get vote mdoels
-		$submitVoteModel = new SubmitThreadVoteForm();
-
-		return $this->renderPartial('_title_description_vote',
-			['thread_choices' => $thread_choices,
-				'submitVoteModel' => $submitVoteModel,
-				'comment_providers' => $comment_providers,
-				'user_choice' => $thread['user_choice'],
-				'vote_tab_active' => true,
-				'thread_id' => $thread_id,
-				'title' => $thread['title'],
-				'description' => $thread['description']]);
+		return $this->renderAjax('../thread/_thread_vote',
+			['thread' => $thread, 'submit_thread_vote_form' => $submit_thread_vote_form]);
 
 	}
 

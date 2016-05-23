@@ -110,7 +110,6 @@ $(document).ready(function(){
     });
 
 
-
     //on profile/index
     /**
      *
@@ -271,7 +270,7 @@ $(document).ready(function(){
         });
 
 
-    $(document).on('click', '.give_comment', function(event){
+    $(document).on('click', '.give-comment', function(event){
         var thread_id = $(this).data('service');
         if($("#redactor_box_" + thread_id ).length == 1){
             event.preventDefault();
@@ -282,6 +281,13 @@ $(document).ready(function(){
                 $("#comment_input_box_section_" + thread_id).show();
             }
         }
+    });
+
+    $(document).on('pjax:complete', '.pjax_user_vote', function(){
+        var thread_id = $(this).data('service');
+
+
+        $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
     });
 
     $(document).on('pjax:send','.comment_input_pjax', function(event){
@@ -483,5 +489,7 @@ $(document).ready(function(){
         $("div#w6-container").slideToggle("fast");
     });
 
+    $(document).on('pjax:complete', '.pjax_user_vote', function(){
 
+    });
 });

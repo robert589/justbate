@@ -40,7 +40,7 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
 
         <?php } ?>
 
-        <?= Html::a("Comment",    $child_comment_request_url,
+        <?= Html::a("Debate it",    $child_comment_request_url,
                                    ['class' => 'button-like-link inline retrieve-child-comment-link',
                                     'data-pjax' => "#child_comment_$thread_id",
                                     'data-service' => $comment_id, 'style' => 'margin-left:15px']) ?>

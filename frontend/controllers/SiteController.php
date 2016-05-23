@@ -252,7 +252,7 @@ class SiteController extends Controller
 
 		$thread_entity = new ThreadEntity($_POST['thread_id'], Yii::$app->user->getId());
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
-		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
+		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE, ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY
 										])	;
 
 		return $this->renderAjax('../thread/_comment_input_box',
@@ -545,28 +545,6 @@ class SiteController extends Controller
 	}
 
 
-	public function actionSubmitVote() {
-		$submit_thread_vote_form  = new SubmitThreadVoteForm();
-		$submit_thread_vote_form->user_id = Yii::$app->user->getId();
-
-		if($submit_thread_vote_form->load(Yii::$app->request->post()) && $submit_thread_vote_form->validate()) {
-			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
-			if(!$submit_thread_vote_form->submitVote()){
-				Yii::$app->end("Failed to store votes, please try again later ");
-			}
-			$submit_thread_vote_form = new SubmitThreadVoteForm();
-		}
-		else {
-			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
-		}
-
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread);
-		$thread = $creator->get([ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY, ThreadCreator::NEED_THREAD_CHOICE]);
-
-		return $this->renderAjax('_list_thread_thread_vote',
-			['thread' => $thread, 'submit_thread_vote_form' => $submit_thread_vote_form]);
-
-	}
 
 
 	private function getDefaultChoice(&$create_thread_form){
