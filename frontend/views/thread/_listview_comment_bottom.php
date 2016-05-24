@@ -12,7 +12,7 @@
 </div>
 
 <!-- Votes part-->
-<div class="col-xs-4" class="comment-votes">
+<div class="inline" class="comment-votes">
     <?= $this->render('_comment_votes', [ 'comment' => $thread_comment ,
                                         'is_thread_comment' => $is_thread_comment])?>
 </div>

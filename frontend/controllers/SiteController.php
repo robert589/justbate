@@ -173,8 +173,12 @@ class SiteController extends Controller
 		return $this->render('home', ['home' => $home_entity,
 									'change_email_form' => new ResendChangeEmailForm(),
 									'create_thread_form' => $create_thread_form]);
+
 	}
 
+	/**
+	 *
+	 */
 	private function setMetaTag(){
 
 		\Yii::$app->view->registerMetaTag([
@@ -332,6 +336,7 @@ class SiteController extends Controller
 	 *
 	 */
 	public function actionGetComment(){
+
 		if(!(Yii::$app->request->isPjax && isset($_GET['thread_id']))) {
 			Yii::$app->end("Failed to store votes: " . Yii::$app->request->isPjax . '&' . isset($_GET['thread_id']) );
 		}

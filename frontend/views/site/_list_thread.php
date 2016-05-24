@@ -23,21 +23,15 @@ $has_chosen_comment = $thread->hasChosenComment();
 
 <article data-service="<?= $thread_id ?>">
 	<div class="col-xs-12" id="thread-issue">
-		<?= $this->render('../thread/_thread_issues', ['thread_issues' => $thread_issues]) ?>
+		<?= $this->render('../thread/_thread_issues', ['thread' => $thread]) ?>
 	</div>
 	<br>
 	<div class="col-xs-12 thread-view">
-		<div class="col-xs-12 thread-link">
-			<div class="col-xs-10 thread-title-list" align="center">
-				<?= Html::a(Html::encode($thread_title), $link_to_thread)?>
-			</div>
-			<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
-				<div class="fb-share-button" data-href="<?= $link_to_thread ?>" data-layout="button_count">
-				</div>
-			</div>
+		<div class="col-xs-12 thread-link" align="center">
+			<?= Html::a(Html::encode($thread_title), $link_to_thread)?>
 		</div>
 
-		<div class="col-xs-11" style="margin-bottom: 10px;" align="left">
+		<div class="col-xs-12" style="margin-bottom: 10px;" align="center">
 			<?= HtmlPurifier::process($thread_description) ?>
 		</div>
 
@@ -49,7 +43,6 @@ $has_chosen_comment = $thread->hasChosenComment();
 							 ['thread' => $thread,
 							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])
 			?>
-			<br><br>
 		</div>
 
 		<div class="user-comment-reaction col-xs-12">
@@ -67,7 +60,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 			$commentator_full_name = $chosen_comment->getFullName();
 			$comment  = $chosen_comment->getComment();
 		?>
-
+			<hr>
 			<div class="col-xs-1"  style=" padding-right: 0;">
 				<img src="<?= $commentator_user_profile_pic_link ?>" class="img img-circle" height="40px" width="40px" />
 			</div>

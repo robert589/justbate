@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 //variable used in this page
 $this->title =  $thread->getTitle();
 $comment_providers = $thread->getCommentList();
-$thread_issues= $thread->getThreadIssues();
 $content_comment = array();
 $choices_in_thread = $thread->getChoices();
 $thread_id = $thread->getThreadId();
@@ -68,7 +67,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
 
 		<div id="thread-issue-wrapper">
-			<?= $this->render('_thread_issues', ['thread_issues' => $thread_issues]) ?>
+			<?= $this->render('_thread_issues', [ 'thread' => $thread]) ?>
 		</div>
 
 		<div id="thread-details" class="col-xs-12">

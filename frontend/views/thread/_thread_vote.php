@@ -46,21 +46,16 @@ foreach($thread_choices as $item){
 ?>
         <?= $form->field($submit_thread_vote_form, 'thread_id')->hiddenInput(['value' => $thread_id]) ?>
 
-        <div class="inline" style="margin-left: 15px">
-            <div class="inline">
-                Choose your side:
-            </div>
-
-            <div class="inline">
-                <?= $form->field($submit_thread_vote_form, 'choice_text')
-                         ->radioButtonGroup($propered_choice_text,
-                                            ['class' => 'btn-group-md user-vote',
-                                             'data-service' => $thread_id,
-                                             'itemOptions' => ['labelOptions' => ['class' => 'btn btn-warning']]])
-                          ?>
-            </div>
-
+        <div align="center">
+            <?= $form->field($submit_thread_vote_form, 'choice_text')
+                     ->radioButtonGroup($propered_choice_text,
+                                        ['class' => 'btn-group-md user-vote',
+                                         'data-service' => $thread_id,
+                                         'itemOptions' => ['labelOptions' => ['class' => 'btn btn-md btn-warning',
+                                                            'style' => 'margin-right:15px' ]]])
+                      ?>
         </div>
+
 <?php
     ActiveForm::end();
 Pjax::end();

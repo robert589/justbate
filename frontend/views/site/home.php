@@ -2,7 +2,6 @@
 use yii\widgets\ListView;
 use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
-use yii\helpers\Html;
 /** @var $home \common\entity\HomeEntity */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
@@ -17,7 +16,7 @@ $num_followers_of_issue = $home->getIssueNumFollowers();
 $has_issue = $home->hasIssue();
 $issue_name = $home->getIssueName();
 $thread_list_provider = $home->getThreadList();
-
+   
 $this->title = "Home";
 ?>
 
@@ -27,7 +26,7 @@ $this->title = "Home";
 	<div class="col-md-3" id="left-sidebar">
 
 		<?= $this->render('_home_sidenav-issue', ['issue_list' => $issue_followed_by_user,
-													'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
+							'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([

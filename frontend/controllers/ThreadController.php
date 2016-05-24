@@ -343,8 +343,10 @@ class ThreadController extends Controller
 
 			$edit_comment_form->update();
 
-			return $this->render('_view_edit_comment_part', ['comment_id' => $edit_comment_form->parent_id,
-															'comment' => $edit_comment_form->comment,
+			$comment_entity = new CommentEntity($edit_comment_form->parent_id, \Yii::$app->user->getId());
+			$comment_entity->setComment($edit_comment_form->comment);
+			return $this->render('_view_edit_comment_part', [
+															'thread_comment' => $comment_entity,
 															'edit_comment_form'=> new EditCommentForm()]);
 
 		}

@@ -32,10 +32,10 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
 
     <?= Dialog::widget(); ?>
 
-    <div class="col-md-8">
+    <div class="inline">
         <?php if($belongs_to_current_user){ ?>
 
-        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment', 'data-service' => $comment_id]) ?>
+        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment','style'=> 'margin-left:5px', 'data-service' => $comment_id]) ?>
         <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment', 'data-service' => $comment_id]) ?>
 
         <?php } ?>
