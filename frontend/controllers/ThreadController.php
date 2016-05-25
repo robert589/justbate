@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\ChildCommentSocket;
 use common\components\LinkConstructor;
 use common\creator\CommentCreator;
 use common\creator\CreatorFactory;
@@ -15,6 +16,9 @@ use frontend\models\DeleteThreadForm;
 use frontend\models\EditCommentForm;
 use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
+use Ratchet\Http\HttpServer;
+use Ratchet\Server\IoServer;
+use Ratchet\WebSocket\WsServer;
 use Yii;
 use yii\helpers\HtmlPurifier;
 use yii\web\Controller;
@@ -76,6 +80,16 @@ class ThreadController extends Controller
 			$comment_id  = $_GET['id'];
 		}
 
+		$server = IoServer::factory(
+			new HttpServer(
+				new WsServer(
+					new ChildCommentSocket()
+				)
+			),
+			8080
+		);
+
+		$server->run();
 
 	}
 
