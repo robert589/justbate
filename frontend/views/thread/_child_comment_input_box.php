@@ -21,23 +21,32 @@
 <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'],
                                             'id' => 'submit_child_comment_form_' . $comment_id,
                                             'options' =>[ 'data-pjax' => '#child_comment_input_box_' . $comment_id,
-                                                            'class' => 'submit_child_comment_form',
-                                                            'data-service' => $comment_id]
+                                                                        'class' => 'submit_child_comment_form',
+                                                                        'data-service' => $comment_id]
                                 ])
 ?>
 
     <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
     <?= Html::hiddenInput('parent_id' , $comment_id) ?>
 
-    <?= $form->field($child_comment_form, 'child_comment')->textarea(['class' => 'inline',
-        'data-service' => $comment_id,
-        'rows' => 1,
-        'placeholder' => 'add comment box..' ])
-        ->label(false)?>
+    <div class="col-xs-12">
 
-    <?= Html::submitButton('Submit', ['class' => 'btn btn- inline submit-child-comment-form-button',
-        'data-service' => $comment_id,'id' => 'submit-child-comment-form-button-'  . $comment_id
-    ]) ?>
+        <div class="col-md-11">
+            <?= $form->field($child_comment_form, 'child_comment')->textarea([
+                'data-service' => $comment_id,
+                'rows' => 1,
+                'style' => 'width:100%',
+                'placeholder' => 'add comment box..' ])
+                ->label(false)?>
+        </div>
+        <div class="col-md-1">
+            <?= Html::submitButton('Submit', ['class' => 'btn btn-md  submit-child-comment-form-button',
+                'style' => 'float:left',
+                'data-service' => $comment_id,'id' => 'submit-child-comment-form-button-'  . $comment_id
+            ]) ?>
+        </div>
+
+    </div>
 
 <?php ActiveForm::end() ?>
 

@@ -101,5 +101,8 @@ class ThreadCommentEntity extends CommentEntity{
 
 
 
+    public function getChildCommentConnection(){
+        return \Yii::$app->request->baseUrl . '/thread/get-child-comment-socket';
+    }
 
 }

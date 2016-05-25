@@ -1,7 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-use app\components\ChildCommentSSE;
 use common\components\LinkConstructor;
 use common\creator\CommentCreator;
 use common\creator\CreatorFactory;
@@ -10,41 +9,20 @@ use common\creator\ThreadCreator;
 use common\entity\CommentEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
-use common\models\ThreadComment;
-use common\models\ThreadIssue;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
 use frontend\models\DeleteThreadForm;
 use frontend\models\EditCommentForm;
-use frontend\models\NotificationForm;
-use frontend\models\SubmitRateThreadForm;
+use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
 use Yii;
-use yii\data\ArrayDataProvider;
-use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
 use yii\helpers\HtmlPurifier;
 use yii\web\Controller;
-use yii\data\Pagination;
-
 use frontend\models\CommentForm;
 use frontend\models\ChildCommentForm;
 use frontend\models\EditThreadForm;
 
-use common\models\Comment;
 use common\models\Thread;
-use common\models\ThreadRate;
-use common\models\Choice;
-use common\models\ChildComment;
-use common\models\CommentVote;
-
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\data\SqlDataProvider;
-use common\models\ThreadVote;
-
 /**
  * Profile controller
  */
@@ -91,7 +69,15 @@ class ThreadController extends Controller
 		                               ]);
 
 
-}
+	}
+
+	public function actionGetChildCommentSocket(){
+		if($_GET['id']){
+			$comment_id  = $_GET['id'];
+		}
+
+
+	}
 
 	/**
 	 * @return string
@@ -373,28 +359,24 @@ class ThreadController extends Controller
 
 
 
-			if($editted_thread->update()) {
-				//thread data
-				$thread = Thread::retrieveThreadById($editted_thread->thread_id, \Yii::$app->user->getId());
-
-				//get all thread_choices
-				$thread_choices = Choice::getMappedChoiceAndItsVoters($editted_thread->thread_id);
-
-				//get all comment providers
-				$comment_providers = Comment::getAllCommentProviders($editted_thread->thread_id, $thread_choices);
-
-				// get vote mdoels
-				$submitVoteModel = new SubmitThreadVoteForm();
-
-				return $this->render('_title_description_vote',
-					['thread_choices' => $thread_choices,
-						'submitVoteModel' => $submitVoteModel,
-						'comment_providers' => $comment_providers,
-						'user_choice' => $thread['user_choice'],
-						'thread_id' => $editted_thread->thread_id,
-						'title' => $_POST['title'],
-						'description' => $editted_thread->description]);
+			if(!$editted_thread->update()) {
+				Yii::$app->end("Failed to store data");
 			}
+
+			//thread data
+			$thread_entity = new ThreadEntity($editted_thread->thread_id, Yii::$app->user->getId());
+			$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
+			$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE, ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY,
+			]);
+			$thread_entity->setTitle($_POST['title']);
+			$thread_entity->setDescription($_POST['description']);
+			//get all comment providers
+			// get vote mdoels
+			$submit_vote_form = new SubmitThreadVoteForm();
+
+			return $this->renderAjax('_title_description_vote',
+				['thread' => $thread_entity,
+					'submit_vote_form' => $submit_vote_form]);
 		}
 	}
 

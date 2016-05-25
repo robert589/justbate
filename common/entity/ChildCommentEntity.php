@@ -9,8 +9,6 @@ class ChildCommentEntity extends CommentEntity{
      */
     private $parent_id;
 
-
-
     /**
      * Thread constructor.
      * @param $id
@@ -48,7 +46,6 @@ class ChildCommentEntity extends CommentEntity{
         $this->parent_id = isset($array['parent_id']) ? $array['parent_id'] : null;
 
     }
-
 
 
 

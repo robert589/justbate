@@ -164,6 +164,7 @@ $(document).ready(function(){
         $("div#create-thread-main-form").slideToggle("fast");
     });
 
+
     $(document).on('click', '#comment_hide_list_thread_btn', function(){
         if($(this).text() == 'Comment'){
             // $("#list_thread_comment_part").show();
@@ -194,28 +195,38 @@ $(document).ready(function(){
         }
     });
 
+
     $(document).on('click', '.retrieve-child-comment-link', function(event){
         var comment_id = $(this).data('service');
         if($("#comment_part_" + comment_id).length == 1){
+
             event.preventDefault();
+
             if($("#comment_part_" + comment_id).is(":visible")){
+
                 $("#comment_part_" + comment_id).css("display", "none");
+
                 $(".col-xs-12.text-center").css("display", "none");
             }
             else{
+
                 $("#comment_part_" + comment_id).css("display", "inline");
+
                 $(".col-xs-12.text-center").css("display", "inline");
             }
         }
         else{
             console.log('retrieve child comment link');
-            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false, scrollTo : false});
+
+            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false, scrollTo : false, timeout:false});
         }
     });
 
     $(document).on('pjax:send', '.child_comment_pjax', function(event){
         event.preventDefault();
+
         var comment_id = $(this).data('service');
+
         $('#child_comment_loading_gif_' + comment_id).css("display", "inline");
 
         return false;

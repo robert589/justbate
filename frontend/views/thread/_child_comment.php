@@ -19,6 +19,8 @@ $comment_id = $thread_comment->getCommentId();
 $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
 $thread_id = $thread_comment->getThreadId();
 $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
+$child_comment_sse_link = $thread_comment->getChildCommentConnection();
+
 ?>
 
 <?php Pjax::begin([
@@ -63,33 +65,43 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
          * VARIABLE USED
          */
         $child_comment_provider = $thread_comment->getChildCommentList();
+
     ?>
 
     <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
+
         <div class="col-xs-12" style="margin-top: 15px;" >
             <?= $this->render('_child_comment_input_box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
         </div>
+
+        <div class="col-xs-12 text-center">
+
+            <div id="child_comment_sse_<?= $comment_id ?>" ></div>
+
+            <?= ListView::widget([
+                'id' => 'threadList',
+                'dataProvider' => $child_comment_provider,
+                'summary' => false,
+                'itemOptions' => ['class' => 'item'],
+                'layout' => "{summary}\n{items}\n{pager}",
+                'itemView' => function ($child_comment, $key, $index, $widget) {
+                    return $this->render('_listview_child_comment',['child_comment' => $child_comment]);
+                }
+            ]) ?>
+        </div>
+
     </div>
 
-    <div class="col-xs-12 text-center">
+    <script>
+        //bad practice
+        $(document).ready(function(){
+            childCommentWebSocket(<?= $comment_id ?>);
+        });
+    </script>
 
-        <div id="child_comment_sse_<?= $comment_id ?>" ></div>
-
-        <?= ListView::widget([
-            'id' => 'threadList',
-            'dataProvider' => $child_comment_provider,
-            'summary' => false,
-            'itemOptions' => ['class' => 'item'],
-            'layout' => "{summary}\n{items}\n{pager}",
-            'itemView' => function ($child_comment, $key, $index, $widget) {
-                return $this->render('_listview_child_comment',['child_comment' => $child_comment]);
-            }
-        ]) ?>
-    </div>
-
-
-    <?php } ?>
-
+    <?php
+    }
+    ?>
 
     <?php $form = ActiveForm::begin(['action' => ['thread/delete-comment'],
         'method' => 'post',
@@ -101,3 +113,4 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
     <?php ActiveForm::end() ?>
 
 <?php Pjax::end() ?>
+

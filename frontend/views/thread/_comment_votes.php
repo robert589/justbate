@@ -17,8 +17,8 @@ if(($is_thread_comment)){
     $downvote = "Against";
 }
 else{
-    $upvote = "<span class='glyphicon glyphicon-thumbs-up'></span>";
-    $downvote = "<span class='glyphicon glyphicon-thumbs-down'></span>";
+    $upvote = "<span class='glyphicon glyphicon-chevron-up'></span>";
+    $downvote = "<span class='glyphicon glyphicon-chevron-down'></span>";
 }
 
 Pjax::begin([
@@ -57,6 +57,7 @@ Pjax::begin([
                     'disabled' => true])
                 ?>
                 <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
+
             </div>
         <?php } else { ?>
             <div class="btn-group" id="button-vote-up">
