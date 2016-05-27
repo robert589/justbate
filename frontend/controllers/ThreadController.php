@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\ChildCommentPusher;
 use common\components\ChildCommentSocket;
 use common\components\LinkConstructor;
 use common\creator\CommentCreator;
@@ -10,6 +11,7 @@ use common\creator\ThreadCreator;
 use common\entity\CommentEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
+use Devristo\Phpws\Server\WebSocketServer;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
 use frontend\models\DeleteThreadForm;
@@ -18,7 +20,11 @@ use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
+use Ratchet\Wamp\WampServer;
 use Ratchet\WebSocket\WsServer;
+use React\EventLoop\Factory;
+use React\Socket\Server;
+use React\ZMQ\Context;
 use Yii;
 use yii\helpers\HtmlPurifier;
 use yii\web\Controller;
@@ -75,22 +81,32 @@ class ThreadController extends Controller
 
 	}
 
+	/**
+	 *
+	 */
 	public function actionGetChildCommentSocket(){
-		if($_GET['id']){
-			$comment_id  = $_GET['id'];
-		}
+		$loop = \React\EventLoop\Factory::create();
 
-		$server = IoServer::factory(
-			new HttpServer(
-				new WsServer(
-					new ChildCommentSocket()
-				)
-			),
-			8080
-		);
+// Create a logger which writes everything to the STDOUT
+		$logger = new \Zend\Log\Logger();
+		$writer = new \Zend\Log\Writer\Stream("php://output");
+		$logger->addWriter($writer);
 
-		$server->run();
+// Create a WebSocket server using SSL
+		$server = new WebSocketServer("tcp://0.0.0.0:12345", $loop, $logger);
 
+		$loop->addPeriodicTimer(0.5, function() use($server, $logger){
+			$time = new \DateTime();
+			$string = $time->format("Y-m-d H:i:s");
+			$logger->notice("Broadcasting time to all clients: $string");
+			foreach($server->getConnections() as $client)
+				$client->sendString($string);
+		});
+// Bind the server
+		$server->bind();
+
+// Start the event loop
+		$loop->run();
 	}
 
 	/**
@@ -133,12 +149,9 @@ class ThreadController extends Controller
 		if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
 			$user_id = $_POST['user_id'];
 			$parent_id = $_POST['parent_id'];
-
 			$child_comment_form->user_id = $user_id;
 			$child_comment_form->parent_id = $parent_id;
-
 			if($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate()){
-
 				if($child_comment_form->store()){
 					if($this->updateChildCommentNotification($user_id, $parent_id)){
 
@@ -146,6 +159,15 @@ class ThreadController extends Controller
 					}
 				}
 			}
+
+			//pusher
+			// This is our new stuff
+			$context = new \ZMQContext();
+			$socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
+			$socket->connect("tcp://localhost:5555");
+
+			$socket->send(json_encode($child_comment_form));
+
 			return $this->renderAjax('_child_comment_input_box',
 				['comment_id' => $parent_id,
 					'retrieved' => true,

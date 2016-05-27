@@ -12,6 +12,12 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii2"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Devristo/phpws"
+        }
+    ],
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
@@ -33,7 +39,13 @@
         "kartik-v/yii2-dialog": "@dev",
         "frostealth/yii2-aws-s3": "@stable",
         "kartik-v/yii2-widget-typeahead": "*",
-        "cboden/ratchet": "0.3.*"
+        "cboden/ratchet": "0.3.*",
+        "react/zmq": "0.2.*|0.3.*",
+        "morozovsk/websocket": "^4.2",
+        "textalk/websocket": "1.2.*",
+        "devristo/phpws": "dev-master"
+
+
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
