@@ -60,44 +60,11 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
 
     <?php if($retrieved) { ?>
 
-        <script>
-            var ws = new WebSocket('ws://127.0.0.1:5001/thread/start-server?comment_id=' + <?= $comment_id ?>);
-
-            ws.onopen = function(msg) {
-                console.log('Connection successfully opened (readyState ' + this.readyState+')');
-            };
-
-            ws.onclose = function(msg) {
-                if(this.readyState == 2) {
-                    console.log(
-                        'Closing... The connection is going throught'
-                        + 'the closing handshake (readyState ' + this.readyState + ')'
-                    );
-                }
-                else if(this.readyState == 3) {
-                    console.log(
-                        'Connection closed... The connection has been closed'
-                        + 'or could not be opened (readyState ' + this.readyState + ')'
-                    );
-                }
-                else {
-                    console.log('Connection closed... (unhandled readyState ' + this.readyState + ')');
-                }
-            };
-
-            ws.onerror = function(event) {
-               console.log("error");
-            };
-
-        </script>
-
         <?php
-
         /**
          * VARIABLE USED
          */
         $child_comment_provider = $thread_comment->getChildCommentList();
-
         ?>
 
         <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">

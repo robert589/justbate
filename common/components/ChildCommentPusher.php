@@ -5,7 +5,9 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\Wamp\WampServerInterface;
 
 class ChildCommentPusher implements MessageComponentInterface {
-    protected $clients = array();
+    protected $clients;
+    private $subscriptions;
+    private $users;
 
     public function __construct(){
         $this->clients = new \SplObjectStorage();
@@ -21,6 +23,9 @@ class ChildCommentPusher implements MessageComponentInterface {
     function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
+
+        unset($this->users[$conn->resourceId]);
+        unset($this->subscriptions[$conn->resourceId]);
     }
 
     function onError(ConnectionInterface $conn, \Exception $e)
@@ -29,16 +34,21 @@ class ChildCommentPusher implements MessageComponentInterface {
         $conn->close();
     }
 
-    function onMessage(ConnectionInterface $from, $msg)
+    function onMessage(ConnectionInterface $conn, $msg)
     {
         // TODO: Implement onMessage() method.
-
-        // TODO: Implement onClose() method.
-        $numRecv = count($this->clients) - 1;
-
-        foreach($this->clients as $client){
-            if($from !== $client){
-                $client->send($msg);
+        $data   = json_decode($msg);
+        if($data->command === "subscribe"){
+            $this->subscriptions[$conn->resourceId] = $data->channel;
+         }
+        else if($data->command === "message"){
+            if(isset($this->subscriptions[$conn->resourceId])){
+                $target = $this->subscriptions[$conn->resourceId];
+                foreach($this->subscriptions as $id => $channel){
+                    if ($channel == $target && $id != $conn->resourceId) {
+                        $this->users[$id]->send($data->message);
+                    }
+                }
             }
         }
     }
