@@ -19,7 +19,7 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
 
 <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
-<div class="col-xs-3 give-comment-button" style="padding: 0;">
+<div class="col-xs-3 give-comment-button" style="margin-left:12px;padding: 0;">
     <?= Html::submitButton('Give Comment',
         ['class' => 'btn btn-primary give-comment',
             'data-service' => $thread_id,

@@ -604,7 +604,12 @@ div#login-form div.form-group label.control-label {
 }
 
 li#notification-bar {
-    margin: 15px 0 0 10px;
+    margin-top: 14px;
+}
+
+#home_menu_bar{
+    margin-right: 16px;
+    overflow: visible;
 }
 
 /*THREAD*/
@@ -885,7 +890,6 @@ div.list-view {
 div.list-view div.item {
     padding: 15px !important;
     margin: -15px !important;
-    margin-top: 30px !important;
 }
 
 div#main-post-desc div#threadList div.item:first-child {

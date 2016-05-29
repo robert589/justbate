@@ -19,8 +19,8 @@ class ThreadComment extends ActiveRecord
      */
     public static function getBestCommentFromThread($thread_id){
         $sql = "SELECT * from thread_comment,comment, user
-where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
-	and comment.user_id = user.id limit 1";
+                where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
+                and comment.user_id = user.id limit 1";
 
         return  \Yii::$app->db->createCommand($sql)
                 ->bindParam(':thread_id', $thread_id)->queryOne();

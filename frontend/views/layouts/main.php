@@ -101,7 +101,7 @@ AppAsset::register($this);
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <?php } else { ?>
-                            <li class="user_item item"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                            <li class="user_item item" id="home_menu_bar"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
                             <li class="user_item dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
                             <li class="user_item item"><a href="<?= $profile_link ?>"><img id="profile-picture-home" src=<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?> height="20px;" /><?= User::findOne(Yii::$app->getUser()->id)->first_name ?></a></li>
                             <li class="user_item dropdown item" id="dropdown-menu-settings">

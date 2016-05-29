@@ -19,7 +19,6 @@ $comment = Html::encode($child_comment->getComment());
 
 <article>
 
-    <br>
 
     <div class="col-md-12" style="max-height: 35px">
 

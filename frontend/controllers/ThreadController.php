@@ -87,13 +87,13 @@ class ThreadController extends Controller
 	public function actionGetChildCommentSocket(){
 		$loop = \React\EventLoop\Factory::create();
 
-// Create a logger which writes everything to the STDOUT
+		// Create a logger which writes everything to the STDOUT
 		$logger = new \Zend\Log\Logger();
 		$writer = new \Zend\Log\Writer\Stream("php://output");
 		$logger->addWriter($writer);
 
-// Create a WebSocket server using SSL
-		$server = new WebSocketServer("tcp://0.0.0.0:12345", $loop, $logger);
+		// Create a WebSocket server using SSL
+		$server = new ChildCommentPusher("tcp://0.0.0.0:12345", $loop, $logger);
 
 		$loop->addPeriodicTimer(0.5, function() use($server, $logger){
 			$time = new \DateTime();
@@ -102,10 +102,10 @@ class ThreadController extends Controller
 			foreach($server->getConnections() as $client)
 				$client->sendString($string);
 		});
-// Bind the server
+		// Bind the server
 		$server->bind();
 
-// Start the event loop
+		// Start the event loop
 		$loop->run();
 	}
 
@@ -138,6 +138,15 @@ class ThreadController extends Controller
 											'is_thread_comment' => false,
 											'child_comment_form' => $child_comment_form]);
 
+	}
+
+	public function actionStartServer(){
+
+		if(!isset($_GET['comment_id'])){
+			return null;
+		}
+
+		return $this->render('child-comment-server', ['comment_id' => $_GET['comment_id']]);
 	}
 
 	/**
