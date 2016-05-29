@@ -26,7 +26,7 @@ Application.prototype.checkExist = function(){
     }
 };
 
-Application.prototype.subscribe = function(comment_id){
+Application.prototype.subscribeChildCommentConn = function(comment_id){
     if(!this.checkExist()){
         var newConn = new ChildCommentWebSocket(comment_id);
         this.userSubscriptions.push(newConn);
@@ -73,7 +73,7 @@ var ChildCommentWebSocket = function(comment_id){
     };
 };
 
-ChildCommentWebSocket.prototype.subscribeChildCommentConn = function(){
+ChildCommentWebSocket.prototype.subscribe = function(){
     this.conn.send(JSON.stringify({command: "subscribe", channel: this.comment_id}));
 };
 
