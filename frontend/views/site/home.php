@@ -16,7 +16,7 @@ $num_followers_of_issue = $home->getIssueNumFollowers();
 $has_issue = $home->hasIssue();
 $issue_name = $home->getIssueName();
 $thread_list_provider = $home->getThreadList();
-   
+$popular_issue_list = $home->getPopularIssueList();
 $this->title = "Home";
 ?>
 
@@ -24,6 +24,10 @@ $this->title = "Home";
 
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
+
+
+		<?= $this->render('_home_popular-issue', ['popular_issue_list' => $popular_issue_list,
+			]) ?>
 
 		<?= $this->render('_home_sidenav-issue', ['issue_list' => $issue_followed_by_user,
 							'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
@@ -40,14 +44,22 @@ $this->title = "Home";
 	<div class="col-xs-12 col-md-8 home-main-section">
 
 		<!-- Issue header if exist-->
-		<?php if($has_issue){ ?>
+		<?php
 
-		<div class="col-xs-12" style="margin-bottom: 15px;background-color: white">
-			<?= $this->render('_home_issue-header', ['issue_name' => $issue_name, 'issue_num_followers' => $num_followers_of_issue,
-													'user_is_follower' => $user_follow_issue]) ?>
+		if($has_issue){
+
+		?>
+
+		<div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
+			<?= $this->render('_home_issue-header',
+							['issue_name' => $issue_name,
+							'issue_num_followers' => $num_followers_of_issue,
+							'user_is_follower' => $user_follow_issue]) ?>
 		</div>
 
-		<?php } ?>
+		<?php
+		}
+		?>
 
 		<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 

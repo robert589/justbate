@@ -5,6 +5,7 @@ use common\entity\HomeEntity;
 use common\entity\ThreadEntity;
 use common\models\Choice;
 use common\models\Comment;
+use common\models\Issue;
 use common\models\Thread;
 use common\models\ThreadIssue;
 use common\models\UserEmailAuthentication;
@@ -25,6 +26,8 @@ class HomeCreator implements CreatorInterface{
     const NEED_USER_FOLLOWED_ISSUE_LIST = 5;
 
     const NEED_USER_EMAIL = 6;
+
+    const NEED_POPULAR_ISSUE_LIST = 7;
 
     /**
      * @var HomeEntity
@@ -68,6 +71,9 @@ class HomeCreator implements CreatorInterface{
                     break;
                 case self::NEED_USER_EMAIL:
                     $this->getUserEmailAuth();
+                    break;
+                case self::NEED_POPULAR_ISSUE_LIST:
+                    $this->getPopularIssueList();
                     break;
                 default:
                     break;
@@ -165,5 +171,10 @@ class HomeCreator implements CreatorInterface{
     private function getUserEmailAuth(){
         $user_email_auth = UserEmailAuthentication::findOne(['user_id' => $this->home->getCurrentUserLoginId()]);
         $this->home->setUserEmailAuth($user_email_auth);
+    }
+
+    private function getPopularIssueList(){
+        $popular_issue_list = Issue::getPopularIssue();
+        $this->home->setPopularIssueList($popular_issue_list);
     }
 }

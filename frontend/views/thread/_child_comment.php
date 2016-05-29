@@ -58,7 +58,11 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
             ['style' => 'display:none;max-height:50px' , 'id' => 'child_comment_loading_gif_' . $comment_id ]) ?>
     </div>
 
-    <?php if($retrieved) { ?>
+    <?php
+
+    if($retrieved) {
+
+    ?>
 
         <?php
         /**
@@ -88,8 +92,8 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
                     }
                 ]) ?>
             </div>
-
         </div>
+
     <?php
     }
     ?>

@@ -12,6 +12,15 @@ $this->title = 'Login';
 ?>
 <div class="site-login">
     <div class="row">
+        <div align="center">
+            <img src=<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>
+                 style="height:130px">
+        </div>
+
+        <h3 align="center" style="color: black;margin-top: 0px">Your Opinion does matter </h3>
+
+    </div>
+    <div class="row">
         <div class="col-xs-12 col-md-6">
             <div id="signup-form">
                 <div class="col-xs-12" id="signup-title">Sign up to our service</div>

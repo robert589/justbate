@@ -4,7 +4,7 @@
     $thread_issues = $thread->getThreadIssues();
 ?>
 
-<div class="col-xs-10">
+<div class="col-xs-9">
 
     <span id="thread-issue-text">
         <?php foreach($thread_issues as $issue){ ?>
@@ -15,7 +15,7 @@
     </span>
 
 </div>
-<div class="col-xs-2" style="font-size: 12pt; text-align: right;">
+<div class="col-xs-3" style="font-size: 12pt; text-align: right;">
     <div class="fb-share-button" data-href="<?= $link_to_thread ?>" data-layout="button_count">
     </div>
 </div>

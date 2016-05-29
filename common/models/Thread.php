@@ -36,14 +36,17 @@ class Thread extends ActiveRecord
 	public static function getThreads($user_id, $issue_name = null) {
 		$template_sql = "
 						Select parent_thread_info.* , thread_vote.choice_text from(
-							Select thread_info.*, count(thread_comment.comment_id) as total_comments
+							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
 								  from thread, user
 								  where thread.user_id = user.id and
 								  thread_status = 10
 							) thread_info
-							left join thread_comment
-							on thread_info.thread_id = thread_comment.thread_id
+							left join (select thread_comment.comment_id, thread_comment.thread_id
+										from thread_comment, comment
+									  where thread_comment.comment_id = comment.comment_id and
+									  comment.comment_status = 10) comments
+							on thread_info.thread_id = comments.thread_id
 							group by thread_info.thread_id
 							order by (created_at) desc
 
@@ -62,7 +65,7 @@ class Thread extends ActiveRecord
 			$sql =  "
 
 						Select parent_thread_info.* , thread_vote.choice_text from(
-							Select thread_info.*, count(thread_comment.comment_id) as total_comments
+							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path from thread, user, thread_issue, issue
 								  where thread.user_id = user.id and
 								  thread_status = 10 and
@@ -70,8 +73,11 @@ class Thread extends ActiveRecord
 								and issue.issue_name = :issue_name
 								and issue.issue_name = thread_issue.issue_name
 							) thread_info
-							left join thread_comment
-							on thread_info.thread_id = thread_comment.thread_id
+							left join (select thread_comment.comment_id, thread_comment.thread_id
+										from thread_comment, comment
+									  where thread_comment.comment_id = comment.comment_id and
+									  comment.comment_status = 10) comments
+							on thread_info.thread_id = comments.thread_id
 							group by thread_info.thread_id
 							order by (created_at) desc
 						) parent_thread_info

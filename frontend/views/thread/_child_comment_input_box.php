@@ -17,16 +17,28 @@
     ]
 ]) ?>
 
+<?php
+/**
+ * Used Variable
+ */
+$last_message_current_user = isset($last_message_current_user) ? $last_message_current_user : null;
+
+?>
 
 <?php $form = ActiveForm::begin(['action' => ['thread/submit-child-comment'],
                                             'id' => 'submit_child_comment_form_' . $comment_id,
-                                            'options' =>[ 'data-pjax' => '#child_comment_input_box_' . $comment_id,
-                                                                        'class' => 'submit_child_comment_form',
-                                                                        'data-service' => $comment_id]
+                                            'options' =>
+                                            [ 'data-pjax' =>
+                                                '#child_comment_input_box_' . $comment_id,
+                                                'class' => 'submit_child_comment_form',
+                                                'data-service' => $comment_id
+                                            ]
                                 ])
 ?>
+    <?= Html::hiddenInput('last_message_current_user', $last_message_current_user, ['id' => 'last_message_current_user_' . $comment_id] ) ?>
 
-    <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId()) ?>
+    <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId(), ['id' => 'current_user_login_id_' . $comment_id]) ?>
+
     <?= Html::hiddenInput('parent_id' , $comment_id) ?>
 
     <div class="col-xs-12">

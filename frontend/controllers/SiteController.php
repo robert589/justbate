@@ -164,7 +164,8 @@ class SiteController extends Controller
 									  HomeCreator::NEED_USER_FOLLOWED_ISSUE,
 									  HomeCreator::NEED_TRENDING_TOPIC_LIST,
 									  HomeCreator::NEED_USER_FOLLOWED_ISSUE_LIST,
-									  HomeCreator::NEED_USER_EMAIL])	;
+									  HomeCreator::NEED_USER_EMAIL,
+									  HomeCreator::NEED_POPULAR_ISSUE_LIST])	;
 
 		$create_thread_form = new CreateThreadForm();
 

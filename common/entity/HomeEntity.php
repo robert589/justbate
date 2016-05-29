@@ -43,6 +43,8 @@ class HomeEntity implements Entity{
 
     private $trending_topic_list;
 
+    private $popular_issue_list;
+
     /**
      * HomeEntity constructor.
      * @param $id
@@ -209,6 +211,23 @@ class HomeEntity implements Entity{
     {
         $this->trending_topic_list = $trending_topic_list;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPopularIssueList()
+    {
+        return $this->popular_issue_list;
+    }
+
+    /**
+     * @param mixed $popular_issue_list
+     */
+    public function setPopularIssueList($popular_issue_list)
+    {
+        $this->popular_issue_list = $popular_issue_list;
+    }
+
 
 
 

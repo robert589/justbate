@@ -142,9 +142,6 @@ class ThreadController extends Controller
 
 	public function actionStartServer(){
 
-		if(!isset($_GET['comment_id'])){
-			return null;
-		}
 
 		return $this->render('child-comment-server', ['comment_id' => $_GET['comment_id']]);
 	}
@@ -162,25 +159,26 @@ class ThreadController extends Controller
 			$child_comment_form->parent_id = $parent_id;
 			if($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate()){
 				if($child_comment_form->store()){
-					if($this->updateChildCommentNotification($user_id, $parent_id)){
+					if(!$this->updateChildCommentNotification($user_id, $parent_id)){
 
-						$child_comment_form = new ChildCommentForm();
 					}
 				}
 			}
 
 			//pusher
 			// This is our new stuff
+			/*
 			$context = new \ZMQContext();
 			$socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
 			$socket->connect("tcp://localhost:5555");
 
 			$socket->send(json_encode($child_comment_form));
-
+*/
 			return $this->renderAjax('_child_comment_input_box',
 				['comment_id' => $parent_id,
-					'retrieved' => true,
-					'child_comment_form' => $child_comment_form]);
+				'retrieved' => true,
+				'child_comment_form' => new ChildCommentForm(),
+				'last_message_current_user' => $child_comment_form->child_comment ]);
 
 		}
 		else{

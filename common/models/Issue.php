@@ -36,13 +36,26 @@ class Issue extends ActiveRecord{
      * Status: Terminated (it is replaced by followed issue)-
      * To get popular issue
      */
-    public static function getPopularCategory(){
-        $sql = "SELECT issue_name
-                from issue
-                ";
+    public static function getPopularIssue(){
+        $sql = "SELECT issue.issue_name , count(thread_issue.thread_id) as total_thread
+                from issue,thread_issue
+                where issue.issue_name = thread_issue.issue_name
+                group by(thread_issue.issue_name)
+                order by total_thread desc
+                limit 8";
 
-        return Yii::$app->db->createCommand($sql)->
-        queryAll();
+        $results =  Yii::$app->db->createCommand($sql)->
+                    queryAll();
+
+        $mapped_issue_list = array();
+        foreach($results as $result){
+            $mapped_issue['label'] = $result['issue_name'];
+            $mapped_issue['url']  = Yii::$app->request->baseUrl . '/issue/' . $result['issue_name'] ;
+            $mapped_issue_list[] = $mapped_issue;
+        }
+
+
+        return $mapped_issue_list;
 
     }
 

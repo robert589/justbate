@@ -58,7 +58,8 @@ AppAsset::register($this);
                 </button>
 
                 <a class="navbar-brand" href="<?= Yii::$app->urlManager->createAbsoluteUrl(['']) ?>">
-                    <img src=<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?> >
+                    <img src=<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>
+                         style="height:50px;margin-top:-15px;width:160px">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">

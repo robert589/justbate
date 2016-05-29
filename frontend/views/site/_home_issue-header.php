@@ -22,7 +22,7 @@ Pjax::begin([
 ])
 
 ?>
-<div class="col-xs-12" style="margin-bottom: 10px">
+<div class="col-xs-12" style="padding: 10px;background: white">
 
     <?php $form = ActiveForm::begin(['action' => ['site/follow-issue'],
         'method' => 'post',

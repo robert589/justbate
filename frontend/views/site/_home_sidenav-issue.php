@@ -29,7 +29,6 @@ Pjax::begin([
         <?= SideNav::widget([
             'type' => SideNav::TYPE_DEFAULT,
             'heading' => 'Followed issue' ,
-
             'items' => $issue_list,
         ]) ?>
     </div><!-- div.col-xs-12 -->

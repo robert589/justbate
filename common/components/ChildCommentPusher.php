@@ -1,5 +1,7 @@
 <?php
 namespace common\components;
+use common\entity\ChildCommentEntity;
+use common\models\User;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 use Ratchet\Wamp\WampServerInterface;
@@ -46,6 +48,9 @@ class ChildCommentPusher implements MessageComponentInterface {
                 $target = $this->subscriptions[$conn->resourceId];
                 foreach($this->subscriptions as $id => $channel){
                     if ($channel == $target && $id != $conn->resourceId) {
+                        $user_id = $data->user_id;
+
+
                         $this->users[$id]->send($data->message);
                     }
                 }

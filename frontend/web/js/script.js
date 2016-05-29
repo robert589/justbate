@@ -1,9 +1,12 @@
 var Application  = function(){
     this.userSubscriptions = [];
+    this.userLastChildCommentMessage = [];
     this.setTimeZoneToCookie();
-    $.pjax.defaults.scrollTo = false;
 };
 
+/**
+ *
+ */
 Application.prototype.setTimeZoneToCookie = function(){
     if (navigator.cookieEnabled) {
         console.log('heelo');
@@ -11,6 +14,11 @@ Application.prototype.setTimeZoneToCookie = function(){
     }
 };
 
+/**
+ *
+ * @param comment_id
+ * @returns ChildCommenWebSocket
+ */
 Application.prototype.getSocketConnection = function(comment_id){
     for(var i = 0; i < this.userSubscriptions.length; i++){
         if(this.userSubscriptions[i].getCommentId() === comment_id ){
@@ -26,6 +34,10 @@ Application.prototype.checkExist = function(){
     }
 };
 
+/**
+ *
+ * @param comment_id
+ */
 Application.prototype.subscribeChildCommentConn = function(comment_id){
     if(!this.checkExist()){
         var newConn = new ChildCommentWebSocket(comment_id);
@@ -33,14 +45,22 @@ Application.prototype.subscribeChildCommentConn = function(comment_id){
     }
 };
 
+/**
+ *
+ */
 Application.prototype.unsubscribe = function(){
     //TODO
 };
 
 //Websocket connection class
+/**
+ *
+ * @param comment_id
+ * @constructor
+ */
 var ChildCommentWebSocket = function(comment_id){
     this.comment_id = comment_id;
-    this.conn = new WebSocket('ws://127.0.0.1:5001/thread/start-server?comment_id=' + this.comment_id);
+    this.conn = new WebSocket('ws://127.0.0.1:8080/server/start');
 
     this.conn.onopen = function(msg) {
         console.log('Connection successfully opened (readyState ' + this.readyState+')');
@@ -65,6 +85,7 @@ var ChildCommentWebSocket = function(comment_id){
     };
 
     this.conn.onmessage = function(e){
+
         console.log(e.data);
     };
 
@@ -73,21 +94,34 @@ var ChildCommentWebSocket = function(comment_id){
     };
 };
 
+/**
+ *
+ */
 ChildCommentWebSocket.prototype.subscribe = function(){
     this.conn.send(JSON.stringify({command: "subscribe", channel: this.comment_id}));
 };
 
-ChildCommentWebSocket.prototype.sendMessage = function(message){
-    this.conn.send(JSON.stringify({command: "message", message: message}));
+/**
+ *
+ * @param message
+ */
+ChildCommentWebSocket.prototype.sendMessage = function(message, user_id){
+    this.conn.send(JSON.stringify({command: "message", message: message, user_id: user_id}));
 };
 
+/**
+ *s
+ * @returns {*}
+ */
 ChildCommentWebSocket.prototype.getCommentId = function(){
     return this.comment_id;
-}
+};
 
 
 $(document).ready(function(){
+
     var app = new Application();
+
     //facebook
     (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -311,7 +345,7 @@ $(document).ready(function(){
 
         $('#child_comment_loading_gif_' + comment_id).css("display","none");
 
-        app.subscribeChildCommentConn(comment_id);
+//        app.subscribeChildCommentConn(comment_id);
 
         return false;
 
@@ -322,6 +356,16 @@ $(document).ready(function(){
     $(document).on('pjax:complete', '.child_comment_input_box_pjax', function(){
      //   event.preventDefault();
         console.log('Complete child comment input box');
+
+        var comment_id = $(this).data('service');
+
+     //   var socketConn = app.getSocketConnection(comment_id);
+
+       // var message = $("#last_message_current_user_" + comment_id);
+        /*
+        if(message !== null){
+            socketConn.sendMessage(message, $("#current_user_login_id_" + comment_id));
+        }*/
         //return false;
     });
     $(document).on('pjax:send', '.child_comment_input_box_pjax', function(){
@@ -498,13 +542,9 @@ $(document).ready(function(){
             $("#comment_section").show();
         }
         else{
-
             $("#comment_section").hide();
         }
-
     });
-
-
 
     $(document).on('click', '.home_show_hide', function(){
         var thread_id  = $(this).data('service');
@@ -574,7 +614,6 @@ $(document).ready(function(){
         $("div#w6-container").slideToggle("fast");
     });
 
-    $(document).on('pjax:complete', '.pjax_user_vote', function(){
+    $.pjax.defaults.scrollTo = false;
 
-    });
 });
