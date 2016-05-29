@@ -28,7 +28,7 @@ $current_user_has_vote = $thread->hasVote();
                     ['class' => 'button-like-link inline retrieve-comment-link',
                      'data-pjax' => "#comment_section_$thread_id",
                      'data-service' => $thread_id,
-                     'style' => 'margin-left:15px; padding: 10px !important;'
+                     'style' => 'margin-left:105pt;position:relative; padding: 10px !important;'
                     ])
         ?>
     </div>
