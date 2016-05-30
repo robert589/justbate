@@ -4,9 +4,6 @@ var Application  = function(){
     this.setTimeZoneToCookie();
 };
 
-/**
- *
- */
 Application.prototype.setTimeZoneToCookie = function(){
     if (navigator.cookieEnabled) {
         console.log('heelo');
@@ -14,13 +11,9 @@ Application.prototype.setTimeZoneToCookie = function(){
     }
 };
 
-/**
- *
- * @param comment_id
- * @returns ChildCommenWebSocket
- */
 Application.prototype.getSocketConnection = function(comment_id){
     for(var i = 0; i < this.userSubscriptions.length; i++){
+
         if(this.userSubscriptions[i].getCommentId() === comment_id ){
             return this.userSubscriptions[i];
         }
@@ -28,26 +21,22 @@ Application.prototype.getSocketConnection = function(comment_id){
     return null;
 };
 
-Application.prototype.checkExist = function(){
-    if(this.getSocketConnection() !== null){
+Application.prototype.checkExist = function(comment_id){
+    if(this.getSocketConnection(comment_id) !== null){
         return true;
     }
 };
 
-/**
- *
- * @param comment_id
- */
 Application.prototype.subscribeChildCommentConn = function(comment_id){
-    if(!this.checkExist()){
+    console.log(this.userSubscriptions);
+
+    if(!this.checkExist(comment_id)){
+        console.log("New connection");
         var newConn = new ChildCommentWebSocket(comment_id);
         this.userSubscriptions.push(newConn);
     }
 };
 
-/**
- *
- */
 Application.prototype.unsubscribe = function(){
     //TODO
 };
@@ -85,7 +74,6 @@ var ChildCommentWebSocket = function(comment_id){
     };
 
     this.conn.onmessage = function(e){
-
         console.log(e.data);
     };
 
@@ -106,7 +94,8 @@ ChildCommentWebSocket.prototype.subscribe = function(){
  * @param message
  */
 ChildCommentWebSocket.prototype.sendMessage = function(message, user_id){
-    this.conn.send(JSON.stringify({command: "message", message: message, user_id: user_id}));
+    console.log("Sending data");
+    this.conn.send(JSON.stringify({command: "message", message: message}));
 };
 
 /**
@@ -295,7 +284,7 @@ $(document).ready(function(){
             }
         }
         else{
-            $.pjax.click(event,{container: "#comment_section_" + thread_id,push:false, scrollTo:false, timeout:6000 });
+            $.pjax.click(event,{container: "#comment_section_" + thread_id,push:false, scrollTo:false, timeout:6000, skipOuterContainers:true });
         }
     });
 
@@ -322,7 +311,7 @@ $(document).ready(function(){
         else{
             console.log('retrieve child comment link');
 
-            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false, scrollTo : false, timeout:false});
+            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false, scrollTo : false, timeout:false, skipOuterContainers:true});
         }
     });
 
@@ -345,7 +334,7 @@ $(document).ready(function(){
 
         $('#child_comment_loading_gif_' + comment_id).css("display","none");
 
-//        app.subscribeChildCommentConn(comment_id);
+        app.subscribeChildCommentConn(comment_id);
 
         return false;
 
@@ -359,15 +348,18 @@ $(document).ready(function(){
 
         var comment_id = $(this).data('service');
 
-     //   var socketConn = app.getSocketConnection(comment_id);
+        $('#child_comment_loading_gif_' + comment_id).css("display","none");
 
-       // var message = $("#last_message_current_user_" + comment_id);
-        /*
+        var socketConn = app.getSocketConnection(comment_id);
+
+        var message = $("#last_message_current_user_" + comment_id).val();
+
         if(message !== null){
             socketConn.sendMessage(message, $("#current_user_login_id_" + comment_id));
-        }*/
-        //return false;
+        }
+        return false;
     });
+
     $(document).on('pjax:send', '.child_comment_input_box_pjax', function(){
        // event.preventDefault();
         console.log('Sent child comment input box');
@@ -376,8 +368,8 @@ $(document).ready(function(){
 
     $(document).on('pjax:timeout', '.child_comment_input_box_pjax', function(){
        console.log('timeout');
-      //  event.preventDefault();
-       // return false;
+       event.preventDefault();
+       return false;
     });
 
     $(document).on('pjax:error', '.child_comment_input_box_pjax', function(){
@@ -615,5 +607,5 @@ $(document).ready(function(){
     });
 
     $.pjax.defaults.scrollTo = false;
-
+    $.pjax.defaults.skipOuterContainers = true;
 });

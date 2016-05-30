@@ -10,10 +10,13 @@
     'enablePushState' => false,
     'timeout' => false,
     'clientOptions'=>[
-
+        'skipOuterContainers' => true
+    ],
+    'options' =>[
         'container'=>'#child_comment_input_box_' . $comment_id,
         'data-service' => $comment_id,
         'class' => 'child_comment_input_box_pjax',
+        'skipOuterContainers' => true
     ]
 ]) ?>
 
@@ -48,9 +51,10 @@ $last_message_current_user = isset($last_message_current_user) ? $last_message_c
                 'data-service' => $comment_id,
                 'rows' => 1,
                 'style' => 'width:100%',
-                'placeholder' => 'add comment box..' ])
+                'placeholder' => 'add comment here..' ])
                 ->label(false)?>
         </div>
+
         <div class="col-md-1">
             <?= Html::submitButton('Submit', ['class' => 'btn btn-md  submit-child-comment-form-button',
                 'style' => 'float:left',

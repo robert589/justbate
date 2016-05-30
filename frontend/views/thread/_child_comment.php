@@ -7,6 +7,8 @@ use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
 use common\models\CommentVote;
 use kartik\dialog\Dialog;
+use WebSocket\Client;
+
 /** @var $thread_comment \common\entity\ThreadCommentEntity */
 /** @var $retrieved boolean */
 /** @var $child_comment_form \frontend\models\ChildCommentForm */
@@ -65,10 +67,11 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
     ?>
 
         <?php
-        /**
-         * VARIABLE USED
-         */
-        $child_comment_provider = $thread_comment->getChildCommentList();
+            /**
+             * VARIABLE USED
+             */
+             $child_comment_provider = $thread_comment->getChildCommentList();
+
         ?>
 
         <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
