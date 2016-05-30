@@ -51,9 +51,13 @@ foreach($thread_choices as $item){
                      ->radioButtonGroup($propered_choice_text,
                                         ['class' => 'btn-group-md user-vote',
                                          'data-service' => $thread_id,
-                                         'itemOptions' => ['labelOptions' => ['class' => 'btn btn-md btn-warning',
-                                                            'style' => 'margin-right:15px' ]]])
-                      ?>
+                                            'disabledItems' => [$submit_thread_vote_form->choice_text],
+                                         'itemOptions' => ['labelOptions' =>
+                                                            ['class' => 'btn btn-md btn-warning',
+                                                             'style' => 'margin-right:15px'
+                                                            ]
+                                                        ]
+                                        ]) ?>
         </div>
 
 <?php

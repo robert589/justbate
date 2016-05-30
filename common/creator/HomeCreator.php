@@ -100,7 +100,6 @@ class HomeCreator implements CreatorInterface{
         $thread_list = array();
 
         foreach($results as $result){
-
             //map database result
             $thread  = new ThreadEntity($result['thread_id'],$this->home->getCurrentUserLoginId());
             $thread->setDataFromArray($result);

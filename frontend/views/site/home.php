@@ -25,12 +25,14 @@ $this->title = "Home";
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
 
+		<?= $this->render('_home_popular-issue',
+						['popular_issue_list' => $popular_issue_list,
+						])
+		?>
 
-		<?= $this->render('_home_popular-issue', ['popular_issue_list' => $popular_issue_list,
-			]) ?>
-
-		<?= $this->render('_home_sidenav-issue', ['issue_list' => $issue_followed_by_user,
-							'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
+		<?= $this->render('_home_sidenav-issue',
+							['issue_list' => $issue_followed_by_user,
+							 'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([

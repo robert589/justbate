@@ -33,11 +33,13 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 												$thread_comment);
 			$thread_comment = $creator->get([\common\creator\ThreadCommentCreator::NEED_COMMENT_VOTE]);
 
-			return $this->render('_listview_comment',['thread_comment' => $thread_comment,
-						                  			'child_comment_form' => new \frontend\models\ChildCommentForm(),
+			return $this->render('_listview_comment',
+									['thread_comment' => $thread_comment,
+									 'child_comment_form' => new \frontend\models\ChildCommentForm(),
 									]);
 		}
 	]);
+
 	if($first == 1){
 		$content_comment_item['active'] = true;
 		$first = 0;

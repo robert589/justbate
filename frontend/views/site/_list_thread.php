@@ -25,7 +25,6 @@ $has_chosen_comment = $thread->hasChosenComment();
 	<div class="row" id="thread-issue">
 		<?= $this->render('../thread/_thread_issues', ['thread' => $thread]) ?>
 	</div>
-	<br>
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link" align="center">
 			<?= Html::a(Html::encode($thread_title), $link_to_thread)?>
@@ -34,11 +33,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 		<div class="col-xs-12" style="margin-bottom: 10px;" align="center">
 			<?= HtmlPurifier::process($thread_description) ?>
 		</div>
-
-		<br>
-
 		<div align="center">
-		<!-- Voting -->
 			<?= $this->render('../thread/_thread_vote',
 							 ['thread' => $thread,
 							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])

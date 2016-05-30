@@ -94,7 +94,7 @@ class ThreadCreator implements CreatorInterface{
         //mapping
         $this->thread->setTitle(($thread_info['title']));
         $this->thread->setDescription(($thread_info['description']));
-        $this->thread->setCurrentUserLoginId(($thread_info['user_id']));
+        $this->thread->setThreadCreatorUserId(($thread_info['user_id']));
         $this->thread->setDateCreated(($thread_info['created_at']));
         $this->thread->setDateUpdated($thread_info['updated_at']);
         $this->thread->setThreadStatus($thread_info['thread_status']);
@@ -140,9 +140,7 @@ class ThreadCreator implements CreatorInterface{
     private  function getUserChoiceOnly(){
         $result = ThreadVote::find()
             ->where(['thread_id' => $this->thread->getThreadId()])
-            ->andWhere(['user_id' => $this->thread->getCurrentUserLoginId()])
-            ->one();
-
+            ->andWhere(['user_id' => $this->thread->getCurrentUserLoginId()])->one();
         if($result !== null){
             $this->thread->setCurrentUserChoice(  $result->choice_text   );
         }

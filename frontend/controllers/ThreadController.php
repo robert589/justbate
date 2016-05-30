@@ -47,7 +47,6 @@ class ThreadController extends Controller
 		if(empty($_GET['id'])) {
 			return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 		}
-
 		$thread_entity = new ThreadEntity($_GET['id'], Yii::$app->user->getId());
 
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR,$thread_entity);
@@ -61,7 +60,6 @@ class ThreadController extends Controller
 		$thread = $creator->get($needs);
 
 		$commentModel = new CommentForm();
-
 		// get vote mdoels
 		$submit_vote_form = new SubmitThreadVoteForm();
 

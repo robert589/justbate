@@ -9,7 +9,6 @@ use yii\helpers\Html;
 /**
  * Used variable
  */
-
 $comment_request_url = $thread->getCommentRequestUrl();
 $thread_id = $thread->getThreadId();
 $thread_total_comments = $thread->getTotalComment();
