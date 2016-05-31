@@ -10,6 +10,7 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use common\models\Thread;
+use yii\rbac\DbManager;
 /**
  * Site controller
  */
@@ -61,7 +62,20 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!\Yii::$app->user->isGuest) {
+            if(key(\Yii::$app->authManager->getRolesByUser(\Yii::$app->user->getId())) !== 'admin'){
+                return $this->render('prohibit');
+            }
+            return $this->render('index');
+        }
+        else
+        {
+            $model = new LoginForm();
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+
     }
 
     public function actionChildComment(){
@@ -128,5 +142,5 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    
+
 }

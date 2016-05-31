@@ -5,80 +5,44 @@ namespace console\controllers;
 use Yii;
 use yii\console\Controller;
 
-class RbacController extends controllers
+class RbacController extends Controller
 {
 	public function actionInit()
 	{
 		$auth = Yii::$app->authManager;
 
-		// add 'banCommentForm' permission
-		$banCommentForm = $auth->createPermission('banCommentForm');
-		$banCommentForm->description = 'Ban Comment Form';
-		$auth->add($banCommentForm);
+		// add 'ban_comment' permission
+		$banComment = $auth->createPermission('ban_comment');
+		$banComment->description = 'Ban Comment';
+		$auth->add($banComment);
 
-		// add 'banIssueForm' permission
-		$banIssueForm = $auth->createPermission('banIssueForm');
-		$banIssueForm->description = 'Ban Issue Form';
-		$auth->add($banIssueForm);
+		// add 'ban_thread' permission
+		$banThread = $auth->createPermission('ban_thread');
+		$banThread->description = 'Ban Thread';
+		$auth->add($banThread);
 
-		// add 'banThreadForm' permission
-		$banThreadForm = $auth->createPermission('banThreadForm');
-		$banThreadForm->description = 'Ban Thread Form';
-		$auth->add($banThreadForm);
+		// add 'edit_comment' permission
+		$editComment = $auth->createPermission('edit_comment');
+		$editComment->description = 'Edit Comment';
+		$auth->add($editComment);
 
-		// add 'createIssueForm' permission
-		$createIssueForm = $auth->createPermission('createIssueForm');
-		$createIssueForm->description = 'Create Issue Form';
-		$auth->add($createIssueForm);
-
-		// add 'deleteIssueForm' permission
-		$deleteIssueForm = $auth->createPermission('deleteIssueForm');
-		$deleteIssueForm->description = 'Delete Issue Form';
-		$auth->add($deleteIssueForm);
-
-		// add 'editChoiceForm' permission
-		$editChoiceForm = $auth->createPermission('editChoiceForm');
-		$editChoiceForm->description = 'Edit Choice Form';
-		$auth->add($editChoiceForm);
-
-		// add 'editChoiceThreadCommentForm' permission
-		$editChoiceThreadCommentForm = $auth->createPermission('editChoiceThreadCommentForm');
-		$editChoiceThreadCommentForm->description = 'Edit Choice Thread Comment Form';
-		$auth->add($editChoiceThreadCommentForm);
-
-		// add 'editCommentForm' permission
-		$editCommentForm = $auth->createPermission('editCommentForm');
-		$editCommentForm->description = 'Edit Comment Form';
-		$auth->add($editCommentForm);
-
-		// add 'editIssueForm' permission
-		$editIssueForm = $auth->createPermission('editIssueForm');
-		$editIssueForm->description = 'Edit Issue Form';
-		$auth->add($editIssueForm);
-
-		// add 'editThreadForm' permission
-		$editThreadForm = $auth->createPermission('editThreadForm');
-		$editThreadForm->description = 'Edit Thread Form';
-		$auth->add($editThreadForm);
+		// add 'edit_thread' permission
+		$editThread = $auth->createPermission('edit_thread');
+		$editThread->description = 'Edit Thread';
+		$auth->add($editThread);
 
 		// add 'admin' role
 		$admin = $auth->createRole('admin');
 		$auth->add($admin);
 
 		// add 'admin' permission
-		$auth->addChild($admin, $banCommentForm);
-		$auth->addChild($admin, $banIssueForm);
-		$auth->addChild($admin, $banThreadForm);
-		$auth->addChild($admin, $createIssueForm);
-		$auth->addChild($admin, $deleteIssueForm);
-		$auth->addChild($admin, $editChoiceForm);
-		$auth->addChild($admin, $editChoiceThreadCommentForm);
-		$auth->addChild($admin, $editCommentForm);
-		$auth->addChild($admin, $editIssueForm);
-		$auth->addChild($admin, $editThreadForm);
+		$auth->addChild($admin, $banComment);
+		$auth->addChild($admin, $banThread);
+		$auth->addChild($admin, $editComment);
+		$auth->addChild($admin, $editThread);
 
 		// assign 'admin' role to user_id
-		$auth->assign($admin, 1);
+		$auth->assign($admin, 72);
 	}
 }
 
