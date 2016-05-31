@@ -16,7 +16,7 @@
         'thread_id',
         'title',
         'user_id',
-        'date_created',
+        'created_at',
         'anonymous',
         'thread_status',
         'description',
