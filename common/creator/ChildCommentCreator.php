@@ -8,6 +8,7 @@ use common\models\ChildComment;
 
 class ChildCommentCreator extends CommentCreator{
 
+    const NEED_COMMENT_INFO  = 1;
 
     /**
      * ChildCommentCreator constructor.
@@ -16,9 +17,31 @@ class ChildCommentCreator extends CommentCreator{
     function __construct(ChildCommentEntity $comment_entity)
     {
         parent::__construct($comment_entity);
-
     }
 
+    /**
+     * @param array $config
+     * @return ChildCommentEntity
+     */
+    public function get(array $needs){
 
+        parent::get($needs);
 
+        foreach($needs as $need){
+            switch($need){
+                case self::NEED_COMMENT_INFO:
+                    $this->getCommentInfo();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        return $this->comment;
+    }
+
+    public function getCommentInfo(){
+        $result  = ChildComment::getComment($this->comment->getCommentId());
+        $this->comment->setDataFromArray($result);
+    }
 }

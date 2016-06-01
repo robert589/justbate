@@ -1,4 +1,6 @@
-var Application  = function(){
+var Application  = function(template){
+
+    this.template = template;
     this.userSubscriptions = [];
     this.userLastChildCommentMessage = [];
     this.setTimeZoneToCookie();
@@ -28,11 +30,10 @@ Application.prototype.checkExist = function(comment_id){
 };
 
 Application.prototype.subscribeChildCommentConn = function(comment_id){
-    console.log(this.userSubscriptions);
 
     if(!this.checkExist(comment_id)){
         console.log("New connection");
-        var newConn = new ChildCommentWebSocket(comment_id);
+        var newConn = new ChildCommentWebSocket(comment_id, this.template);
         this.userSubscriptions.push(newConn);
     }
 };
@@ -41,15 +42,17 @@ Application.prototype.unsubscribe = function(){
     //TODO
 };
 
-//Websocket connection class
 /**
  *
  * @param comment_id
+ * @param self
  * @constructor
  */
-var ChildCommentWebSocket = function(comment_id){
+var ChildCommentWebSocket = function(comment_id, template){
     this.comment_id = comment_id;
-    this.conn = new WebSocket('ws://127.0.0.1:8080/server/start');
+     var child_comment_template = template;
+
+    this.conn = new WebSocket('ws://127.0.0.1:8080');
 
     this.conn.onopen = function(msg) {
         console.log('Connection successfully opened (readyState ' + this.readyState+')');
@@ -67,6 +70,7 @@ var ChildCommentWebSocket = function(comment_id){
                 'Connection closed... The connection has been closed'
                 + 'or could not be opened (readyState ' + this.readyState + ')'
             );
+            console.log(msg);
         }
         else {
             console.log('Connection closed... (unhandled readyState ' + this.readyState + ')');
@@ -74,42 +78,57 @@ var ChildCommentWebSocket = function(comment_id){
     };
 
     this.conn.onmessage = function(e){
-        console.log(e.data);
+        applyTemplate(JSON.parse(e.data));
+
     };
+
 
     this.conn.onerror = function(event) {
         console.log("error");
     };
+
+    function applyTemplate(data){
+        console.log(data);
+        template = template .replace('comment_id', data.comment_id)
+                            .replace('first_name', data.first_name)
+                            .replace('last_name', data.last_name)
+                            .replace('current_user_vote', data.current_user_vote)
+                            .replace('total_like', data.total_like)
+                            .replace('total_dislike', data.total_dislike)
+                            .replace('photo_path', data.photo_path)
+                            .replace('username', data.username)
+                            .replace('comment', data.comment);
+        console.log(template);
+
+        $("#comment_part_" + data.parent_id + " .list-view").prepend(template);
+    }
 };
 
-/**
- *
- */
+ChildCommentWebSocket.prototype.applyTemplate = function(){
+
+};
+
 ChildCommentWebSocket.prototype.subscribe = function(){
     this.conn.send(JSON.stringify({command: "subscribe", channel: this.comment_id}));
 };
 
-/**
- *
- * @param message
- */
-ChildCommentWebSocket.prototype.sendMessage = function(message, user_id){
+ChildCommentWebSocket.prototype.sendMessage = function(comment_id, user_id){
     console.log("Sending data");
-    this.conn.send(JSON.stringify({command: "message", message: message}));
+    this.conn.send(JSON.stringify({command: "message",
+                                   comment_id: comment_id,
+                                   user_id: user_id}));
 };
 
-/**
- *s
- * @returns {*}
- */
 ChildCommentWebSocket.prototype.getCommentId = function(){
     return this.comment_id;
 };
 
 
 $(document).ready(function(){
+    var $this = $(this);
+    var child_comment_template = $this.find("#child-comment-template").html();
 
-    var app = new Application();
+    var app = new Application(child_comment_template);
 
     //facebook
     (function(d, s, id) {
@@ -132,8 +151,12 @@ $(document).ready(function(){
     $(document).on('submit', '.form_user_thread_vote', function(event){
         var data_pjax = $(this).data('pjax');
 
-        $.pjax.submit(event, data_pjax ,{'push' : false, 'replace' : false, 'timeout' : false, skipOuterContainers:true, scrollTo:false});
-
+        $.pjax.submit(event, data_pjax ,
+                     {'push' : false,
+                      'replace' : false,
+                      'timeout' : false,
+                      'skipOuterContainers':true,
+                      'scrollTo':false});
     });
 
     // replacing fb icon with font-awesome
@@ -284,7 +307,13 @@ $(document).ready(function(){
             }
         }
         else{
-            $.pjax.click(event,{container: "#comment_section_" + thread_id,push:false, scrollTo:false, timeout:6000, skipOuterContainers:true });
+            $.pjax.click(event,
+                        {container: "#comment_section_" + thread_id,
+                         push:false,
+                         scrollTo:false,
+                         timeout:6000,
+                         skipOuterContainers:true}
+                        );
         }
     });
 
@@ -352,11 +381,14 @@ $(document).ready(function(){
 
         var socketConn = app.getSocketConnection(comment_id);
 
-        var message = $("#last_message_current_user_" + comment_id).val();
+        var comment_id = $("#last_comment_id_current_user_" + comment_id).val();
 
-        if(message !== null){
-            socketConn.sendMessage(message, $("#current_user_login_id_" + comment_id));
+        var user_id = $("#user-login-id").val();
+
+        if(comment_id !== null){
+            socketConn.sendMessage(comment_id, user_id);
         }
+
         return false;
     });
 

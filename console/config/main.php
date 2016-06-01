@@ -20,6 +20,12 @@ return [
                 ],
             ],
         ],
+        'urlManager' => [
+            'scriptUrl' => Yii::getAlias('@base-url'),
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false
+        ]
+
     ],
     'params' => $params,
 ];

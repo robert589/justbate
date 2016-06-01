@@ -660,7 +660,7 @@ div.thread-view {
     padding-right: 0;
 }
 
-div#threadList div.item article div#commentator-moderate {
+div#threadList div.item article div.commentator-moderate {
     margin-bottom: 15px;
     padding-bottom: 15px;
 }

@@ -1,4 +1,6 @@
 <?php
+Yii::setAlias('base-url', 'http://localhost');
+//Yii::setAlias('base-url', 'http://justbate.com');
 Yii::setAlias('common', dirname(__DIR__));
 Yii::setAlias('frontend', dirname(dirname(__DIR__)) . '/frontend');
 Yii::setAlias('backend', dirname(dirname(__DIR__)) . '/backend');

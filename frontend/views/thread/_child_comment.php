@@ -39,25 +39,34 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
     <div class="inline">
         <?php if($belongs_to_current_user){ ?>
 
-        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment','style'=> 'margin-left:5px', 'data-service' => $comment_id]) ?>
-        <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment', 'data-service' => $comment_id]) ?>
+        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment',
+                                  'style'=> 'margin-left:5px',
+                                  'data-service' => $comment_id]) ?>
+        <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment',
+                                    'data-service' => $comment_id]) ?>
 
         <?php } ?>
 
         <?= Html::a("Debate it",    $child_comment_request_url,
                                    ['class' => 'button-like-link inline retrieve-child-comment-link',
                                     'data-pjax' => "#child_comment_$thread_id",
-                                    'data-service' => $comment_id, 'style' => 'margin-left:15px']) ?>
+                                    'data-service' => $comment_id,
+                                    'style' => 'margin-left:15px'])?>
 
-        <?= Html::hiddenInput('child_comment_url', \yii\helpers\Url::to(['thread/get-sse-child-comment', 'comment_id' => $comment_id,
-        'last_time' =>  time() , ['id' => 'child_comment_url_' . $comment_id]   ])) ?>
+        <?= Html::hiddenInput('child_comment_url',
+                              \yii\helpers\Url::to([ 'thread/get-sse-child-comment',
+                                                     'comment_id' => $comment_id,
+                                                     'last_time' =>  time() ,
+                                                    ['id' => 'child_comment_url_' . $comment_id]]))?>
 
     </div>
 
 
     <div  align="center" class="col-xs-12" >
         <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
-            ['style' => 'display:none;max-height:50px' , 'id' => 'child_comment_loading_gif_' . $comment_id ]) ?>
+                     [  'style' => 'display:none;max-height:50px' ,
+                        'id' => 'child_comment_loading_gif_' . $comment_id
+                     ])?>
     </div>
 
     <?php
@@ -71,7 +80,6 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
              * VARIABLE USED
              */
              $child_comment_provider = $thread_comment->getChildCommentList();
-
         ?>
 
         <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">

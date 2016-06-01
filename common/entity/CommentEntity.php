@@ -139,6 +139,23 @@ class CommentEntity implements Entity{
     }
 
     /**
+     * @return mixed
+     */
+    public function getCommentCreatorUsername()
+    {
+        return $this->comment_creator_username;
+    }
+
+    /**
+     * @param mixed $comment_creator_username
+     */
+    public function setCommentCreatorUsername($comment_creator_username)
+    {
+        $this->comment_creator_username = $comment_creator_username;
+    }
+
+
+    /**
      * @return int
      */
     public function getComment()
@@ -356,7 +373,7 @@ class CommentEntity implements Entity{
     }
 
     public function getCommentatorUserProfileLink(){
-        return Yii::$app->request->baseUrl . "/user/" . $this->comment_creator_username;
+        return Yii::$app->urlManager->createAbsoluteUrl(['user/' . $this->comment_creator_username]);
     }
 
     /**

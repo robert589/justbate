@@ -130,7 +130,6 @@ class ThreadController extends Controller
 
 		$child_comment_form = new ChildCommentForm();
 
-
 		return $this->renderAjax('_child_comment', ['thread_comment' => $thread_comment,
 											'retrieved' => true,
 											'is_thread_comment' => false,
@@ -138,9 +137,7 @@ class ThreadController extends Controller
 
 	}
 
-	public function actionStartServer(){
-
-
+	public function actionStartServer() {
 		return $this->render('child-comment-server', ['comment_id' => $_GET['comment_id']]);
 	}
 
@@ -148,35 +145,30 @@ class ThreadController extends Controller
 	 * POST DATA: user_id, parent_id, ChildCommentForm
 	 * return: render
 	 */
-	public function actionSubmitChildComment(){
+	public function actionSubmitChildComment() {
 		$child_comment_form = new ChildCommentForm();
 		if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
 			$user_id = $_POST['user_id'];
 			$parent_id = $_POST['parent_id'];
 			$child_comment_form->user_id = $user_id;
 			$child_comment_form->parent_id = $parent_id;
-			if($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate()){
-				if($child_comment_form->store()){
-					if(!$this->updateChildCommentNotification($user_id, $parent_id)){
-
-					}
-				}
+			if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
+				//error
 			}
 
-			//pusher
-			// This is our new stuff
-			/*
-			$context = new \ZMQContext();
-			$socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
-			$socket->connect("tcp://localhost:5555");
+			if(!($new_comment_id = $child_comment_form->store())){
+				//error
+			}
 
-			$socket->send(json_encode($child_comment_form));
-*/
+			if(!$this->updateChildCommentNotification($user_id, $parent_id)){
+				//error
+			}
+
 			return $this->renderAjax('_child_comment_input_box',
 				['comment_id' => $parent_id,
 				'retrieved' => true,
 				'child_comment_form' => new ChildCommentForm(),
-				'last_message_current_user' => $child_comment_form->child_comment ]);
+				'last_comment_id_current_user' => $new_comment_id ]);
 
 		}
 		else{

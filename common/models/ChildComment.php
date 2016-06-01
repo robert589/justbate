@@ -28,9 +28,9 @@ class ChildComment extends ActiveRecord
 
     public static function getAllChildComments(){
         $sql = "SELECT *
-                from child_comment
-                inner join comment
-                on child_comment.comment_id = comment.comment_id";
+                from child_comment, comment, user
+                where child_comment.comment_id = comment.comment_id
+                  and user.id = comment.user_id";
 
         $result =  \Yii::$app->db->createCommand($sql)->
         queryAll();
@@ -39,10 +39,10 @@ class ChildComment extends ActiveRecord
     }
 
     public static function getComment($comment_id){
-        $sql = "SELECT * from child_comment
-                inner join comment
-                on child_comment.comment_id = comment.comment_id
-                where child_comment.comment_id = :comment_id";
+        $sql = "SELECT * from child_comment, comment, user
+                where child_comment.comment_id = comment.comment_id
+                and child_comment.comment_id = :comment_id
+                and user.id = comment.user_id";
 
         return  \Yii::$app->db->createCommand($sql)->bindParam(':comment_id', $comment_id)->queryOne();
 

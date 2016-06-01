@@ -140,6 +140,21 @@ AppAsset::register($this);
     </div>
 
 
+    <!-- hidden input -->
+    <?= Html::hiddenInput('user_id',
+                          (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
+                         ['id' => 'user-login-id']) ?>
+
+    <!-- Javascript template -->
+    <div style="display: none" id="child-comment-template">
+        <div class="item" >
+            <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
+                $child_comment_dummy->convertToTemplate();
+            ?>
+            <?= $this->render(Yii::$app->request->baseUrl . '/../thread/_listview_child_comment',
+                            ['child_comment' => $child_comment_dummy]) ?>
+        </div>
+    </div>
 
 <?php
     $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');

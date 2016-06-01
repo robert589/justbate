@@ -29,9 +29,7 @@ class ChildCommentForm extends Model
     }
 
     /**
-     * Signs user up.
-     *
-     * @return User|null the saved model or null if saving fails
+     * @return int|null
      */
     public function store()
     {
@@ -44,7 +42,7 @@ class ChildCommentForm extends Model
                 $child_comment->comment_id = $comment->comment_id;
                 $child_comment->parent_id = $this->parent_id;
                 if($child_comment->save()){
-                    return true;
+                    return $comment->comment_id;
                 }
             }
             return null;
