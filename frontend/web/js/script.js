@@ -1,3 +1,9 @@
+//new string library
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 var Application  = function(template){
 
     this.template = template;
@@ -89,15 +95,14 @@ var ChildCommentWebSocket = function(comment_id, template){
 
     function applyTemplate(data){
         console.log(data);
-        template = template .replace('comment_id', data.comment_id)
-                            .replace('first_name', data.first_name)
-                            .replace('last_name', data.last_name)
-                            .replace('current_user_vote', data.current_user_vote)
-                            .replace('total_like', data.total_like)
-                            .replace('total_dislike', data.total_dislike)
-                            .replace('photo_path', data.photo_path)
-                            .replace('username', data.username)
-                            .replace('comment', data.comment);
+        template = template .replaceAll('~comment_id', data.comment_id)
+                            .replaceAll('~first_name', data.first_name)
+                            .replaceAll('~last_name', data.last_name)
+                            .replaceAll('~total_like', data.total_like)
+                            .replaceAll('~total_dislike', data.total_dislike)
+                            .replaceAll('~photo_path', data.photo_path)
+                            .replaceAll('~username', data.username)
+                            .replaceAll('~comment', data.comment);
         console.log(template);
 
         $("#comment_part_" + data.parent_id + " .list-view").prepend(template);
