@@ -8,7 +8,7 @@ use yii\base\Model;
 
 use common\models\Thread;
 
-class CreateIssueForm extends ModeL {
+class CreateIssueForm extends Model {
 
     public $issue_name;
     public $issue_description;

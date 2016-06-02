@@ -7,7 +7,7 @@ use common\models\Issue;
 use common\models\Thread;
 use Yii;
 
-class BanIssueForm extends ModeL {
+class BanIssueForm extends Model {
 
     public $issue_id;
 

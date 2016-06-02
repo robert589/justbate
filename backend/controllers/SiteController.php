@@ -94,7 +94,6 @@ class SiteController extends Controller
 
     public function actionThread(){
         $all_threads = Thread::find()->all();
-
         $thread_provider = new ArrayDataProvider([
             'allModels' => $all_threads,
             'pagination' => [

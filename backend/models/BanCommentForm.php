@@ -7,7 +7,7 @@ use yii\base\Model;
 
 use common\models\Thread;
 
-class BanCommentForm extends ModeL {
+class BanCommentForm extends Model {
 
     public $comment_id;
 

@@ -6,7 +6,7 @@ use yii\base\Model;
 
 use common\models\Thread;
 
-class EditThreadForm extends ModeL {
+class EditThreadForm extends Model {
 
     public $thread_id;
     public $title;

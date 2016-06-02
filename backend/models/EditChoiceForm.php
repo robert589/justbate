@@ -7,7 +7,7 @@ use yii\base\Model;
 
 use common\models\Thread;
 
-class EditChoiceForm extends ModeL {
+class EditChoiceForm extends Model {
 
     public $thread_id;
     public $old_choice_text;

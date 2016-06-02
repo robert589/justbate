@@ -7,7 +7,7 @@ use yii\base\Model;
 use common\models\Comment;
 use common\models\Issue;
 
-class EditIssueForm extends ModeL {
+class EditIssueForm extends Model {
 
     public $issue_id;
     public $issue_name;

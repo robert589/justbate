@@ -7,7 +7,7 @@ use yii\base\Model;
 use Yii;
 use common\models\Comment;
 
-class EditChoiceThreadCommentForm extends ModeL {
+class EditChoiceThreadCommentForm extends Model {
 
     public $thread_id;
     public $comment_id;

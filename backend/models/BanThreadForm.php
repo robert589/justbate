@@ -6,7 +6,7 @@ use yii\base\Model;
 
 use common\models\Thread;
 
-class BanThreadForm extends ModeL {
+class BanThreadForm extends Model {
 
     public $thread_id;
 

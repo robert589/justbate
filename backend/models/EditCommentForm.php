@@ -6,7 +6,7 @@ use yii\base\Model;
 
 use common\models\Comment;
 
-class EditCommentForm extends ModeL {
+class EditCommentForm extends Model {
 
     public $comment_id;
     public $comment;
