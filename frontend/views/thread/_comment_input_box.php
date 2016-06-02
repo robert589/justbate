@@ -49,20 +49,12 @@ if(isset($comment_input_retrieved)) {
             <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>">
                 <?=  $form->field($comment_model,
                                   'comment',
-                                  [
-                                      'selectors' => ['input' => '#comment-input-' . $thread_id]
-                                  ])
+                                  ['selectors' => ['input' => '#comment-input-' . $thread_id]])
                           ->widget(\yii\redactor\widgets\Redactor::className(),
-                                  [
-                                       'options' => [
-                                           'id' => 'comment-input-' . $thread_id,
-                                       ],
-                                       'clientOptions' => [
-                                           'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
-                                       ],
-                                   ])->label(false)
-                ?>
-
+                                  ['options' => ['id' => 'comment-input-' . $thread_id],
+                                                 'clientOptions' => [
+                                                   'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image'])]])
+                          ->label(false)?>
             </div>
         </div>
 

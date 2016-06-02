@@ -86,7 +86,6 @@ $this->title = "Home";
 						'triggerOffset' => 100,
 					],
 					'itemView' => function ($thread, $key, $index, $widget) {
-
 						return $this->render('_list_thread',[
 							'thread' => $thread]
 						);

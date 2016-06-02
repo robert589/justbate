@@ -32,7 +32,7 @@ abstract class CommentCreator{
 
     /**
      * @param array $config
-     * @return ThreadEntity
+     * @return CommentEntity
      */
     public function get(array $needs){
         foreach($needs as $need){

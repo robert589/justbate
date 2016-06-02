@@ -37,5 +37,4 @@ $comment_thread_id = $thread_comment->getThreadId();
 	<div class="col-xs-12 commentator-moderate">
 		<?= $this->render('_listview_comment_bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
 	</div>
-
 </article>

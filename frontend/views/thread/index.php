@@ -88,13 +88,15 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 			</div>
 
 			<div class="col-xs-12">
-				<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
+				<div class="inline">
+					<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
+				</div>
 
 				<?php if($thread_belongs_to_current_user) { ?>
 
-					<?= Html::button('Delete', ['id' => 'delete_thread', 'class' => 'btn', 'style' => 'background: #d9534f;']) ?>
+					<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn inline', 'style' => 'background: #d9534f;']) ?>
 
-					<?= Html::button('Edit', ['id' => 'edit_thread', 'class' => 'btn','data-guest' => $guest]) ?>
+					<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn inline','data-guest' => $guest]) ?>
 
 				<?php } ?>
 			</div>

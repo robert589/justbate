@@ -42,8 +42,7 @@ use yii\web\JsExpression;
                 'options' => ['placeholder' => 'Add Choices ...', 'multiple' => true],
                 'pluginOptions' => [
                     'tags' => true,
-                    'maximumInputLength' => 8,
-                    'minimumInputLength' => 2,
+                    'minimumInputLength' => 1,
                 ]
             ])->label(false) ?>
         </div> <!-- div.col-xs-12 -->
@@ -53,10 +52,8 @@ use yii\web\JsExpression;
             <?= $form->field($create_thread_form, 'issues')->widget(Select2::classname(), [
                 'initValueText' => $create_thread_form->issues,
                 'maintainOrder' => true,
-
                 'options' => ['placeholder' => 'Select Keywords ...', 'multiple' => true],
                 'pluginOptions' => [
-                    'maximumInputLength' => 10,
                     'minimumInputLength' => 1,
                     'allowClear' => true,
                     'ajax' => [

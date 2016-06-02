@@ -41,7 +41,7 @@ $current_user_has_vote = $thread->hasVote();
 </div>
 
 <!-- Comment input box-->
-<div style="margin-right: -15px;">
+<div style="margin-right: -15px;" class="col-xs-12">
     <?= $this->render('../thread/_comment_input_box',
                         ['thread' => $thread,
                          'comment_model' => new \frontend\models\CommentForm()])

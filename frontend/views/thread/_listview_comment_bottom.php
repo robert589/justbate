@@ -6,9 +6,7 @@
 <div class="col-xs-12 commentator-comment">
     <?= $this->render('_view_edit_comment_part', ['thread_comment' => $thread_comment,
         'edit_comment_form' => new \backend\models\EditCommentForm(),
-        'is_thread_comment' => true
-
-        ]) ?>
+        'is_thread_comment' => true  ]) ?>
 </div>
 
 <!-- Votes part-->

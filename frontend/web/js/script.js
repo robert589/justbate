@@ -58,7 +58,7 @@ var ChildCommentWebSocket = function(comment_id, template){
     this.comment_id = comment_id;
      var child_comment_template = template;
 
-    this.conn = new WebSocket('ws://127.0.0.1:8080');
+    this.conn = new WebSocket('ws://127.0.0.1:8080?' + comment_id);
 
     this.conn.onopen = function(msg) {
         console.log('Connection successfully opened (readyState ' + this.readyState+')');
@@ -94,8 +94,8 @@ var ChildCommentWebSocket = function(comment_id, template){
     };
 
     function applyTemplate(data){
-        console.log(data);
-        template = template .replaceAll('~comment_id', data.comment_id)
+        var copied = template;
+        copied = copied .replaceAll('~comment_id', data.comment_id)
                             .replaceAll('~first_name', data.first_name)
                             .replaceAll('~last_name', data.last_name)
                             .replaceAll('~total_like', data.total_like)
@@ -103,9 +103,8 @@ var ChildCommentWebSocket = function(comment_id, template){
                             .replaceAll('~photo_path', data.photo_path)
                             .replaceAll('~username', data.username)
                             .replaceAll('~comment', data.comment);
-        console.log(template);
 
-        $("#comment_part_" + data.parent_id + " .list-view").prepend(template);
+        $("#comment_part_" + data.parent_id + " .list-view").prepend(copied);
     }
 };
 
@@ -344,14 +343,17 @@ $(document).ready(function(){
         }
         else{
             console.log('retrieve child comment link');
-
-            $.pjax.click(event,{container: "#child_comment_" + comment_id, push:false, scrollTo : false, timeout:false, skipOuterContainers:true});
+            $.pjax.click(event,{container: "#child_comment_" + comment_id,
+                                push:false,
+                                scrollTo : false,
+                                timeout:false,
+                                skipOuterContainers:true});
         }
     });
 
     $(document).on('pjax:send', '.child_comment_pjax', function(event){
         event.preventDefault();
-
+        console.log("child_comment_pjax");
         var comment_id = $(this).data('service');
 
         $('#child_comment_loading_gif_' + comment_id).css("display", "inline");
@@ -364,6 +366,7 @@ $(document).ready(function(){
     $(document).on('pjax:complete', '.child_comment_pjax', function(event){
         event.preventDefault();
 
+        console.log("child_comment_pjax_comment");
         var comment_id = $(this).data('service');
 
         $('#child_comment_loading_gif_' + comment_id).css("display","none");
@@ -374,17 +377,19 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('pjax:send', '.comment_votes_pjax', function(event){
+        console.log("comment votes pjax");
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
 
 
     $(document).on('pjax:complete', '.child_comment_input_box_pjax', function(){
-     //   event.preventDefault();
-        console.log('Complete child comment input box');
 
-        var comment_id = $(this).data('service');
+        var parent_id = $(this).data('service');
 
-        $('#child_comment_loading_gif_' + comment_id).css("display","none");
-
-        var socketConn = app.getSocketConnection(comment_id);
+        var socketConn = app.getSocketConnection(parent_id);
 
         var comment_id = $("#last_comment_id_current_user_" + comment_id).val();
 
@@ -397,10 +402,9 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on('pjax:send', '.child_comment_input_box_pjax', function(){
-       // event.preventDefault();
-        console.log('Sent child comment input box');
-        //return false;
+    $(document).on('pjax:send', '.child_comment_input_box_pjax', function(event){
+        event.preventDefault();
+        event.stopPropagation();
     });
 
     $(document).on('pjax:timeout', '.child_comment_input_box_pjax', function(){
@@ -417,15 +421,26 @@ $(document).ready(function(){
     .on('submit', '.submit_child_comment_form', function(event){
         event.preventDefault();
 
-        var comment_id = $(this).data('service');
+        $.pjax.submit(event, $(this).data('pjax') ,
+                        {'push' : false,
+                         'replace' : false,
+                         'timeout' : false,
+                         'skipOuterContainers' : true});
 
-        $.pjax.submit(event, $(this).data('pjax') ,{'push' : false, 'replace' : false, 'timeout' : false, skipOuterContainers:true});
+        return false;
     })
 
     .on('submit', '.submit-vote-form', function(event){
         event.preventDefault();
 
-        $.pjax.submit(event, $(this).data('pjax'), {'push' : false, 'replace' : false, 'timeout' : false, skipOuterContainers:true})
+        $.pjax.submit(event,
+                      $(this).data('pjax'),
+                        {'push' : false,
+                        'replace' : false,
+                        'timeout' : false,
+                        skipOuterContainers:true});
+
+        return false;
     });
 
 
@@ -508,12 +523,12 @@ $(document).ready(function(){
     });
 
     //edit thread part
-    $("#edit_thread").click(function(){
+    $("#edit-thread").click(function(){
         $("#shown_title_description_part").css("display","none");
         $("#edit_title_description_part").css("display","inline");
     });
 
-    $("#delete_thread").on("click", function() {
+    $("#delete-thread").on("click", function() {
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
             if (result) {
                 $("#delete_thread_form").submit();
@@ -546,14 +561,12 @@ $(document).ready(function(){
     $(document).on('click', '.delete_comment',function(e){
         e.preventDefault();
         var comment_id = $(this).data('service');
-
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
             if (result) {
                 $("#delete_comment_form_" + comment_id).submit();
                 return false;
             }
         });
-
     });
 
     //cancel edit comment is at
@@ -566,7 +579,6 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#display_hide_comment_input_box', function(){
-
         if(!$("#comment_section").is(':visible')){
             $("#comment_section").show();
         }
@@ -587,7 +599,6 @@ $(document).ready(function(){
         else{
             $this_button.text('Hide');
             $("#home_comment_section_" + thread_id).show();
-
         }
     });
 
@@ -599,10 +610,25 @@ $(document).ready(function(){
             $("#hide_button_" + comment_id).text("Show");
         }
         else{
-            $("div._list_thread_form_"+comment_id+" form#comment-form div.col-xs-12").slideToggle();
+            $("div._list_thread_form_"+comment_id+" form.comment-form div.col-xs-12").slideToggle();
             $("#comment_part_" + comment_id).show();
             $("#hide_button_" +comment_id).text("Hide");
         }
+    });
+
+    $(document).on('submit', '.comment-form', function(event){
+        event.preventDefault();
+
+        var data_pjax = $(this).data('pjax');
+
+        $.pjax.submit(event,
+                    data_pjax ,
+                    {'push' : false,
+                     'replace' : false,
+                     'timeout' : false,
+                     'skipOuterContainers':true,
+                     'scrollTo':false});
+        return false;
     });
 
     $("#cancel_edit_thread_button").click(function(){

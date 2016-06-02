@@ -8,19 +8,17 @@ use Ratchet\MessageComponentInterface;
 use Yii;
 class ChildCommentPusher implements MessageComponentInterface {
     protected $clients;
+    protected $channels;
     private $subscriptions;
     private $users;
 
     public function __construct(){
         $this->clients = new \SplObjectStorage();
-        $this->subscriptions = array();
-        $this->users = array();
     }
 
     function onOpen(ConnectionInterface $conn)
     {
         $this->clients->attach($conn);
-
     }
 
     function onClose(ConnectionInterface $conn)
@@ -49,10 +47,7 @@ class ChildCommentPusher implements MessageComponentInterface {
             $this->subscriptions[$conn->resourceId] = $data->channel;
          }
         else if($data->command === "message"){
-            echo "Tring to send data";
-
             $entity = new ChildCommentEntity($data->comment_id, $data->user_id);
-
             $creator = (new CreatorFactory())->getCreator(CreatorFactory::CHILD_COMMENT_CREATOR, $entity);
             $entity = $creator->get([
                                         ChildCommentCreator::NEED_COMMENT_INFO,
@@ -60,11 +55,17 @@ class ChildCommentPusher implements MessageComponentInterface {
                                     ]);
 
             foreach($this->clients as $client){
-                $client->send(json_encode($entity->jsonSerialize()));
+                echo $entity->getParentId() . ' '  . $data->comment_id;
+                if(($entity->getParentId() . '') == $client->WebSocket->request->getQuery()){
+                    $client->send(json_encode($entity->jsonSerialize()));
+                }
             }
         }
     }
 
 
+}
+
+class Channel{
 
 }

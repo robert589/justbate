@@ -27,9 +27,7 @@ Pjax::begin([
 
 <?php
     if(isset($comment_retrieved)){
-        /**
-         * Variable used in this if block
-         */
+        /* Variable used in this if block   */
         $total_comments = $thread->getTotalComment();
         $comment_providers = $thread->getCommentList();
         $thread_id = $thread->getThreadId();

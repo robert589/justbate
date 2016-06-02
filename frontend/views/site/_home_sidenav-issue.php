@@ -62,7 +62,7 @@ Pjax::begin([
                     'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
                 ],
                 'ajax' => [
-                    'url' => \yii\helpers\Url::to(['site/search-issue']),
+                    'url' => \yii\helpers\Url::to(['site/search-issue', 'except-own' => 'true']),
                     'dataType' => 'json',
                     'data' => new JsExpression('function(params) { return {q:params.term}; }')
                 ],

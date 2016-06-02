@@ -42,6 +42,7 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
         <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment',
                                   'style'=> 'margin-left:5px',
                                   'data-service' => $comment_id]) ?>
+
         <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment',
                                     'data-service' => $comment_id]) ?>
 

@@ -118,6 +118,10 @@ a.desc:after {
     color: #999;
 }
 
+#delete-thread{
+    margin-left:5px
+}
+
 .error-summary {
     color: #a94442;
     background: #fdf7f7;

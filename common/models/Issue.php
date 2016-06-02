@@ -63,14 +63,28 @@ class Issue extends ActiveRecord{
         return Self::find()->where([self::ID => $issue])->exists();
     }
 
-    public static function getIssueBySearch($q){
+    public static function getIssueBySearch($q, $except, $user_id = null){
         $q = '%' . $q . '%';
+
         $sql = "Select issue_name as id, issue_name as text from issue where issue_name like :query";
 
-        return \Yii::$app->db
-            ->createCommand($sql)
-            ->bindParam(':query', $q)
-            ->queryAll();
+        if($except === true){
+            $sql .= " and issue_name NOT IN(Select issue_name from user_followed_issue where user_id = :user_id )";
+
+            return
+                \Yii::$app->db
+                    ->createCommand($sql)
+                    ->bindParam(':query', $q)
+                    ->bindParam(':user_id', $user_id)
+                    ->queryAll();
+        }
+        else{
+            return \Yii::$app->db
+                ->createCommand($sql)
+                ->bindParam(':query', $q)
+                ->queryAll();
+        }
+
     }
 
 }

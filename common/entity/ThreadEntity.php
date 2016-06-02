@@ -359,8 +359,8 @@ class ThreadEntity implements Entity{
             $belongs = 0;
         }
         else {
-            if(\Yii::$app->user->getId()== $this->current_user_login_id){
-                $belongs = 1;
+            if(\Yii::$app->user->getId()== $this->thread_creator_user_id){
+                $belongs = true;
             } else {
                 $belongs = 0;
             }

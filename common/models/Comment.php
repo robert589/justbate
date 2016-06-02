@@ -219,7 +219,7 @@ class Comment extends ActiveRecord
                 ],
 
             ]);
-            $all_providers[$thread_choice[  'choice_text'] . ' (' . count($allModels) . ')' ] = $dataProvider;
+            $all_providers[$thread_choice['choice_text'] . ' (' . count($allModels) . ')' ] = $dataProvider;
         }
 
         return $all_providers;

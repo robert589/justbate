@@ -104,9 +104,7 @@ class ThreadCreator implements CreatorInterface{
 
     private function getThreadComments()
     {
-
         $comment_providers = Comment::getAllCommentProviders($this->thread->getThreadId(), $this->thread->getChoices(), $this->thread->getCurrentUserLoginId());
-
         $this->thread->setCommentList($comment_providers);
     }
 

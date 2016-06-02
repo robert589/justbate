@@ -25,7 +25,9 @@ Pjax::begin([
     'id' => 'comment_likes_' . $comment_id,
     'timeout' => false,
     'enablePushState' => false,
-    'clientOptions'=>[
+    'options'=>[
+        'class' => 'comment_votes_pjax',
+        'skipOuterContainers' => true,
         'container'=>'#comment_likes_' . $comment_id,
     ],
 ]);
@@ -34,10 +36,11 @@ Pjax::begin([
 
 <!-- The vote -->
 <!-- The form only be used as refresh page -->
-<?= Html::beginForm(["thread/comment-vote" ], 'post', [
-    'id' => 'submit-vote-form-' . $comment_id,
-    'data-pjax' => '#comment_likes_' . $comment_id,
-    'class' => 'form-inline submit-vote-form']); ?>
+<?= Html::beginForm(["thread/comment-vote" ],
+                    'post',
+                    ['id' => 'submit-vote-form-' . $comment_id,
+                     'data-pjax' => '#comment_likes_' . $comment_id,
+                     'class' => 'form-inline submit-vote-form']); ?>
 
     <?= Html::hiddenInput("comment_id", $comment_id, ['class' => 'hi-comment-vote-comment-id']) ?>
 

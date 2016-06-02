@@ -45,9 +45,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 		<?php
 
 		if($has_chosen_comment){
-			/**
-			 * Used Variable
-			 */
+			/** Used Variable */
 			$chosen_comment = $thread->getChosenComment();
 			$commentator_user_profile_link = $chosen_comment->getCommentatorUserProfileLink();
 			$commentator_user_profile_pic_link = $chosen_comment->getCommentatorPhotoLink();
@@ -56,9 +54,11 @@ $has_chosen_comment = $thread->hasChosenComment();
 			$comment  = $chosen_comment->getComment();
 		?>
 			<hr>
+
 			<div class="col-xs-1"  style=" padding-right: 0;">
 				<img src="<?= $commentator_user_profile_pic_link ?>" class="img img-circle" height="40px" width="40px" />
 			</div>
+
 			<div class="col-xs-11" style="margin-top: -40px; margin-left: 55px;margin-bottom: 20px">
 				<div class="name-link inline">
 					<?= $commentator_full_name ?> chose <?= $commentator_choice ?>
@@ -67,8 +67,8 @@ $has_chosen_comment = $thread->hasChosenComment();
 
 			<div class="home-comment-tab" style="margin-left:0; padding-left: 0">
 				<?= $this->render('../thread/_listview_comment_bottom',
-								['thread_comment' => $chosen_comment ,
-								 'is_thread_comment' => true]) ?>
+								 ['thread_comment' => $chosen_comment ,
+								  'is_thread_comment' => true]) ?>
 			</div>
 
 		<?php

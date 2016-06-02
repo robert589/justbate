@@ -17,16 +17,14 @@ $form1 = ActiveForm::begin(['action' =>['site/retrieve-comment-input'],
 
 ?>
 
-<?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
-<div class="col-xs-3 give-comment-button" style="position:absolute;padding: 0;margin-bottom: 2px">
     <?= Html::submitButton('Give Comment',
-                        ['class' => 'btn btn-primary give-comment',
+                        ['class' => 'btn btn-primary give-comment inline',
                          'data-service' => $thread_id,
                          'disabled' => ($current_user_has_vote) ? false: true,
                          'id' => 'retrieve-input-box-button-' . $thread_id
                         ]) ?>
-</div>
 
 <?php
 

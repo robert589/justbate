@@ -16,7 +16,6 @@
         'container'=>'#child_comment_input_box_' . $comment_id,
         'data-service' => $comment_id,
         'class' => 'child_comment_input_box_pjax',
-        'skipOuterContainers' => true
     ]
 ]) ?>
 
@@ -57,9 +56,11 @@ $last_comment_id_current_user = isset($last_comment_id_current_user) ? $last_com
         </div>
 
         <div class="col-md-1">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-md  submit-child-comment-form-button',
-                'style' => 'float:left',
-                'data-service' => $comment_id,'id' => 'submit-child-comment-form-button-'  . $comment_id
+            <?= Html::submitButton('Submit',
+                                   ['class' => 'btn btn-md  submit-child-comment-form-button',
+                                    'style' => 'float:left',
+                                    'data-service' => $comment_id,
+                                    'id' => 'submit-child-comment-form-button-'  . $comment_id
             ]) ?>
         </div>
 
