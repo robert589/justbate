@@ -18,6 +18,7 @@ class ChildCommentPusher implements MessageComponentInterface {
 
     function onOpen(ConnectionInterface $conn)
     {
+        echo 'Connection openned';
         $this->clients->attach($conn);
     }
 
@@ -27,7 +28,6 @@ class ChildCommentPusher implements MessageComponentInterface {
         $this->clients->detach($conn);
 
         unset($this->users[$conn->resourceId]);
-        unset($this->subscriptions[$conn->resourceId]);
         $conn->close();
 
     }
@@ -42,7 +42,7 @@ class ChildCommentPusher implements MessageComponentInterface {
     function onMessage(ConnectionInterface $conn, $msg)
     {
         $data   = json_decode($msg);
-
+        echo var_dump($data);
         if($data->command === "subscribe"){
             $this->subscriptions[$conn->resourceId] = $data->channel;
          }

@@ -56,6 +56,7 @@ use yii\web\JsExpression;
                 'pluginOptions' => [
                     'minimumInputLength' => 1,
                     'allowClear' => true,
+                    'tags' => true,
                     'ajax' => [
                         'url' => \yii\helpers\Url::to(['search-issue']),
                         'dataType' => 'json',

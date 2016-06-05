@@ -12,7 +12,10 @@ class DateTimeFormatter{
 
     const DEFAULT_TIMEZONE_OFFSET = 8;
 
-
+    /**
+     * @param $timestamp
+     * @return string
+     */
     public static function getTimeByTimestampAndTimezoneOffset($timestamp){
         $original       = new \DateTime(date(self::DEFAULT_DATE_FORMAT, $timestamp));
 

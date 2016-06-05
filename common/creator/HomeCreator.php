@@ -52,6 +52,7 @@ class HomeCreator implements CreatorInterface{
      * @return ThreadEntity
      */
     public function get(array $needs){
+
         foreach($needs as $need){
             switch($need){
                 case self::NEED_THREAD_LISTS:
@@ -123,6 +124,9 @@ class HomeCreator implements CreatorInterface{
         $this->home->setThreadList($data_provider);
     }
 
+    /**
+     *
+     */
     private function issueNumFollowers(){
         $issue_num_followers = ($this->home->hasIssue()) ? UserFollowedIssue::getTotalFollowedIssue($this->home->getIssueName()) : null;
         $this->home->setIssueNumFollowers($issue_num_followers);

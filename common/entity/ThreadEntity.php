@@ -23,7 +23,6 @@ class ThreadEntity implements Entity{
      * @var
      */
     private $thread_creator_user_id;
-
     private $thread_creator_first_name;
 
     /**

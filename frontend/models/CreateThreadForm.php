@@ -79,7 +79,13 @@ class CreateThreadForm extends Model
 
 	private function saveIssues($thread_id){
 		foreach($this->issues as $issue){
-
+			if(!Issue::checkExist($issue)){
+				$issue_model = new Issue();
+				$issue_model->issue_name = $issue;
+				if(!$issue_model->save()){
+					return false;
+				}
+			}
 			$thread_issue_model = new ThreadIssue();
 			$thread_issue_model->thread_id = $thread_id;
 			$thread_issue_model->issue_name = $issue;

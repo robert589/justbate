@@ -60,7 +60,7 @@ class Issue extends ActiveRecord{
     }
 
     public static function checkExist($issue){
-        return Self::find()->where([self::ID => $issue])->exists();
+        return self::find()->where(['issue_name' => $issue])->exists();
     }
 
     public static function getIssueBySearch($q, $except, $user_id = null){

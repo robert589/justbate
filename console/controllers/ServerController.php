@@ -15,7 +15,6 @@ class ServerController extends \yii\console\Controller
 
                     )
                 ), 8080
-
         );
 
         $server->run();

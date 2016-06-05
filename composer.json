@@ -40,10 +40,8 @@
         "frostealth/yii2-aws-s3": "@stable",
         "kartik-v/yii2-widget-typeahead": "*",
         "cboden/ratchet": "0.3.*",
-        "react/zmq": "0.2.*|0.3.*",
-        "morozovsk/websocket": "^4.2",
-        "textalk/websocket": "1.2.*",
-        "devristo/phpws": "dev-master"
+        "react/zmq": "0.2.*|0.3.*"
+
 
 
     },

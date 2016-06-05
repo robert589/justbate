@@ -58,7 +58,7 @@ var ChildCommentWebSocket = function(comment_id, template){
     this.comment_id = comment_id;
      var child_comment_template = template;
 
-    this.conn = new WebSocket('ws://127.0.0.1:8080?' + comment_id);
+    this.conn = new WebSocket('ws://justbate.com:8080?' + comment_id);
 
     this.conn.onopen = function(msg) {
         console.log('Connection successfully opened (readyState ' + this.readyState+')');
@@ -391,7 +391,7 @@ $(document).ready(function(){
 
         var socketConn = app.getSocketConnection(parent_id);
 
-        var comment_id = $("#last_comment_id_current_user_" + comment_id).val();
+        var comment_id = $("#last_comment_id_current_user_" + parent_id).val();
 
         var user_id = $("#user-login-id").val();
 

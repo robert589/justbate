@@ -16,19 +16,20 @@ $current_user_has_vote = $thread->hasVote();
 ?>
 
 <div class="col-xs-12" style="padding-left: 0; padding-right: 0;">
-    <!-- Retrieve comment input -->
-    <?= $this->render('../thread/_retrieve_comment_button', ['thread' => $thread]) ?>
+    <div class="inline">
+        <!-- Retrieve comment input -->
+        <?= $this->render('../thread/_retrieve_comment_button', ['thread' => $thread]) ?>
+    </div>
 
-    <!-- retrieve comment -->
-
-    <div>
+    <div class="inline">
+        <!-- retrieve comment -->
         <?= Html::a("Comment ( $thread_total_comments )",
-                    $comment_request_url,
-                    ['class' => 'button-like-link inline retrieve-comment-link',
-                     'data-pjax' => "#comment_section_$thread_id",
-                     'data-service' => $thread_id,
-                     'style' => 'margin-left:105pt;position:relative; padding: 10px !important;'
-                    ])
+            $comment_request_url,
+            ['class' => 'btn btn-primary inline retrieve-comment-link',
+                'data-pjax' => "#comment_section_$thread_id",
+                'data-service' => $thread_id,
+                'style' => 'margin-left:10pt;position:relative;'
+            ])
         ?>
     </div>
 </div>

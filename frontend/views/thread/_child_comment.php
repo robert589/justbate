@@ -49,7 +49,7 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
         <?php } ?>
 
         <?= Html::a("Debate it",    $child_comment_request_url,
-                                   ['class' => 'button-like-link inline retrieve-child-comment-link',
+                                   ['class' => 'btn btn-primary inline retrieve-child-comment-link',
                                     'data-pjax' => "#child_comment_$thread_id",
                                     'data-service' => $comment_id,
                                     'style' => 'margin-left:15px'])?>
@@ -65,9 +65,8 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
 
     <div  align="center" class="col-xs-12" >
         <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
-                     [  'style' => 'display:none;max-height:50px' ,
-                        'id' => 'child_comment_loading_gif_' . $comment_id
-                     ])?>
+                     ['style' => 'display:none;max-height:50px' ,
+                      'id' => 'child_comment_loading_gif_' . $comment_id])?>
     </div>
 
     <?php

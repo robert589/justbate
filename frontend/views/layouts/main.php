@@ -44,6 +44,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="shortcut icon" href="" />
 </head>
 <body>
     <?php $this->beginBody() ?>
@@ -59,7 +60,7 @@ AppAsset::register($this);
 
                 <a class="navbar-brand" href="<?= Yii::$app->urlManager->createAbsoluteUrl(['']) ?>">
                     <img src=<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>
-                         style="height:50px;margin-top:-15px;width:160px">
+                         style="height:45px;margin-top:-10px;margin-left:15px;width:145px">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -151,7 +152,7 @@ AppAsset::register($this);
             <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
                 $child_comment_dummy->convertToTemplate();
             ?>
-            <?= $this->render(Yii::$app->request->baseUrl . '/../thread/_listview_child_comment',
+            <?= $this->render('../thread/_listview_child_comment',
                             ['child_comment' => $child_comment_dummy]) ?>
         </div>
     </div>
