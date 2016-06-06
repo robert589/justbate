@@ -1,3 +1,5 @@
+
+
 //new string library
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -130,9 +132,19 @@ ChildCommentWebSocket.prototype.getCommentId = function(){
 
 $(document).ready(function(){
     var $this = $(this);
+
     var child_comment_template = $this.find("#child-comment-template").html();
 
     var app = new Application(child_comment_template);
+    /*
+    $(function()
+    {
+        $.Redactor.settings = {
+            plugins: ['video', 'fullscreen'],
+            buttons: ['undo', 'redo', 'format', 'bold', 'italic', 'image']
+
+        }
+    });*/
 
     //facebook
     (function(d, s, id) {
@@ -280,9 +292,12 @@ $(document).ready(function(){
         .load($(this).attr("value"));
     });
 
-    $("div#create-thread-dropdown").click(function() {
+    $("div#create-thread-dropdown").click(function(event) {
         $("div#create-thread-main-form").slideToggle("fast");
+        event.stopPropagation();
     });
+
+
 
 
     $(document).on('click', '#comment_hide_list_thread_btn', function(){

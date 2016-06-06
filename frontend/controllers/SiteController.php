@@ -447,11 +447,15 @@ class SiteController extends Controller
 	public function actionSearchIssue($q =null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
-		if ($q != null || $q != '') {
-
+		if ($q != null) {
 			$data = Issue::getIssueBySearch($q, isset($_GET['except-own']), Yii::$app->user->getId());
-			$out['results'] = array_values($data);
+
 		}
+		else{
+			$data = UserFollowedIssue::getFollowedIssueByIdText(Yii::$app->user->getId());
+
+		}
+		$out['results'] = array_values($data);
 
 		echo Json::encode($out);
 	}

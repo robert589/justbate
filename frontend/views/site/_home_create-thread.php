@@ -4,11 +4,12 @@ use yii\helpers\Html;
 use kartik\widgets\Select2;
 use yii\db\Expression;
 use yii\web\JsExpression;
-
+use common\components\Constant;
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 ?>
 
-<?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,'method' => 'post', 'id' => 'form-action']) ?>
+<?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,'method' => 'post', 'id' => 'form-action',
+         'enableClientValidation' => true]) ?>
 <!-- Title input box -->
 
 <div id="create-thread-wrapper">
@@ -16,8 +17,10 @@ use yii\web\JsExpression;
         <div class="col-xs-12" id="create-thread-dropdown">
             <div id="create-thread-button">
                 <div class="input-group">
-                    <?= $form->field($create_thread_form, 'title',   [ 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-pencil"></i>']]]
-                                 )->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Topic title"]) ?>
+                    <?= $form->field($create_thread_form,
+                                    'title',
+                                    ['addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-pencil"></i>']]])
+                              ->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Topic title"]) ?>
                 </div>
             </div>
         </div> <!-- div.col-xs-12 -->
@@ -29,6 +32,8 @@ use yii\web\JsExpression;
             <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
             [
                 'clientOptions' => [
+                    'buttons' => Constant::defaultButtonRedactorConfig(),
+                    'plugins' => Constant::defaultPluginRedactorConfig(),
                     'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
                 ],
              ]) ?>
@@ -54,7 +59,6 @@ use yii\web\JsExpression;
                 'maintainOrder' => true,
                 'options' => ['placeholder' => 'Select Keywords ...', 'multiple' => true],
                 'pluginOptions' => [
-                    'minimumInputLength' => 1,
                     'allowClear' => true,
                     'tags' => true,
                     'ajax' => [

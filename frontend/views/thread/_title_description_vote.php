@@ -4,6 +4,7 @@
     use yii\helpers\Html;
     use yii\widgets\Pjax;
     use yii\helpers\HtmlPurifier;
+    use common\components\Constant;
 /** @var $thread \common\entity\ThreadEntity */
 /** @var $submit_vote_form \frontend\models\SubmitThreadVoteForm */
 
@@ -36,7 +37,8 @@ Pjax::begin([
             <?= Html::encode($title) ?>
         </div>
         <div id='post-description' align="center">
-            <?= HtmlPurifier::process($description)  ?>
+            <?= HtmlPurifier::process($description, Constant::DefaultPurifierConfig())
+            ?>
         </div>
 
     </div>
@@ -60,7 +62,7 @@ Pjax::begin([
         <div class="row">
             <?= \yii\redactor\widgets\Redactor::widget([
                 'name' => 'description',
-                'value' => HtmlPurifier::process($description),
+                'value' => HtmlPurifier::process($description, Constant::DefaultPurifierConfig()),
                 'clientOptions' => [
                     'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
                 ],

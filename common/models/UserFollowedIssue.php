@@ -56,6 +56,25 @@ class UserFollowedIssue extends ActiveRecord
         return $mapped_issue_list;
     }
 
+    public static function getFollowedIssueByIdText($user_id){
+        $sql = "SELECT issue_name from user_followed_issue where user_id = :user_id";
+
+        $results =  Yii::$app->db->createCommand($sql)->
+        bindParam(":user_id", $user_id)->
+        queryAll();
+
+        $mapped_issue_list = array();
+        foreach($results as $result){
+            $mapped_issue['id'] = $result['issue_name'];
+            $mapped_issue['text']  = $result['issue_name'] ;
+            $mapped_issue_list[] = $mapped_issue;
+        }
+
+
+        return $mapped_issue_list;
+
+    }
+
     public static function isFollower($user_id, $issue_name){
         return UserFollowedIssue::find()->where(['user_id' => $user_id, 'issue_name' => $issue_name])->exists();
     }

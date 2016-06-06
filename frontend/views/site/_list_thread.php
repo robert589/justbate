@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\helpers\HtmlPurifier;
 use common\models\User;
+use common\components\Constant;
 /** @var $thread \common\entity\ThreadEntity */
 /** @var $thread_issues array */
 
@@ -31,7 +32,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 		</div>
 
 		<div class="col-xs-12" style="margin-bottom: 10px;" align="center">
-			<?= HtmlPurifier::process($thread_description) ?>
+			<?= HtmlPurifier::process($thread_description, Constant::DefaultPurifierConfig()) ?>
 		</div>
 		<div align="center">
 			<?= $this->render('../thread/_thread_vote',

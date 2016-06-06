@@ -59,6 +59,8 @@ class Issue extends ActiveRecord{
 
     }
 
+
+
     public static function checkExist($issue){
         return self::find()->where(['issue_name' => $issue])->exists();
     }

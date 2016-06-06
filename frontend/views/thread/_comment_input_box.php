@@ -3,6 +3,7 @@ use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use common\components\Constant;
 /* @var $thread \common\entity\ThreadEntity **/
 /* @var $comment_model \frontend\models\CommentForm */
 /** @var $comment_input_retrieved boolean */
@@ -53,6 +54,8 @@ if(isset($comment_input_retrieved)) {
                           ->widget(\yii\redactor\widgets\Redactor::className(),
                                   ['options' => ['id' => 'comment-input-' . $thread_id],
                                                  'clientOptions' => [
+                                                     'buttons' => Constant::defaultButtonRedactorConfig(),
+                                                     'plugins' => Constant::defaultPluginRedactorConfig(),
                                                    'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image'])]])
                           ->label(false)?>
             </div>
