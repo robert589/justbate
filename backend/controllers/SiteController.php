@@ -5,6 +5,7 @@ use common\models\ChildComment;
 use common\models\ThreadComment;
 use common\models\LoginForm;
 use common\models\Thread;
+use common\models\User;
 
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -163,5 +164,17 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    public function actionUser()
+    {
+        $registered_user = User::find()->all();
+        $user_provider = new ArrayDataProvider([
+            'allModels' => $registered_user,
+            'pagination' => [
+                'pageSize' => 30
+            ]
+        ]);
+
+        return $this->render('user', ['user_provider' => $user_provider]);
+    }
 
 }
