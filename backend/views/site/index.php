@@ -3,7 +3,7 @@ use kartik\widgets\SideNav;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Welcome to admin page!';
+$this->title = "JustBate - Admin";
 
 $items = [
     ['label' => 'Threads',
@@ -15,13 +15,6 @@ $items = [
 
 ]
 ?>
-<div class="site-index">
-    <div class="col-md-3">
 
-
-    </div>
-
-    <div class="col-md-9">
-
-    </div>
-</div>
+<h1><?= $home->getWelcome() ?></h1>
+<p><?= $home->getDesc() ?></p>

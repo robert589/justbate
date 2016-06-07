@@ -3,14 +3,20 @@ namespace backend\controllers;
 
 use common\models\ChildComment;
 use common\models\ThreadComment;
+use common\models\LoginForm;
+use common\models\Thread;
+
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use common\models\LoginForm;
 use yii\filters\VerbFilter;
-use common\models\Thread;
 use yii\rbac\DbManager;
+
+use backend\entity\HomeEntity;
+use backend\creator\CreatorFactory;
+use backend\creator\HomeCreator;
+
 /**
  * Site controller
  */
@@ -62,11 +68,24 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        // check if user is signed in
         if (!\Yii::$app->user->isGuest) {
+            // check if signed in user is admin
             if(key(\Yii::$app->authManager->getRolesByUser(\Yii::$app->user->getId())) !== 'admin'){
                 return $this->render('prohibit');
             }
-            return $this->render('index');
+
+            // creating home factory
+            $user_id = Yii::$app->user->getId();
+            $entity = new HomeEntity($user_id);
+            $creator = (new CreatorFactory())->getCreator(CreatorFactory::HOME_CREATOR, $entity);
+
+            // creating home entity
+            $home_entity = $creator->get([HomeCreator::NEED_WELCOME]);
+
+            return $this->render('index', [
+                'home' => $home_entity,
+            ]);
         }
         else
         {
@@ -78,7 +97,8 @@ class SiteController extends Controller
 
     }
 
-    public function actionChildComment(){
+    public function actionChildComment()
+    {
         $all_child_comment = ChildComment::getAllChildComments();
 
         $child_comment_provider = new ArrayDataProvider([
@@ -92,7 +112,8 @@ class SiteController extends Controller
 
     }
 
-    public function actionThread(){
+    public function actionThread()
+    {
         $all_threads = Thread::find()->all();
         $thread_provider = new ArrayDataProvider([
             'allModels' => $all_threads,
@@ -104,7 +125,8 @@ class SiteController extends Controller
         return $this->render('thread', ['thread_provider' => $thread_provider]);
     }
 
-    public function actionThreadComment(){
+    public function actionThreadComment()
+    {
         $all_thread_comment = ThreadComment::getAllThreadComments();
 
         $thread_comment_provider = new ArrayDataProvider([

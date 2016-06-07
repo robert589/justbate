@@ -2,19 +2,23 @@
 namespace backend\controllers;
 
 use backend\models\BanThreadForm;
-use common\models\Choice;
 use backend\models\EditChoiceForm;
 use backend\models\EditThreadForm;
+
+use common\models\Choice;
+use common\models\LoginForm;
+use common\models\Thread;
+use common\models\Issue;
+
 use frontend\models\CreateThreadForm;
+
 use Yii;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use common\models\LoginForm;
 use yii\filters\VerbFilter;
-use common\models\Thread;
-use common\models\Issue;
+
 /**
  * Thread controller
  */
@@ -52,7 +56,8 @@ class ThreadController extends Controller
         ];
     }
 
-    public function actionBanned(){
+    public function actionBanned()
+    {
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $ban_thread_form = new BanThreadForm();
@@ -69,7 +74,8 @@ class ThreadController extends Controller
 
     }
 
-    public function actionCreate(){
+    public function actionCreate()
+    {
         $create_thread_form = new CreateThreadForm();
         $create_thread_form->user_id = \Yii::$app->user->id;
         if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
@@ -80,7 +86,8 @@ class ThreadController extends Controller
         return $this->render('create', ['create_thread_form' => $create_thread_form]);
     }
 
-    public function actionIssueList(){
+    public function actionIssueList()
+    {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!empty($_GET['q'])) {
@@ -92,7 +99,8 @@ class ThreadController extends Controller
         return $out;
     }
 
-    public function actionEdit(){
+    public function actionEdit()
+    {
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $queried_thread = Thread::findOne(['thread_id' => $id]);
