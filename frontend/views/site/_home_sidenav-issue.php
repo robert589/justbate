@@ -11,6 +11,7 @@
     use kartik\sidenav\SideNav;
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
+
 ?>
 
 <?php
@@ -27,6 +28,7 @@ Pjax::begin([
         <?= SideNav::widget([
             'type' => SideNav::TYPE_DEFAULT,
             'heading' => 'Feeds ' .
+
                         '<a class="btn" style="float:right;padding:0px" id="home-issue-edit-button">
                             <span class="glyphicon glyphicon-pencil"></ span>
                          </a>' ,

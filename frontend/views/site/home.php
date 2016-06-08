@@ -25,9 +25,10 @@ $this->title = "Home";
 <?php
 Modal::begin([
 	'id' => 'home-issue-edit-modal',
-	'size' => Modal::SIZE_LARGE
+	'size' => Modal::SIZE_LARGE,
+	'clientOptions' =>[ 'style' => 'position:fixed;margin-bottom:0']
 ]);
-echo $this->render('_home_issue_edit');
+echo $this->render('_home_issue_edit', ['issue_list' => $popular_issue_list, 'followed_issue_list' => $issue_followed_by_user ]);
 
 Modal::end();
 ?>
