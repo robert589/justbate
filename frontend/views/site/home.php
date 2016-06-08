@@ -2,6 +2,7 @@
 use yii\widgets\ListView;
 use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
+use yii\bootstrap\Modal;
 /** @var $home \common\entity\HomeEntity */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
@@ -19,6 +20,18 @@ $thread_list_provider = $home->getThreadList();
 $popular_issue_list = $home->getPopularIssueList();
 $this->title = "Home";
 ?>
+
+
+<?php
+Modal::begin([
+	'id' => 'home-issue-edit-modal',
+	'size' => Modal::SIZE_LARGE
+]);
+echo $this->render('_home_issue_edit');
+
+Modal::end();
+?>
+
 
 
 

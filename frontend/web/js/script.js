@@ -205,6 +205,12 @@ $(document).ready(function(){
         $("#home-add-issue-form-div").show();
     });
 
+    $(document).on('click', '#home-issue-edit-button', function(){
+        $("#home-issue-edit-modal").modal("show")
+            .find('#home-issue-edit-modal')
+            .load($(this).attr("value"));
+    });
+
     /**
      *
      */
@@ -502,7 +508,6 @@ $(document).ready(function(){
         console.log('retrieve comment input box form submitted');
 
         var services = '' + $(this).data('pjax');
-
 
         $.pjax.submit(event,  services, {push:false});
 
