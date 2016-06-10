@@ -73,7 +73,8 @@ AppAsset::register($this);
                             'id' => 'search_box_menu',
                             'theme' => Select2::THEME_KRAJEE,
                             'options' => ['placeholder' => 'Search'],
-                            'pluginEvents' => [
+
+                           'pluginEvents' => [
                                 "select2:select" => "function(){
                                     window.location.replace(
                                     'http://' +  document.domain  + '$temp_localhost' + '/thread/' + $('#search_box_menu').val() + '/' +
@@ -85,6 +86,8 @@ AppAsset::register($this);
                             'pluginOptions' => [
                                 'allowClear' => true,
                                 'minimumInputLength' => 1,
+                                'maximumSelectionSize' => 1,
+                                'multiple' => true,
                                 'language' => [
                                     'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
                                 ],

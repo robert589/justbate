@@ -1631,3 +1631,7 @@ select#give-comment-select {
 .select2-search__field {
     width: 100% !important;
 }
+
+.s2-togall-button{
+    display: none !important;
+}
