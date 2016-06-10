@@ -13,6 +13,12 @@ class DeletableList extends Widget
 
     public $style;
 
+    public $controller;
+
+    public $id;
+
+    public $post_name_data;
+
     public function init()
     {
         parent::init();
@@ -25,6 +31,25 @@ class DeletableList extends Widget
             $this->style = "";
         }
 
+        if($this->controller === null){
+            $this->controller = "";
+        }
+
+        if($this->id === null){
+            $this->id = "home-deletable-list";
+        }
+
+        if($this->post_name_data === null){
+            $this->post_name_data = "post_name_data";
+        }
+
+        $this->registerAssets();
+    }
+
+    public function registerAssets(){
+        $view = $this->getView();
+        DeletableListAsset::register($view);
+
     }
 
     public function run()
@@ -34,6 +59,9 @@ class DeletableList extends Widget
         }
         return $this->render('deletable-list', ['list' => $this->list,
                                                 'class' => $this->class,
-                                                'style' => $this->style]);
+                                                'style' => $this->style,
+                                                'controller' => $this->controller,
+                                                'id' => $this->id,
+                                                'name' => $this->post_name_data]);
     }
 }

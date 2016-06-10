@@ -1,6 +1,5 @@
 <?php
 /** @var $popular_issue_list array */
-
 $first = true;
 ?>
 
@@ -8,12 +7,10 @@ $first = true;
     <div style="background-color: white;margin-top: 0">
         <h4 align="center">Popular issue</h4>
         <ul style="display: inline;padding: 1px;">
-
             <?php
-
             foreach($popular_issue_list as $issue){
                 if(!$first){echo '-';}else{ $first = false;}
-                ?>
+            ?>
 
                 <li style="display: inline">
                     <a href="<?= $issue['url'] ?>" style="font-size: 12px">
@@ -22,11 +19,7 @@ $first = true;
                 </li>
 
 
-                <?php
-
-            }
-
-            ?>
+            <?php } ?>
         </ul>
     </div>
 </div>

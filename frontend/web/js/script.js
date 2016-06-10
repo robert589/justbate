@@ -201,14 +201,13 @@ $(document).ready(function(){
      *
      */
     $(document).on('click', '#home-add-issue-button', function(){
+
         $("#home-add-issue-button-div").hide();
         $("#home-add-issue-form-div").show();
     });
 
     $(document).on('click', '#home-issue-edit-button', function(){
-        $("#home-issue-edit-modal").modal("show")
-            .find('#home-issue-edit-modal')
-            .load($(this).attr("value"));
+        $("#home-add-issue-form-div").show();
     });
 
     /**

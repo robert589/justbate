@@ -21,67 +21,40 @@ $popular_issue_list = $home->getPopularIssueList();
 $this->title = "Home";
 ?>
 
-
-<?php
-Modal::begin([
-	'id' => 'home-issue-edit-modal',
-	'size' => Modal::SIZE_LARGE,
-	'clientOptions' =>[ 'style' => 'position:fixed;margin-bottom:0']
-]);
-echo $this->render('_home_issue_edit', ['issue_list' => $popular_issue_list, 'followed_issue_list' => $issue_followed_by_user ]);
-
-Modal::end();
-?>
-
-
-
-
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
 
 		<?= $this->render('_home_popular-issue',
-						['popular_issue_list' => $popular_issue_list,
-						])
-		?>
+						['popular_issue_list' => $popular_issue_list])?>
 
 		<?= $this->render('_home_sidenav-issue',
-							['issue_list' => $issue_followed_by_user,
-							 'add_issue_form' => new \common\models\UserFollowedIssue()]) ?>
+						 ['issue_list' => $issue_followed_by_user,
+						  'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
 
 		<div class="col-xs-12">
 			<?= SideNav::widget([
 					'type' => SideNav::TYPE_DEFAULT,
 					'heading' => 'Trending Topic',
-					'items' => $trending_topic_list,
-			]) ?>
-		</div> <!-- div.col-xs-12 -->
-	</div><!-- div.col-md-3 -->
+					'items' => $trending_topic_list	]) ?>
+		</div>
+	</div>
 
 	<div class="col-xs-12 col-md-8 home-main-section">
 
 		<!-- Issue header if exist-->
-		<?php
-
-		if($has_issue){
-
-		?>
-
+		<?php if($has_issue){ ?>
 		<div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
 			<?= $this->render('_home_issue-header',
 							['issue_name' => $issue_name,
 							'issue_num_followers' => $num_followers_of_issue,
 							'user_is_follower' => $user_follow_issue]) ?>
 		</div>
-
-		<?php
-		}
-		?>
+		<?php }	?>
 
 		<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
 
 
 		<div class="col-xs-12 home-thread-list">
-
 			<div class="col-xs-12" id="main-post-desc">
 				<?= ListView::widget([
 					'id' => 'threadList',
@@ -103,11 +76,9 @@ Modal::end();
 						return $this->render('_list_thread',[
 							'thread' => $thread]
 						);
-					}
-				])
-				?>
-			</div><!-- div.col-xs-12 -->
-		</div> <!-- div.md-7 -->
+					}])?>
+			</div>
+		</div>
 	</div>
 </div>
 

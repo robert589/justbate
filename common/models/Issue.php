@@ -68,19 +68,25 @@ class Issue extends ActiveRecord{
     public static function getIssueBySearch($q, $except, $user_id = null){
         $q = '%' . $q . '%';
 
-        $sql = "Select issue_name as id, issue_name as text from issue where issue_name like :query";
+        if($q === '' || $q === null){
+            $sql = "Select issue_name as id, issue_name as text from issue order by issue_name " ;
+        }
+        else{
 
+            $sql = "Select issue_name as id, issue_name as text from issue where issue_name like :query";
+
+        }
         if($except === true){
-            $sql .= " and issue_name NOT IN(Select issue_name from user_followed_issue where user_id = :user_id )";
+            $sql .= " and issue_name NOT IN(Select issue_name from user_followed_issue where user_id = :user_id ) limit 4";
 
-            return
-                \Yii::$app->db
+            return \Yii::$app->db
                     ->createCommand($sql)
                     ->bindParam(':query', $q)
                     ->bindParam(':user_id', $user_id)
                     ->queryAll();
         }
         else{
+            $sql .= ' limit 4';
             return \Yii::$app->db
                 ->createCommand($sql)
                 ->bindParam(':query', $q)

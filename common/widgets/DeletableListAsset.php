@@ -15,13 +15,15 @@ use yii\web\AssetBundle;
  */
 class DeletableListAsset extends AssetBundle
 {
+
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '@web' ;
+
     public $css = [
-        'css/deletable-list.css',
+        'frontend/web/css/deletable-list.css',
     ];
     public $js = [
-        'js/deletable-list.js'
+        'frontend/web/js/deletable-list.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

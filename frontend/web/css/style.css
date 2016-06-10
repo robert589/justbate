@@ -1626,4 +1626,8 @@ select#give-comment-select {
     div#profile-feed {
         width: 100%;
     }
+
+}
+.select2-search__field {
+    width: 100% !important;
 }

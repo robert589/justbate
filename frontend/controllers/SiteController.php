@@ -234,10 +234,13 @@ class SiteController extends Controller
 
 	public function actionAddIssue(){
 		$add_issue_form = new UserFollowIssueForm();
-		if($add_issue_form->load(Yii::$app->request->post()) && $add_issue_form->validate()){
-			if($add_issue_form->followIssue()){
+
+		if($add_issue_form->load(Yii::$app->request->post()) && $add_issue_form->validate()) {
+			if ($add_issue_form->followIssue()) {
 				$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
-				return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => new UserFollowIssueForm()]);
+				return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => new UserFollowIssueForm()]);
+			} else {
+				Yii::$app->end("Cannot follow issue");
 			}
 		}
 
@@ -447,14 +450,8 @@ class SiteController extends Controller
 	public function actionSearchIssue($q =null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
-		if ($q != null) {
-			$data = Issue::getIssueBySearch($q, isset($_GET['except-own']), Yii::$app->user->getId());
+		$data = Issue::getIssueBySearch($q, isset($_GET['except-own']), Yii::$app->user->getId());
 
-		}
-		else{
-			$data = UserFollowedIssue::getFollowedIssueByIdText(Yii::$app->user->getId());
-
-		}
 		$out['results'] = array_values($data);
 
 		echo Json::encode($out);
@@ -555,7 +552,19 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionDeleteFollowList(){
+		if(isset($_POST['deleted_issue'])){
 
+			$user_follow_issue_form = new UserFollowIssueForm();
+
+			$user_follow_issue_form->issue_name = $_POST['deleted_issue'];
+			$user_follow_issue_form->user_id = Yii::$app->user->getId();
+
+			$success = $user_follow_issue_form->unfollowIssue();
+
+			echo $success;
+		}
+	}
 
 
 	private function getDefaultChoice(&$create_thread_form){
