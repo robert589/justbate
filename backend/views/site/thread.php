@@ -7,7 +7,6 @@
 
     $this->title = "Thread list" ;
 ?>
-
 <?= Dialog::widget() ?>
 
 <?= GridView::widget([

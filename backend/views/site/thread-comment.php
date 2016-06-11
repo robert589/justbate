@@ -9,7 +9,6 @@ $this->title = "Thread Comment List" ;
 ?>
 
 <?= Dialog::widget() ?>
-
 <?= GridView::widget([
     'dataProvider' => $thread_comment_provider,
     'columns' => [

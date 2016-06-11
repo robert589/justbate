@@ -174,5 +174,4 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->find()->where(['username' => $this->username])->exists();
     }
 
-
 }

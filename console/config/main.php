@@ -24,7 +24,10 @@ return [
             'scriptUrl' => Yii::getAlias('@base-url'),
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false
-        ]
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
 
     ],
     'params' => $params,
