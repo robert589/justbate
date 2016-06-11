@@ -6,6 +6,7 @@ use common\models\ThreadComment;
 use common\models\LoginForm;
 use common\models\Thread;
 use common\models\User;
+use common\components\DateTimeFormatter;
 
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -23,37 +24,68 @@ use backend\creator\HomeCreator;
  */
 class SiteController extends Controller
 {
+    private $isAuth = true;
     /**
      * @inheritdoc
      */
-    /*
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['thread', 'login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'access' => [
+    //             'class' => AccessControl::className(),
+    //             'rules' => [
+    //                 [
+    //                     'actions' => ['thread', 'login', 'error'],
+    //                     'allow' => true,
+    //                 ],
+    //                 [
+    //                     'actions' => ['logout', 'index'],
+    //                     'allow' => true,
+    //                     'roles' => ['@'],
+    //                 ],
+    //             ],
+    //         ],
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             'actions' => [
+    //                 'logout' => ['post'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
-    */
+    public function beforeAction($action)
+    {
+        if($action->id === "index"){
+            if(key(\Yii::$app->authManager->getRolesByUser(\Yii::$app->user->getId())) !== 'admin'){
+                $this->isAuth = false;
+            }
+        }
+        else if($action->id === "thread"){
+            if (!Yii::$app->user->can('edit_thread') || !Yii::$app->user->can('ban_thread')){
+                $this->isAuth = false;
+            }
+        }
+        else if($action->id === "thread-comment"){
+            if (!Yii::$app->user->can('edit_thread_comment') || !Yii::$app->user->can('ban_thread_comment')){
+                $this->isAuth = false;
+            }
+        }
+        else if($action->id === "child-comment"){
+            if (!Yii::$app->user->can('edit_child_comment') || !Yii::$app->user->can('ban_child_comment')){
+                $this->isAuth = false;
+            }
+        }
+        else if($action->id === "user"){
+            if (!Yii::$app->user->can('view_all_user')){
+                $this->isAuth = false;
+            }
+        }
+        else{
+            $this->isAuth = true;
+        }
+        return true;
+    }
 
     /**
      * @inheritdoc
@@ -71,8 +103,9 @@ class SiteController extends Controller
     {
         // check if user is signed in
         if (!\Yii::$app->user->isGuest) {
-            // check if signed in user is admin
-            if(key(\Yii::$app->authManager->getRolesByUser(\Yii::$app->user->getId())) !== 'admin'){
+
+            // check if user is authenticated
+            if($this->isAuth === false){
                 return $this->render('prohibit');
             }
 
@@ -100,6 +133,11 @@ class SiteController extends Controller
 
     public function actionChildComment()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('prohibit');
+        }
+
         $all_child_comment = ChildComment::getAllChildComments();
 
         $child_comment_provider = new ArrayDataProvider([
@@ -115,6 +153,11 @@ class SiteController extends Controller
 
     public function actionThread()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('prohibit');
+        }
+
         $all_threads = Thread::find()->all();
         $thread_provider = new ArrayDataProvider([
             'allModels' => $all_threads,
@@ -128,6 +171,11 @@ class SiteController extends Controller
 
     public function actionThreadComment()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('prohibit');
+        }
+
         $all_thread_comment = ThreadComment::getAllThreadComments();
 
         $thread_comment_provider = new ArrayDataProvider([
@@ -136,7 +184,7 @@ class SiteController extends Controller
                 'pageSize' => 30
             ]
         ]);
-
+        $actionid = $this->action->id;
         return $this->render('thread-comment', ['thread_comment_provider' => $thread_comment_provider]);
 
     }
@@ -166,7 +214,22 @@ class SiteController extends Controller
 
     public function actionUser()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('prohibit');
+        }
+        
         $registered_user = User::find()->all();
+
+        //modify date format
+        foreach ($registered_user as $row) {
+            foreach ($row as $key => $value) {
+                if($key === 'created_at' || $key === 'updated_at'){
+                    $row[$key] = DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($value);
+                }
+            }
+        }
+
         $user_provider = new ArrayDataProvider([
             'allModels' => $registered_user,
             'pagination' => [
