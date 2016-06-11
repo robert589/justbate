@@ -27,23 +27,17 @@ Pjax::begin([
 
 ?>
 
-<?php
-    if(isset($comment_retrieved)){
+<?php if(isset($comment_retrieved)){
         /* Variable used in this if block   */
         $total_comments = $thread->getTotalComment();
         $comment_providers = $thread->getCommentList();
-        $thread_id = $thread->getThreadId();
+        $thread_id = $thread->getThreadId(); ?>
+    <?= Html::hiddenInput('total_comments',$total_comments, ['id' => 'hi_total_comments_' . $thread_id]) ?>
+    <div class="col-xs-12 comment-tab section" id= <?="home_comment_section_" . $thread_id?>>
+        <?= $this->render('../thread/_comment_part', ['comment_providers' => $comment_providers]) ?>
+    </div>
+<?php } ?>
 
-?>
-        <?= Html::hiddenInput('total_comments',$total_comments, ['id' => 'hi_total_comments_' . $thread_id]) ?>
-
-        <div class="col-xs-12 comment-tab section" id= <?="home_comment_section_" . $thread_id?>>
-
-            <?= $this->render('../thread/_comment_part', ['comment_providers' => $comment_providers]) ?>
-
-        </div>
 <?php
-
-    }
 Pjax::end();
 ?>

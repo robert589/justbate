@@ -30,22 +30,17 @@ $has_chosen_comment = $thread->hasChosenComment();
 		<div class="col-xs-12 thread-link" align="center">
 			<?= Html::a(Html::encode($thread_title), $link_to_thread)?>
 		</div>
-
 		<div class="col-xs-12" style="margin-bottom: 10px;" align="center">
 			<?= HtmlPurifier::process($thread_description, Constant::DefaultPurifierConfig()) ?>
 		</div>
 		<div align="center">
 			<?= $this->render('../thread/_thread_vote',
 							 ['thread' => $thread,
-							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])
-			?>
+							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
 		</div>
-
 		<div class="user-comment-reaction col-xs-12">
 
-		<?php
-
-		if($has_chosen_comment){
+		<?php if($has_chosen_comment){
 			/** Used Variable */
 			$chosen_comment = $thread->getChosenComment();
 			$commentator_user_profile_link = $chosen_comment->getCommentatorUserProfileLink();
@@ -62,14 +57,18 @@ $has_chosen_comment = $thread->hasChosenComment();
 
 			<div class="col-xs-11" style="margin-top: -40px; margin-left: 55px;margin-bottom: 20px">
 				<div class="name-link inline">
-					<?= $commentator_full_name ?> chose <?= $commentator_choice ?>
+					<?= Html::a($commentator_full_name, $commentator_user_profile_link) ?> chose <?= $commentator_choice ?>
 				</div>
 			</div>
 
-			<div class="home-comment-tab" style="margin-left:0; padding-left: 0">
+			<div class="home-comment-tab col-xs-12" style="margin-left:0; padding-left: 0">
 				<?= $this->render('../thread/_listview_comment_bottom',
 								 ['thread_comment' => $chosen_comment ,
 								  'is_thread_comment' => true]) ?>
+			</div>
+			<div class="col-xs-12">
+				<hr style="margin-bottom: 0">
+				<?= Html::a('View other comments <span class="glyphicon glyphicon-arrow-right"></span>', $link_to_thread, ['target' => '_blank']) ?>
 			</div>
 
 		<?php
@@ -77,8 +76,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 		else{
 		?>
 			<div class="home-comment-tab">
-				<?= $this->render('_list_thread_bottom', [
-					'thread' => $thread]) ?>
+				<?= $this->render('_list_thread_bottom', ['thread' => $thread]) ?>
 			</div>
 		<?php
 		}

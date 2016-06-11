@@ -97,7 +97,8 @@ class ThreadController extends Controller
 
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $thread_comment);
 
-		$thread_comment = $creator->get([ThreadCommentCreator::NEED_CHILD_COMMENTS]);
+		/** remove this in the future for comment info, bad practice */
+		$thread_comment = $creator->get([ThreadCommentCreator::NEED_CHILD_COMMENTS, ThreadCommentCreator::NEED_COMMENT_INFO]);
 
 		$thread_comment->setThreadId($thread_id);
 

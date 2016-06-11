@@ -22,12 +22,10 @@ else{
     $logout_link = Yii::$app->request->baseUrl . '/site/logout';
     $profile_link = Yii::$app->request->baseUrl . '/user/' . User::getUsername(Yii::$app->getUser()->id);
 }
-
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/bootstrap-social.css');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery-ias.min.js');
-
 $temp_localhost = Yii::$app->request->baseUrl;
 AppAsset::register($this);
 ?>
@@ -59,49 +57,45 @@ AppAsset::register($this);
                 </button>
 
                 <a class="navbar-brand" href="<?= Yii::$app->urlManager->createAbsoluteUrl(['']) ?>">
-                    <img src=<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>
+                    <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>"
                          style="height:45px;margin-top:-10px;margin-left:15px;width:145px">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li id="search-box" class="item">
-                        <?=
-                        Select2::widget([
-                            'name' => 'search_box_menu',
-                            'class'  => 'form-input',
-                            'id' => 'search_box_menu',
-                            'theme' => Select2::THEME_KRAJEE,
-                            'options' => ['placeholder' => 'Search'],
-
-                           'pluginEvents' => [
-                                "select2:select" => "function(){
-                                    window.location.replace(
-                                    'http://' +  document.domain  + '$temp_localhost' + '/thread/' + $('#search_box_menu').val() + '/' +
-                                    $('#search_box_menu').text().replace(
-                                    'Search','').replace(/ /g, '-').toLowerCase()
-                                    );
-                                }"
-                            ],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                                'minimumInputLength' => 1,
-                                'maximumSelectionSize' => 1,
-                                'multiple' => true,
-                                'language' => [
-                                    'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                        <?= Select2::widget([
+                               'name' => 'search_box_menu',
+                               'class'  => 'form-input',
+                               'id' => 'search_box_menu',
+                               'theme' => Select2::THEME_KRAJEE,
+                               'options' => ['placeholder' => 'Search'],
+                               'pluginEvents' => [
+                                    "select2:select" => "function(){
+                                        window.location.replace(
+                                        'http://' +  document.domain  + '$temp_localhost' + '/thread/' + $('#search_box_menu').val() + '/' +
+                                        $('#search_box_menu').text().replace(
+                                        'Search','').replace(/ /g, '-').toLowerCase()
+                                        );
+                                    }"
                                 ],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                    'maximumSelectionSize' => 1,
+                                    'multiple' => true,
+                                    'language' => [
+                                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                    ],
                                     'ajax' => [
-                                    'url' => \yii\helpers\Url::to(['site/search-in-notif']),
-                                    'dataType' => 'json',
-                                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                        'url' => \yii\helpers\Url::to(['site/search-in-notif']),
+                                        'dataType' => 'json',
+                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                    ],
+                                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                    'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
+                                    'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
                                 ],
-                                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                                'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
-                                'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
-                            ],
-                        ])
-                        ?>
+                            ])?>
                     </li>
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>

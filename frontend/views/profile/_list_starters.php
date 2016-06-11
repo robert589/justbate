@@ -5,10 +5,10 @@
 
 
 <article>
-    <div class="row">
+    <div>
         <?= Html::a(Html::encode($model['title']), Yii::$app->request->baseUrl . "/thread/" . $model['thread_id'] . '/' . Html::encode($model['title'])) ?>
     </div>
-    <div class="row" align="left">
+    <div align="left">
         <?= HtmlPurifier::process($model['description']) ?>
     </div>
 

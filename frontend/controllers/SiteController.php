@@ -436,10 +436,8 @@ class SiteController extends Controller
 	public function actionSearchInNotif($q = null){
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$out = ['results' => ['id' => '', 'text' => '']];
-		if ($q != null || $q != '') {
-			$data = Thread::getThreadBySearch($q);
-			$out['results'] = array_values($data);
-		}
+		$data = Thread::getThreadBySearch($q);
+		$out['results'] = array_values($data);
 
 		echo Json::encode($out);
 	}
@@ -465,8 +463,6 @@ class SiteController extends Controller
 	{
 		$model = new SignupForm();
 		$is_sign_up_with_fb = false;
-
-
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {
 				if (Yii::$app->getUser()->login($user)) {
@@ -476,9 +472,7 @@ class SiteController extends Controller
 					Yii::$app->end("User" . print_r($user));
 				}
 			}
-
 		}
-
 		return $this->render('signup', [
 			'is_sign_up_with_fb' => $is_sign_up_with_fb,
 			'model' => $model,

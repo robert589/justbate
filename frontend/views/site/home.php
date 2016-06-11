@@ -3,6 +3,7 @@ use yii\widgets\ListView;
 use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
 use yii\bootstrap\Modal;
+use kartik\social\FacebookPlugin;
 /** @var $home \common\entity\HomeEntity */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
@@ -79,6 +80,10 @@ $this->title = "Home";
 					}])?>
 			</div>
 		</div>
+	</div>
+
+	<div class="col-md-1">
+		<div class="fb-page" data-href="https://www.facebook.com/justbate/" data-tabs="timeline" data-width="180" data-height="150" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/justbate/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/justbate/">Justbate</a></blockquote></div>
 	</div>
 </div>
 

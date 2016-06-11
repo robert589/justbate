@@ -15,14 +15,11 @@ $thread_total_comments = $thread->getTotalComment();
 $current_user_has_vote = $thread->hasVote();
 ?>
 
-<div class="col-xs-12" style="padding-left: 0; padding-right: 0;">
+<div class="col-xs-12" style="padding-right: 0;">
     <div class="inline">
-        <!-- Retrieve comment input -->
         <?= $this->render('../thread/_retrieve_comment_button', ['thread' => $thread]) ?>
     </div>
-
     <div class="inline">
-        <!-- retrieve comment -->
         <?= Html::a("Comment ( $thread_total_comments )",
             $comment_request_url,
             ['class' => 'btn btn-primary inline retrieve-comment-link',
@@ -40,7 +37,6 @@ $current_user_has_vote = $thread->hasVote();
                  'id' => 'list_thread_loading_gif_' . $thread_id ])
     ?>
 </div>
-
 <!-- Comment input box-->
 <div style="margin-right: -15px;" class="col-xs-12">
     <?= $this->render('../thread/_comment_input_box',
@@ -48,10 +44,7 @@ $current_user_has_vote = $thread->hasVote();
                          'comment_model' => new \frontend\models\CommentForm()])
     ?>
 </div>
-
 <!-- Thread comment -->
 <div class="col-xs-12" style="width: 100%">
-    <?= $this->render('_list_thread_thread_comment',
-                    ['thread' => $thread  ])
-    ?>
+    <?= $this->render('_list_thread_thread_comment', ['thread' => $thread  ]) ?>
 </div>

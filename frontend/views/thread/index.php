@@ -35,8 +35,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 			return $this->render('_listview_comment',
 									['thread_comment' => $thread_comment,
-									 'child_comment_form' => new \frontend\models\ChildCommentForm(),
-									]);
+									 'child_comment_form' => new \frontend\models\ChildCommentForm()]);
 		}
 	]);
 

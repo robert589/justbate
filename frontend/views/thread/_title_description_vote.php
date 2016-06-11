@@ -11,9 +11,6 @@
 if(!isset($vote_tab_active)){
     $vote_tab_active = true;
 }
-/**
- * VARIABLE USED
- */
 $current_user_choice = $thread->getCurrentUserChoice();
 $choices_in_thread = $thread->getChoices();
 $description = $thread->getDescription();
@@ -28,7 +25,6 @@ Pjax::begin([
         'container' => '#edit_thread',
     ]]
 );?>
-    <!-- Shown part-->
     <div id="shown_title_description_part">
         <div class="col-xs-12 thread-title">
             <?= Html::encode($title) ?>
@@ -36,11 +32,8 @@ Pjax::begin([
         <div id='post-description' align="center">
             <?= HtmlPurifier::process($description, Constant::DefaultPurifierConfig()) ?>
         </div>
-
     </div>
-    <!-- Edit part-->
     <div id="edit_title_description_part" style="display: none">
-
         <?php $form = ActiveForm::begin([
                 'action' => ['thread/edit-thread'],
                 'method' => 'post',
@@ -48,13 +41,10 @@ Pjax::begin([
             ])
         ?>
             <?= Html::hiddenInput('thread_id', $thread_id ) ?>
-
             <div class="row">
                  <?= Html::input('text','title', $title, ['placeholder' => 'Title..', 'class' => 'form-control']) ?>
             </div>
-
             <div class="row">
-
                 <?= \yii\redactor\widgets\Redactor::widget([
                     'name' => 'description',
                     'value' => HtmlPurifier::process($description, Constant::DefaultPurifierConfig()),
@@ -65,15 +55,11 @@ Pjax::begin([
                     ],
                 ]) ?>
             </div>
-
             <div class="row" align="right">
                 <?= Html::button('Cancel', ['class' => 'btn btn-danger', 'id' => 'cancel_edit_thread_button']) ?>
                 <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
             </div>
-
         <?php  ActiveForm::end(); ?>
-
     </div>
-
 <?php Pjax::end(); ?>
 

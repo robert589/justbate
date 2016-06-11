@@ -40,7 +40,6 @@ Application.prototype.checkExist = function(comment_id){
 Application.prototype.subscribeChildCommentConn = function(comment_id){
 
     if(!this.checkExist(comment_id)){
-        console.log("New connection");
         var newConn = new ChildCommentWebSocket(comment_id, this.template);
         this.userSubscriptions.push(newConn);
     }
@@ -132,20 +131,8 @@ ChildCommentWebSocket.prototype.getCommentId = function(){
 
 $(document).ready(function(){
     var $this = $(this);
-
     var child_comment_template = $this.find("#child-comment-template").html();
-
     var app = new Application(child_comment_template);
-    /*
-    $(function()
-    {
-        $.Redactor.settings = {
-            plugins: ['video', 'fullscreen'],
-            buttons: ['undo', 'redo', 'format', 'bold', 'italic', 'image']
-
-        }
-    });*/
-
     //facebook
     (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -155,10 +142,8 @@ $(document).ready(function(){
             fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    //layout main
     $('#loading-bar').height($(document).height());
 
-    // user vote submit when value changed
     $(document).on('change',".user-vote",function() {
         var service = $(this).data('service');
         $("form#form_user_vote_"+service).submit();
@@ -175,54 +160,48 @@ $(document).ready(function(){
                       'scrollTo':false});
     });
 
-    // replacing fb icon with font-awesome
     $("span.auth-icon").remove();
     $("a.auth-link").removeAttr("data-popup-width");
     $("a.auth-link").removeAttr("data-popup-height");
     $("a.auth-link").append($('<div class="input-group"><span class="input-group-addon"><i class="fa fa-facebook"></i></span><input type="text" class="form-control" value="Facebook" readonly="true" /></div>'));
     $("div#facebook-signup input[type='text']").val("Join Us With Facebook");
 
-    // define width on thread/index.php
     var total_width = $('div#first-part').width();
     var sum_of_children = $("div#comment-tab ul#comment-tab").children().length;
     if ($(window).innerWidth() < 767) {
         $("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width", (total_width/sum_of_children) + "px");
-    //        alert($("div.section div#comment-tab div#comment-tab-container ul.nav-tabs li").css("width"));
     }
 
     // on site/home
     $(document).on('click',"div#verify-email-dropdown",function() {
         $("div#verify-email-form").slideToggle("fast");
-        $("span#icon-dropdown").toggleClass("glyphicon-chevron-down");
+        $("span#icon-dropdown").toggl
+        eClass("glyphicon-chevron-down");
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
 
-    /**
-     *
-     */
     $(document).on('click', '#home-add-issue-button', function(){
-
         $("#home-add-issue-button-div").hide();
         $("#home-add-issue-form-div").show();
     });
 
-    $(document).on('click', '#home-issue-edit-button', function(){
-        $("#home-add-issue-form-div").show();
-    });
+    $("#home-issue-edit-popover").click(function(){
+        if($("#home-add-issue-popover-content").is(':visible')) {
+            $("#home-add-issue-popover-content").hide();
 
-    /**
-     *
-     */
+        }
+        else{
+            $("#home-add-issue-popover-content").show();
+        }}
+    );
+
+
+
     $(document).on('click', '#resend-unverified-email-button',function(){
         $("#resendchangeemailform-command").val("resend");
         $("#change-verify-email-form").submit();
     });
 
-
-    /**
-     *
-     *
-     */
     $(document).on('click', '#change-unverified-email-button', function(){
         if($(this).text() == 'Change'){
             $("#resendchangeemailform-user_email").prop('readonly', false);
@@ -230,7 +209,6 @@ $(document).ready(function(){
         }
         else if($(this).text() == 'Confirm') {
             $("#resendchangeemailform-command").val("change");
-            //    $("#resendchangeemailform-email").val("rlimanto001@gmail.com");
             $("#change-verify-email-form").submit();
             $(this).text('Change');
             $("#resendchangeemailform-user_email").prop('readonly', true);
@@ -238,7 +216,6 @@ $(document).ready(function(){
     });
 
     $(document).on('pjax:send', '#change-verify-email-pjax', function(){
-        console.log('change verify email pjax');
         $('#resend-unverified-email-button').prop('disabled', true);
         $('#change-unverified-email-button').prop('disabled', true);
 
@@ -248,26 +225,16 @@ $(document).ready(function(){
     });
 
 
-    //on profile/index
-    /**
-     *
-     */
     $("img#avatar").mouseenter(function() {
         $("img#avatar").css("opacity",".5");
         $("button#upload-image").css("opacity","1");
     });
 
-    /**
-     *
-     */
     $("button#upload-image").mouseenter(function() {
         $("img#avatar").css("opacity",".5");
         $("button#upload-image").css("opacity","1");
     });
 
-    /**
-     *
-     */
     $("button#upload-image").mouseout(function() {
         $("img#avatar").css("opacity","1");
         $("button#upload-image").css("opacity","0");
@@ -362,7 +329,6 @@ $(document).ready(function(){
             }
         }
         else{
-            console.log('retrieve child comment link');
             $.pjax.click(event,{container: "#child_comment_" + comment_id,
                                 push:false,
                                 scrollTo : false,
@@ -373,7 +339,6 @@ $(document).ready(function(){
 
     $(document).on('pjax:send', '.child_comment_pjax', function(event){
         event.preventDefault();
-        console.log("child_comment_pjax");
         var comment_id = $(this).data('service');
 
         $('#child_comment_loading_gif_' + comment_id).css("display", "inline");
@@ -386,7 +351,6 @@ $(document).ready(function(){
     $(document).on('pjax:complete', '.child_comment_pjax', function(event){
         event.preventDefault();
 
-        console.log("child_comment_pjax_comment");
         var comment_id = $(this).data('service');
 
         $('#child_comment_loading_gif_' + comment_id).css("display","none");
@@ -398,7 +362,6 @@ $(document).ready(function(){
     });
 
     $(document).on('pjax:send', '.comment_votes_pjax', function(event){
-        console.log("comment votes pjax");
         event.preventDefault();
         event.stopPropagation();
     });
@@ -406,19 +369,13 @@ $(document).ready(function(){
 
 
     $(document).on('pjax:complete', '.child_comment_input_box_pjax', function(){
-
         var parent_id = $(this).data('service');
-
         var socketConn = app.getSocketConnection(parent_id);
-
         var comment_id = $("#last_comment_id_current_user_" + parent_id).val();
-
         var user_id = $("#user-login-id").val();
-
         if(comment_id !== null){
             socketConn.sendMessage(comment_id, user_id);
         }
-
         return false;
     });
 
@@ -428,13 +385,11 @@ $(document).ready(function(){
     });
 
     $(document).on('pjax:timeout', '.child_comment_input_box_pjax', function(){
-       console.log('timeout');
        event.preventDefault();
        return false;
     });
 
     $(document).on('pjax:error', '.child_comment_input_box_pjax', function(){
-        console.log('error');
         event.preventDefault();
     })
 
@@ -452,7 +407,6 @@ $(document).ready(function(){
 
     .on('submit', '.submit-vote-form', function(event){
         event.preventDefault();
-
         $.pjax.submit(event,
                       $(this).data('pjax'),
                         {'push' : false,
@@ -486,62 +440,37 @@ $(document).ready(function(){
 
     $(document).on('pjax:send','.comment_input_pjax', function(event){
         event.preventDefault();
-        console.log('comment input pjax sent');
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).css("display","inline");
 
     }).on('pjax:complete', '.comment_input_pjax', function(event){
         event.preventDefault();
-        console.log('comment input pjax completed');
         var thread_id = $(this).data('service');
         $('#list_thread_loading_gif_' + thread_id).css("display","none");
 
     });
 
-    /**
-     * File:
-     */
     $(document).on('submit', '.retrieve_comment_input_box_form', function(event) {
         event.preventDefault();
-
-        console.log('retrieve comment input box form submitted');
-
         var services = '' + $(this).data('pjax');
-
         $.pjax.submit(event,  services, {push:false});
-
         return false;
-
     });
 
     $(document).on('pjax:send','.comment_section_pjax', function(event){
         event.preventDefault();
-
-        console.log('comment_section_pjax sent');
-
         var thread_id = $(this).data('service');
-
         $('#list_thread_loading_gif_' + thread_id).css("display","inline");
-
         return false;
-
     }).on('pjax:complete', '.comment_section_pjax', function(event){
         event.preventDefault();
-
-        console.log('comment_section_pjax completed')
-
         var thread_id = $(this).data('service');
-
         $('#list_thread_loading_gif_' + thread_id).css("display","none");
-
         return false;
-
     }).on('pjax:timeout', '.comment_section_pjax', function(event){
         event.preventDefault();
-        console.log('timeout');
     });
 
-    //edit thread part
     $("#edit-thread").click(function(){
         $("#shown_title_description_part").css("display","none");
         $("#edit_title_description_part").css("display","inline");
@@ -561,14 +490,11 @@ $(document).ready(function(){
         var vote = $(this).val();
 
         var comment_id = $(this).closest("form").find('.hi-comment-vote-comment-id').val();
-        // console.log(vote);
 
         $("#hi-comment-vote-" + comment_id).val(vote);
-        //console.log( $("#hi-comment-vote-" + comment_id).val());
     });
 
 
-    //edit comment is at
     $(document).on('click', '.edit_comment',function(e){
         e.preventDefault();
         var comment_id = $(this).data('service');
@@ -576,7 +502,6 @@ $(document).ready(function(){
         $("#comment_edit_part_" + comment_id).show();
     });
 
-    //edit comment is at
     $(document).on('click', '.delete_comment',function(e){
         e.preventDefault();
         var comment_id = $(this).data('service');
@@ -594,7 +519,6 @@ $(document).ready(function(){
         var comment_id = $(this).data('service');
         $("#comment_shown_part_" +  comment_id).show();
         $("#comment_edit_part_" + comment_id).hide();
-
     });
 
     $(document).on('click', '#display_hide_comment_input_box', function(){
@@ -609,9 +533,7 @@ $(document).ready(function(){
     $(document).on('click', '.home_show_hide', function(){
         var thread_id  = $(this).data('service');
         var $this_button = $("#home_show_hide_" + thread_id);
-        console.log(thread_id + $this_button.text());
         if($this_button.text() == 'Hide'){
-            console.log('' + $this_button.length);
             $("#home_comment_section_" + thread_id).hide();
             $this_button.text('Comment (' + $("#hi_total_comments_" + thread_id).val() + ")");
         }

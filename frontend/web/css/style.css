@@ -733,11 +733,6 @@ div#title-part {
     margin-bottom: 15px;
 }
 
-/* REDACTOR BOX */
-div.field-commentform-comment div.redactor-box {
-    float: right;
-    width: calc(100% - 30px);
-}
 
 ul.pagination {
     position: relative;
@@ -1004,6 +999,7 @@ ul#profile-sidebar-nav {
 
 div#displayName {
     padding: 15px 0px;
+    line-height: 32px;
 }
 
 table#bio-table {

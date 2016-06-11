@@ -179,11 +179,18 @@ class Thread extends ActiveRecord
 
 	public static function getThreadBySearch($q){
 		$q = '%' . $q . '%';
-		$sql = "Select thread_id as id, title as text from thread where title like :query and thread.thread_status = 10";
+		if($q === null || $q === ''){
+			$sql = "Select thread_id as id, title as text from thread where thread.thread_status = 10 order by thread.created_at asc";
+		}
+		else{
+			$sql = "Select thread_id as id, title as text from thread where title like :query and thread.thread_status = 10";
+		}
 
 		return \Yii::$app->db
 			->createCommand($sql)
 			->bindParam(':query', $q)
 			->queryAll();
 	}
+
+
 }

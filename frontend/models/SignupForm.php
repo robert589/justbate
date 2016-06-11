@@ -123,7 +123,8 @@ class SignupForm extends Model
 
     public function generateUsername(){
 
-        $base_username = strtolower($this->first_name) . '.' . strtolower($this->last_name);
+        $base_username = strtolower($this->first_name) . ' ' . strtolower($this->last_name);
+        $base_username = preg_replace('/\s+/', '.', trim($base_username));
         $i = 0;
         while(true){
 
