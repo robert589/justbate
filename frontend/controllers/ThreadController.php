@@ -160,66 +160,47 @@ class ThreadController extends Controller
 		if(Yii::$app->user->isGuest || !isset($_POST['thread_id'])) {
 			Yii::$app->end('You should login before submitting the comment');
 		}
+
 		$comment_model = new CommentForm();
-
 		$thread_id = $_POST['thread_id'];
-
 		$thread_entity = new ThreadEntity($thread_id, Yii::$app->user->getId());
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
 		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE]);
-
 		if(!($comment_model->load(Yii::$app->request->post()) && $comment_model->validate())) {
 			return $this->renderAjax('_comment_input_box', ['commentModel' => $comment_model, 'thread' => $thread_entity]);
 		}
-
 		$comment_model->thread_id =  $thread_id;
-
 		$comment_model->user_id = \Yii::$app->user->getId();
-
 		if(!($comment_id = $comment_model->store())) {
-			//error, notify admin
 		}
-
 		if(!$this->updateCommentNotification($comment_model->user_id, $thread_id)){
-			//error, notify admin
 		}
-
 		$comment_entity = new ThreadCommentEntity($comment_id, $comment_model->user_id);
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
 		$comment_entity = $creator->get([ThreadCommentCreator::NEED_COMMENT_INFO,
-										 ThreadCommentCreator::NEED_COMMENT_VOTE
-										]);
-
+										 ThreadCommentCreator::NEED_COMMENT_VOTE]);
 		return  $this->renderAjax('_listview_comment', [
 			'thread_comment' => $comment_entity,
 			'child_comment_form' => new ChildCommentForm()]);
-
 	}
 
 	private function setMetaTag($thread_id, $thread_title, $thread_description){
-
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:type',
 			'content' => 'website'
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:image',
-			'content' => Yii::getAlias('@img_dir_local') . '/logo.png'
+			'content' => 'http://www.justbate.com/frontend/web/img/logo.png'
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:url',
 			'content' => LinkConstructor::threadLinkConstructor($thread_id,$thread_title)
 		]);
-
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:title',
 			'content' => $thread_title
 		]);
-		\Yii::$app->view->registerMetaTag([
-			'property' => 'og:description',
-			'content' => HtmlPurifier::process($thread_description)
-		]);
-
 	}
 
 	/**
@@ -249,7 +230,6 @@ class ThreadController extends Controller
 		if ($comment_vote_form->store() !== true) {
 			Yii::$app->end('Failed to store votes');
 		}
-
 		//use thread comment entity, although it is child comment entity
 		//bad practice, use it for a while
 

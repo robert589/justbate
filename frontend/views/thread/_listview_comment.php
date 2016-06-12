@@ -24,7 +24,7 @@ $comment_thread_id = $thread_comment->getThreadId();
 
 <article class="block-for-comment">
 	<div class="col-xs-1 image-commentator">
-		<img class="img img-rounded profile-picture-comment" src=<?= $commentator_user_photo_path_link ?>>
+		<img class="img img-circle profile-picture-comment" style="width: 40px;height:40px" src="<?= $commentator_user_photo_path_link ?>">
 	</div>
 
 	<div class="col-xs-11 non-image-commentator">

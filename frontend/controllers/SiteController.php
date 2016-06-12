@@ -197,7 +197,7 @@ class SiteController extends Controller
 
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:title',
-			'content' => 'Justbate, Social Media For debate'
+			'content' => 'Justbate, Cause your opinion counts'
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:description',

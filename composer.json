@@ -40,12 +40,7 @@
         "frostealth/yii2-aws-s3": "@stable",
         "kartik-v/yii2-widget-typeahead": "*",
         "cboden/ratchet": "0.3.*",
-        "react/zmq": "0.2.*|0.3.*",
-        "kartik-v/yii2-popover-x": "*",
-        "fedemotta/yii2-bootstrap-list-filter": "*"
-
-
-
+        "kartik-v/yii2-popover-x": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
