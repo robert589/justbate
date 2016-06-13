@@ -188,7 +188,7 @@ class SiteController extends Controller
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:image',
-			'content' => Yii::$app->request->baseUrl. '/frontend/web/img/logo.png'
+			'content' =>  'http://www.justbate.com/frontend/web/img/logo.png'
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:url',
