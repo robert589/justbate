@@ -90,7 +90,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/../backend/web/js/jquery.j
             ]
         ],
         ['label' => 'Access Control',
-         'url' => Yii::$app->request->baseUrl . '/admin'
+         'url' => Yii::$app->request->baseUrl . '/user/access'
         ]
     ];
     ?>

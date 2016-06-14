@@ -13,7 +13,16 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'admin' => [
+            'layout' => 'left-menu',
             'class' => 'mdm\admin\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'common\models\User',
+                    'idField' => 'id', // id field of model User
+                    'usernameField' => 'username', // username field of model User
+                ],
+            ],
         ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
@@ -52,15 +61,6 @@ return [
             'web'=> '/backend/web',
             'adminUrl' => '/admin'
         ],
-    ],
-    'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            'site/*', // add or remove allowed actions to this list
-            'thread/*',
-            'comment/*',
-            'issue/*'
-        ]
     ],
     'params' => $params,
 ];
