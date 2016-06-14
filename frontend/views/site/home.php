@@ -41,7 +41,7 @@ $this->title = "Home";
 		</div>
 	</div>
 
-	<div class="col-xs-12 col-md-8 home-main-section">
+	<div class="col-xs-12 col-md-7 home-main-section">
 
 		<!-- Issue header if exist-->
 		<?php if($has_issue){ ?>
@@ -83,12 +83,12 @@ $this->title = "Home";
 		</div>
 	</div>
 
-	<div class="col-md-1">
-		<div class="row">
+	<div class="col-md-2">
+		<div class="col-md-12" style="margin: 5px">
 			<div class="fb-page" data-href="https://www.facebook.com/justbate/" data-tabs="timeline" data-width="180" data-height="150" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/justbate/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/justbate/">Justbate</a></blockquote></div>
 		</div>
-		<div class="row" style="margin-left:1px">
-			<?= Html::a("About us", ['site/about'], ['style' => 'font-size:10px']) ?>
+		<div class="col-md-12">
+			<b></a><?= Html::a("About us", ['site/about'], ['style' => 'font-size:10px']) ?></b>
 		</div>
 	</div>
 </div>

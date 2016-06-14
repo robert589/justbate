@@ -25,7 +25,7 @@
     </span>
 
 </div>
-<div class="col-xs-3" style="font-size: 12pt; text-align: right;">
+<div class="col-xs-3" style="font-size: 12pt; text-align: center;">
     <div class="fb-share-button" data-href="<?= $link_to_thread ?>" data-layout="button_count">
     </div>
 </div>
