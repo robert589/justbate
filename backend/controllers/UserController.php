@@ -13,7 +13,32 @@ use yii\web\Controller;
 
 class UserController extends Controller
 {
+    private $isAuth = true;
+
+    public function beforeAction($action)
+    {
+        if($action->id === "access"){
+            if(!Yii::$app->user->can('access_user')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "promote"){
+            if(!Yii::$app->user->can('promote_user')){
+                $this->isAuth = false;
+            }
+        }
+        else{
+            $this->isAuth = true;
+        }
+        return true;
+    }
+
     public function actionAccess(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         $users = \common\models\User::find()->all();
         $user_provider = new ArrayDataProvider([
             'allModels' => $users,
@@ -25,6 +50,11 @@ class UserController extends Controller
     }
 
     public function actionPromote(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         if(isset($_GET['id'])){
             $id = $_GET['id'];
 

@@ -34,17 +34,17 @@ class SiteController extends Controller
             }
         }
         else if($action->id === "thread"){
-            if (!Yii::$app->user->can('edit_thread') || !Yii::$app->user->can('ban_thread')){
+            if (!Yii::$app->user->can('view_all_thread')){
                 $this->isAuth = false;
             }
         }
         else if($action->id === "thread-comment"){
-            if (!Yii::$app->user->can('edit_thread_comment') || !Yii::$app->user->can('ban_thread_comment')){
+            if (!Yii::$app->user->can('view_all_thread_comment')){
                 $this->isAuth = false;
             }
         }
         else if($action->id === "child-comment"){
-            if (!Yii::$app->user->can('edit_child_comment') || !Yii::$app->user->can('ban_child_comment')){
+            if (!Yii::$app->user->can('view_all_child_comment')){
                 $this->isAuth = false;
             }
         }
@@ -190,7 +190,7 @@ class SiteController extends Controller
         if($this->isAuth === false){
             return $this->render('prohibit');
         }
-        
+
         $registered_user = User::find()->all();
 
         //modify date format

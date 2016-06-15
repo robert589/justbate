@@ -15,10 +15,10 @@ use common\models\Issue;
  */
 class IssueController extends Controller
 {
+    private $isAuth = true;
     /**
      * @inheritdoc
      */
-
     public function behaviors()
     {
         return [
@@ -35,6 +35,40 @@ class IssueController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if($action->id === "list"){
+            if (!Yii::$app->user->can('view_all_issue')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "banned"){
+            if (!Yii::$app->user->can('ban_issue')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "edit"){
+            if (!Yii::$app->user->can('edit_issue')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "create"){
+            if (!Yii::$app->user->can('create_issue')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "request"){
+            if (!Yii::$app->user->can('request_issue')){
+                $this->isAuth = false;
+            }
+        }
+        else{
+            $this->isAuth = true;
+        }
+
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
@@ -48,6 +82,11 @@ class IssueController extends Controller
     }
 
     public function actionBanned(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         if(isset($_GET['id'])){
             $id = $_GET['id'];
 
@@ -63,6 +102,11 @@ class IssueController extends Controller
     }
 
     public function actionEdit(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         if(isset($_GET['id'])){
             $id = $_GET['id'];
 
@@ -80,6 +124,11 @@ class IssueController extends Controller
     }
 
     public function actionList(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         $issue_list = Issue::find()->all();
 
         $issue_provider = new ArrayDataProvider([
@@ -95,6 +144,11 @@ class IssueController extends Controller
     }
 
     public function actionCreate(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         $create_issue_form = new CreateIssueForm();
 
         if($create_issue_form->load(Yii::$app->request->post()) && $create_issue_form->validate()){
@@ -109,6 +163,11 @@ class IssueController extends Controller
     }
 
     public function actionRequest(){
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         return $this->render('request');
     }
 }

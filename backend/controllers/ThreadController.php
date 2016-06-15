@@ -24,6 +24,8 @@ use yii\filters\VerbFilter;
  */
 class ThreadController extends Controller
 {
+    private $isAuth = true;
+
     /**
      * @inheritdoc
      */
@@ -44,6 +46,29 @@ class ThreadController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if($action->id === "create"){
+            if (!Yii::$app->user->can('create_thread')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "banned"){
+            if (!Yii::$app->user->can('ban_thread')){
+                $this->isAuth = false;
+            }
+        }
+        else if ($action->id === "edit"){
+            if (!Yii::$app->user->can('edit_thread')){
+                $this->isAuth = false;
+            }
+        }
+        else {
+            $this->isAuth = true;
+        }
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
@@ -58,6 +83,11 @@ class ThreadController extends Controller
 
     public function actionBanned()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $ban_thread_form = new BanThreadForm();
@@ -76,6 +106,11 @@ class ThreadController extends Controller
 
     public function actionCreate()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         $create_thread_form = new CreateThreadForm();
         $create_thread_form->user_id = \Yii::$app->user->id;
         if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
@@ -101,6 +136,11 @@ class ThreadController extends Controller
 
     public function actionEdit()
     {
+        // check if user is authenticated
+        if($this->isAuth === false){
+            return $this->render('/site/prohibit');
+        }
+
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $queried_thread = Thread::findOne(['thread_id' => $id]);
