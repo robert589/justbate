@@ -49,7 +49,7 @@ class SiteController extends Controller
             }
         }
         else if($action->id === "user"){
-            if (!Yii::$app->user->can('view_all_user')){
+                if (!Yii::$app->user->can('view_all_user')){
                 $this->isAuth = false;
             }
         }
