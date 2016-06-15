@@ -246,6 +246,7 @@ class ThreadEntity implements Entity{
      */
     public function getThreadIssues()
     {
+
         return $this->thread_issues;
     }
 
@@ -254,7 +255,12 @@ class ThreadEntity implements Entity{
      */
     public function setThreadIssues($thread_issues)
     {
-        $this->thread_issues = $thread_issues;
+        $issues = [];
+        foreach($thread_issues as $issue){
+            $issues[] = $issue['issue_name'];
+
+        }
+        $this->thread_issues = $issues;
     }
 
     /**

@@ -15,7 +15,6 @@ class CreateThreadForm extends Model
 	public $description;
 	public $issues;
 	public $user_id;
-
 	public $anonymous;
 	public $choices;
 
@@ -28,8 +27,6 @@ class CreateThreadForm extends Model
 			['user_id' , 'integer'],
 			['issues', 'each', 'rule' => ['string']],
 			['choices', 'each', 'rule' => ['string']],
-
-
 		];
 	}
 

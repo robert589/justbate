@@ -67,13 +67,12 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
 
-		<div id="thread-issue-wrapper">
-			<?= $this->render('_thread_issues', [ 'thread' => $thread]) ?>
-		</div>
+
 
 		<div id="thread-details" class="col-xs-12">
 			<?= $this->render('_title_description_vote',
 				['thread' => $thread ,
+				 'edit_thread_form' => new \frontend\models\EditThreadForm(),
 				 'submit_vote_form' => $submit_vote_form])
 			?>
 		</div>

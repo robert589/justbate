@@ -333,36 +333,29 @@ class ThreadController extends Controller
 	 * @return string
 	 */
 	public function actionEditThread() {
-
 		if(Yii::$app->request->isPjax){
-
-			$editted_thread = new EditThreadForm();
-
-			$editted_thread->description = $_POST['description'];
-
-			$editted_thread->title = $_POST['title'];
-
-			$editted_thread->thread_id = $_POST['thread_id'];
-
-
-
-			if(!$editted_thread->update()) {
-				Yii::$app->end("Failed to store data");
+			$edit_thread_form = new EditThreadForm();
+			if($edit_thread_form->load(Yii::$app->request->post()) && $edit_thread_form->validate()){
+				if(!$edit_thread_form->update()) {
+					//FAIL
+				}
 			}
 
+
 			//thread data
-			$thread_entity = new ThreadEntity($editted_thread->thread_id, Yii::$app->user->getId());
+			$thread_entity = new ThreadEntity($edit_thread_form->thread_id, Yii::$app->user->getId());
 			$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
 			$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE, ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY,
+				ThreadCreator::NEED_THREAD_ISSUE
 			]);
-			$thread_entity->setTitle($_POST['title']);
-			$thread_entity->setDescription($_POST['description']);
+			$thread_entity->setTitle($edit_thread_form->title);
+			$thread_entity->setDescription($edit_thread_form->description);
 			//get all comment providers
 			// get vote mdoels
 			$submit_vote_form = new SubmitThreadVoteForm();
-
 			return $this->renderAjax('_title_description_vote',
 				['thread' => $thread_entity,
+					'edit_thread_form' => $edit_thread_form,
 					'submit_vote_form' => $submit_vote_form]);
 		}
 	}

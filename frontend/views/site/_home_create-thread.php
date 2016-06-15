@@ -27,7 +27,6 @@ use common\components\Constant;
     </div>
 
     <div class="col-xs-12" id="create-thread-main-form">
-
         <div class="col-xs-12" style="padding: 0;">
             <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
             [
@@ -38,7 +37,6 @@ use common\components\Constant;
                 ],
              ]) ?>
         </div> <!-- div.col-xs-12 -->
-
         <!-- Choice -->
         <div class="col-xs-12" style="padding: 0;">
             <?= $form->field($create_thread_form, 'choices')->widget(Select2::className(), [

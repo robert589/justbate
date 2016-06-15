@@ -18,7 +18,7 @@
             }
             ?>
             <span style="padding-top: 15px !important;">
-              <?= \yii\helpers\Html::a('<span>' . $issue['issue_name'] . '</span>', Yii::$app->request->baseUrl . '/issue/' . $issue['issue_name']) ?>
+              <?= \yii\helpers\Html::a('<span>' . $issue . '</span>', Yii::$app->request->baseUrl . '/issue/' . $issue) ?>
             </span>
         <?php } ?>
 

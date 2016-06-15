@@ -83,7 +83,7 @@ $this->title = "Home";
 		</div>
 	</div>
 
-	<div class="col-md-2">
+	<div class="col-md-2 hidden-xs">
 		<div class="col-md-12" style="margin: 5px">
 			<div class="fb-page" data-href="https://www.facebook.com/justbate/" data-tabs="timeline" data-width="180" data-height="150" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/justbate/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/justbate/">Justbate</a></blockquote></div>
 		</div>
