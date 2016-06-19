@@ -18,18 +18,18 @@ class NotificationController extends Controller{
 
     public function actionIndex(){
         //Leave it first
-        $recentTags = Notification::getAllNotifications(\Yii::$app->user->getId());
+        $recentActivity = Notification::getAllNotifications(\Yii::$app->user->getId());
 
         // build an ArrayDataProvider with an empty query and a pagination with 40 items for page
-        $recentTagsProvider = new \yii\data\ArrayDataProvider([
-            'allModels' => $recentTags,
+        $recentActivity = new \yii\data\ArrayDataProvider([
+            'allModels' => $recentActivity,
             'pagination' => [
                 'pageSize' => 20,
             ],
         ]);
 
         //remve the base line
-        return $this->renderAjax( 'index' , ['recent_notifications_provider' => $recentTagsProvider] );
+        return $this->renderAjax( 'index' , ['recent_notifications_provider' => $recentActivity] );
 
     }
 

@@ -1,5 +1,3 @@
-
-
 //new string library
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -23,7 +21,6 @@ Application.prototype.setTimeZoneToCookie = function(){
 
 Application.prototype.getSocketConnection = function(comment_id){
     for(var i = 0; i < this.userSubscriptions.length; i++){
-
         if(this.userSubscriptions[i].getCommentId() === comment_id ){
             return this.userSubscriptions[i];
         }
@@ -59,7 +56,8 @@ var ChildCommentWebSocket = function(comment_id, template){
     this.comment_id = comment_id;
      var child_comment_template = template;
 
-    this.conn = new WebSocket('ws://justbate.com:8080?' + comment_id);
+
+    this.conn = new WebSocket('ws://52.6.157.157:8080?' + comment_id);
 
     this.conn.onopen = function(msg) {
         console.log('Connection successfully opened (readyState ' + this.readyState+')');

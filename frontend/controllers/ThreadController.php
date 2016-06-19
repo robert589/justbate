@@ -134,10 +134,6 @@ class ThreadController extends Controller
 				//error
 			}
 
-			if(!$this->updateChildCommentNotification($user_id, $parent_id)){
-				//error
-			}
-
 			return $this->renderAjax('_child_comment_input_box',
 				['comment_id' => $parent_id,
 				'retrieved' => true,
@@ -191,7 +187,7 @@ class ThreadController extends Controller
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:image',
-			'content' => 'http://www.justbate.com/frontend/web/img/logo.png'
+			'content' => 'http://www.justbate.com/frontend/web/img/logo_square_share.jpg'
 		]);
 		\Yii::$app->view->registerMetaTag([
 			'property' => 'og:url',
@@ -365,23 +361,10 @@ class ThreadController extends Controller
 	 * @param $thread_id
 	 * @return bool
 	 */
-	private function updateCommentNotification($trigger_id, $thread_id){
+	private function updateCommentNotification($actor_id, $thread_id){
 		$notification_form = new NotificationForm();
-		$notification_form->trigger_id = $trigger_id;
-		if($notification_form->insertCommentNotification($thread_id) == true){
-			return true;
-		}
-	}
-
-	/**
-	 * @param $trigger_id
-	 * @param $comment_id
-	 * @return bool
-	 */
-	private function updateChildCommentNotification($trigger_id, $comment_id){
-		$notification_form = new NotificationForm();
-		$notification_form->trigger_id = $trigger_id;
-		if($notification_form->insertChildCommentNotification($comment_id)){
+		$notification_form->actor_id = $actor_id;
+		if($notification_form->submitCommentNotification($thread_id) == true){
 			return true;
 		}
 	}

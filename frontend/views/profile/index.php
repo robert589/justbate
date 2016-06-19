@@ -58,7 +58,7 @@ Modal::end();
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
 <div class="col-xs-12" id="profile-picture-main-body">
 	<div class="row">
-		<div class="col-xs-4 col-md-2">
+		<div class="inline">
 			<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>"
 				alt="Profile Picture"
 				style="width:148px;height:148px;"
@@ -68,14 +68,14 @@ Modal::end();
 
 				<?= Html::button('Upload Photo', ['class' => 'btn btn-primary', 'id' => 'upload-image']) ?>
 
-				<?php } ?>
-			</div>
-			<div class="col-xs-6 col-md-4" id="profile-details">
-				<div id="displayName">
-					<?= $user->first_name ?> <?= $user->last_name ?>
-					<div align="right">
-						<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
-					</div>
+			<?php } ?>
+		</div>
+		<div class="inline" id="profile-details">
+			<div id="displayName">
+				<?= $user->first_name ?> <?= $user->last_name ?>
+				<div align="right">
+					<?= $this->render('_index_follow_button', ['is_following' => $is_following, 'followee_id' => $user['id']]) ?>
+				</div>
 				</div>
 				<hr>
 			</div>

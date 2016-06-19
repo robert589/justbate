@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
     'layout' => "\n{items}\n{pager}",
 
     'itemView' => function ($model, $key, $index, $widget) {
-        return $this->render('_list_notification',['model' => $model]);
+        return $this->render('_list_notification',['notification_entity' => $model]);
     },
     'pager' => [
         'firstPageLabel' => 'first',

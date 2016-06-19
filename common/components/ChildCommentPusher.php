@@ -24,12 +24,9 @@ class ChildCommentPusher implements MessageComponentInterface {
 
     function onClose(ConnectionInterface $conn)
     {
-
         $this->clients->detach($conn);
-
         unset($this->users[$conn->resourceId]);
         $conn->close();
-
     }
 
     function onError(ConnectionInterface $conn, \Exception $e)

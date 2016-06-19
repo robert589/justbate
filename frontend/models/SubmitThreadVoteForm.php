@@ -93,8 +93,8 @@ class SubmitThreadVoteForm extends Model
         $thread_vote->user_id = $this->user_id;
         $thread_vote->thread_id = $this->thread_id;
         $thread_vote->choice_text = $this->choice_text;
-
         if($thread_vote->save()){
+
             return true;
         }
         else{

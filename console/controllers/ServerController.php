@@ -8,6 +8,7 @@ class ServerController extends \yii\console\Controller
 {
 
     public function actionStart(){
+        echo 'starting server';
         $server = \Ratchet\Server\IoServer::factory(
                 new HttpServer(
                     new WsServer(
@@ -16,6 +17,7 @@ class ServerController extends \yii\console\Controller
                     )
                 ), 8080
         );
+        echo 'running server';
 
         $server->run();
 
