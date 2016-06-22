@@ -1,10 +1,10 @@
 <?php
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
-
+/** @var $list_notification_vo \frontend\vo\ListNotificationVo */
 ?>
 <?= ListView::widget([
-    'dataProvider' => $recent_notifications_provider,
+    'dataProvider' => $list_notification_vo->getListNotificationProvider(),
     'options' => [
         'tag' => 'div',
         'class' => 'list-wrapper',
@@ -12,8 +12,8 @@ use yii\widgets\Pjax;
     ],
     'layout' => "\n{items}\n{pager}",
 
-    'itemView' => function ($model, $key, $index, $widget) {
-        return $this->render('_list_notification',['notification_entity' => $model]);
+    'itemView' => function ($notification_vo, $key, $index, $widget) {
+        return $this->render('_list_notification',['notification_vo' => $notification_vo]);
     },
     'pager' => [
         'firstPageLabel' => 'first',

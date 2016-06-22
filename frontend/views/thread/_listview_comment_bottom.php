@@ -9,13 +9,11 @@
         'is_thread_comment' => true  ]) ?>
 </div>
 
-<!-- Votes part-->
 <div class="inline" class="comment-votes" style="margin-left: 12px">
     <?= $this->render('_comment_votes', [ 'comment' => $thread_comment ,
                                         'is_thread_comment' => $is_thread_comment])?>
 </div>
 
-<!-- Child commetn and the button  -->
 <?= $this->render('_child_comment', ['thread_comment' => $thread_comment,
     'retrieved' => false,
     'child_comment_form' => new \frontend\models\ChildCommentForm() ]) ?>

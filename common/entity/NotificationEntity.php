@@ -33,7 +33,7 @@ class NotificationEntity implements Entity{
      */
     public function getPhotoPath()
     {
-        return Yii::$app->request->baseUrl . '/frontend/web/' . $this->photo_path;
+        return Yii::$app->request->baseUrl . '/frontend/web/photos/ ' . $this->photo_path;
     }
 
     /**

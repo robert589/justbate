@@ -1,6 +1,6 @@
 <?php
-//Yii::setAlias('base-url', 'http://localhost');
-Yii::setAlias('base-url', 'http://fiucer.justbate.com');
+Yii::setAlias('base-url', 'http://localhost');
+//Yii::setAlias('base-url', 'http://fiucer.justbate.com');
 Yii::setAlias('common', dirname(__DIR__));
 Yii::setAlias('frontend', dirname(dirname(__DIR__)) . '/frontend');
 Yii::setAlias('backend', dirname(dirname(__DIR__)) . '/backend');

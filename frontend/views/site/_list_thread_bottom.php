@@ -32,7 +32,7 @@ $current_user_has_vote = $thread->hasVote();
 </div>
 
 <div  align="center" class="col-xs-12" >
-    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
+        <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
                 ['style' => 'display:none;max-height:50px' ,
                  'id' => 'list_thread_loading_gif_' . $thread_id ])
     ?>

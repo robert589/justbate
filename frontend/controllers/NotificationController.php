@@ -2,34 +2,28 @@
 
 namespace frontend\controllers;
 
-
-use frontend\models\TagInThread;
+use frontend\service\ServiceFactory;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\data\SqlDataProvider;
-use yii\data\Pagination;
-use yii\helpers\Url;
-use frontend\models\ThreadTopic;
-use frontend\models\CreateThreadForm;
-use common\models\User;
-use common\models\Notification;
+
 class NotificationController extends Controller{
 
+    /**
+     * @var ServiceFactory
+     */
+    private $serviceFactory;
+
+    public function init() {
+        $this->serviceFactory = new ServiceFactory();
+    }
+
+
     public function actionIndex(){
-        //Leave it first
-        $recentActivity = Notification::getAllNotifications(\Yii::$app->user->getId());
 
-        // build an ArrayDataProvider with an empty query and a pagination with 40 items for page
-        $recentActivity = new \yii\data\ArrayDataProvider([
-            'allModels' => $recentActivity,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+        $service = $this->serviceFactory->getService(ServiceFactory::LIST_NOTIFICATION_SERVICE);
 
-        //remve the base line
-        return $this->renderAjax( 'index' , ['recent_notifications_provider' => $recentActivity] );
+        $vo = $service->getNotifications(Yii::$app->user->getId());
+        return $this->renderAjax( 'index' , ['list_notification_vo' => $vo] );
 
     }
 
