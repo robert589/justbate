@@ -18,6 +18,12 @@ class NotificationVoBuilder{
 
     private $photo_path;
 
+    private $notification_type_name;
+
+    private $notification_verb_name;
+
+    private $extra_value;
+
     function __construct(){
 
     }
@@ -52,6 +58,18 @@ class NotificationVoBuilder{
 
     function photoPath($photo_path){
         $this->photo_path = $photo_path;
+    }
+
+    function notificationTypeName($notification_type_name){
+        $this->notification_type_name = $notification_type_name;
+    }
+
+    function notificationVerbName($notification_verb_name){
+        $this->notification_verb_name = $notification_verb_name;
+    }
+
+    function extraValue($extra_value){
+        $this->extra_value = $extra_value;
     }
 
     /**
@@ -117,6 +135,31 @@ class NotificationVoBuilder{
     {
         return $this->url_key_value;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNotificationTypeName()
+    {
+        return $this->notification_type_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotificationVerbName()
+    {
+        return $this->notification_verb_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExtraValue()
+    {
+        return $this->extra_value;
+    }
+
 
 
 

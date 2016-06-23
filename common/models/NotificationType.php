@@ -8,6 +8,8 @@ use yii\behaviors\TimestampBehavior;
 class NotificationType extends ActiveRecord
 {
 
+    const THREAD_TYPE = 'thread';
+
     public static function tableName()
     {
         return 'notification_type';

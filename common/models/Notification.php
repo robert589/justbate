@@ -9,8 +9,9 @@ use yii\db\ActiveRecord;
  * Notification model
  *
  * @property integer $notification_id
- * @property boolean $is_read
- * @property integer $notification_verb_id
+ * @property boolean $read
+ * @property string $notification_type_name
+ * @property string $notification_verb_name
  * @property string $url_key_value
  */
 class Notification extends ActiveRecord{

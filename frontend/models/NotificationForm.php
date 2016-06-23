@@ -3,7 +3,10 @@ namespace frontend\models;
 
 use common\models\Notification;
 use common\models\NotificationActor;
+use common\models\NotificationExtraValue;
 use common\models\NotificationReceiver;
+use common\models\NotificationType;
+use common\models\NotificationVerb;
 use yii\base\Model;
 use common\models\Thread;
 use common\models\User;
@@ -12,8 +15,6 @@ use common\models\FollowerRelation;
 
 class NotificationForm extends Model
 {
-    const PEOPLE_COMMENT_ON_YOUR_THREAD = 1;
-    const PEOPLE_VOTE_ON_YOUR_THREAD = 2;
     /**
      * @var User that causes other users to be notified
      */
@@ -34,12 +35,13 @@ class NotificationForm extends Model
      */
     public function submitCommentNotification($thread_id){
         if($this->validate()){
-            $notification_id = $this->getNotificationId($thread_id, self::PEOPLE_COMMENT_ON_YOUR_THREAD);
+            $notification_id = $this->getNotificationId($thread_id, NotificationType::THREAD_TYPE, NotificationVerb::PEOPLE_COMMENT_ON_YOUR_THREAD);
             if(is_null($notification_id)){
                 $notification = new Notification();
-                $notification->notification_verb_id = self::PEOPLE_COMMENT_ON_YOUR_THREAD;
+                $notification->notification_verb_name = NotificationVerb::PEOPLE_COMMENT_ON_YOUR_THREAD;
+                $notification->notification_type_name = NotificationType::THREAD_TYPE;
                 $thread_title = Thread::findOne($thread_id)->title;
-                $notification->url_key_value = $thread_id . '%,%' . $thread_title ;
+                $notification->url_key_value = $thread_id;
                 if(!$notification->save()){
                     //error
                 }
@@ -48,6 +50,14 @@ class NotificationForm extends Model
                 $notification_receiver->notification_id = $notification->notification_id;
                 $notification_receiver->receiver_id = Thread::find()->where(['thread_id' => $thread_id])->one()->user_id;
                 if(!$notification_receiver->save()){
+                    //error
+                }
+
+                $notification_extra_value = new NotificationExtraValue();
+                $notification_extra_value->notification_type_name = $notification->notification_type_name;
+                $notification_extra_value->url_key_value = $notification->url_key_value;
+                $notification_extra_value->extra_value = $thread_title;
+                if(!$notification_extra_value->save()){
                     //error
                 }
             }
@@ -76,8 +86,9 @@ class NotificationForm extends Model
         return NotificationActor::find()->where(['notification_id' => $notification_id, 'actor_id' => $actor_id])->one();
     }
 
-    private function getNotificationId($thread_id, $notification_verb_id){
-        $notification = Notification::find()->where(['url_key_value' => $thread_id, 'notification_verb_id' => $notification_verb_id])->one();
+    private function getNotificationId($thread_id, $notification_type_name, $notification_verb_name){
+        $notification = Notification::find()->where(['url_key_value' => $thread_id, 'notification_type_name' => $notification_type_name,
+                    'notification_verb_name' => $notification_verb_name])->one();
 
         if($notification !== null){
             return $notification->notification_id;
