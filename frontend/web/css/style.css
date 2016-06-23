@@ -1349,55 +1349,60 @@ button.btn {
 }
 
 /* MEDIA QUERY */
-@media screen and (max-width: 1100px) {
-
-    body {
-        background: black;
+@media screen and (max-width: 768px) {
+    div.navbar-header button {
+        margin-right: 45px;
     }
 
-    div#thread-issue {
+    div #profile-sidebar-nav{
         display: none;
     }
 
-    a.dropdown-toggle {
-        padding-left: 15px !important;
+    div #profile-history{
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
+}
 
-    form[id^='form_user_vote'] div.inline {
-        margin-left: 45px;
+@media screen and (min-width: 768px) and (max-width: 897px) {
+    .collapse {
+        display: none !important;
     }
 
     .navbar-header {
-        float: none;
+        width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    img {
+        display: none;
     }
 
-    .navbar-toggle {
-        display: block;
-        margin-right: 15px;
+    ul#menubar-left {
+        width: 30%;
     }
 
-    .navbar-fixed-top .navbar-collapse,
-    .navbar-static-top .navbar-collapse,
-    .navbar-fixed-bottom .navbar-collapse {
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-
+    /* Additional search settings */
     .navbar-collapse.collapse {
         display: none !important;
     }
 
-    .navbar-collapse.collapse.in {
-        display: block!important;
-        margin-top: 0px;
+    .navbar-collapse {
+        overflow-x: visible !important;
     }
 
-    ul#menubar-left {
-        width: 33% !important;
+    .navbar-collapse.in {
+        overflow-y: auto !important;
+    }
+
+    .collapse.in {
+        display: block !important;
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 992px) and (max-width: 1200px) {
     body {
         overflow-x: hidden;
         overflow-y: scroll;
@@ -1410,10 +1415,6 @@ button.btn {
 
     li.item, li.user_item {
         margin-left: -15px;
-    }
-
-    li#dropdown-menu-setings, li.item, li.user_item {
-        width: 25% !important;
     }
 
     a.navbar-brand img {
@@ -1483,6 +1484,14 @@ button.btn {
         margin-left: 13px;
     }
 
+    ul#menubar-left {
+        width: 25% !important;
+    }
+
+    ul.navbar-right {
+        width: 50% !important;
+    }
+
     /*THREAD */
     div.thread-title {
         padding: 0;
@@ -1519,8 +1528,6 @@ button.btn {
         padding-left: 15px;
         padding-right: 15px;
     }
-
-
 
     div#first-part {
         margin-top: 0;
@@ -1649,9 +1656,31 @@ button.btn {
     div#profile-feed {
         width: 100%;
     }
+
+    ul#left-menu {
+        width: 100%;
+    }
 }
 
-@media screen and (min-width: 768px) and (max-width: 768px) {
+@media screen and (min-width: ) and (max-width: 1200px) {
+    ul#menubar-left {
+
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    div#thread-issue {
+        display: none;
+    }
+
+    a.dropdown-toggle {
+        padding-left: 15px !important;
+    }
+
+    form[id^='form_user_vote'] div.inline {
+        margin-left: 45px;
+    }
+
     .navbar-header {
         float: none;
     }
@@ -1676,20 +1705,8 @@ button.btn {
         display: block!important;
         margin-top: 0px;
     }
-}
 
-@media screen and (max-width: 500px) {
-    div.navbar-header button {
-        margin-right: 45px;
-    }
-
-    div #profile-sidebar-nav{
-        display: none;
-    }
-
-    div #profile-history{
-        width: 100%;
-        margin: 0;
-        padding: 0;
+    ul#menubar-left {
+        width: 47% !important;
     }
 }

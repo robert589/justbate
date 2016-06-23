@@ -58,45 +58,47 @@ AppAsset::register($this);
 
                 <a class="navbar-brand" href="<?= Yii::$app->urlManager->createAbsoluteUrl(['']) ?>">
                     <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>"
-                         style="height:45px;margin-top:-10px;margin-left:15px;width:145px">
+                    style="height:45px;margin-top:-10px;margin-left:15px;width:145px">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav" id="menubar-left">
                     <li id="search-box" class="item">
                         <?= Select2::widget([
-                               'name' => 'search_box_menu',
-                               'class'  => 'form-input',
-                               'id' => 'search_box_menu',
-                               'theme' => Select2::THEME_KRAJEE,
-                               'options' => ['placeholder' => 'Search'],
-                               'pluginEvents' => [
-                                    "select2:select" => "function(){
-                                        window.location.replace(
-                                        'http://' +  document.domain  + '$temp_localhost' + '/thread/' + $('#search_box_menu').val() + '/' +
-                                        $('#search_box_menu').text().replace(
-                                        'Search','').replace(/ /g, '-').toLowerCase()
-                                        );
-                                    }"
-                                ],
-                                'pluginOptions' => [
-                                    'allowClear' => true,
-                                    'maximumSelectionSize' => 1,
-                                    'multiple' => true,
-                                    'language' => [
-                                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
-                                    ],
-                                    'ajax' => [
-                                        'url' => \yii\helpers\Url::to(['site/search-in-notif']),
-                                        'dataType' => 'json',
-                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                                    ],
-                                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                                    'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
-                                    'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
-                                ],
-                            ])?>
+                            'name' => 'search_box_menu',
+                            'class'  => 'form-input',
+                            'id' => 'search_box_menu',
+                            'theme' => Select2::THEME_KRAJEE,
+                            'options' => ['placeholder' => 'Search'],
+                            'pluginEvents' => [
+                                "select2:select" => "function(){
+                                    window.location.replace(
+                                    'http://' +  document.domain  + '$temp_localhost' + '/thread/' + $('#search_box_menu').val() + '/' +
+                                    $('#search_box_menu').text().replace(
+                                    'Search','').replace(/ /g, '-').toLowerCase()
+                                );
+                            }"
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            'maximumSelectionSize' => 1,
+                            'multiple' => true,
+                            'language' => [
+                                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                            ],
+                            'ajax' => [
+                                'url' => \yii\helpers\Url::to(['site/search-in-notif']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                            ],
+                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                            'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
+                            'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
+                        ],
+                        ])?>
                     </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <?php } else { ?>
@@ -110,53 +112,53 @@ AppAsset::register($this);
                                     <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
                                 </ul>
                             </li>
-                        <?php } ?>
-                </ul>
-            </div>
-        </div>
-    </nav>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
-    <?php
-    Modal::begin([
-        'id' => 'loginModal',
-        'size' => Modal::SIZE_LARGE
-    ]);
-        $login_form = new \common\models\LoginForm();
-        echo $this->render('../site/login', ['login_form' => $login_form, 'model' => new \frontend\models\SignupForm()]);
-    Modal::end();
-    ?>
-
-    <div class="container" id="home-container" >
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-        <div id="loading-bar" style="left: 0; right: 0; display: none; margin-top: -73px; margin-left: -100%; margin-right: -18.65%; height: 100% !important;">
-            <div style='z-index:0;left:0;top:0;width:100% !important;height:100% !important;background:#ddd;opacity: 0.4;'>Loading</div>
-        </div>
-    </div>
-
-
-    <!-- hidden input -->
-    <?= Html::hiddenInput('user_id',
-                          (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
-                         ['id' => 'user-login-id']) ?>
-
-    <!-- Javascript template -->
-    <div style="display: none" id="child-comment-template">
-        <div class="item" >
-            <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
-                $child_comment_dummy->convertToTemplate();
+            <?php
+            Modal::begin([
+                'id' => 'loginModal',
+                'size' => Modal::SIZE_LARGE
+            ]);
+            $login_form = new \common\models\LoginForm();
+            echo $this->render('../site/login', ['login_form' => $login_form, 'model' => new \frontend\models\SignupForm()]);
+            Modal::end();
             ?>
-            <?= $this->render('../thread/_listview_child_comment',
-                            ['child_comment' => $child_comment_dummy]) ?>
-        </div>
-    </div>
 
-<?php
-    $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
-    $this->endBody();
-?>
-</html>
-<?php $this->endPage() ?>
+            <div class="container" id="home-container" >
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    ]) ?>
+                    <?= Alert::widget() ?>
+                    <?= $content ?>
+                    <div id="loading-bar" style="left: 0; right: 0; display: none; margin-top: -73px; margin-left: -100%; margin-right: -18.65%; height: 100% !important;">
+                        <div style='z-index:0;left:0;top:0;width:100% !important;height:100% !important;background:#ddd;opacity: 0.4;'>Loading</div>
+                    </div>
+                </div>
+
+
+                <!-- hidden input -->
+                <?= Html::hiddenInput('user_id',
+                (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
+                ['id' => 'user-login-id']) ?>
+
+                <!-- Javascript template -->
+                <div style="display: none" id="child-comment-template">
+                    <div class="item" >
+                        <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
+                        $child_comment_dummy->convertToTemplate();
+                        ?>
+                        <?= $this->render('../thread/_listview_child_comment',
+                        ['child_comment' => $child_comment_dummy]) ?>
+                    </div>
+                </div>
+
+                <?php
+                $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+                $this->endBody();
+                ?>
+                </html>
+                <?php $this->endPage() ?>
