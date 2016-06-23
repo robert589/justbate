@@ -1,0 +1,323 @@
+/*
+
+------------------
+Table of Content :
+------------------
+
+body
+div#home-container
+div#main-container
+div#page-header
+
+-- Menubar --
+
+nav#menubar
+ul#menubar-left
+div.navbar-header a, li.item a, .navbar-collapse
+li.item a[href$='home'], li.user_item a[href$='home']
+#home_menu_bar
+
+-- Dropdown --
+.item > .dropdown
+a.dropdown-toggle span.glyphicon
+li#dropdown-menu-settings, li.item, li.user_item
+li#dropdown-menu-settings a[data-toggle='dropdown'] span.glyphicon-chevron-down
+li#dropdown-menu-settings ul.dropdown-menu
+li#dropdown-menu-settings:hover
+li#dropdown-menu-settings:hover a:hover, .nav .open > a:hover, li.item a:hover
+li#dropdown-menu-settings li.item a
+li#dropdown-menu-settings li.item a:hover
+li.dropdown
+ul.dropdown
+ul.dropdown-menu
+ul.dropdown-menu div#dropdown-menu-title
+ul.dropdown-menu div#kv-spin-center
+
+-- Search Box --
+
+li#search-box
+li#search-box:hover
+li#search-box.item
+li#search-box.user_item
+span.select2-selection--single, span#select2-search_box_menu-container
+span.select2-selection__arrow
+.select2-search__field
+.s2-togall-button
+
+-- Notification --
+
+li#notification
+.notification-item:hover
+a#trigger_notification
+span.notification-label a
+li#notification-bar:hover, li#notification-bar div#notifbar:hover
+li#notif-expansion
+li#notif-expansion:hover
+li#notif-expansion ul.dropdown-menu, li#notif-expansion ul.dropdown-menu a
+li#notif-expansion ul.dropdown-menu span.glyphicon
+li#notif-expansion ul.dropdown-menu span#notification-label
+li#notification-bar
+
+-- Modal --
+
+div.modal-content div.modal-header
+div.modal-content div.model-body
+div.modal-body input[type="text"], div.modal-body input[type="password"]
+div.modal-body button#sign-up
+
+-- Login --
+
+div#login-form
+div#login-form div.form-group label.control-label
+div#login-form input[class="form-control"]
+div#login-form div[class^='col-xs-']
+div#login-form-button
+div#login-form .checkbox
+div#login-label
+div#login-box.fade-in
+div#remember-me
+
+-- Site Login --
+div.site-login
+div.site-login form
+div.site-login h1
+div.site-login div.row div.col-xs-12
+
+-- Sign Up --
+
+div#signup-page
+h3#signup-title
+form#form-signup
+form#form-signup div[class^='col-']
+form#form-signup input.form-control, form#form-signup div[class^='col-'] input.form-control
+div#signup-form
+button#signup-button
+div#signup-form div#signup-title
+div#signup-table
+div#signup-table div.col-xs-6
+div#signup-table div.col-xs-6:last-child
+div#signup-table input[type='text']
+div#signup-label
+
+-- Facebook --
+
+hr#facebook-separator
+div#facebook-signup
+div#facebook-signup input[type='text']
+i.fa-facebook
+a i.fa-facebook
+div#facebook-login
+div#facebook-login ul.auth-clients
+
+-- Thread --
+
+div#first-part
+div#title-part
+div#main-post-desc
+div#thread-issue
+div#thread-issue-wrapper
+span#thread-issue-text
+div.thread-view
+div#left-part-of-thread
+div.ias-trigger
+div.ias-trigger a
+div[id^='comment-part']
+div#threadList div.ias-trigger, div#threadList div.ias-noneleft
+div#threadList div.item article div.commentator-moderate
+div.thread-title
+div.thread-details
+
+-- Comment --
+
+div#comment
+div#comment div#w0
+div#comment-rate
+div.user-comment-reaction
+div.user-comment-reaction div.col-xs-11 hr
+button.give-comment
+div.give-comment-button
+input[type="text"]#give-comment-text, select#give-comment-select
+
+-- User Comment Reaction --
+
+div.empty
+div#shown_part
+div#shown_part + div.row
+div#first-part div.tabs-above li
+div#first-part div.tabs-above li.active
+div#first-part div.tabs-above div.tab-content div#post-description p
+div#first-part div.col-xs-12:first-child
+div.list-view div.item:first-child
+ul.pagination
+div#vote
+div#vote-part-home
+div#vote-part-home select
+div#vote-part-home select option
+div#list_thread_comment_part
+div.input-multiselect
+div.tab-content
+ul#comment-tab li
+.nav-tabs > li
+.nav-tabs > li > a
+div#action-button
+div#action-button-thing
+div#action-button-thing button
+div.home-comment-tab
+div.home-comment-tab div.col-xs-12:last-child
+div[id^='comment_edit_part'] form[method='POST'] div.row
+div.comment-tab div.tabs-above ul.nav-tabs
+div.comment-tab div.tabs-above ul.nav-tabs li
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
+div#commentator-action div.commentator-comment
+div#commentator-action div.commentator-moderate
+div#button-vote-up, div#button-vote-down
+div#button-vote-up button, div#button-vote-down button
+div.comment-tab div.tabs-above div.tab-content div.row
+div.list-view
+div.list-view div.item
+img.profile-picture-comment
+div.commentator-name a
+div.comment-votes
+article.block-for-comment
+div.comment-created
+div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"]
+div.commentator-moderate
+div.btn-group-horizontal button
+div[class^='ias-noneleft']
+
+-- Email Form --
+
+div#verify-email
+div#verify-email-form
+div#verify-email-button
+div#verify-email-dropdown, div#create-thread-dropdown
+div#verify-email-form input[type='email']
+div#verify-email-form button
+div#verify-email-form button#resend-button
+hr#email-separator
+
+-- Create Thread --
+
+div#craete-thread
+div#create-thread-wrapper
+div#create-thread-main-form
+div#create-thread-dropdown
+div#create-thread-dropdown span.input-group-addon
+input[type='text']#create-thread-title
+ul.redactor-toolbar
+label[for="createthreadform-description"]
+div#submit-thread
+span#anonymous-checkbox
+
+-- Section, Sidebar, Body --
+
+div#left-sidebar
+.section
+.home-main-section
+div#main-body
+div#main-post
+
+-- Thread Page --
+
+form[id^='retrieve_comment_form_']
+div#submitThreadVote div#form-control input[type="radio"]
+div.field-submitthreadvoteform-choice_text label.control-label
+div#vote button[type="submit"].btn-primary
+div.field-submitthreadvoteform-choice_text
+div.input-multiselect
+h3#user-choice
+.thread-link
+.thread-link hr
+.thread-link div.col-xs-12 hr
+.home-thread-list
+div.thread-title-list
+.list-thread
+div#action-button, div#thread-issue-wrapper span#thread-issue-text
+
+-- Profile Page --
+
+div#profile-history
+div#profile-history h3
+div#profile-history div#thread_starter_list_view_1
+div#profile-history div#thread_starter_list_view_2
+div#profile-picture-main-body
+div#profile-sidebar
+div#profile-sidebar-nav
+ul#profile-sidebar-nav
+div#profile-sidebar-nav
+div#profile-feed
+.sidebar-nav li
+.sidebar-nav a[href^='followees'] li
+.sidebar-nav li:hover
+div#displayName
+div#thread_starter_list_view_1 div.item
+div#thread_starter_list_view_2 div.item article div.row
+div#thread_starter_list_view_2 div.item
+table#bio-table
+table#bio-table tbody tr td
+button#upload-image
+#profile-details
+img#profile-picture-home
+
+-- Vote Function --
+
+div.vote-on-thread
+select.user-vote
+
+-- Authentication --
+
+span.auth-title
+a.auth-link
+div[class^='field-loginform'] label.control-label
+.auth-clients
+li.auth-client
+
+-- Form Group --
+
+div.form-group
+div.form-group label.control-label
+div.form-group p.help-block-error
+
+-- Other Style --
+.name-link
+div.inline
+
+-- Input --
+
+input
+div.input-group
+
+-- Social Icon --
+
+div#social-icon
+div#social-icon input[type='text']
+div#social-icon i.fa-facebook
+
+-- Table --
+
+table#left-menu
+table#left-menu a
+table#left-menu tr td button
+tbody > tr > td
+
+-- Custom HTML Style --
+
+article
+select
+textarea
+hr.separator
+
+-- PJAX --
+div[id^='comment_section_']
+.form-group
+
+-- Icon --
+span#left-icon
+span.fa-envelope
+
+-- Button --
+
+button.btn
+.button-like-link
+
+*/
