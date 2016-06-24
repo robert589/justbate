@@ -39,7 +39,7 @@ class ListNotificationDao{
                                           na.updated_at = (SELECT max(na1.updated_at)
                                                            from notification_actor na1
                                                            where n.notification_id = na1.notification_id
-                                                           )
+                                                             )
                                   ) last_actor
                                 on notification_entity.notification_id = last_actor.notification_id
                                 left join notification_extra_value
