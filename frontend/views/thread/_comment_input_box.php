@@ -45,6 +45,12 @@ if(isset($comment_input_retrieved)) {
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
 
         <div class="col-xs-12" id="comment_input_box_section_<?= $thread_id ?>" style="padding: 0;">
+            <hr>
+            <div class="col-xs-12">
+                <?= Html::button('Go Anonymous', ['class' => 'btn btn-default thread-anonymous-btn',
+                                                  'id' => 'thread-anonymous-btn-' . $thread_id,
+                                                    'data-service' => $thread_id]) ?>
+            </div>
             <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>" style="padding-top: 8px">
                 <?= $form->field($comment_model,
                                   'comment',
@@ -70,6 +76,7 @@ if(isset($comment_input_retrieved)) {
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'width: 100%;']) ?>
                 </div>
             </div>
+            <hr>
         </div>
 
     <?php ActiveForm::end();

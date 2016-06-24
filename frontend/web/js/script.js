@@ -432,6 +432,7 @@ $(document).ready(function(){
     $(document).on('pjax:complete', '.pjax_user_vote', function(){
         var thread_id = $(this).data('service');
 
+        $("#retrieve-input-box-button-" + thread_id).click();
 
         $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
     });
@@ -481,6 +482,30 @@ $(document).ready(function(){
                 return false;
             }
         });
+    });
+
+    $(document).on('click',".thread-anonymous-btn", function(event){
+        var thread_id = $(this).data('service');
+        var base_url = $("#base-url").val();
+        var user_id = $("#user-login-id").val();
+        $("#thread-anonymous-btn-" + thread_id).text("Loading..");
+        $("#thread-anonymous-btn-" + thread_id).prop("disabled", 'false');
+
+        $.ajax({
+            type:'post',
+            url: base_url + "/thread/request-anonymous",
+            data: {thread_id: thread_id, user_id: user_id},
+            success: function(data){
+                if(data === true){
+                    $("#thread-anonymous-btn-" + thread_id).text("You are Anonymous");
+
+                }
+                else{
+                    $("#thread-anonymous-btn-" + thread_id).text("Go Anonymous");
+
+                }
+            }
+        })
     });
 
     //comment_votes part

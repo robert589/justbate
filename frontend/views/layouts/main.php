@@ -140,7 +140,9 @@ AppAsset::register($this);
                 </div>
 
 
+                <?= Html::hiddenInput('base_url', Yii::$app->request->baseUrl, ['id' => 'base-url' ]) ?>
                 <!-- hidden input -->
+
                 <?= Html::hiddenInput('user_id',
                 (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
                 ['id' => 'user-login-id']) ?>

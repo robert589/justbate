@@ -38,19 +38,24 @@ $has_chosen_comment = $thread->hasChosenComment();
 							 ['thread' => $thread,
 							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
 		</div>
-		<div class="user-comment-reaction col-xs-12">
 
-		<?php if($has_chosen_comment){
-			/** Used Variable */
-			$chosen_comment = $thread->getChosenComment();
-			$commentator_user_profile_link = $chosen_comment->getCommentatorUserProfileLink();
-			$commentator_user_profile_pic_link = $chosen_comment->getCommentatorPhotoLink();
-			$commentator_choice = $chosen_comment->getCommentatorChoice();
-			$commentator_full_name = $chosen_comment->getFullName();
-			$comment  = $chosen_comment->getComment();
-		?>
+		<div class="user-comment-reaction col-xs-12">
+			<div class="home-comment-tab">
+				<?= $this->render('_list_thread_bottom', ['thread' => $thread]) ?>
+			</div>
 			<hr>
 
+			<?php if($has_chosen_comment){
+				/** Used Variable */
+				$chosen_comment = $thread->getChosenComment();
+				$commentator_user_profile_link = $chosen_comment->getCommentatorUserProfileLink();
+				$commentator_user_profile_pic_link = $chosen_comment->getCommentatorPhotoLink();
+				$commentator_choice = $chosen_comment->getCommentatorChoice();
+				$commentator_full_name = $chosen_comment->getFullName();
+				$comment  = $chosen_comment->getComment();
+			?>
+
+			<hr>
 			<div class="col-xs-1"  style=" padding-right: 0;">
 				<img src="<?= $commentator_user_profile_pic_link ?>" class="img img-circle" height="40px" width="40px" />
 			</div>
@@ -69,14 +74,6 @@ $has_chosen_comment = $thread->hasChosenComment();
 			<div class="col-xs-12">
 				<hr style="margin-bottom: 0">
 				<?= Html::a('View other comments <span class="glyphicon glyphicon-arrow-right"></span>', $link_to_thread, ['target' => '_blank']) ?>
-			</div>
-
-		<?php
-		}
-		else{
-		?>
-			<div class="home-comment-tab">
-				<?= $this->render('_list_thread_bottom', ['thread' => $thread]) ?>
 			</div>
 		<?php
 		}

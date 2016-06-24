@@ -10,6 +10,7 @@ use common\models\LoginForm;
 use common\models\Thread;
 use common\models\Issue;
 
+use common\models\ThreadAnonymous;
 use frontend\models\CreateThreadForm;
 
 use Yii;
@@ -190,6 +191,5 @@ class ThreadController extends Controller
             return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
         }
     }
-
 
 }

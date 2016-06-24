@@ -104,6 +104,8 @@ class ThreadEntity implements Entity{
 
     private $total_comment;
 
+    private $current_user_anonymous;
+
     /**
      * Thread constructor.
      * @param $id
@@ -111,6 +113,22 @@ class ThreadEntity implements Entity{
     public function __construct($id, $current_user_login_id){
         $this->thread_id = $id;
         $this->current_user_login_id = $current_user_login_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentUserAnonymous()
+    {
+        return $this->current_user_anonymous;
+    }
+
+    /**
+     * @param mixed $current_user_anonymous
+     */
+    public function setCurrentUserAnonymous($current_user_anonymous)
+    {
+        $this->current_user_anonymous = $current_user_anonymous;
     }
 
 

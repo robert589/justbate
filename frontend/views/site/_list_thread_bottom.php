@@ -19,20 +19,10 @@ $current_user_has_vote = $thread->hasVote();
     <div class="inline">
         <?= $this->render('../thread/_retrieve_comment_button', ['thread' => $thread]) ?>
     </div>
-    <div class="inline">
-        <?= Html::a("Comment ( $thread_total_comments )",
-            $comment_request_url,
-            ['class' => 'btn btn-primary inline retrieve-comment-link',
-                'data-pjax' => "#comment_section_$thread_id",
-                'data-service' => $thread_id,
-                'style' => 'margin-left:10pt;position:relative;'
-            ])
-        ?>
-    </div>
 </div>
 
 <div  align="center" class="col-xs-12" >
-        <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
+    <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
                 ['style' => 'display:none;max-height:50px' ,
                  'id' => 'list_thread_loading_gif_' . $thread_id ])
     ?>
@@ -43,8 +33,4 @@ $current_user_has_vote = $thread->hasVote();
                         ['thread' => $thread,
                          'comment_model' => new \frontend\models\CommentForm()])
     ?>
-</div>
-<!-- Thread comment -->
-<div class="col-xs-12" style="width: 100%">
-    <?= $this->render('_list_thread_thread_comment', ['thread' => $thread  ]) ?>
 </div>

@@ -11,6 +11,7 @@ use common\creator\ThreadCreator;
 use common\entity\CommentEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
+use common\models\ThreadAnonymous;
 use Devristo\Phpws\Server\WebSocketServer;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
@@ -366,6 +367,19 @@ class ThreadController extends Controller
 		$notification_form->actor_id = $actor_id;
 		if($notification_form->submitCommentNotification($thread_id) == true){
 			return true;
+		}
+	}
+
+	public function actionRequestAnonymous(){
+		if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
+			$thread_id = $_POST['thread_id'];
+			$user_id = $_POST['user_id'];
+
+			//bad practice, please remove during refactoring
+			$thread_anon = new ThreadAnonymous();
+			$thread_anon->thread_id = $thread_id;
+			$thread_anon->user_id = $user_id;
+			return $thread_anon->save();
 		}
 	}
 
