@@ -12,6 +12,7 @@ div#page-header
 -- Menubar --
 
 nav#menubar
+img#logo
 ul#menubar-left
 div.navbar-header a, li.item a, .navbar-collapse
 li.item a[href$='home'], li.user_item a[href$='home']
