@@ -1,8 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-use common\components\ChildCommentPusher;
-use common\components\ChildCommentSocket;
 use common\components\LinkConstructor;
 use common\creator\CommentCreator;
 use common\creator\CreatorFactory;
@@ -12,13 +10,13 @@ use common\entity\CommentEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
 use common\models\ThreadAnonymous;
-use Devristo\Phpws\Server\WebSocketServer;
 use frontend\models\CommentVoteForm;
 use frontend\models\DeleteCommentForm;
 use frontend\models\DeleteThreadForm;
 use frontend\models\EditCommentForm;
 use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
+use frontend\models\ThreadAnonymousForm;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\Wamp\WampServer;
@@ -376,10 +374,24 @@ class ThreadController extends Controller
 			$user_id = $_POST['user_id'];
 
 			//bad practice, please remove during refactoring
-			$thread_anon = new ThreadAnonymous();
-			$thread_anon->thread_id = $thread_id;
-			$thread_anon->user_id = $user_id;
-			return $thread_anon->save();
+			$thread_anon_form = new ThreadAnonymousForm();
+			$thread_anon_form->thread_id = $thread_id;
+			$thread_anon_form->user_id = $user_id;
+			return $thread_anon_form->requestAnon();
+		}
+	}
+
+
+	public function actionCancelAnonymous(){
+		if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
+			$thread_id = $_POST['thread_id'];
+			$user_id = $_POST['user_id'];
+
+			//bad practice, please remove during refactoring
+			$thread_anon_form = new ThreadAnonymousForm();
+			$thread_anon_form->thread_id = $thread_id;
+			$thread_anon_form->user_id = $user_id;
+			return $thread_anon_form->cancelAnon();
 		}
 	}
 

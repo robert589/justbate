@@ -310,19 +310,13 @@ $(document).ready(function(){
     $(document).on('click', '.retrieve-child-comment-link', function(event){
         var comment_id = $(this).data('service');
         if($("#comment_part_" + comment_id).length == 1){
-
             event.preventDefault();
-
             if($("#comment_part_" + comment_id).is(":visible")){
-
                 $("#comment_part_" + comment_id).css("display", "none");
-
                 $(".col-xs-12.text-center").css("display", "none");
             }
             else{
-
                 $("#comment_part_" + comment_id).css("display", "inline");
-
                 $(".col-xs-12.text-center").css("display", "inline");
             }
         }
@@ -484,29 +478,6 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on('click',".thread-anonymous-btn", function(event){
-        var thread_id = $(this).data('service');
-        var base_url = $("#base-url").val();
-        var user_id = $("#user-login-id").val();
-        $("#thread-anonymous-btn-" + thread_id).text("Loading..");
-        $("#thread-anonymous-btn-" + thread_id).prop("disabled", 'false');
-
-        $.ajax({
-            type:'post',
-            url: base_url + "/thread/request-anonymous",
-            data: {thread_id: thread_id, user_id: user_id},
-            success: function(data){
-                if(data === true){
-                    $("#thread-anonymous-btn-" + thread_id).text("You are Anonymous");
-
-                }
-                else{
-                    $("#thread-anonymous-btn-" + thread_id).text("Go Anonymous");
-
-                }
-            }
-        })
-    });
 
     //comment_votes part
     $(document).on("click",".submit-comment-vote-button", function(){

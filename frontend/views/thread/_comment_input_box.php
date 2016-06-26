@@ -7,7 +7,6 @@ use common\components\Constant;
 /* @var $thread \common\entity\ThreadEntity **/
 /* @var $comment_model \frontend\models\CommentForm */
 /** @var $comment_input_retrieved boolean */
-
 /**
  * Variable Used
  */
@@ -26,20 +25,19 @@ Pjax::begin([
     ]
 ]);
 
-if(isset($comment_input_retrieved)) {
 
+
+
+if(isset($comment_input_retrieved)) {
     //prepare data
     $choice_text = array();
-
     foreach ($thread_choices as $choice) {
         $choice_text[$choice['choice_text']] = $choice['choice_text'];
     }
-
 ?>
 
-
-<!--Comment Input Part-->
-<?php
+    <?php
+    $current_user_anonymous = $thread->getCurrentUserAnonymous();
     $form = ActiveForm::begin(['action' => ['thread/submit-comment'],
                     'options' => ['class' => 'comment-form',
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
@@ -47,9 +45,8 @@ if(isset($comment_input_retrieved)) {
         <div class="col-xs-12" id="comment_input_box_section_<?= $thread_id ?>" style="padding: 0;">
             <hr>
             <div class="col-xs-12">
-                <?= Html::button('Go Anonymous', ['class' => 'btn btn-default thread-anonymous-btn',
-                                                  'id' => 'thread-anonymous-btn-' . $thread_id,
-                                                    'data-service' => $thread_id]) ?>
+                <?= \frontend\widgets\CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
+                                                                     'thread_id' => $thread_id ]) ?>
             </div>
             <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>" style="padding-top: 8px">
                 <?= $form->field($comment_model,

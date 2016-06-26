@@ -34,12 +34,19 @@ class Thread extends ActiveRecord
 	}
 
 	public static function getThreads($user_id, $issue_name = null) {
-		$template_sql = "
-						Select parent_thread_info.* , thread_vote.choice_text from(
+
+		if($issue_name == null){
+			$template_sql = "
+						Select parent_thread_info.* ,
+                        		thread_vote.choice_text,
+                                count(parent_thread_info.thread_id) * 8 +
+                               ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
+                               (anonymous.thread_id is not null) as current_user_anonymous
+                        from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
 								  from thread, user
-								  where thread.user_id = user.id and
+									  where thread.user_id = user.id and
 								  thread_status = 10
 							) thread_info
 							left join (select thread_comment.comment_id, thread_comment.thread_id
@@ -53,9 +60,18 @@ class Thread extends ActiveRecord
 						) parent_thread_info
 						left join thread_vote
 						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
+                        left join (SELECT thread_id, user_followed_issue.issue_name as issue_followed_name from thread_issue, user_followed_issue
+                                   where thread_issue.issue_name = user_followed_issue.issue_name
+                                  and user_followed_issue.user_id = :user_id) followed_issue
+                        on followed_issue.thread_id = parent_thread_info.thread_id
+                        left join (SELECT thread_id
+                                   from thread_anonymous
+                                   where thread_anonymous.user_id = :user_id) anonymous
+                        on parent_thread_info.thread_id = anonymous.thread_id
+                        group by(parent_thread_info.thread_id)
+                        order by(parameter) desc
+				";
 
-						";
-		if($issue_name == null){
 			$sql =  $template_sql;
 			return  \Yii::$app->db->createCommand($sql)->
 					bindParam(':user_id', $user_id)
@@ -63,13 +79,18 @@ class Thread extends ActiveRecord
 		}
 		else{
 			$sql =  "
-
-						Select parent_thread_info.* , thread_vote.choice_text from(
+						Select parent_thread_info.* ,
+                        		thread_vote.choice_text,
+                                count(parent_thread_info.thread_id) * 8 +
+                               ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
+                               (anonymous.thread_id is not null) as current_user_anonymous
+                        from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
-							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path from thread, user, thread_issue, issue
-								  where thread.user_id = user.id and
+							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
+								  from thread, user, thread_issue, issue
+									  where thread.user_id = user.id and
 								  thread_status = 10 and
-								thread_issue.thread_id = thread.thread_id
+								  thread_issue.thread_id = thread.thread_id
 								and issue.issue_name = :issue_name
 								and issue.issue_name = thread_issue.issue_name
 							) thread_info
@@ -80,9 +101,20 @@ class Thread extends ActiveRecord
 							on thread_info.thread_id = comments.thread_id
 							group by thread_info.thread_id
 							order by (created_at) desc
+
 						) parent_thread_info
 						left join thread_vote
 						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
+                        left join (SELECT thread_id, user_followed_issue.issue_name as issue_followed_name from thread_issue, user_followed_issue
+                                   where thread_issue.issue_name = user_followed_issue.issue_name
+                                  and user_followed_issue.user_id = :user_id) followed_issue
+                        on followed_issue.thread_id = parent_thread_info.thread_id
+                        left join (SELECT thread_id
+                                   from thread_anonymous
+                                   where thread_anonymous.user_id = :user_id) anonymous
+                        on parent_thread_info.thread_id = anonymous.thread_id
+                        group by(parent_thread_info.thread_id)
+                        order by(parameter) desc
 
 			";
 

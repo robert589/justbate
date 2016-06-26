@@ -9,6 +9,7 @@ use common\entity\HomeEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
 use common\models\Issue;
+use common\models\ThreadAnonymous;
 use common\models\ThreadComment;
 use common\models\ThreadVote;
 use common\models\UserEmailAuthentication;
@@ -116,7 +117,13 @@ class SiteController extends Controller
 			$model->first_name = $userAttributes['first_name'];
 			$model->last_name = $userAttributes['last_name'];
 			$url = "https://graph.facebook.com/". $userAttributes['id'] . "/picture?width=150";
-			$photos = file_get_contents($url);
+			$arrContextOptions=array(
+				"ssl"=>array(
+					"verify_peer"=>false,
+					"verify_peer_name"=>false,
+				),
+			);
+			$photos = file_get_contents($url, false, stream_context_create($arrContextOptions));
 			$model->photo_path = (new UploadProfilePicForm())->uploadFacebookPhoto($photos);
 
 			if($user = $model->signup()){
@@ -257,11 +264,17 @@ class SiteController extends Controller
 		if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
 			Yii::$app->end('Something went wrong, we will fix it as soon as possible');
 		}
-
 		$thread_entity = new ThreadEntity($_POST['thread_id'], Yii::$app->user->getId());
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
-		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE, ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY
-										])	;
+		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
+										ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY]);
+
+		//bad practice
+		$thread_entity->setCurrentUserAnonymous(
+			ThreadAnonymous::find()->where(['thread_id' => $_POST['thread_id'],
+									        'user_id' => Yii::$app->user->getId()
+										   ])->exists());
+
 
 		return $this->renderAjax('../thread/_comment_input_box',
 								['thread' => $thread_entity,

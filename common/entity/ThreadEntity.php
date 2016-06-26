@@ -410,7 +410,7 @@ class ThreadEntity implements Entity{
         $this->anonymous = isset($array['anonymous']) ? $array['anonymous'] : null;
         $this->description = isset($array['description']) ? $array['description'] : null;
         $this->total_comment = isset($array['total_comments']) ? $array['total_comments'] : null;
-
+        $this->current_user_anonymous = isset($array['current_user_anonymous']) ? $array['current_user_anonymous'] : null;
     }
 
     public function hasChosenComment(){
