@@ -177,6 +177,18 @@ a.notification-item {
     text-transform: none;
 }
 
+.notification-status {
+    content: "\25cf";
+}
+
+.notification-status-read {
+    color: white;
+}
+
+.notification-status-unread {
+    color: #1097FF;
+}
+
 .notification-item:hover{
     background: #e0e0e0;
 }
@@ -322,7 +334,7 @@ div#remember-me {
 div.site-login {
     color: #FFF;
     padding: 15px;
-    background: #FFF;
+    background-repeat: repeat;
 }
 
 div.site-login form {
@@ -1361,6 +1373,68 @@ button.btn {
 }
 
 /* MEDIA QUERY */
+@media screen and (max-width: 400px) {
+    a.navbar-brand {
+        width: 50% !important;
+    }
+
+    a.navbar-brand img {
+        margin-left: -45px !important;
+    }
+
+    div.navbar-header {
+        margin: 0 !important;
+        float: left !important;
+        width: calc(100% + 45px) !important;
+    }
+
+    div.navbar-header button.navbar-toggle {
+        margin-right: 20px;
+    }
+
+    li.item {
+        padding-left: 15px;
+    }
+
+    li.item a[href$='home'],
+    li.user_item a[href$='home'] {
+        width: calc(100% + 15px);
+        margin-left: 0 !important;
+    }
+
+    div.home-comment-tab div.inline {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    div[id^='button-vote'].btn {
+        width: 50%;
+        align-items: center;
+        margin: 0 !important;
+    }
+
+    div#button-vote-up {
+        float: left;
+        margin-right: 15px;
+    }
+
+    div#button-vote-down {
+        float: right;
+        margin-left: 15px;
+    }
+
+    div#child_comment_1 div.inline {
+        padding-top: 15px;
+        width: 100% !important;
+    }
+
+    div#child_comment_1 div.inline a.btn {
+        width: 100%;
+        border-radius: 0;
+        margin: 0 !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
 
     body {
@@ -1485,13 +1559,32 @@ button.btn {
     }
 
     ul#menubar-left {
-        width: 15%;
+        width: 10%;
+    }
+
+    #left-sidebar {
+        display: none;
+    }
+
+    .navbar-header {
+        width: 20%;
     }
 }
 
-@media screen and (max-width: 978px) {
+@media screen and (max-width: 925px) {
+    /* SEARCH BOX */
+    .navbar-header {
+        width: 25% !important;
+    }
+
+    ul#menubar-left {
+        width: 8% !important;
+    }
+}
+
+@media screen and (max-width: 950px) {
     /* MENUBAR */
-    div.navbar-header {
+    .navbar-header {
         width: 100%;
     }
 
@@ -1529,10 +1622,11 @@ button.btn {
     }
 }
 
-@media screen and (min-width: 897px) and (max-width: 992px) {
+
+@media screen and (min-width: 935px) and (max-width: 992px) {
     /* Search Menu */
     ul#menubar-left {
-        width: 25%;
+        width: 20%;
     }
 
     /* Additional search settings */
@@ -1553,52 +1647,16 @@ button.btn {
     }
 }
 
+@media screen and (min-width: 887px) and (max-width: 935px) {
+    ul#menubar-left {
+        width: 22% !important;
+    }
+}
 @media screen and (min-width: 992px) and (max-width: 1200px) {
     body {
         overflow-x: hidden;
         overflow-y: scroll;
         font-size: 8pt;
-    }
-
-    div#myNavbar {
-        overflow: hidden;
-    }
-
-    li.item, li.user_item {
-        margin-left: -15px;
-    }
-
-    a.navbar-brand img {
-        padding-left: 15px;
-    }
-
-    div.navbar-header button {
-        margin-right: 60px;
-    }
-
-    .navbar-header {
-        float: none;
-    }
-
-    .navbar-toggle {
-        display: block;
-        margin-right: 15px;
-    }
-
-    .navbar-fixed-top .navbar-collapse,
-    .navbar-static-top .navbar-collapse,
-    .navbar-fixed-bottom .navbar-collapse {
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-
-    .navbar-collapse.collapse {
-        display: none !important;
-    }
-
-    .navbar-collapse.collapse.in {
-        display: block!important;
-        margin-top: 0px;
     }
 
     div.home-main-section {
