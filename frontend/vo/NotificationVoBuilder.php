@@ -24,12 +24,19 @@ class NotificationVoBuilder{
 
     private $extra_value;
 
+    private $anonymous;
+
     function __construct(){
 
     }
 
     function read($read){
         $this->read = $read;
+    }
+
+
+    function anonymous($anonymous){
+        $this->anonymous = $anonymous;
     }
 
     function urlTemplate($url_template){
@@ -160,7 +167,9 @@ class NotificationVoBuilder{
         return $this->extra_value;
     }
 
-
+    public function getAnonymous(){
+        return $this->anonymous;
+    }
 
 
     function build(){

@@ -228,7 +228,6 @@ li#notif-expansion:hover {
 
 li#notif-expansion ul.dropdown-menu,
 li#notif-expansion ul.dropdown-menu a {
-    width: 500px;
     color: #000 !important;
 }
 

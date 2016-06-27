@@ -33,6 +33,8 @@ class NotificationVo implements Vo{
 
     private $notification_verb_name;
 
+    private $anonymous;
+
     static function createBuilder(){
         return new NotificationVoBuilder();
     }
@@ -50,7 +52,7 @@ class NotificationVo implements Vo{
         $this->notification_type_name = $builder->getNotificationTypeName();
         $this->notification_verb_name = $builder->getNotificationVerbName();
         $this->extra_value = $builder->getExtraValue();
-
+        $this->anonymous = $builder->getAnonymous();
     }
 
     /**
@@ -119,7 +121,13 @@ class NotificationVo implements Vo{
      */
     public function getPhotoPath()
     {
-        return Yii::$app->request->baseUrl . '/frontend/web/photos/' . $this->photo_path;
+        if($this->anonymous){
+            return Yii::$app->request->baseUrl . '/frontend/web/photos/default.png';
+        }
+        else{
+            return Yii::$app->request->baseUrl . '/frontend/web/photos/' . $this->photo_path;
+
+        }
     }
 
 
@@ -133,9 +141,22 @@ class NotificationVo implements Vo{
         $actors = array_map(function($actor) { return ucfirst($actor); }, $actors);
 
         switch(count($actors)){
-            case 1: $text= $this->replace($this->text_template, $actors);
+            case 1:
+                if($this->anonymous){
+                    $text= $this->replace($this->text_template, array('Anonymous'));
+                }
+                else{
+                    $text= $this->replace($this->text_template, $actors);
+                }
+
                 break;
-            case 2: $text= $this->replace($this->text_template_two_people, $actors);
+            case 2:
+                if($this->anonymous){
+                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1));
+                }
+                else{
+                   $text= $this->replace($this->text_template_two_people, $actors);
+                }
                 break;
             case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1]);
                 break;

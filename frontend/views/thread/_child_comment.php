@@ -37,29 +37,28 @@ $child_comment_sse_link = $thread_comment->getChildCommentConnection();
     <?= Dialog::widget(); ?>
 
     <div class="inline">
+
+        <?= Html::a("Comment",    $child_comment_request_url,
+            ['class' => 'btn btn-primary inline retrieve-child-comment-link',
+                'data-pjax' => "#child_comment_$thread_id",
+                'data-service' => $comment_id,
+                'style' => 'margin-left:15px; float:left'])?>
+
         <?php if($belongs_to_current_user){ ?>
+            <div class="inline">
+                <li class="item dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options</a>
+                    <ul class="dropdown-menu container-fluid">
+                        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment',
+                            'style'=> 'margin-left:5px',
+                            'data-service' => $comment_id]) ?>
 
-        <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment',
-                                  'style'=> 'margin-left:5px',
-                                  'data-service' => $comment_id]) ?>
-
-        <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment',
-                                    'data-service' => $comment_id]) ?>
-
+                        <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment',
+                            'data-service' => $comment_id]) ?>
+                    </ul>
+                </li>
+            </div>
         <?php } ?>
-
-        <?= Html::a("Debate it",    $child_comment_request_url,
-                                   ['class' => 'btn btn-primary inline retrieve-child-comment-link',
-                                    'data-pjax' => "#child_comment_$thread_id",
-                                    'data-service' => $comment_id,
-                                    'style' => 'margin-left:15px'])?>
-
-        <?= Html::hiddenInput('child_comment_url',
-                              \yii\helpers\Url::to([ 'thread/get-sse-child-comment',
-                                                     'comment_id' => $comment_id,
-                                                     'last_time' =>  time() ,
-                                                    ['id' => 'child_comment_url_' . $comment_id]]))?>
-
     </div>
 
 

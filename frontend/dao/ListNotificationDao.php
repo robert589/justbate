@@ -10,7 +10,7 @@ class ListNotificationDao{
     const NOTIFICATION_SQL = "SELECT notification_entity.*,
 		notification_actors.actors,
         last_actor.photo_path, last_actor.updated_at, last_actor.actor_id,
-        notification_extra_value.extra_value
+        notification_extra_value.extra_value, (thread_anonymous.thread_id is not null) as anonymous
                                 from (SELECT notification_type.url_template,
                                       		notification_verb.text_template,
                                             notification_verb.text_template_two_people,
@@ -47,7 +47,10 @@ class ListNotificationDao{
                                 left join notification_extra_value
                                 on notification_extra_value.notification_type_name = notification_entity.notification_type_name
                                 and notification_extra_value.url_key_value = notification_entity.url_key_value
-                                where last_actor.actor_id is not null ";
+                                left join thread_anonymous
+                                on notification_entity.url_key_value = thread_anonymous.thread_id
+                                and thread_anonymous.user_id = last_actor.actor_id and notification_entity.notification_type_name = 'thread'
+             					where last_actor.actor_id is not null ";
 
 
     function buildListNotification($user_id ,ListNotificationVoBuilder $builder){
@@ -72,6 +75,7 @@ class ListNotificationDao{
             $notification_builder->notificationTypeName($result['notification_type_name']);
             $notification_builder->notificationVerbName($result['notification_verb_name']);
             $notification_builder->extraValue($result['extra_value']);
+            $notification_builder->anonymous($result['anonymous']);
             $list_notification[] = $notification_builder->build();
         }
 

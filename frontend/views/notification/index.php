@@ -23,8 +23,8 @@ Pjax::begin([
             </a>
             <ul class="dropdown-menu container-fluid" style="background: #fff !important;
                 color: black !important;
-                height:300px;width:350px;overflow-y: scroll;overflow-x: hidden">
-                <div align="center" id="dropdown-menu" style="font-size: 10px"><h4>Notifications (Under development)</h4></div>
+                height:300px;width:400px;overflow-y: scroll;overflow-x: hidden">
+                <div align="center" id="dropdown-menu" style="font-size: 10px"><h4>Notifications</h4></div>
                 <hr style="margin: 0;">
                 <?php if(isset($list_notification_vo)) { ?>
                 <?= $this->render('_notifications', ['id' => 'dropdown-menu-body',
