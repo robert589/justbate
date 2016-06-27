@@ -29,7 +29,14 @@ $comment_thread_id = $thread_comment->getThreadId();
 
 	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
-			<span><?= Html::a($comment_creator_full_name, $commentator_user_profile_link, ['data-pjax' => 0])?></span> -
+			<?php if($thread_comment->isAnonymous()) { ?>
+				<span><label><?= $comment_creator_full_name ?></label></span>
+			<?php } else { ?>
+				<span><?= Html::a($comment_creator_full_name,
+						$commentator_user_profile_link,
+						['data-pjax' => 0])?></span> -
+			<?php } ?>
+
 			<span class="comment-created"><?= $comment_created_at ?></span>
 		</div>
 	</div>

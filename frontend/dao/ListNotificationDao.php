@@ -9,7 +9,7 @@ use frontend\vo\NotificationVoBuilder;
 class ListNotificationDao{
     const NOTIFICATION_SQL = "SELECT notification_entity.*,
 		notification_actors.actors,
-        last_actor.photo_path, last_actor.updated_at,
+        last_actor.photo_path, last_actor.updated_at, last_actor.actor_id,
         notification_extra_value.extra_value
                                 from (SELECT notification_type.url_template,
                                       		notification_verb.text_template,
@@ -26,25 +26,28 @@ class ListNotificationDao{
                                            group_concat(actor.first_name SEPARATOR '%,%') as actors
                                     FROM notification n, notification_actor na, user actor
                                     WHERE n.notification_id = na.notification_id
-                                    and actor.id = na.actor_id
+                                    and actor.id = na.actor_id and actor.id <> :user_id
                                     group by na.notification_id
                                     order by na.updated_at desc
                                     ) notification_actors
                                 on notification_actors.notification_id = notification_entity.notification_id
                                 left join(
-                                    SELECT u.photo_path, n.notification_id, na.updated_at
+                                    SELECT u.photo_path, n.notification_id, na.updated_at,na.actor_id
                                     from notification n, notification_actor na, user u
                                     where n.notification_id = na.notification_id and
                                           na.actor_id = u.id and
                                           na.updated_at = (SELECT max(na1.updated_at)
                                                            from notification_actor na1
                                                            where n.notification_id = na1.notification_id
+                                                           and na1.actor_id <> :user_id
+
                                                              )
                                   ) last_actor
                                 on notification_entity.notification_id = last_actor.notification_id
                                 left join notification_extra_value
                                 on notification_extra_value.notification_type_name = notification_entity.notification_type_name
-                                and notification_extra_value.url_key_value = notification_entity.url_key_value";
+                                and notification_extra_value.url_key_value = notification_entity.url_key_value
+                                where last_actor.actor_id is not null ";
 
 
     function buildListNotification($user_id ,ListNotificationVoBuilder $builder){

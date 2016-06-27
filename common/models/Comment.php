@@ -40,17 +40,21 @@ class Comment extends ActiveRecord
         $sql=  "SELECT comments.*,
                         (case comment_vote.user_id when :user_id then vote else null end) as vote,
                         COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
-                        COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
+                        COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike,
+                        (thread_anonymous.user_id is not null) as comment_anonymous
                 FROM (
-                    SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, user.last_name, user.username, user.photo_path
-                    from thread_comment,comment, user
-                    where thread_id = :thread_id and
+                    SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name, 								user.last_name, user.username, user.photo_path
+                    from thread_comment,comment, user, thread_anonymous
+                    where thread_comment.thread_id = :thread_id and
                     thread_comment.choice_text= :choice_text and
-                    thread_comment.comment_id = comment.comment_id 			and user.id = comment.user_id and
+                    thread_comment.comment_id = comment.comment_id 	and
+                    user.id = comment.user_id and
                     comment_status = 10
                     ) comments
                 LEFT JOIN comment_vote
                 on comment_vote.comment_id = comments.comment_id
+                left join thread_anonymous
+                on thread_anonymous.thread_id = comments.thread_id and thread_anonymous.user_id  = comments.user_id
                 group by
                  comments.comment_id
                 order by total_like desc

@@ -18,10 +18,15 @@ class ThreadComment extends ActiveRecord
      *
      */
     public static function getBestCommentFromThread($thread_id){
-        $sql = "SELECT *
-                from thread_comment,comment, user
-                where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
-                and comment.user_id = user.id and comment.comment_status = 10
+        $sql = "SELECT comment_info.*,
+                  (thread_anonymous.thread_id is not null) as comment_anonymous
+                from (SELECT comment.*, thread_comment.thread_id, thread_comment.choice_text, user.first_name, user.last_name,
+                             user.photo_path, user.username
+                    from thread_comment,comment, user
+                    where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
+                    and comment.user_id = user.id and comment.comment_status = 10) as comment_info
+                left join thread_anonymous
+                on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
                 limit 1";
 
         return  \Yii::$app->db->createCommand($sql)

@@ -41,7 +41,7 @@ class Thread extends ActiveRecord
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
-                               (anonymous.thread_id is not null) as current_user_anonymous
+                               (anonymous.thread_id is not null) as comment_anonymous
                         from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
@@ -163,9 +163,11 @@ class Thread extends ActiveRecord
 		}
 
 		$sql = "SELECT TU.*,
-					(SELECT choice_text from thread_vote where thread_id = :thread_id and user_id = :user_id) as user_choice
-				  	FROM (SELECT thread.*, user.id, user.first_name, user.last_name from thread inner join user on thread.user_id = user.id) TU
-					where thread_id = :thread_id";
+					(SELECT choice_text
+					from thread_vote
+					where thread_id = :thread_id and user_id = :user_id) as user_choice
+				FROM (SELECT thread.*, user.id, user.first_name, user.last_name from thread inner join user on thread.user_id = user.id) TU
+				where thread_id = :thread_id";
 
 		$result =  \Yii::$app->db->createCommand($sql)->
 			bindParam(':thread_id', $thread_id)->

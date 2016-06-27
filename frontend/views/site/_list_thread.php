@@ -62,7 +62,13 @@ $has_chosen_comment = $thread->hasChosenComment();
 
 			<div class="col-xs-11" style="margin-top: -40px; margin-left: 55px;margin-bottom: 20px">
 				<div class="name-link inline">
-					<?= Html::a($commentator_full_name, $commentator_user_profile_link) ?> chose <?= $commentator_choice ?>
+					<?php if(!$chosen_comment->isAnonymous()){ ?>
+						<?= Html::a($commentator_full_name, $commentator_user_profile_link) ?>
+					<?php }else{ ?>
+						<?= $commentator_full_name ?>
+					<?php } ?>
+						chose <?= $commentator_choice ?>
+
 				</div>
 			</div>
 

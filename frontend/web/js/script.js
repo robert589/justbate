@@ -603,7 +603,6 @@ $(document).ready(function(){
     $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
     });
-
     $.pjax.defaults.scrollTo = false;
     $.pjax.defaults.skipOuterContainers = true;
 });

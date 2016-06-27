@@ -85,6 +85,7 @@ class CommentEntity implements Entity{
      */
     private $comment_status;
 
+    private $anonymous;
 
     /**
      * Thread constructor.
@@ -145,6 +146,16 @@ class CommentEntity implements Entity{
     {
         return $this->comment_creator_username;
     }
+
+    /**
+     * @param mixed $anonymous
+     */
+    public function setAnonymous($anonymous)
+    {
+        $this->anonymous = $anonymous;
+    }
+
+
 
     /**
      * @param mixed $comment_creator_username
@@ -360,20 +371,38 @@ class CommentEntity implements Entity{
         $this->dateCreated = isset($array['created_at']) ? $array['created_at'] : null;
         $this->dateUpdated = isset($array['updated_at']) ? $array['updated_at'] : null;
         $this->comment_status = isset($array['comment_status']) ? $array['comment_status'] : null;
-        $this->current_user_vote = isset($array['vote']) ? $array['vote'] : null;
+        $this->anonymous = isset($array['comment_anonymous']) ? $array['comment_anonymous'] : null;
 
     }
 
     public function getFullName(){
-        return $this->comment_creator_first_name . ' ' . $this->comment_creator_last_name;
+        if($this->anonymous){
+            return 'Anonymous';
+        }
+        else{
+            return $this->comment_creator_first_name . ' ' . $this->comment_creator_last_name;
+
+        }
     }
 
     public function getCommentatorPhotoLink(){
-       return \Yii::getAlias('@image_dir') . '/' . $this->comment_creator_photo_path;
+        if($this->anonymous){
+            return \Yii::getAlias('@image_dir') . '/default.png';
+
+        }
+        else{
+            return \Yii::getAlias('@image_dir') . '/' . $this->comment_creator_photo_path;
+
+        }
     }
 
     public function getCommentatorUserProfileLink(){
-        return Yii::$app->urlManager->createAbsoluteUrl(['user/' . $this->comment_creator_username]);
+        if($this->anonymous){
+            return '#';
+        }
+        else{
+            return Yii::$app->urlManager->createAbsoluteUrl(['user/' . $this->comment_creator_username]);
+        }
     }
 
     /**
@@ -393,5 +422,9 @@ class CommentEntity implements Entity{
 
         return $belongs;
 
+    }
+
+    public function isAnonymous(){
+        return $this->anonymous;
     }
 }

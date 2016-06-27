@@ -91,12 +91,16 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 				</div>
 
 				<?php if($thread_belongs_to_current_user) { ?>
+					<div class="inline">
 
-					<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn inline', 'style' => 'background: #d9534f;']) ?>
+						<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn inline', 'style' => 'background: #d9534f;']) ?>
 
-					<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn inline','data-guest' => $guest]) ?>
+						<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn inline','data-guest' => $guest]) ?>
+
+					</div>
 
 				<?php } ?>
+
 			</div>
 		</div>
 	</div>
