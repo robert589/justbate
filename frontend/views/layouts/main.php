@@ -63,7 +63,7 @@ AppAsset::register($this);
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav" id="menubar-left">
+                <ul class="nav navbar-nav navbar-right" id="menubar-left">
                     <li id="search-box" class="item">
                         <?= Select2::widget([
                             'name' => 'search_box_menu',
@@ -98,8 +98,6 @@ AppAsset::register($this);
                         ],
                         ])?>
                     </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <?php } else { ?>
