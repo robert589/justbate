@@ -131,12 +131,23 @@ class SiteController extends Controller
         }
 
         $all_threads = Thread::find()->all();
+
+        //modify date format
+        foreach ($all_threads as $row) {
+            foreach ($row as $key => $value) {
+                if($key === 'created_at' || $key === 'updated_at'){
+                    $row[$key] = DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($value);
+                }
+            }
+        }
+
         $thread_provider = new ArrayDataProvider([
             'allModels' => $all_threads,
             'pagination' => [
                 'pageSize' => 30
             ]
         ]);
+
 
         return $this->render('thread', ['thread_provider' => $thread_provider]);
     }

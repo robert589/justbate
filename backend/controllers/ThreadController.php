@@ -170,7 +170,7 @@ class ThreadController extends Controller
                             }
                         }
 
-                        return $this->redirect(Yii::$app->request->baseUrl . '../thread/' . $id);
+                        return $this->redirect(Yii::$app->request->baseUrl . '/site/thread/');
 
                     }
                 }

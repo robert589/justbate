@@ -3,12 +3,14 @@
     use yii\widgets\ActiveForm;
     use kartik\select2\Select2;
     use yii\helpers\Html;
+    use kartik\dialog\Dialog;
     /** @var $thread array */
     /** @var $edit_thread_form \frontend\models\EditThreadForm */
     /** @var $choices array */
     /** @var $edit_choice_forms array */
 
 ?>
+<?= Dialog::widget() ?>
 
 <div class="col-md-6 col-md-offset-3">
     <label>Please only correct the grammar, do not change the context</label>
@@ -36,4 +38,3 @@
 
     <?php \yii\widgets\ActiveForm::end() ?>
 </div>
-
