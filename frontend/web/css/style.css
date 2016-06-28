@@ -1454,6 +1454,10 @@ button.btn {
         width: 100%;
     }
 
+    ul#menubar-left {
+        margin-top: 0px !important;
+    }
+
     /* LOGIN */
     div.site-login div.row div.col-xs-12 div#signup-form {
         padding: 15px;
@@ -1611,12 +1615,11 @@ button.btn {
 
 @media screen and (max-width: 900px) {
      .navbar-header {
-        width: 100% !important;
+        width: 100%;
     }
 
     ul#menubar-left {
-        width: 100%;
-        margin-top: -50px;
+        width: 100% !important;
     }
 
     li#search-box {
