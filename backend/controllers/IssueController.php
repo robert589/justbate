@@ -107,15 +107,16 @@ class IssueController extends Controller
             return $this->render('/site/prohibit');
         }
 
-        if(isset($_GET['id'])){
-            $id = $_GET['id'];
+        if(isset($_GET['name'])){
+            $name = $_GET['name'];
 
-            $issue = Issue::find()->where(['issue_id' => $id])->one();
+            $issue = Issue::find()->where(['issue_name' => $name])->one();
 
             $edit_issue_form = new EditIssueForm();
-            $edit_issue_form->issue_id = $id;
+            
             if($edit_issue_form->load(Yii::$app->request->post()) && $edit_issue_form->validate()){
-                if($edit_issue_form->update()){
+                //passed $name param here
+                if($edit_issue_form->update($name)){
                     return $this->redirect(Yii::$app->request->baseUrl . '/issue/list');
                 }
             }

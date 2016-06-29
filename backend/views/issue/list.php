@@ -34,7 +34,7 @@ $this->title = "Thread list" ;
             ],
             'urlCreator' => function ($action, $model, $key, $index) {
                 if ($action === 'edit') {
-                    $url = Yii::$app->request->baseUrl . '/issue/edit?id='.  $model['issue_name']; // your own url generation logic
+                    $url = Yii::$app->request->baseUrl . '/issue/edit?name='.  $model['issue_name']; // your own url generation logic
                     return $url;
                 }
                 else if($action == 'banned'){
