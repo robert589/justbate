@@ -36,35 +36,35 @@ $last_comment_id_current_user = isset($last_comment_id_current_user) ? $last_com
             'data-service' => $comment_id
         ]])
 ?>
-<?= Html::hiddenInput('last_comment_id_current_user',
-    $last_comment_id_current_user,
-    ['id' => 'last_comment_id_current_user_' . $comment_id])?>
+    <?= Html::hiddenInput('last_comment_id_current_user',
+        $last_comment_id_current_user,
+        ['id' => 'last_comment_id_current_user_' . $comment_id])?>
 
-<?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId(), ['id' => 'current_user_login_id_' . $comment_id]) ?>
+    <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId(), ['id' => 'current_user_login_id_' . $comment_id]) ?>
 
-<?= Html::hiddenInput('parent_id' , $comment_id) ?>
+    <?= Html::hiddenInput('parent_id' , $comment_id) ?>
 
-<div class="col-xs-12">
+    <div class="col-xs-12">
 
-    <div class="col-md-11">
-        <?= $form->field($child_comment_form, 'child_comment')->textarea([
-            'data-service' => $comment_id,
-            'rows' => 1,
-            'style' => 'width:100%',
-            'placeholder' => 'add comment here..' ])
-            ->label(false)?>
-    </div>
-
-    <div class="col-md-1">
-        <?= Html::submitButton('Submit',
-            ['class' => 'btn btn-md  submit-child-comment-form-button',
-                'style' => 'float:left',
+        <div class="col-md-11">
+            <?= $form->field($child_comment_form, 'child_comment')->textarea([
                 'data-service' => $comment_id,
-                'id' => 'submit-child-comment-form-button-'  . $comment_id
-            ]) ?>
-    </div>
+                'rows' => 1,
+                'style' => 'width:100%',
+                'placeholder' => 'add comment here..' ])
+                ->label(false)?>
+        </div>
 
-</div>
+        <div class="col-md-1">
+            <?= Html::submitButton('Submit',
+                ['class' => 'btn btn-md  submit-child-comment-form-button',
+                    'style' => 'float:left',
+                    'data-service' => $comment_id,
+                    'id' => 'submit-child-comment-form-button-'  . $comment_id
+                ]) ?>
+        </div>
+
+    </div>
 
 <?php ActiveForm::end() ?>
 

@@ -22,18 +22,15 @@ class CommentController extends Controller{
 
     public function actionIndex(){
         if(isset($_GET['id']) && isset($_GET['comment_id'])){
-
             $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
-
-            $vo = $service->getCommentInfo(Yii::$app->user->getId(), $_GET['id'], $_GET['comment_id']);
-
-            if($vo instanceof ThreadCommentVo::class){
-
+            $vo = $service->getCommentInfo(Yii::$app->user->getId(), $_GET['id'], $_GET['comment_id'],
+                isset($_GET['child']));
+            if($vo === null){
+                return $this->redirect(Yii::$app->request->baseUrl . '/site/not-found');
             }
-            else if($vo instanceof  ChildCommentVo::class){
-
+            else if($vo instanceof ThreadCommentVo){
+                return $this->render('index', ['thread_comment' => $vo] );
             }
-            return $this->renderAjax( 'index' , ['list_notification_vo' => $vo] );
         }
     }
 

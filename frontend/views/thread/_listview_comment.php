@@ -26,7 +26,6 @@ $comment_thread_id = $thread_comment->getThreadId();
 	<div class="col-xs-1 image-commentator">
 		<img class="img img-circle profile-picture-comment" style="width: 40px;height:40px" src="<?= $commentator_user_photo_path_link ?>">
 	</div>
-
 	<div class="col-xs-11 non-image-commentator">
 		<div class="col-xs-12 commentator-name">
 			<?php if($thread_comment->isAnonymous()) { ?>

@@ -3,11 +3,12 @@
 namespace frontend\vo;
 
 use common\components\DateTimeFormatter;
+use common\libraries\UserUtility;
 use Yii;
 use yii\data\ArrayDataProvider;
 
 abstract class CommentVo implements Vo{
-
+    protected $comment_id;
 
     private $comment_creator_username;
 
@@ -86,9 +87,9 @@ abstract class CommentVo implements Vo{
     /**
      * @return mixed
      */
-    public function getCommentCreatorUsername()
+    public function getUserProfileLink()
     {
-        return $this->comment_creator_username;
+        return UserUtility::buildUserLink($this->comment_creator_username);
     }
 
     /**
@@ -99,28 +100,17 @@ abstract class CommentVo implements Vo{
         return $this->comment_creator_id;
     }
 
-    /**
-     * @return string
-     */
-    public function getCommentCreatorFirstName()
-    {
-        return $this->comment_creator_first_name;
+
+    public function getFullName(){
+        return UserUtility::getFullName($this->comment_creator_first_name, $this->comment_creator_last_name);
     }
 
     /**
      * @return string
      */
-    public function getCommentCreatorLastName()
+    public function getCommentCreatorPhotoLink()
     {
-        return $this->comment_creator_last_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCommentCreatorPhotoPath()
-    {
-        return $this->comment_creator_photo_path;
+        return UserUtility::buildPhotoPath($this->comment_creator_photo_path);
     }
 
     /**
@@ -152,7 +142,7 @@ abstract class CommentVo implements Vo{
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($this->created_at);
     }
 
     /**
@@ -160,7 +150,7 @@ abstract class CommentVo implements Vo{
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($this->updated_at);
     }
 
     /**
@@ -203,6 +193,15 @@ abstract class CommentVo implements Vo{
         return $this->anonymous;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCommentId()
+    {
+        return $this->comment_id;
+    }
+
+
 
     function __construct(CommentVoBuilder $builder)
     {
@@ -220,7 +219,28 @@ abstract class CommentVo implements Vo{
         $this->comment_creator_last_name = $builder->getCommentCreatorLastName();
         $this->comment_creator_username = $builder->getCommentCreatorUsername();
         $this->comment_creator_id = $builder->getCommentCreatorId();
+        $this->comment_id = $builder->getCommentId();
+    }
+
+
+    /**
+     * @return int
+     */
+    public function isBelongToCurrentUser(){
+        if (\Yii::$app->user->isGuest) {
+            $belongs = 0;
+        }
+        else {
+            if(\Yii::$app->user->getId()== $this->comment_creator_id){
+                $belongs = 1;
+            } else {
+                $belongs = 0;
+            }
+        }
+
+        return $belongs;
 
     }
+
 
 }

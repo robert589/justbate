@@ -3,6 +3,7 @@ namespace frontend\vo;
 
 abstract class CommentVoBuilder implements Builder{
 
+    private $comment_id;
 
     private $comment_creator_username;
 
@@ -316,6 +317,22 @@ abstract class CommentVoBuilder implements Builder{
     public function setAnonymous($anonymous)
     {
         $this->anonymous = $anonymous;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentId()
+    {
+        return $this->comment_id;
+    }
+
+    /**
+     * @param mixed $comment_id
+     */
+    public function setCommentId($comment_id)
+    {
+        $this->comment_id = $comment_id;
     }
 
 

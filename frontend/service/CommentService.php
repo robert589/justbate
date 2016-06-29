@@ -22,9 +22,15 @@ class CommentService{
         }
         else{
             $builder = new ThreadCommentVoBuilder();
-            $this->comment_dao->buildThreadComment($user_id, $thread_id, $comment_id, $builder);
+            $builder = $this->comment_dao->buildThreadComment($user_id, $thread_id, $comment_id, $builder);
         }
-        return $builder->build();
+
+        if($builder === null){
+            return null;
+        }
+        else{
+            return $builder->build();
+        }
     }
 
 
