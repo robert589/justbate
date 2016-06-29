@@ -9,18 +9,18 @@ use Yii;
 
 class BanIssueForm extends Model {
 
-    public $issue_id;
+    public $issue_name;
 
     public function rules() {
         return [
-            [['issue_id'], 'integer'],
-            ['issue_id', 'required']
+            [['issue_name'], 'string'],
+            ['issue_name', 'required']
         ];
     }
 
     public function ban() {
         if($this->validate()) {
-            $issue  = Issue::findOne(['issue_id' => $this->issue_id]);
+            $issue  = Issue::findOne(['issue_name' => $this->issue_name]);
             $issue->issue_status = Issue::STATUS_BANNED;
             if($issue->update()){
                 return true;

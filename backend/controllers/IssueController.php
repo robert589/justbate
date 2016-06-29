@@ -87,16 +87,16 @@ class IssueController extends Controller
             return $this->render('/site/prohibit');
         }
 
-        if(isset($_GET['id'])){
-            $id = $_GET['id'];
+        if(isset($_GET['name'])){
+            $name = $_GET['name'];
 
             $ban_issue_form = new BanIssueForm();
-            $ban_issue_form->issue_id = $id;
+            $ban_issue_form->issue_name = $name;
 
             if ($ban_issue_form->validate() && $ban_issue_form->ban()) {
                 return $this->redirect(Yii::$app->request->baseUrl . '/issue/list');
             }
-            //return $this->redirect(Yii::$app->request->baseUrl. '/site/error');
+            return $this->redirect(Yii::$app->request->baseUrl. '/site/error');
         }
 
     }
@@ -113,7 +113,7 @@ class IssueController extends Controller
             $issue = Issue::find()->where(['issue_name' => $name])->one();
 
             $edit_issue_form = new EditIssueForm();
-            
+
             if($edit_issue_form->load(Yii::$app->request->post()) && $edit_issue_form->validate()){
                 //passed $name param here
                 if($edit_issue_form->update($name)){
