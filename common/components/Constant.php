@@ -1,9 +1,8 @@
 <?php
 namespace common\components;
-
 use yii\helpers\HtmlPurifier;
 
-class Constant{
+class Constant {
     public static function DefaultPurifierConfig(){
         $cfg = \HTMLPurifier_Config::createDefault();
 

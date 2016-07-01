@@ -1,6 +1,9 @@
 <?php
 namespace frontend\models;
 
+use common\components\Constant;
+use common\entity\CommentEntity;
+use common\libraries\CommentUtility;
 use common\models\Notification;
 use common\models\NotificationActor;
 use common\models\NotificationExtraValue;
@@ -12,6 +15,7 @@ use common\models\Thread;
 use common\models\User;
 use common\models\Comment;
 use common\models\FollowerRelation;
+use yii\helpers\HtmlPurifier;
 
 class NotificationForm extends Model
 {
@@ -27,6 +31,57 @@ class NotificationForm extends Model
             [['actor_id'], 'integer'],
 
         ];
+    }
+
+    public function submitChildCommentNotification( $thread_id, $comment_id){
+        if($this->validate()){
+            $notification_id = $this->getNotificationId($thread_id . '%,%' .$comment_id, NotificationType::COMMENT_TYPE, NotificationVerb::PEOPLE_COMMENT_ON_YOUR_COMMENT);
+            if(is_null($notification_id)){
+                $notification = new Notification();
+                $notification->notification_verb_name = NotificationVerb::PEOPLE_COMMENT_ON_YOUR_COMMENT;
+                $notification->notification_type_name = NotificationType::COMMENT_TYPE;
+                $comment_text = CommentUtility::cutText(Comment::findOne($comment_id)->comment);
+                $notification->url_key_value = $thread_id . '%,%' . $comment_id;
+                if(!$notification->save()){
+                    //error
+                }
+
+                $notification_id = $notification->notification_id;
+                $notification_receiver = new NotificationReceiver();
+                $notification_receiver->notification_id = $notification->notification_id;
+                $notification_receiver->receiver_id = Comment::find()->where(['comment_id' => $comment_id])->one()->user_id;
+                if(!$notification_receiver->save()){
+                    //error
+                }
+
+                $notification_extra_value = new NotificationExtraValue();
+                $notification_extra_value->notification_type_name = $notification->notification_type_name;
+                $notification_extra_value->url_key_value = $notification->url_key_value;
+                $notification_extra_value->extra_value =  Constant::removeAllHtmlTag($comment_text);
+                if(!$notification_extra_value->save()){
+                    //error
+                }
+            }
+
+
+            $notification_actor = $this->getNotificationActor($notification_id, $this->actor_id);
+            if(is_null($notification_actor)){
+                $notification_actor = new NotificationActor();
+                $notification_actor->notification_id = $notification_id;
+                $notification_actor->actor_id = $this->actor_id;
+                if(!$notification_actor->save()){
+                    //error
+                }
+            }
+            else{
+                $notification_actor->updated_at = 'unix_timestamp()';
+                if(!$notification_actor->update()){
+                    //error
+                }
+            }
+
+            return true;
+        }
     }
 
     /**
@@ -86,9 +141,11 @@ class NotificationForm extends Model
         return NotificationActor::find()->where(['notification_id' => $notification_id, 'actor_id' => $actor_id])->one();
     }
 
-    private function getNotificationId($thread_id, $notification_type_name, $notification_verb_name){
-        $notification = Notification::find()->where(['url_key_value' => $thread_id, 'notification_type_name' => $notification_type_name,
-                    'notification_verb_name' => $notification_verb_name])->one();
+    private function getNotificationId($url_key_value, $notification_type_name, $notification_verb_name){
+
+        $notification = Notification::find()->where(['url_key_value' => $url_key_value,
+                                                    'notification_type_name' => $notification_type_name,
+                                                    'notification_verb_name' => $notification_verb_name])->one();
 
         if($notification !== null){
             return $notification->notification_id;

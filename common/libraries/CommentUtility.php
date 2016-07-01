@@ -2,11 +2,12 @@
 namespace common\libraries;
 use Yii;
 use yii\helpers\Html;
+use common\components\Constant;
 
 class CommentUtility{
 
     public static function cutText($comment){
-        $comment = Html::encode($comment);
+        $comment = Constant::removeAllHtmlTag($comment);
         $comment = substr($comment, 0 , 65);
         return $comment;
     }

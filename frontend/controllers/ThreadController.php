@@ -17,15 +17,11 @@ use frontend\models\EditCommentForm;
 use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
 use frontend\models\ThreadAnonymousForm;
-use Ratchet\Http\HttpServer;
-use Ratchet\Server\IoServer;
-use Ratchet\Wamp\WampServer;
-use Ratchet\WebSocket\WsServer;
-use React\EventLoop\Factory;
-use React\Socket\Server;
-use React\ZMQ\Context;
+
+use frontend\vo\ChildCommentVo;
+use frontend\vo\ChildCommentVoBuilder;
+use frontend\widgets\ThreadComment;
 use Yii;
-use yii\helpers\HtmlPurifier;
 use yii\web\Controller;
 use frontend\models\CommentForm;
 use frontend\models\ChildCommentForm;
@@ -128,12 +124,19 @@ class ThreadController extends Controller
 			if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
 				//error
 			}
+			//bad practice
+			$thread_id = \common\models\ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
+			if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
+				//error
+			}
 
 			if(!($new_comment_id = $child_comment_form->store())){
 				//error
 			}
 
-			return $this->renderAjax('_child_comment_input_box',
+
+
+			return $this->renderAjax('child-comment',
 				['comment_id' => $parent_id,
 				'retrieved' => true,
 				'child_comment_form' => new ChildCommentForm(),
@@ -366,6 +369,15 @@ class ThreadController extends Controller
 		if($notification_form->submitCommentNotification($thread_id) == true){
 			return true;
 		}
+	}
+
+	private function updateChildCommentNotification($actor_id, $thread_id, $comment_id){
+		$notification_form = new NotificationForm();
+		$notification_form->actor_id = $actor_id;
+		if($notification_form->submitChildCommentNotification($thread_id, $comment_id) == true){
+			return true;
+		}
+
 	}
 
 	public function actionRequestAnonymous(){

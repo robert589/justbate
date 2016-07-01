@@ -14,7 +14,7 @@ class NotificationVoBuilder{
 
     private $url_key_value;
 
-    private $actors_in_string;
+    private $actors;
 
     private $photo_path;
 
@@ -56,11 +56,11 @@ class NotificationVoBuilder{
     }
 
     function urlKeyValue($url_key_value){
-        $this->url_key_value = $url_key_value;
+        $this->url_key_value  = explode("%,%", $url_key_value);
     }
 
     function actorsInString($actors_in_string){
-        $this->actors_in_string = $actors_in_string;
+        $this->actors  = explode("%,%", $actors_in_string);
     }
 
     function photoPath($photo_path){
@@ -82,25 +82,22 @@ class NotificationVoBuilder{
     /**
      * @return mixed
      */
-    public function getRead()
-    {
+    public function getRead() {
         return $this->read;
     }
 
     /**
      * @return mixed
      */
-    public function getPhotoPath()
-    {
+    public function getPhotoPath() {
         return $this->photo_path;
     }
 
     /**
      * @return mixed
      */
-    public function getActorsInString()
-    {
-        return $this->actors_in_string;
+    public function getActors() {
+        return $this->actors;
     }
 
     /**

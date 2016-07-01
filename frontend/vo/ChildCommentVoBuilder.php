@@ -2,7 +2,6 @@
 
 namespace frontend\vo;
 
-use common\entity\ChildCommentVo;
 
 class ChildCommentVoBuilder extends CommentVoBuilder {
 

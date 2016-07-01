@@ -3,6 +3,7 @@
 namespace frontend\vo;
 
 use common\components\DateTimeFormatter;
+use common\models\Notification;
 use common\models\NotificationType;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -23,7 +24,7 @@ class NotificationVo implements Vo{
 
     private $url_key_value;
 
-    private $actors_in_string;
+    private $actors;
 
     private $photo_path;
 
@@ -47,7 +48,7 @@ class NotificationVo implements Vo{
         $this->text_template_two_people = $builder->getTextTemplateTwoPeople();
         $this->text_template_more_than_two_people = $builder->getTextTemplateMoreThanTwoPeople();
         $this->url_key_value = $builder->getUrlKeyValue();
-        $this->actors_in_string = $builder->getActorsInString();
+        $this->actors = $builder->getActors();
         $this->photo_path = $builder->getPhotoPath();
         $this->notification_type_name = $builder->getNotificationTypeName();
         $this->notification_verb_name = $builder->getNotificationVerbName();
@@ -70,7 +71,11 @@ class NotificationVo implements Vo{
     {
         if($this->notification_type_name === NotificationType::THREAD_TYPE ){
             return Yii::$app->request->baseUrl . '/' . $this->replace($this->url_template,
-                [$this->url_key_value, str_replace(' ' , '-', strtolower($this->extra_value))]);
+                [$this->url_key_value[0], str_replace(' ' , '-', strtolower($this->extra_value))]);
+        }
+        else if($this->notification_type_name === NotificationType::COMMENT_TYPE) {
+            return Yii::$app->request->baseUrl . '/' . $this->replace($this->url_template,
+                [$this->url_key_value[0], $this->url_key_value[1], str_replace(' ' , '-', strtolower($this->extra_value))]);
         }
 
         return null;
@@ -100,21 +105,6 @@ class NotificationVo implements Vo{
         return $this->text_template_more_than_two_people;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUrlKeyValue()
-    {
-        return $this->url_key_value;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActorsInString()
-    {
-        return $this->actors_in_string;
-    }
 
     /**
      * @return mixed
@@ -137,8 +127,17 @@ class NotificationVo implements Vo{
      */
     public function getText()
     {
-        $actors  = explode("%,%", $this->actors_in_string);
-        $actors = array_map(function($actor) { return ucfirst($actor); }, $actors);
+        if($this->notification_type_name === NotificationType::THREAD_TYPE){
+            return $this->getThreadText();
+        }
+        else if($this->notification_type_name === NotificationType::COMMENT_TYPE) {
+            return $this->getCommentText();
+        }
+    }
+
+    private function getCommentText(){
+
+        $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
 
         switch(count($actors)){
             case 1:
@@ -146,6 +145,7 @@ class NotificationVo implements Vo{
                     $text= $this->replace($this->text_template, array('Anonymous'));
                 }
                 else{
+                    $actors[] = $this->extra_value;
                     $text= $this->replace($this->text_template, $actors);
                 }
 
@@ -155,12 +155,14 @@ class NotificationVo implements Vo{
                     $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1));
                 }
                 else{
-                   $text= $this->replace($this->text_template_two_people, $actors);
+                    $actors[] = $this->extra_value;
+                    $text= $this->replace($this->text_template_two_people, $actors);
                 }
                 break;
-            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1]);
+            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1, $this->extra_value ]);
                 break;
             default:
+                $actors[] = $this->extra_value;
                 $text = $this->replace($this->text_template, $actors);
                 break;
         }
@@ -168,8 +170,43 @@ class NotificationVo implements Vo{
     }
 
 
-    private function replace($text, $args){
 
+    private function getThreadText(){
+
+        $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
+
+        switch(count($actors)){
+            case 1:
+                if($this->anonymous){
+                    $text= $this->replace($this->text_template, array('Anonymous'));
+                }
+                else{
+                    $actors[] = $this->extra_value;
+                    $text= $this->replace($this->text_template, $actors);
+                }
+
+                break;
+            case 2:
+
+                if($this->anonymous){
+                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1));
+                }
+                else{
+                    $actors[] = $this->extra_value;
+                    $text= $this->replace($this->text_template_two_people, $actors);
+                }
+                break;
+            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1]);
+                break;
+            default:
+                $actors[] = $this->extra_value;
+                $text = $this->replace($this->text_template, $actors);
+                break;
+        }
+        return $text;
+    }
+
+    private function replace($text, $args){
         foreach($args as $index => $arg){
             $text = str_replace('%'. ($index + 1) . '$%',"$arg", $text);
         }

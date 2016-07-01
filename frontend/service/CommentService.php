@@ -15,15 +15,10 @@ class CommentService{
         $this->comment_dao = $comment_dao;
     }
 
-    public function getCommentInfo($user_id, $thread_id, $comment_id, $child) {
-        if($child){
-            $builder = new ChildCommentVoBuilder();
-            $this->comment_dao->buildChildComment($user_id, $thread_id, $comment_id, $builder);
-        }
-        else{
-            $builder = new ThreadCommentVoBuilder();
-            $builder = $this->comment_dao->buildThreadComment($user_id, $thread_id, $comment_id, $builder);
-        }
+    public function getThreadCommentInfo($user_id, $thread_id, $comment_id) {
+
+        $builder = new ThreadCommentVoBuilder();
+        $builder = $this->comment_dao->buildThreadComment($user_id, $thread_id, $comment_id, $builder);
 
         if($builder === null){
             return null;
@@ -31,6 +26,19 @@ class CommentService{
         else{
             return $builder->build();
         }
+    }
+
+    public function getChildCommentInfo($user_id, $comment_id){
+        $builder = new ChildCommentVoBuilder();
+        $this->comment_dao->buildChildComment($user_id, $comment_id, $builder);
+
+        if($builder === null){
+            return null;
+        }
+        else{
+            return $builder->build();
+        }
+
     }
 
 

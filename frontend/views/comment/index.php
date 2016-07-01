@@ -5,7 +5,7 @@
 $thread_title = $thread_comment->getParentThreadTitle();
 ?>
 
-<div class="container-fluid" style="background-color: white">
+<div class="container-fluid col-xs-12 col-md-8" style="background-color: white">
     <div class="col-xs-12 thread-title">
         <?= Html::encode($thread_title) ?>
     </div>

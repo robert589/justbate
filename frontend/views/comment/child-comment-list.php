@@ -75,8 +75,11 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
         <div class="col-xs-12" style="margin-top: 15px;">
             <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
         </div>
+
         <div class="col-xs-12 text-center">
-            <div id="child_comment_sse_<?= $comment_id ?>"></div>
+            <div id="child-comment-input-box-new-comment">
+
+            </div>
             <?= ListView::widget([
                 'id' => 'threadList',
                 'dataProvider' => $child_comment_provider,
@@ -99,8 +102,8 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
     'method' => 'post',
     'id' => 'delete_comment_form_' . $comment_id]) ?>
 
-<?= Html::hiddenInput('comment_id', $comment_id) ?>
-<?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?= Html::hiddenInput('comment_id', $comment_id) ?>
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 
 <?php ActiveForm::end() ?>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\entity;
+namespace frontend\vo;
 
 use frontend\vo\ChildCommentVoBuilder;
 use frontend\vo\CommentVo;

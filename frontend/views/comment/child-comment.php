@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
-/** @var $child_comment \common\entity\ChildCommentEntity **/
+/** @var $child_comment \frontend\vo\ChildCommentVo **/
 
 
 $comment_id = $child_comment->getCommentId();
@@ -11,9 +11,9 @@ $guest = Yii::$app->user->isGuest;
 $belongs_to_current_user = $child_comment->isBelongToCurrentUser();
 $comment_creator_full_name = $child_comment->getFullName();
 $comment_creator_user_id = $child_comment->getCommentCreatorId();
-$commentator_user_profile_link = $child_comment->getCommentatorUserProfileLink();
-$commentator_user_photo_path_link = $child_comment->getCommentatorPhotoLink();
-$comment_created_at = $child_comment->getDateCreated();
+$commentator_user_profile_link = $child_comment->getUserProfileLink();
+$commentator_user_photo_path_link = $child_comment->getCommentCreatorPhotoLink();
+$comment_created_at = $child_comment->getCreatedAt();
 $comment = Html::encode($child_comment->getComment());
 ?>
 
