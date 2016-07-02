@@ -84,42 +84,30 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 				?>
 
 			</div>
-
 			<div class="col-xs-12">
 				<div class="inline">
 					<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
 				</div>
-
 				<?php if($thread_belongs_to_current_user) { ?>
 					<div class="inline">
-
 						<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn inline', 'style' => 'background: #d9534f;']) ?>
-
 						<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn inline','data-guest' => $guest]) ?>
-
 					</div>
-
 				<?php } ?>
-
 			</div>
 		</div>
 	</div>
 
 
 	<div  id="comment_section" class="section col-xs-12">
-
 		<div class="row" >
-
 			<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
-													'thread' => $thread,
+	 												'thread' => $thread,
 													]) ?>
 		</div>
-
 	</div>
 
-
 	<div class="col-xs-12 section">
-
 		<div id="comment-tab">
 			<?= // Ajax Tabs Above
 			TabsX::widget([
@@ -131,10 +119,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 			])
 			?>
 		</div>
-
 	</div>
-
-
 </div>
 
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>

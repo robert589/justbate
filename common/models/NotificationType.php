@@ -10,6 +10,8 @@ class NotificationType extends ActiveRecord
 
     const THREAD_TYPE = 'thread';
 
+    const COMMENT_TYPE = 'comment';
+
     public static function tableName()
     {
         return 'notification_type';

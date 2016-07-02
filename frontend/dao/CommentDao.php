@@ -2,6 +2,7 @@
 namespace frontend\dao;
 
 use common\entity\ChildCommentVo;
+use common\models\ChildComment;
 use common\models\Notification;
 use common\models\ThreadComment;
 use frontend\vo\ChildCommentVoBuilder;
@@ -12,7 +13,24 @@ use frontend\vo\NotificationVoBuilder;
 use frontend\vo\ThreadCommentVoBuilder;
 
 class CommentDao{
-    const CHILD_COMMENT_INFO = "";
+    const CHILD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.thread_id is not null as anonymous
+                                from (
+                                    SELECT child_comment_info.*, creator.first_name, creator.last_name, creator.photo_path, creator.username, thread_of_parent_comment.thread_id,
+                                       COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
+                                       COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
+                                       COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
+                                    from comment child_comment_info, child_comment, comment parent_comment, user creator, thread thread_of_parent_comment, comment_vote, thread_comment
+                                    where child_comment_info.comment_id = child_comment.comment_id and
+                                            parent_comment.comment_id = thread_comment.comment_id and
+                                            thread_of_parent_comment.thread_id = thread_comment.thread_id and
+                                            child_comment_info.user_id = creator.id and
+                                            child_comment.parent_id = parent_comment.comment_id and
+                                            child_comment.comment_id = :comment_id and
+                                            comment_vote.comment_id = :comment_id ) comment_info
+                                left join thread_anonymous
+                                on comment_info.thread_id = thread_anonymous.thread_id
+
+        ";
 
     const THREAD_COMMENT_CHILD_COMMENT = "
         SELECT comment.*, child_comment.parent_id, user.id, user.first_name, user.last_name, user.username, user.photo_path
@@ -43,24 +61,42 @@ class CommentDao{
                                     where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.parent_id
                                     and comment.comment_id = :comment_id LIMIT 1";
 
-    function buildChildComment($user_id, $thread_id, $comment_id, ChildCommentVoBuilder $builder){
-        if($this->checkChildCommentExist($thread_id, $comment_id)){
-            /**
-             * Todo
-             */
+    function buildChildComment($user_id, $comment_id, ChildCommentVoBuilder $builder){
+        if($this->checkChildCommentExist($comment_id)){
+            $result =  \Yii::$app->db
+                ->createCommand(self::CHILD_COMMENT_INFO)
+                ->bindValues([':comment_id' => $comment_id])
+                ->bindValues([':user_id' => $user_id])
+
+                ->queryOne();
+
+            $builder->setAnonymous($result['anonymous']);
+            $builder->setCommentCreatorId($result['user_id']);
+            $builder->setCreatedAt($result['created_at']);
+            $builder->setComment($result['comment']);
+            $builder->setUpdatedAt($result['updated_at']);
+            $builder->setCommentStatus($result['comment_status']);
+            $builder->setCommentCreatorUsername($result['username']);
+            $builder->setCommentCreatorFirstName($result['first_name']);
+            $builder->setCommentCreatorLastName($result['last_name']);
+            $builder->setCommentCreatorPhotoPath($result['photo_path']);
+            $builder->setCurrentUserVote($result['vote']);
+            $builder->setTotalLike($result['total_like']);
+            $builder->setTotalDislike($result['total_dislike']);
+            $builder->setCommentId($result['comment_id']);
+            return $builder;
+
         }
         return null;
     }
 
 
     function buildThreadComment($user_id, $thread_id, $comment_id, ThreadCommentVoBuilder $builder){
-
-        if($this->checkThreadCommentExist($thread_id, $comment_id)){
+        if($this->checkThreadCommentExist($thread_id, $comment_id)) {
             $builder = $this->buildThreadCommentInfo($user_id, $comment_id, $builder);
             $builder = $this->buildChildCommentList($comment_id, $builder);
             return $builder;
         }
-
         return null;
     }
 
@@ -72,16 +108,8 @@ class CommentDao{
         return $result;
     }
 
-    private function checkChildCommentExist($thread_id, $comment_id){
-
-        // DAO
-        $results =  \Yii::$app->db
-            ->createCommand(self::CHILD_COMMENT_EXIST_SQL)
-            ->bindValues([':thread_id' => $thread_id])
-            ->bindValues([':comment_id' => $comment_id])
-            ->queryScalar();
-
-        return $results;
+    private function checkChildCommentExist($comment_id){
+        return ChildComment::find()->where(['comment_id' => $comment_id])->exists();
     }
 
     private function buildThreadCommentInfo($user_id, $comment_id, ThreadCommentVoBuilder $builder){

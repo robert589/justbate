@@ -36,8 +36,7 @@ class m160618_073619_update_notification extends Migration
                 notification_verb_name varchar(255) not null,
                 url_key_value varchar(255) not null,
                 UNIQUE(notification_type_name, notification_verb_name, url_key_value),
-                foreign key(notification_verb_name) references notification_verb(notification_verb_name),
-                foreign key(notification_type_name) references notification_verb(notification_type_name)
+                foreign key(notification_verb_name, notification_type_name) references notification_verb(notification_verb_name, notification_type_name)
             );
 
             Create table notification_receiver(
