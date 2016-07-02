@@ -44,19 +44,13 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
             'style' => 'margin-left:15px; float:left'])?>
 
     <?php if($belongs_to_current_user){ ?>
-        <div class="inline">
-            <li class="item dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options</a>
-                <ul class="dropdown-menu container-fluid">
-                    <?= Html::button('Edit', ['class' => 'btn btn-primary inline edit_comment',
-                        'style'=> 'margin-left:5px',
-                        'data-service' => $comment_id]) ?>
-
-                    <?= Html::button('Delete', ['class' => 'btn btn-danger inline delete_comment',
-                        'data-service' => $comment_id]) ?>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</button>
+                <ul class="dropdown-menu">
+                    <li data-service="<?= $comment_id ?>" class="edit_comment">Edit</li>
+                    <li data-service="<?= $comment_id ?>" class="delete-comment">Delete</li>
                 </ul>
-            </li>
-        </div>
+            </div>
     <?php } ?>
 </div>
 
