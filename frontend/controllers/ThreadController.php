@@ -58,7 +58,6 @@ class ThreadController extends Controller
 		}
 		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
 		$thread = $service->getThreadInfo( $_GET['id'],Yii::$app->user->getId(), new ThreadVoBuilder());
-
 		$commentModel = new CommentForm();
 		// get vote mdoels
 		$submit_vote_form = new SubmitThreadVoteForm();
@@ -69,7 +68,6 @@ class ThreadController extends Controller
 		if($thread->getThreadStatus() === Thread::STATUS_BANNED) {
 			return $this->render('banned');
 		}
-
 		return $this->render('index', ['thread' => $thread,
 			                           'comment_model' => $commentModel,
 									   'submit_vote_form' => $submit_vote_form,

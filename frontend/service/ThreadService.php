@@ -17,6 +17,8 @@ class ThreadService{
         $this->thread_dao = $thread_dao;
     }
 
+
+
     /**
      * @param $thread_id
      * @param $user_id
@@ -40,8 +42,8 @@ class ThreadService{
 
     public function getThreadInfoForRetrieveCommentInput($thread_id, $user_id, ThreadVoBuilder $builder) {
         $builder->setThreadId($thread_id);
-        $builder = $this->thread_dao->getThreadChoices($thread_id, $builder);
         $builder = $this->thread_dao->getUserChoiceOnly($thread_id,$user_id, $builder);
+        $builder = $this->thread_dao->getAnonymous($thread_id, $user_id, $builder);
         return $builder->build();
     }
 

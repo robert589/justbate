@@ -221,7 +221,15 @@ class ThreadVo implements Vo{
      */
     public function hasChosenComment()
     {
-        return $this->chosen_comment === null;
+        return $this->chosen_comment !== null;
+    }
+
+    /**
+     * @return ThreadCommentVo
+     */
+    public function getChosenComment()
+    {
+        return $this->chosen_comment;
     }
 
 

@@ -5,6 +5,7 @@ use common\entity\ChildCommentVo;
 use common\models\ChildComment;
 use common\models\Notification;
 use common\models\Thread;
+use common\models\ThreadAnonymous;
 use common\models\ThreadComment;
 use common\models\ThreadIssue;
 use common\models\ThreadVote;
@@ -19,8 +20,9 @@ use frontend\vo\ThreadVoBuilder;
 use yii\data\ArrayDataProvider;
 
 class ThreadDao{
-        const GET_ONE_COMMENT = "SELECT chosen_comment.*,
-		CASE when (user_vote.comment_id is not null and user_vote.user_id = 1) then user_vote.vote else null end as current_user_vote,
+        const GET_ONE_COMMENT = "
+SELECT chosen_comment.*,
+		CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
         count(case when total_vote.vote = 1 then 1 else null end) as total_like,
         count(case when total_vote.vote = -1 then 1 else null end) as total_dislike
 from(
@@ -29,13 +31,13 @@ from(
    from (SELECT comment.*, thread_comment.thread_id, thread_comment.choice_text, user.first_name, user.last_name,
                 user.photo_path, user.username
          from thread_comment,comment, user
-         where thread_comment.thread_id = 19 and thread_comment.comment_id = comment.comment_id
+         where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
            and comment.user_id = user.id and comment.comment_status = 10) as comment_info
          left join thread_anonymous
           on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
          limit 1) chosen_comment
 left join comment_vote user_vote
-on chosen_comment.comment_id = user_vote.comment_id and user_vote.user_id = 1
+on chosen_comment.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
 left join comment_vote total_vote
 on total_vote.comment_id  = chosen_comment.comment_id";
 
@@ -241,15 +243,23 @@ on total_vote.comment_id  = chosen_comment.comment_id";
 
     }
 
+    public function getAnonymous($thread_id, $current_user_id, ThreadVoBuilder $builder) {
+        $builder->setCurrentUserAnonymous(ThreadAnonymous::find()->where(['thread_id' => $thread_id, 'user_id' => $current_user_id])->exists());
+        return $builder;
+    }
+
     public function getOneComment($thread_id, $current_user_id, ThreadVoBuilder $builder){
         $result = \Yii::$app->db
             ->createCommand(self::GET_ONE_COMMENT)
             ->bindValues([':thread_id' => $thread_id])
             ->bindValue(':user_id', $current_user_id)
             ->queryOne();
-        if($result === false){
-            return null;
+        if($result['comment_id'] === null){
+            $builder->setChosenComment(null);
+            return $builder;
         }
+
+
 
         $comment_builder = new ThreadCommentVoBuilder();
 

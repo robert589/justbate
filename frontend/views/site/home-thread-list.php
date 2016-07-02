@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\HtmlPurifier;
 use common\models\User;
 use common\components\Constant;
-/** @var $thread \common\entity\ThreadEntity */
+/** @var $thread \frontend\vo\ThreadVo */
 /** @var $thread_issues array */
 
 /**
@@ -48,34 +48,16 @@ $has_chosen_comment = $thread->hasChosenComment();
 			<?php if($has_chosen_comment){
 				/** Used Variable */
 				$chosen_comment = $thread->getChosenComment();
-				$commentator_user_profile_link = $chosen_comment->getCommentatorUserProfileLink();
-				$commentator_user_profile_pic_link = $chosen_comment->getCommentatorPhotoLink();
-				$commentator_choice = $chosen_comment->getCommentatorChoice();
+				$commentator_user_profile_link = $chosen_comment->getUserProfileLink();
+				$commentator_user_profile_pic_link = $chosen_comment->getCommentCreatorPhotoLink();
+				$commentator_choice = $chosen_comment->getCurrentUserVote();
 				$commentator_full_name = $chosen_comment->getFullName();
 				$comment  = $chosen_comment->getComment();
 			?>
 
 			<hr>
-			<div class="col-xs-1"  style=" padding-right: 0;">
-				<img src="<?= $commentator_user_profile_pic_link ?>" class="img img-circle" height="40px" width="40px" />
-			</div>
-
-			<div class="col-xs-11" style="margin-top: -40px; margin-left: 55px;margin-bottom: 20px">
-				<div class="name-link inline">
-					<?php if(!$chosen_comment->isAnonymous()){ ?>
-						<?= Html::a($commentator_full_name, $commentator_user_profile_link) ?>
-					<?php }else{ ?>
-						<?= $commentator_full_name ?>
-					<?php } ?>
-						chose <?= $commentator_choice ?>
-
-				</div>
-			</div>
-
-			<div class="home-comment-tab col-xs-12" style="margin-left:0; padding-left: 0">
-				<?= $this->render('../thread/_listview_comment_bottom',
-								 ['thread_comment' => $chosen_comment ,
-								  'is_thread_comment' => true]) ?>
+			<div class="col-xs-12">
+				<?= $this->render('../comment/thread-comment', ['thread_comment' => $chosen_comment]) ?>
 			</div>
 			<div class="col-xs-12">
 				<hr style="margin-bottom: 0">

@@ -5,7 +5,7 @@
 
     <div class="col-xs-12 commentator-comment">
         <?= $this->render('comment-section', ['thread_comment' => $thread_comment,
-            'edit_comment_form' => new \backend\models\EditCommentForm(),
+            'edit_comment_form' => new \frontend\models\EditCommentForm(),
             'is_thread_comment' => true  ]) ?>
     </div>
 

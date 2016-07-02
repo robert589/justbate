@@ -34,7 +34,6 @@ foreach($thread_choices as $item){
     $propered_choice_text[$item_values[0]]  = $item_values[0] . " (" . $item['total_voters'] . ")";
 }
 
-var_dump($thread_id);
     //Start form
     $form = ActiveForm::begin(['action' =>['thread/submit-vote'],
         'method' => 'post',

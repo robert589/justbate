@@ -35,7 +35,7 @@ class SiteDao{
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
-                               (anonymous.thread_id is not null) as comment_anonymous
+                               (anonymous.thread_id is not null) as thread_anonymous
                         from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
@@ -69,7 +69,7 @@ class SiteDao{
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
-                               (anonymous.thread_id is not null) as current_user_anonymous
+                               (anonymous.thread_id is not null) as thread_anonymous
                         from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
@@ -122,7 +122,7 @@ class SiteDao{
             $thread_builder->setThreadId($result['thread_id']);
             $thread_builder->setThreadCreatorUserId($result['user_id']);
             $thread_builder->setTitle($result['title']);
-            $thread_builder->setCurrentUserAnonymous($result['comment_anonymous']);
+            $thread_builder->setCurrentUserAnonymous($result['thread_anonymous']);
             $thread_builder->setThreadStatus($result['thread_status']);
             $thread_builder->setDescription($result['description']);
             $thread_builder->setUpdatedAt($result['updated_at']);
@@ -130,6 +130,7 @@ class SiteDao{
             $thread_builder->setCurrentUserVote($result['choice_text']);
 
 
+            $thread_builder = $this->thread_dao->getOneComment($result['thread_id'], $current_user_id, $thread_builder);
             $thread_builder = $this->thread_dao->getThreadIssues($result['thread_id'], $thread_builder);
             $thread_builder = $this->thread_dao->getUserChoiceOnly($result['thread_id'] , $current_user_id, $thread_builder);
             $thread_builder = $this->thread_dao->getThreadChoices($result['thread_id'], $thread_builder);

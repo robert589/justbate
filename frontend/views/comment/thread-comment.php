@@ -26,7 +26,6 @@ $comment_thread_id = $thread_comment->getParentThreadId();
     <div class="col-xs-1 image-commentator">
         <img class="img img-circle profile-picture-comment" style="width: 40px;height:40px" src="<?= $commentator_user_photo_path_link ?>">
     </div>
-
     <div class="col-xs-11 non-image-commentator">
         <div class="col-xs-12 commentator-name">
             <?php if($thread_comment->getAnonymous()) { ?>
@@ -36,11 +35,9 @@ $comment_thread_id = $thread_comment->getParentThreadId();
                         $commentator_user_profile_link,
                         ['data-pjax' => 0])?></span> -
             <?php } ?>
-
             <span class="comment-created"><?= $comment_created_at ?></span>
         </div>
     </div>
-
     <div class="col-xs-12 commentator-moderate">
         <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
     </div>

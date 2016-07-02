@@ -163,9 +163,8 @@ class SiteController extends Controller
 		$this->setMetaTag();
 		if(Yii::$app->user->isGuest){
 			return $this->render('login',
-				[
-					'login_form' => new LoginForm(),
-					'model' => new SignupForm()
+				['login_form' => new LoginForm(),
+				 'model' => new SignupForm()
 				]);
 		}
 		$user_id = Yii::$app->user->getId();
