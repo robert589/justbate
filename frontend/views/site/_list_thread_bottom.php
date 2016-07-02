@@ -4,14 +4,14 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-/** @var $thread \common\entity\ThreadEntity */
+/** @var $thread \frontend\vo\ThreadVo */
 
 /**
  * Used variable
  */
 $comment_request_url = $thread->getCommentRequestUrl();
 $thread_id = $thread->getThreadId();
-$thread_total_comments = $thread->getTotalComment();
+$thread_total_comments = $thread->getTotalComments();
 $current_user_has_vote = $thread->hasVote();
 ?>
 

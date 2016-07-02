@@ -4,15 +4,14 @@ use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use common\components\Constant;
-/* @var $thread \common\entity\ThreadEntity **/
+/* @var $thread \frontend\vo\ThreadVo **/
 /* @var $comment_model \frontend\models\CommentForm */
 /** @var $comment_input_retrieved boolean */
 /**
  * Variable Used
  */
 $thread_id = $thread->getThreadId();
-$thread_choices = $thread->getChoices();
-$current_user_choice = $thread->getCurrentUserChoice();
+$current_user_choice = $thread->getCurrentUserVote();
 $comment_model->choice_text = $current_user_choice;
 Pjax::begin([
     'id' => 'comment_input_' . $thread_id,
@@ -29,11 +28,7 @@ Pjax::begin([
 
 
 if(isset($comment_input_retrieved)) {
-    //prepare data
-    $choice_text = array();
-    foreach ($thread_choices as $choice) {
-        $choice_text[$choice['choice_text']] = $choice['choice_text'];
-    }
+
 ?>
 
     <?php
@@ -66,7 +61,7 @@ if(isset($comment_input_retrieved)) {
                     <div id="choice-text-comment-input-box-<?= $thread_id ?>" >
                         <?= $comment_model->choice_text ?>
                     </div>
-                    <?= $form->field($comment_model, 'choice_text')->hiddenInput(['value' => $thread->getCurrentUserChoice()])->label(false) ?>
+                    <?= $form->field($comment_model, 'choice_text')->hiddenInput(['value' => $thread->getCurrentUserVote()])->label(false) ?>
                 </div>
                 <div align="right" class="col-xs-6">
                     <?= Html::hiddenInput('thread_id', $thread_id) ?>

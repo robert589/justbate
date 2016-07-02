@@ -2,34 +2,34 @@
 use yii\widgets\ListView;
 use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
-use yii\bootstrap\Modal;
-use kartik\social\FacebookPlugin;
+
 use yii\helpers\Html;
-/** @var $home \common\entity\HomeEntity */
+/** @var $home \frontend\vo\SiteVo */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
 /** @var $change_email_form \frontend\models\ResendChangeEmailForm */
 /**
  * Variable used
  */
-$issue_followed_by_user = $home->getUserFollowedIssueList();
+$issue_followed_by_user = $home->getIssueFollowedByUser();
 $trending_topic_list = $home->getTrendingTopicList();
-$user_follow_issue = $home->isUserFollowedIssue();
-$num_followers_of_issue = $home->getIssueNumFollowers();
-$has_issue = $home->hasIssue();
+$user_follow_issue = $home->getUserFollowIssue();
+$num_followers_of_issue = $home->getNumFollowersOfIssue();
+$has_issue = $home->getHasIssue();
 $issue_name = $home->getIssueName();
-$thread_list_provider = $home->getThreadList();
+$thread_list_provider = $home->getThreadListProvider();
 $popular_issue_list = $home->getPopularIssueList();
+
 $this->title = "Home";
 ?>
 
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
 
-		<?= $this->render('_home_popular-issue',
+		<?= $this->render('home-popular-issue',
 						['popular_issue_list' => $popular_issue_list])?>
 
-		<?= $this->render('_home_sidenav-issue',
+		<?= $this->render('home-sidenav-issue',
 						 ['issue_list' => $issue_followed_by_user,
 						  'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
 
@@ -53,7 +53,7 @@ $this->title = "Home";
 		</div>
 		<?php }	?>
 
-		<?= $this->render('_home_create-thread', ['create_thread_form' => $create_thread_form]) ?>
+		<?= $this->render('home-create-thread', ['create_thread_form' => $create_thread_form]) ?>
 
 
 		<div class="col-xs-12 home-thread-list">
@@ -63,7 +63,6 @@ $this->title = "Home";
 					'dataProvider' => $thread_list_provider,
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],
-
 					'pager' => [
 						'class' => ScrollPager::class,
 						'enabledExtensions' => [
@@ -94,5 +93,5 @@ $this->title = "Home";
 </div>
 
 <?php if(!Yii::$app->user->isGuest && $change_email_form->user_email != null ){ ?>
-	<?= $this->render('_home_verify-email', ['change_email_form' => $change_email_form]) ?>
+	<?= $this->render('home-verify-email', ['change_email_form' => $change_email_form]) ?>
 <?php } ?>

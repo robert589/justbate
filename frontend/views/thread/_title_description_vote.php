@@ -7,14 +7,14 @@
     use kartik\widgets\Select2;
     use yii\web\JsExpression;
     use yii\redactor\widgets\Redactor;
-/** @var $thread \common\entity\ThreadEntity */
+/** @var $thread \frontend\vo\ThreadVo */
 /** @var $submit_vote_form \frontend\models\SubmitThreadVoteForm */
 /** @var $edit_thread_form \frontend\models\EditThreadForm */
 
 if(!isset($vote_tab_active)){
     $vote_tab_active = true;
 }
-$current_user_choice = $thread->getCurrentUserChoice();
+$current_user_choice = $thread->getCurrentUserVote();
 $choices_in_thread = $thread->getChoices();
 $description = $thread->getDescription();
 $title = $thread->getTitle();

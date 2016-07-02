@@ -18,8 +18,11 @@ use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
 use frontend\models\ThreadAnonymousForm;
 
+use frontend\service\ServiceFactory;
 use frontend\vo\ChildCommentVo;
 use frontend\vo\ChildCommentVoBuilder;
+use frontend\vo\ThreadVo;
+use frontend\vo\ThreadVoBuilder;
 use frontend\widgets\ThreadComment;
 use Yii;
 use yii\web\Controller;
@@ -33,26 +36,28 @@ use common\models\Thread;
  */
 class ThreadController extends Controller
 {
+
+	/**
+	 * @var ServiceFactory
+	 */
+	private $serviceFactory;
+
+
+	public function init() {
+		$this->serviceFactory = new ServiceFactory();
+	}
+
 	/**
 	 * @return string|\yii\web\Response
 	 */
 	public function actionIndex(){
-		/** @var ThreadCreator $creator */
+		/** @var ThreadVo $thread */
 
 		if(empty($_GET['id'])) {
 			return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 		}
-		$thread_entity = new ThreadEntity($_GET['id'], Yii::$app->user->getId());
-
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR,$thread_entity);
-
-		$needs = [ThreadCreator::NEED_THREAD_INFO,
-			      ThreadCreator::NEED_THREAD_CHOICE,
-			      ThreadCreator::NEED_THREAD_ISSUE,
-				  ThreadCreator::NEED_THREAD_COMMENTS,
-				  ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY];
-
-		$thread = $creator->get($needs);
+		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
+		$thread = $service->getThreadInfo( $_GET['id'],Yii::$app->user->getId(), new ThreadVoBuilder());
 
 		$commentModel = new CommentForm();
 		// get vote mdoels
@@ -61,7 +66,6 @@ class ThreadController extends Controller
 		$this->setMetaTag($thread->getThreadId(),
 						  $thread->getTitle(),
 						  $thread->getDescription());
-
 		if($thread->getThreadStatus() === Thread::STATUS_BANNED) {
 			return $this->render('banned');
 		}
@@ -91,14 +95,10 @@ class ThreadController extends Controller
 		$thread_comment = new ThreadCommentEntity($comment_id, Yii::$app->user->getId());
 
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $thread_comment);
-
 		/** remove this in the future for comment info, bad practice */
 		$thread_comment = $creator->get([ThreadCommentCreator::NEED_CHILD_COMMENTS, ThreadCommentCreator::NEED_COMMENT_INFO]);
-
 		$thread_comment->setThreadId($thread_id);
-
 		$child_comment_form = new ChildCommentForm();
-
 		return $this->renderAjax('_child_comment', ['thread_comment' => $thread_comment,
 											'retrieved' => true,
 											'is_thread_comment' => false,
@@ -108,6 +108,27 @@ class ThreadController extends Controller
 
 	public function actionStartServer() {
 		return $this->render('child-comment-server', ['comment_id' => $_GET['comment_id']]);
+	}
+
+
+	/**
+	 * @return string
+	 * @throws \yii\base\ExitException
+	 */
+	public function actionRetrieveCommentInput(){
+		if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
+			Yii::$app->end('Something went wrong, we will fix it as soon as possible');
+		}
+		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
+		$thread = $service->getThreadInfoForRetrieveCommentInput( $_POST['thread_id'],Yii::$app->user->getId(), new ThreadVoBuilder());
+
+
+		return $this->renderAjax('../thread/_comment_input_box',
+			['thread' => $thread,
+				'comment_input_retrieved' => true,
+				'comment_model' => new CommentForm()]);
+
+
 	}
 
 	/**
@@ -234,7 +255,6 @@ class ThreadController extends Controller
 		$comment_entity = new ThreadCommentEntity($comment_vote_form->comment_id, $comment_vote_form->user_id);
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
 		$comment_entity =$creator->get([CommentCreator::NEED_COMMENT_VOTE]);
-
 		return $this->renderAjax('_comment_votes',
 			['comment' => $comment_entity,
 			'trigger_login_form' => $trigger_login_form,
@@ -248,23 +268,15 @@ class ThreadController extends Controller
 	public function actionSubmitVote() {
 		$submit_thread_vote_form  = new SubmitThreadVoteForm();
 		$submit_thread_vote_form->user_id = Yii::$app->user->getId();
-
+		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
 		if($submit_thread_vote_form->load(Yii::$app->request->post()) && $submit_thread_vote_form->validate()) {
-			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
 			if(!$submit_thread_vote_form->submitVote()){
 				Yii::$app->end("Failed to store votes, please try again later ");
 			}
-			$submit_thread_vote_form = new SubmitThreadVoteForm();
 		}
-		else {
-			$thread = new ThreadEntity($submit_thread_vote_form->thread_id, $submit_thread_vote_form->user_id);
-		}
-
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread);
-		$thread = $creator->get([ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY, ThreadCreator::NEED_THREAD_CHOICE]);
-
+		$thread = $service->getThreadInfoVote( $submit_thread_vote_form->thread_id,Yii::$app->user->getId(), new ThreadVoBuilder());
 		return $this->renderAjax('../thread/_thread_vote',
-			['thread' => $thread, 'submit_thread_vote_form' => $submit_thread_vote_form]);
+			['thread' => $thread, 'submit_thread_vote_form' => new SubmitThreadVoteForm()]);
 
 	}
 

@@ -115,18 +115,13 @@ class ThreadCreator implements CreatorInterface{
 
     private function getOneComment(){
         $result = ThreadComment::getBestCommentFromThread($this->thread->getThreadId());
-
         if($result === false){
             return null;
         }
-
         $thread_comment = new ThreadCommentEntity($result['comment_id'], $this->thread->getCurrentUserLoginId());
-
         $thread_comment->setDataFromArray($result);
-
         $creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $thread_comment);
         $thread_comment = $creator->get([ThreadCommentCreator::NEED_COMMENT_VOTE]);
-
         $this->thread->setChosenComment($thread_comment);
     }
 
@@ -142,9 +137,6 @@ class ThreadCreator implements CreatorInterface{
         if($result !== null){
             $this->thread->setCurrentUserChoice(  $result->choice_text   );
         }
-
-
-
     }
 
 }

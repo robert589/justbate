@@ -2,7 +2,7 @@
 use yii\widgets\Pjax;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
-/** @var $thread \common\entity\ThreadEntity */
+/** @var $thread \frontend\vo\ThreadVo */
 /** @var $submit_thread_vote_form \frontend\models\SubmitThreadVoteForm */
 
 /**
@@ -20,22 +20,21 @@ Pjax::begin([
         'container' => '#pjax_user_vote_' . $thread_id
     ]
 ]);
-
 /**
  * Variable used
  */
 $thread_id = $thread->getThreadId();
-$thread_choices = $thread->getChoices();
-$current_user_choice = $thread->getCurrentUserChoice();
+$submit_thread_vote_form->thread_id = $thread_id;
+$thread_choices = $thread->getMappedChoices();
+$current_user_choice = $thread->getCurrentUserVote();
 $submit_thread_vote_form->choice_text = $current_user_choice;
 $propered_choice_text = array();
-
 foreach($thread_choices as $item){
     $item_values = array_values($item);
     $propered_choice_text[$item_values[0]]  = $item_values[0] . " (" . $item['total_voters'] . ")";
 }
 
-
+var_dump($thread_id);
     //Start form
     $form = ActiveForm::begin(['action' =>['thread/submit-vote'],
         'method' => 'post',
@@ -44,7 +43,7 @@ foreach($thread_choices as $item){
                     'class' => 'form_user_thread_vote']]
     )
 ?>
-        <?= $form->field($submit_thread_vote_form, 'thread_id')->hiddenInput(['value' => $thread_id]) ?>
+        <?= $form->field($submit_thread_vote_form, 'thread_id')->hiddenInput() ?>
 
         <div align="center">
             <?= $form->field($submit_thread_vote_form, 'choice_text')

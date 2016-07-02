@@ -12,7 +12,8 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
 
-$select2_content =          Select2::widget([
+$select2_content =
+    Select2::widget([
         'name' => 'add-new-issue-select-2',
         'id' => 'add-new-issue-select-2',
         'theme' => Select2::THEME_KRAJEE,

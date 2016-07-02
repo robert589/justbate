@@ -7,8 +7,7 @@ use frontend\vo\ThreadCommentVoBuilder;
 use yii\data\ArrayDataProvider;
 
 class ThreadCommentVo extends CommentVo{
-
-    private $parent_thread_id;
+   private $parent_thread_id;
 
     private $parent_thread_title;
     /**

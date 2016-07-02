@@ -1,9 +1,10 @@
 <?php
     use yii\helpers\Html;
-    /** @var $thread \common\entity\ThreadEntity */
+    /** @var $thread \frontend\vo\ThreadVo */
     $link_to_thread = $thread->getThreadLink();
     $thread_issues = $thread->getThreadIssues();
     $belongs = $thread->belongToCurrentUser();
+
     $first = true;
 ?>
 <div class="col-xs-9">

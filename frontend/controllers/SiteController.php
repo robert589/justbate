@@ -22,6 +22,8 @@ use frontend\models\SubmitThreadVoteForm;
 use frontend\models\UploadProfilePicForm;
 use frontend\models\UserFollowIssueForm;
 use frontend\models\ValidateAccountForm;
+use frontend\service\ServiceFactory;
+use frontend\vo\SiteVoBuilder;
 use Yii;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -45,6 +47,17 @@ use yii\filters\AccessControl;
  */
 class SiteController extends Controller
 {
+	/**
+	 * @var ServiceFactory
+	 */
+	private $serviceFactory;
+
+
+	public function init() {
+		$this->serviceFactory = new ServiceFactory();
+	}
+
+
 	/**
 	 * @inheritdoc
 	 */
@@ -148,7 +161,6 @@ class SiteController extends Controller
 	public function actionHome()
 	{
 		$this->setMetaTag();
-
 		if(Yii::$app->user->isGuest){
 			return $this->render('login',
 				[
@@ -156,32 +168,15 @@ class SiteController extends Controller
 					'model' => new SignupForm()
 				]);
 		}
-
 		$user_id = Yii::$app->user->getId();
-
-		$home_entity = new HomeEntity($user_id);
-
-		if(isset($_GET['issue'])){
-			$home_entity->setIssueName($_GET['issue']);
-		}
-
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::HOME_CREATOR, $home_entity);
-		$home_entity = $creator->get([HomeCreator::NEED_THREAD_LISTS,
-									  HomeCreator::NEED_ISSUE_NUM_FOLLOWERS,
-									  HomeCreator::NEED_USER_FOLLOWED_ISSUE,
-									  HomeCreator::NEED_TRENDING_TOPIC_LIST,
-									  HomeCreator::NEED_USER_FOLLOWED_ISSUE_LIST,
-									  HomeCreator::NEED_USER_EMAIL,
-									  HomeCreator::NEED_POPULAR_ISSUE_LIST])	;
-
+		$issue = isset($_GET['issue']) ? $_GET['issue'] : null;
+		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+		$home = $service->getHomeInfo($user_id, $issue, new SiteVoBuilder());
 		$create_thread_form = new CreateThreadForm();
-
 		$this->getDefaultChoice($create_thread_form);
-
-		return $this->render('home', ['home' => $home_entity,
+		return $this->render('home', ['home' => $home,
 									'change_email_form' => new ResendChangeEmailForm(),
 									'create_thread_form' => $create_thread_form]);
-
 	}
 
 	/**
@@ -256,51 +251,19 @@ class SiteController extends Controller
 
 	}
 
-	/**
-	 * @return string
-	 * @throws \yii\base\ExitException
-	 */
-	public function actionRetrieveCommentInput(){
-		if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
-			Yii::$app->end('Something went wrong, we will fix it as soon as possible');
-		}
-		$thread_entity = new ThreadEntity($_POST['thread_id'], Yii::$app->user->getId());
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
-		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
-										ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY]);
-
-		//bad practice
-		$thread_entity->setCurrentUserAnonymous(
-			ThreadAnonymous::find()->where(['thread_id' => $_POST['thread_id'],
-									        'user_id' => Yii::$app->user->getId()
-										   ])->exists());
-
-
-		return $this->renderAjax('../thread/_comment_input_box',
-								['thread' => $thread_entity,
-								 'comment_input_retrieved' => true,
-								 'comment_model' => new CommentForm()]);
-
-
-	}
 
 	public function actionFollowIssue(){
 		if(isset($_POST['issue_name']) && isset($_POST['user_id']) && isset($_POST['command'])){
-
 			$command = $_POST['command'];
-
 			$user_follow_issue_form = new UserFollowIssueForm();
-
 			$user_follow_issue_form->issue_name = $_POST['issue_name'];
 			$user_follow_issue_form->user_id = $_POST['user_id'];
-
 			if($command == 'follow_issue'){
 				$success = $user_follow_issue_form->followIssue();
 			}
 			else{
 				$success = $user_follow_issue_form->unfollowIssue();
 			}
-
 			if($success == true){
 				$user_is_follower = UserFollowedIssue::isFollower($user_follow_issue_form->user_id, $user_follow_issue_form->issue_name);
 				$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($user_follow_issue_form->issue_name);
