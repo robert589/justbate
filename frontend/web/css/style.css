@@ -333,6 +333,8 @@ div#remember-me {
 div.site-login {
     color: #FFF;
     padding: 15px;
+    /*background: url('/frontend/web/img/login_bg.jpg');*/
+    background: url('/startUp/frontend/web/img/login_bg.jpg');
     background-repeat: repeat;
 }
 
@@ -1615,7 +1617,7 @@ button.btn {
 
 @media screen and (max-width: 900px) {
      .navbar-header {
-        width: 100%;
+        width: 100% !important;
     }
 
     ul#menubar-left {
@@ -1731,6 +1733,8 @@ button.btn {
     form[id^='form_user_vote'] div.inline {
         margin-left: 13px;
     }
+
+    /* SEARCH BAR */
 
     ul#menubar-left {
         width: 75% !important;
@@ -1918,6 +1922,23 @@ button.btn {
 
     a.dropdown-toggle {
         padding-left: 15px !important;
+    }
+
+    div#comment_input_box_section_1 div.row {
+        margin: 0;
+    }
+
+    /* ANONYMOUS */
+
+    div#comment-input-anonymous-section-anonymous-1 div.inline label {
+        padding: 15px;
+        background: #ddd;
+        padding-bottom: 0;
+        padding-top: 7px;
+    }
+
+    div#comment-input-anonymous-section-anonymous-1 div.inline button {
+        margin-left: 15px;
     }
 
     form[id^='form_user_vote'] div.inline {
