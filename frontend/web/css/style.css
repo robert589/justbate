@@ -1615,7 +1615,7 @@ button.btn {
 
 @media screen and (max-width: 900px) {
      .navbar-header {
-        width: 100%;
+        width: 100% !important;
     }
 
     ul#menubar-left {
@@ -1731,6 +1731,8 @@ button.btn {
     form[id^='form_user_vote'] div.inline {
         margin-left: 13px;
     }
+
+    /* SEARCH BAR */
 
     ul#menubar-left {
         width: 75% !important;
