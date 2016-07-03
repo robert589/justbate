@@ -172,7 +172,14 @@ class SiteDao{
 
     public function getFollowedIssueList($current_user_id, SiteVoBuilder $builder){
         $issue_list = UserFollowedIssue::find()->where(['user_id' => $current_user_id])->all();
-        $builder->setIssueFollowedByUser($issue_list);
+        $issues = [];
+
+        foreach($issue_list as $item) {
+            $issue['url'] = \Yii::$app->request->baseUrl . '/issue/' . $item['issue_name'];
+            $issue['label'] = $item['issue_name'];
+            $issues[] = $issue;
+        }
+        $builder->setIssueFollowedByUser($issues);
         return $builder;
     }
 

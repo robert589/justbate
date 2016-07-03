@@ -120,7 +120,6 @@ abstract class CommentVo implements Vo{
         }
         else{
             return UserUtility::buildPhotoPath($this->comment_creator_photo_path);
-
         }
     }
 
@@ -231,6 +230,7 @@ abstract class CommentVo implements Vo{
         $this->comment_creator_username = $builder->getCommentCreatorUsername();
         $this->comment_creator_id = $builder->getCommentCreatorId();
         $this->comment_id = $builder->getCommentId();
+        $this->comment_creator_photo_path = $builder->getCommentCreatorPhotoPath();
     }
 
 

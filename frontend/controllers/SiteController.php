@@ -239,14 +239,14 @@ class SiteController extends Controller
 		if($add_issue_form->load(Yii::$app->request->post()) && $add_issue_form->validate()) {
 			if ($add_issue_form->followIssue()) {
 				$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
-				return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => new UserFollowIssueForm()]);
+				return $this->renderPartial('home-sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => new UserFollowIssueForm()]);
 			} else {
 				Yii::$app->end("Cannot follow issue");
 			}
 		}
 
 		$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
-		return $this->renderPartial('_home_sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => $add_issue_form]);
+		return $this->renderPartial('home-sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => $add_issue_form]);
 
 	}
 

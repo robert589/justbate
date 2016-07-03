@@ -32,6 +32,7 @@ class SiteService{
         $builder = $this->site_dao->userFollowedIssue($user_id,$issue_name,$builder);
         $builder = $this->site_dao->getTrendingTopicList($builder);
         $builder = $this->site_dao->getPopularIssueList($builder);
+        $builder = $this->site_dao->getFollowedIssueList($user_id, $builder);
 
         return $builder->build();
     }
