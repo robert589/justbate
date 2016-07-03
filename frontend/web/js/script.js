@@ -470,6 +470,11 @@ $(document).ready(function(){
 
     //comment_votes part
     $("div#dropdown-button").click(function() {
+        if (($("ul#comment-options").is(":visible"))) {
+            $("div#dropdown-button").css("margin-bottom", "0");
+        } else {
+            $("div#dropdown-button").css("margin-bottom", "35.09px");
+        }
         $("ul#comment-options").slideToggle();
     })
 

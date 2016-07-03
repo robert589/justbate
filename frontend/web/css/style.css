@@ -607,8 +607,8 @@ div#dropdown-button {
 }
 
 div#dropdown-button ul#comment-options {
+    top: 35.09px;
     margin-left: -40.23px;
-    margin-top: 35.09px;
     position: relative;
     display: none;
     z-index: 1000;
