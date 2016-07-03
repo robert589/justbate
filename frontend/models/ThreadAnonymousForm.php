@@ -1,15 +1,10 @@
 <?php
 namespace frontend\models;
 
-use common\models\Issue;
 use common\models\ThreadAnonymous;
-use common\models\UserFollowedIssue;
+use frontend\dao\ThreadDao;
 use yii\base\Model;
 use Yii;
-use yii\web\UploadedFile;
-use yii\validators\ImageValidator;
-use common\models\ThreadVote;
-use yii\web\User;
 
 class ThreadAnonymousForm extends Model
 {
@@ -17,6 +12,11 @@ class ThreadAnonymousForm extends Model
 
     public $user_id;
 
+    private $thread_dao;
+
+    public function init() {
+        $this->thread_dao = new ThreadDao();
+    }
 
 
     public function rules()
@@ -32,6 +32,7 @@ class ThreadAnonymousForm extends Model
             $thread_anon = new ThreadAnonymous();
             $thread_anon->thread_id = $this->thread_id;
             $thread_anon->user_id = $this->user_id;
+            $thread_anon->anonymous_id = $this->checkMaxNumber() + 1;
             return $thread_anon->save();
         }
 
@@ -45,6 +46,10 @@ class ThreadAnonymousForm extends Model
         }
 
         return true;
+    }
+
+    private function checkMaxNumber() {
+        return ThreadAnonymous::find()->where(['thread_id' => $this->thread_id])->orderBy("anonymous_id")->one()->anonymous_id;
     }
 
     private  function checkExist(){
