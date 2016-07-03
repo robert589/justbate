@@ -49,7 +49,7 @@ AppAsset::register($this);
     <?php $this->beginBody() ?>
     <!-- website menu bar and navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" id="menubar">
-        <div class="container">
+        <div class="nav-container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
@@ -63,7 +63,7 @@ AppAsset::register($this);
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right" id="menubar-left">
+                <ul class="nav navbar-nav" id="menubar-left">
                     <li id="search-box" class="item">
                         <?= Select2::widget([
                             'name' => 'search_box_menu',
@@ -79,25 +79,28 @@ AppAsset::register($this);
                                     'Search','').replace(/ /g, '-').toLowerCase()
                                 );
                             }"
-                        ],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                            'maximumSelectionSize' => 1,
-                            'multiple' => true,
-                            'language' => [
-                                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
                             ],
-                            'ajax' => [
-                                'url' => \yii\helpers\Url::to(['site/search-in-notif']),
-                                'dataType' => 'json',
-                                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'maximumSelectionSize' => 1,
+                                'multiple' => true,
+                                'language' => [
+                                    'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                ],
+                                'ajax' => [
+                                    'url' => \yii\helpers\Url::to(['site/search-in-notif']),
+                                    'dataType' => 'json',
+                                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                ],
+                                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
+                                'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
                             ],
-                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                            'templateResult' => new JsExpression('function(thread) { return thread.text; }'),
-                            'templateSelection' => new JsExpression('function (thread) { return thread.text; }'),
-                        ],
                         ])?>
                     </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="menubar-right">
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
                         <?php } else { ?>

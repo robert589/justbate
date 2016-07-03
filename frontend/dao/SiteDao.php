@@ -128,23 +128,18 @@ class SiteDao{
             $thread_builder->setUpdatedAt($result['updated_at']);
             $thread_builder->setTotalComments($result['total_comments']);
             $thread_builder->setCurrentUserVote($result['choice_text']);
-
-
             $thread_builder = $this->thread_dao->getOneComment($result['thread_id'], $current_user_id, $thread_builder);
             $thread_builder = $this->thread_dao->getThreadIssues($result['thread_id'], $thread_builder);
             $thread_builder = $this->thread_dao->getUserChoiceOnly($result['thread_id'] , $current_user_id, $thread_builder);
             $thread_builder = $this->thread_dao->getThreadChoices($result['thread_id'], $thread_builder);
-
             $thread_list[] = $thread_builder->build();
         }
-
         $data_provider = new ArrayDataProvider([
             'allModels' => $thread_list,
             'pagination' => [
                 'pageSize' =>10,
             ],
         ]);
-
         $builder->setThreadListProvider($data_provider);
         return $builder;
     }
@@ -155,25 +150,21 @@ class SiteDao{
      */
     public function issueNumFollowers($issue_name, SiteVoBuilder $builder){
         $issue_num_followers = null;
-
         if($builder->getHasIssue()){
             $issue_num_followers = (int) \Yii::$app->db->createCommand(self::ISSUE_NUM_FOLLOWERS)->
                         bindParam(":issue_name", $issue_name)->
                         queryScalar();
         }
         $builder->setNumFollowersOfIssues($issue_num_followers);
-
         return $builder;
     }
 
     public function userFollowedIssue($current_user_id, $issue_name, SiteVoBuilder $builder) {
         $userFollowedIssue = null;
-
         if($issue_name === null) {
             $userFollowedIssue = UserFollowedIssue::find()->where(['user_id' => $current_user_id, 'issue_name' => $issue_name])
                     ->exists();
         }
-
         $builder->setUserFollowIssue($userFollowedIssue);
         return $builder;
 
@@ -202,7 +193,10 @@ class SiteDao{
         return $builder;
     }
 
-
+    /**
+     * @param SiteVoBuilder $builder
+     * @return SiteVoBuilder
+     */
     public function getPopularIssueList(SiteVoBuilder $builder){
         $popular_issue_list = Issue::getPopularIssue();
         $builder->setPopularIssueList($popular_issue_list);

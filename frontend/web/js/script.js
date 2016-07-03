@@ -376,12 +376,15 @@ $(document).ready(function(){
             return false;
         }
 
+        var comment_id = form.attr('data-service');
+
         $.ajax({
             url: form.attr('action'),
             type: 'post',
             data: form.serialize(),
             success: function(data) {
-                $("#child-comment-input-box-new-comment").append(data);
+                $("#submit_child_comment_form_" + comment_id).find("#childcommentform-child_comment").val("");
+                $("#child-comment-list-new-comment-" + comment_id).append(data);
             }
         });
 
@@ -392,9 +395,9 @@ $(document).ready(function(){
         $.pjax.submit(event,
                       $(this).data('pjax'),
                         {'push' : false,
-                        'replace' : false,
-                        'timeout' : false,
-                        skipOuterContainers:true});
+                         'replace' : false,
+                         'timeout' : false,
+                         'skipOuterContainers':true});
 
         return false;
     });

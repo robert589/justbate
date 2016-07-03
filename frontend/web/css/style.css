@@ -1465,9 +1465,6 @@ button.btn {
         width: 100%;
     }
 
-    ul#menubar-left {
-        margin-top: 0px !important;
-    }
 
     /* LOGIN */
     div.site-login div.row div.col-xs-12 div#signup-form {
@@ -1595,11 +1592,10 @@ button.btn {
     }
 
     ul#menubar-left {
-        width: 75%;
+        display: none;
     }
-
-    li#search-box {
-        width: 25%;
+    ul#menubar-left {
+        width: 45%;
     }
 
     #left-sidebar {
@@ -1626,12 +1622,10 @@ button.btn {
 }
 
 @media screen and (max-width: 900px) {
-     .navbar-header {
-        width: 100% !important;
-    }
+
 
     ul#menubar-left {
-        width: 100% !important;
+        display: none !important;
     }
 
     li#search-box {
@@ -1678,7 +1672,7 @@ button.btn {
 @media screen and (min-width: 935px) and (max-width: 992px) {
     /* Search Menu */
     ul#menubar-left {
-        width: 75%;
+        display: none;
     }
 
     li#search-box {
@@ -1747,11 +1741,24 @@ button.btn {
     /* SEARCH BAR */
 
     ul#menubar-left {
-        width: 75% !important;
+        width: 30% !important;
+    }
+
+    ul#menubar-right {
+        width: 45% !important;
+    }
+
+    li#home_menu_bar{
+        width: 20%;
+    }
+    li#notification-bar{
+        width:35%;
+        white-space: nowrap;
+
     }
 
     li#search-box {
-        width: 35%;
+        width: 100%;
     }
 
     /*THREAD */
@@ -1956,10 +1963,15 @@ button.btn {
     }
 
     ul#menubar-left {
-        width: 75% !important;
+        width: 42% !important;
+    }
+
+
+    ul#menubar-right {
+        width: 42% !important;
     }
 
     li#search-box {
-        width: 40%;
+        width: 100%;
     }
 }

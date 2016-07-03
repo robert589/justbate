@@ -66,7 +66,7 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
                     <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
                 </div>
                 <div class="col-xs-12 text-center">
-                    <div id="child-comment-input-box-new-comment">
+                    <div id="child-comment-list-new-comment-<?= $comment_id ?>">
                     </div>
                     <?= ListView::widget([
                         'id' => 'threadList',
