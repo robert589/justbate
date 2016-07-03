@@ -602,16 +602,15 @@ div#shown_part + div.row {
     padding: 15px !important;
 }
 
-div#dropdown-button {
+div[id^='dropdown-button'] {
     margin-left: 15px;
 }
 
-div#dropdown-button ul#comment-options {
+div[id^='dropdown-button'] ul[id^='comment-options'] {
     top: 35.09px;
     margin-left: -40.23px;
     position: relative;
     display: none;
-    z-index: 1000;
 }
 
 div#first-part div.tabs-above li {
@@ -1539,6 +1538,7 @@ button.btn {
     }
 
     /* THREAD */
+
     div#thread-issue.row div.col-xs-3 {
         padding-right: 15px;
     }
