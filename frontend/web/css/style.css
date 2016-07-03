@@ -1745,7 +1745,7 @@ button.btn {
     }
 
     ul#menubar-right {
-        width: 45% !important;
+        width: 50% !important;
     }
 
     li#home_menu_bar{
@@ -1963,7 +1963,7 @@ button.btn {
     }
 
     ul#menubar-left {
-        width: 42% !important;
+        width: 41% !important;
     }
 
 
@@ -1973,5 +1973,12 @@ button.btn {
 
     li#search-box {
         width: 100%;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+    .nav-container {
+        margin-left:100px;
     }
 }

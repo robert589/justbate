@@ -9,6 +9,7 @@ use common\entity\ThreadCommentEntity;
 use common\models\Thread;
 use common\models\ThreadComment;
 use frontend\models\ChildCommentForm;
+use frontend\models\DeleteCommentForm;
 use frontend\models\NotificationForm;
 use frontend\service\ServiceFactory;
 use frontend\vo\ThreadCommentVo;
@@ -103,6 +104,23 @@ class CommentController extends Controller{
 
 
 
+    /**
+     * @return \yii\web\Response
+     */
+    public function actionDeleteComment(){
+        if(isset($_POST['comment_id'])){
+            $delete_comment_form = new DeleteCommentForm();
+
+            $delete_comment_form->comment_id = $_POST['comment_id'];
+
+            if($delete_comment_form->delete()){
+
+                $thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
+
+                return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
+            }
+        }
+    }
 
 }
 

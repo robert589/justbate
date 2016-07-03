@@ -108,7 +108,7 @@ class CommentDao{
     function buildThreadComment($user_id, $thread_id, $comment_id, ThreadCommentVoBuilder $builder){
         if($this->checkThreadCommentExist($thread_id, $comment_id)) {
             $builder = $this->buildThreadCommentInfo($user_id, $comment_id, $builder);
-            $builder = $this->buildChildCommentList($comment_id, $builder);
+            $builder = $this->buildChildCommentList($comment_id, $user_id, $builder);
             return $builder;
         }
         return null;
