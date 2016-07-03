@@ -14,7 +14,7 @@ class UserUtility{
     }
 
     public static function buildPhotoPath($photo_path){
-        return Yii::$app->request->baseUrl . '/frontend/web/' . $photo_path;
+        return Yii::$app->request->baseUrl . '/frontend/web/photos/' . $photo_path;
     }
 
 }

@@ -12,6 +12,7 @@ use yii\helpers\Html;
  * Variable used
  */
 $issue_followed_by_user = $home->getIssueFollowedByUser();
+
 $trending_topic_list = $home->getTrendingTopicList();
 $user_follow_issue = $home->getUserFollowIssue();
 $num_followers_of_issue = $home->getNumFollowersOfIssue();

@@ -47,6 +47,15 @@ class ThreadService{
         return $builder->build();
     }
 
+    public function getThreadInfoAfterEdit($thread_id, $current_user_id, $title, $description, ThreadVoBuilder $builder) {
+        $builder->setTitle($title);
+        $builder->setDescription($description);
+        $builder = $this->thread_dao->getThreadChoices($thread_id, $builder);
+        $builder = $this->thread_dao->getUserChoiceOnly($thread_id, $current_user_id, $builder);
+        $builder = $this->thread_dao->getThreadIssues($thread_id, $builder);
+        return $builder->build();
+    }
+
 
 
 }

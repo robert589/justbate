@@ -35,7 +35,7 @@ class SiteDao{
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
-                               (anonymous.thread_id is not null) as thread_anonymous
+                               (anonymous.anonymous_id) as thread_anonymous
                         from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
@@ -58,7 +58,7 @@ class SiteDao{
                                    where thread_issue.issue_name = user_followed_issue.issue_name
                                   and user_followed_issue.user_id = :user_id) followed_issue
                         on followed_issue.thread_id = parent_thread_info.thread_id
-                        left join (SELECT thread_id
+                        left join (SELECT thread_id, anonymous_id
                                    from thread_anonymous
                                    where thread_anonymous.user_id = :user_id) anonymous
                         on parent_thread_info.thread_id = anonymous.thread_id
@@ -69,7 +69,7 @@ class SiteDao{
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
-                               (anonymous.thread_id is not null) as thread_anonymous
+                               (anonymous.anonymous_id) as thread_anonymous
                         from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
 							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
@@ -95,7 +95,7 @@ class SiteDao{
                                    where thread_issue.issue_name = user_followed_issue.issue_name
                                   and user_followed_issue.user_id = :user_id) followed_issue
                         on followed_issue.thread_id = parent_thread_info.thread_id
-                        left join (SELECT thread_id
+                        left join (SELECT thread_id, anonymous_id
                                    from thread_anonymous
                                    where thread_anonymous.user_id = :user_id) anonymous
                         on parent_thread_info.thread_id = anonymous.thread_id
@@ -172,7 +172,14 @@ class SiteDao{
 
     public function getFollowedIssueList($current_user_id, SiteVoBuilder $builder){
         $issue_list = UserFollowedIssue::find()->where(['user_id' => $current_user_id])->all();
-        $builder->setIssueFollowedByUser($issue_list);
+        $issues = [];
+
+        foreach($issue_list as $item) {
+            $issue['url'] = \Yii::$app->request->baseUrl . '/issue/' . $item['issue_name'];
+            $issue['label'] = $item['issue_name'];
+            $issues[] = $issue;
+        }
+        $builder->setIssueFollowedByUser($issues);
         return $builder;
     }
 

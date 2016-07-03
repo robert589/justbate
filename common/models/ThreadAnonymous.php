@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
  * @package common\models
  * @property int $thread_id
  * @property int $user_id
+ * @property int $anonymous_id
  */
 class ThreadAnonymous extends ActiveRecord
 {

@@ -10,7 +10,7 @@ class ListNotificationDao{
     const NOTIFICATION_SQL = "SELECT notification_entity.*,
 		notification_actors.actors,
         last_actor.photo_path, last_actor.updated_at, last_actor.actor_id,
-        notification_extra_value.extra_value, (thread_anonymous.thread_id is not null) as anonymous
+        notification_extra_value.extra_value, thread_anonymous.anonymous_id as anonymous
                                 from (SELECT notification_type.url_template,
                                       		notification_verb.text_template,
                                             notification_verb.text_template_two_people,

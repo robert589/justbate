@@ -27,7 +27,7 @@ class ThreadDao{
                     count(case when total_vote.vote = -1 then 1 else null end) as total_dislike
             from(
                 SELECT comment_info.*,
-                      (thread_anonymous.thread_id is not null) as comment_anonymous
+                      (thread_anonymous.anonymous_id) as comment_anonymous
                from (SELECT comment.*, thread_comment.thread_id, thread_comment.choice_text, user.first_name, user.last_name,
                             user.photo_path, user.username
                      from thread_comment,comment, user
@@ -46,7 +46,7 @@ class ThreadDao{
                     (case comment_vote.user_id when :user_id then vote else null end) as vote,
                     COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
                     COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike,
-                    (thread_anonymous.user_id is not null) as comment_anonymous
+                    (thread_anonymous.anonymous_id) as comment_anonymous
             FROM (
                 SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name,
                                                 user.last_name, user.username, user.photo_path
@@ -84,7 +84,7 @@ class ThreadDao{
                               ) thread_choices
                         on thread_choices.thread_id = TU.thread_id";
 
-        const THREAD_INFO_FOR_COMMENT_INPUT_BOX = "SELECT (SElect thread_anonymous.thread_id is not null as anonymous from thread_anonymous
+        const THREAD_INFO_FOR_COMMENT_INPUT_BOX = "SELECT (SElect thread_anonymous.anonymous_id as anonymous from thread_anonymous
                                                             where thread_id = :thread_id  and user_id = :user_id) as anonymous,
                                                             (SELECT thread_vote.choice_text from thread_vote
                                                              where thread_id = :thread_id  and user_id = :user_id) as choice_text
@@ -281,6 +281,7 @@ class ThreadDao{
         $comment_builder->setTotalLike($result['total_like']);
         $comment_builder->setTotalDislike($result['total_dislike']);
         $comment_builder->setCommentId($result['comment_id']);
+
 
         $builder->setChosenComment($comment_builder->build());
         return $builder;

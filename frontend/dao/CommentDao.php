@@ -13,7 +13,7 @@ use frontend\vo\NotificationVoBuilder;
 use frontend\vo\ThreadCommentVoBuilder;
 
 class CommentDao{
-    const CHILD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.thread_id is not null as anonymous
+    const CHILD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous
                                 from (
                                     SELECT child_comment_info.*, creator.first_name, creator.last_name, creator.photo_path, creator.username, thread_of_parent_comment.thread_id,
                                        COALESCE (count(case comment_vote.user_id when :user_id then vote else null end), 0 ) as vote,
@@ -34,7 +34,7 @@ class CommentDao{
 
     const THREAD_COMMENT_CHILD_COMMENT = "
                 SELECT comment_list.*, thread_comment.thread_id,
-                        thread_anonymous.thread_id is not null as anonymous,
+                        thread_anonymous.anonymous_id as anonymous,
                          (case comment_vote.user_id when :user_id then vote else null end) as current_user_vote,
                          COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
                          COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike
@@ -57,7 +57,7 @@ class CommentDao{
                 order by comment_list.created_at desc
 
     ";
-    const THREAD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.thread_id is not null as anonymous
+    const THREAD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous
                                 from
                                     (SELECT comment.*, thread.title, thread.thread_id, user.id, user.username,  user.first_name, user.last_name,
                                        user.photo_path,

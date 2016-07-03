@@ -68,8 +68,6 @@ class ThreadController extends Controller
 			                           'comment_model' => $commentModel,
 									   'submit_vote_form' => $submit_vote_form,
 		                               ]);
-
-
 	}
 
 
@@ -122,42 +120,6 @@ class ThreadController extends Controller
 
 	}
 
-	/**
-	 * POST DATA: user_id, parent_id, ChildCommentForm
-	 * return: render
-	 */
-//	public function actionSubmitChildComment() {
-//		$child_comment_form = new ChildCommentForm();
-//		if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
-//			$user_id = $_POST['user_id'];
-//			$parent_id = $_POST['parent_id'];
-//			$child_comment_form->user_id = $user_id;
-//			$child_comment_form->parent_id = $parent_id;
-//			if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
-//				//error
-//			}
-//			//bad practice
-//			$thread_id = \common\models\ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
-//			if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
-//				//error
-//			}
-//
-//			if(!($new_comment_id = $child_comment_form->store())){
-//				//error
-//			}
-//			return $this->renderAjax('child-comment',
-//				['comment_id' => $parent_id,
-//				'retrieved' => true,
-//				'child_comment_form' => new ChildCommentForm(),
-//				'last_comment_id_current_user' => $new_comment_id ]);
-//
-//		}
-//		else{
-//			return $this->renderAjax('error');
-//		}
-//
-//	}
-
 
 	/**
 	 * WEAKNESS: If server validation error occur, no solution other than saying error
@@ -182,12 +144,13 @@ class ThreadController extends Controller
 		}
 		if(!$this->updateCommentNotification($comment_model->user_id, $thread_id)){
 		}
-		$comment_entity = new ThreadCommentEntity($comment_id, $comment_model->user_id);
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
-		$comment_entity = $creator->get([ThreadCommentCreator::NEED_COMMENT_INFO,
-										 ThreadCommentCreator::NEED_COMMENT_VOTE]);
-		return  $this->renderAjax('_listview_comment', [
-			'thread_comment' => $comment_entity,
+
+		$service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
+		$thread = $service->getThreadCommentInfo(Yii::$app->user->getId(), $thread_id, $comment_id);
+
+
+		return  $this->renderAjax('../comment/thread-comment', [
+			'thread_comment' => $thread,
 			'child_comment_form' => new ChildCommentForm()]);
 	}
 
@@ -274,7 +237,7 @@ class ThreadController extends Controller
 
 			if($delete_comment_form->delete()){
 
-				$thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
+     			$thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
 
 				return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
 			}
@@ -303,7 +266,6 @@ class ThreadController extends Controller
 	public function actionEditComment(){
 		$edit_comment_form = new EditCommentForm();
 		$edit_comment_form->load(Yii::$app->request->post());
-
 		if(isset($_POST['comment']) ){
 			$edit_comment_form->comment = $_POST['comment'];
 			$edit_comment_form->update();
@@ -332,22 +294,15 @@ class ThreadController extends Controller
 				}
 			}
 
+			$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
+			$thread = $service->getThreadInfoAfterEdit( $edit_thread_form->thread_id,Yii::$app->user->getId(),
+				$edit_thread_form->title, $edit_thread_form->description, new ThreadVoBuilder());
 
-			//thread data
-			$thread_entity = new ThreadEntity($edit_thread_form->thread_id, Yii::$app->user->getId());
-			$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
-			$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE, ThreadCreator::NEED_USER_CHOICE_ON_THREAD_ONLY,
-				ThreadCreator::NEED_THREAD_ISSUE
-			]);
-			$thread_entity->setTitle($edit_thread_form->title);
-			$thread_entity->setDescription($edit_thread_form->description);
-			//get all comment providers
-			// get vote mdoels
 			$submit_vote_form = new SubmitThreadVoteForm();
 			return $this->renderAjax('_title_description_vote',
-				['thread' => $thread_entity,
-					'edit_thread_form' => $edit_thread_form,
-					'submit_vote_form' => $submit_vote_form]);
+				['thread' => $thread,
+				 'edit_thread_form' => $edit_thread_form,
+				 'submit_vote_form' => $submit_vote_form]);
 		}
 	}
 

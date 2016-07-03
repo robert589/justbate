@@ -62,7 +62,7 @@ Pjax::begin([
                             <span class="glyphicon glyphicon-pencil"></ span>
                          </a>' ,
             'items' => $issue_list,
-        ]) ?>
+        ]); ?>
         <div id="home-add-issue-popover-content" style="display: none;margin-bottom:8px">
 
             <?= Select2::widget([
