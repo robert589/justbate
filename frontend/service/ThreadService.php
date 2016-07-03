@@ -29,7 +29,7 @@ class ThreadService{
         $builder = $this->thread_dao->getThreadInfo($thread_id, $user_id, $builder);
         $builder = $this->thread_dao->getThreadChoices($thread_id, $builder);
 
-        $builder = $this->thread_dao->getAllCommentProviders($thread_id, $builder->getChoices(), $user_id, $builder);
+        $builder = $this->thread_dao->getAllCommentProviders($thread_id, $builder->getMappedChoices(), $user_id, $builder);
         return $builder->build();
     }
 

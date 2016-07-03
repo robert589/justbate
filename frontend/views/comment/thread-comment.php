@@ -34,7 +34,7 @@ $comment_thread_id = $thread_comment->getParentThreadId();
                 <span><?= Html::a($comment_creator_full_name,
                         $commentator_user_profile_link,
                         ['data-pjax' => 0])?></span> -
-            <?php } ?>
+              <?php } ?>
             <span class="comment-created"><?= $comment_created_at ?></span>
         </div>
     </div>

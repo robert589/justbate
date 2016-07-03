@@ -41,7 +41,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 
 		<div class="user-comment-reaction col-xs-12">
 			<div class="home-comment-tab">
-				<?= $this->render('_list_thread_bottom', ['thread' => $thread]) ?>
+				<?= $this->render('home-thread-list-bottom', ['thread' => $thread]) ?>
 			</div>
 			<hr>
 

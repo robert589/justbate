@@ -86,8 +86,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 	<div  id="comment_section" class="section col-xs-12">
 		<div class="row" >
 			<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
-	 												'thread' => $thread,
-													]) ?>
+	 												'thread' => $thread]) ?>
 		</div>
 	</div>
 	<div class="col-xs-12 section">

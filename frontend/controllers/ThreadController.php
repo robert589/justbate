@@ -51,17 +51,13 @@ class ThreadController extends Controller
 	 * @return string|\yii\web\Response
 	 */
 	public function actionIndex(){
-		/** @var ThreadVo $thread */
-
 		if(empty($_GET['id'])) {
 			return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 		}
 		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
 		$thread = $service->getThreadInfo( $_GET['id'],Yii::$app->user->getId(), new ThreadVoBuilder());
 		$commentModel = new CommentForm();
-		// get vote mdoels
 		$submit_vote_form = new SubmitThreadVoteForm();
-
 		$this->setMetaTag($thread->getThreadId(),
 						  $thread->getTitle(),
 						  $thread->getDescription());
@@ -104,9 +100,6 @@ class ThreadController extends Controller
 
 	}
 
-	public function actionStartServer() {
-		return $this->render('child-comment-server', ['comment_id' => $_GET['comment_id']]);
-	}
 
 
 	/**
@@ -122,9 +115,9 @@ class ThreadController extends Controller
 
 
 		return $this->renderAjax('../thread/_comment_input_box',
-			['thread' => $thread,
-				'comment_input_retrieved' => true,
-				'comment_model' => new CommentForm()]);
+				['thread' => $thread,
+	             'comment_input_retrieved' => true,
+				 'comment_model' => new CommentForm()]);
 
 
 	}
@@ -133,40 +126,37 @@ class ThreadController extends Controller
 	 * POST DATA: user_id, parent_id, ChildCommentForm
 	 * return: render
 	 */
-	public function actionSubmitChildComment() {
-		$child_comment_form = new ChildCommentForm();
-		if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
-			$user_id = $_POST['user_id'];
-			$parent_id = $_POST['parent_id'];
-			$child_comment_form->user_id = $user_id;
-			$child_comment_form->parent_id = $parent_id;
-			if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
-				//error
-			}
-			//bad practice
-			$thread_id = \common\models\ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
-			if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
-				//error
-			}
-
-			if(!($new_comment_id = $child_comment_form->store())){
-				//error
-			}
-
-
-
-			return $this->renderAjax('child-comment',
-				['comment_id' => $parent_id,
-				'retrieved' => true,
-				'child_comment_form' => new ChildCommentForm(),
-				'last_comment_id_current_user' => $new_comment_id ]);
-
-		}
-		else{
-			return $this->renderAjax('error');
-		}
-
-	}
+//	public function actionSubmitChildComment() {
+//		$child_comment_form = new ChildCommentForm();
+//		if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
+//			$user_id = $_POST['user_id'];
+//			$parent_id = $_POST['parent_id'];
+//			$child_comment_form->user_id = $user_id;
+//			$child_comment_form->parent_id = $parent_id;
+//			if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
+//				//error
+//			}
+//			//bad practice
+//			$thread_id = \common\models\ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
+//			if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
+//				//error
+//			}
+//
+//			if(!($new_comment_id = $child_comment_form->store())){
+//				//error
+//			}
+//			return $this->renderAjax('child-comment',
+//				['comment_id' => $parent_id,
+//				'retrieved' => true,
+//				'child_comment_form' => new ChildCommentForm(),
+//				'last_comment_id_current_user' => $new_comment_id ]);
+//
+//		}
+//		else{
+//			return $this->renderAjax('error');
+//		}
+//
+//	}
 
 
 	/**
@@ -229,14 +219,9 @@ class ThreadController extends Controller
 			Yii::$app->end('Fail to like: Contact Admin');
 		}
 
-		if(!isset($_POST['user_id'])) {
-			$trigger_login_form = true;
-		}
-
 		$trigger_login_form = false;
-
 		$comment_vote_form = new CommentVoteForm();
-		$comment_vote_form->user_id = $_POST['user_id'];
+		$comment_vote_form->user_id = Yii::$app->user->getId();
 		$comment_vote_form->vote = $_POST['vote'];
 		$comment_vote_form->comment_id =  $_POST['comment_id'];
 
@@ -321,9 +306,7 @@ class ThreadController extends Controller
 
 		if(isset($_POST['comment']) ){
 			$edit_comment_form->comment = $_POST['comment'];
-
 			$edit_comment_form->update();
-
 			$comment_entity = new CommentEntity($edit_comment_form->parent_id, \Yii::$app->user->getId());
 			$comment_entity->setComment($edit_comment_form->comment);
 			return $this->render('_view_edit_comment_part', [

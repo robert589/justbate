@@ -33,7 +33,7 @@ class ThreadCommentVo extends CommentVo{
 
 
     public function getChildCommentRequestURL(){
-        return \Yii::$app->request->baseUrl . '/thread/get-child-comment?thread_id=' . $this->parent_thread_id . '&comment_id=' . $this->comment_id ;
+        return \Yii::$app->request->baseUrl . '/comment/get-child-comment?thread_id=' . $this->parent_thread_id . '&comment_id=' . $this->comment_id ;
     }
 
     /**

@@ -31,18 +31,17 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
         'data-service' => $comment_id,
         'container'=>'#child_comment_' . $comment_id,
     ],
-    ]) ?>
+    ]);
+
+?>
 
     <?= Dialog::widget(); ?>
-
     <div class="inline">
-
         <?= Html::a("Comment",    $child_comment_request_url,
-        ['class' => 'btn btn-primary inline retrieve-child-comment-link',
-        'data-pjax' => "#child_comment_$thread_id",
-        'data-service' => $comment_id,
-        'style' => 'margin-left:15px; float:left'])?>
-
+                    ['class' => 'btn btn-primary inline retrieve-child-comment-link',
+                    'data-pjax' => "#child_comment_$thread_id",
+                    'data-service' => $comment_id,
+                    'style' => 'margin-left:15px; float:left'])?>
         <?php if($belongs_to_current_user){ ?>
             <div id="dropdown-button" role="group" aria-label="group" class="btn-group dropdown-toggle" type="button" data-toggle="dropdown">
                 <button class="btn btn-secondary" type="button"><span class="glyphicon glyphicon-chevron-down"></span></button>
@@ -53,26 +52,21 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
             </div>
             <?php } ?>
         </div>
-
-
         <div  align="center" class="col-xs-12" >
             <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
             ['style' => 'display:none;max-height:50px' ,
             'id' => 'child_comment_loading_gif_' . $comment_id])?>
         </div>
-
         <?php
         if($thread_comment->isRetrieved()) {
             $child_comment_provider = $thread_comment->getChildCommentList();
-            ?>
+        ?>
             <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
                 <div class="col-xs-12" style="margin-top: 15px;">
                     <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
                 </div>
-
                 <div class="col-xs-12 text-center">
                     <div id="child-comment-input-box-new-comment">
-
                     </div>
                     <?= ListView::widget([
                         'id' => 'threadList',
@@ -86,19 +80,11 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
                         ]) ?>
                     </div>
                 </div>
-
-                <?php
-            }
-            ?>
-
-
-            <?php $form = ActiveForm::begin(['action' => ['thread/delete-comment'],
-            'method' => 'post',
-            'id' => 'delete_comment_form_' . $comment_id]) ?>
-
-            <?= Html::hiddenInput('comment_id', $comment_id) ?>
-            <?= Html::hiddenInput('thread_id', $thread_id) ?>
-
-            <?php ActiveForm::end() ?>
-
-            <?php Pjax::end() ?>
+        <?php } ?>
+    <?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
+                        'method' => 'post',
+                        'id' => 'delete_comment_form_' . $comment_id]) ?>
+        <?= Html::hiddenInput('comment_id', $comment_id) ?>
+        <?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?php ActiveForm::end() ?>
+<?php Pjax::end() ?>

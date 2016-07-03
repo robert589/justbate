@@ -102,7 +102,12 @@ abstract class CommentVo implements Vo{
 
 
     public function getFullName(){
-        return UserUtility::getFullName($this->comment_creator_first_name, $this->comment_creator_last_name);
+        if($this->anonymous){
+            return 'Anonymous';
+        }
+        else{
+            return UserUtility::getFullName($this->comment_creator_first_name, $this->comment_creator_last_name);
+        }
     }
 
     /**
@@ -110,7 +115,13 @@ abstract class CommentVo implements Vo{
      */
     public function getCommentCreatorPhotoLink()
     {
-        return UserUtility::buildPhotoPath($this->comment_creator_photo_path);
+        if($this->anonymous){
+            return UserUtility::buildPhotoPath('default.png');
+        }
+        else{
+            return UserUtility::buildPhotoPath($this->comment_creator_photo_path);
+
+        }
     }
 
     /**

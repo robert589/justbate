@@ -16,10 +16,8 @@ class CommentService{
     }
 
     public function getThreadCommentInfo($user_id, $thread_id, $comment_id) {
-
         $builder = new ThreadCommentVoBuilder();
         $builder = $this->comment_dao->buildThreadComment($user_id, $thread_id, $comment_id, $builder);
-
         if($builder === null){
             return null;
         }
@@ -38,6 +36,16 @@ class CommentService{
         else{
             return $builder->build();
         }
+
+    }
+
+    public function getChildCommentList($user_id, $comment_id, $thread_id) {
+        $builder = new ThreadCommentVoBuilder();
+        $builder->setCommentId($comment_id);
+        $this->comment_dao->buildChildCommentList($comment_id, $user_id, $builder);
+
+        return $builder->build();
+
 
     }
 

@@ -21,48 +21,49 @@ use yii\data\ArrayDataProvider;
 
 class ThreadDao{
         const GET_ONE_COMMENT = "
-SELECT chosen_comment.*,
-		CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
-        count(case when total_vote.vote = 1 then 1 else null end) as total_like,
-        count(case when total_vote.vote = -1 then 1 else null end) as total_dislike
-from(
-    SELECT comment_info.*,
-          (thread_anonymous.thread_id is not null) as comment_anonymous
-   from (SELECT comment.*, thread_comment.thread_id, thread_comment.choice_text, user.first_name, user.last_name,
-                user.photo_path, user.username
-         from thread_comment,comment, user
-         where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
-           and comment.user_id = user.id and comment.comment_status = 10) as comment_info
-         left join thread_anonymous
-          on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
-         limit 1) chosen_comment
-left join comment_vote user_vote
-on chosen_comment.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
-left join comment_vote total_vote
-on total_vote.comment_id  = chosen_comment.comment_id";
+            SELECT chosen_comment.*,
+                    CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
+                    count(case when total_vote.vote = 1 then 1 else null end) as total_like,
+                    count(case when total_vote.vote = -1 then 1 else null end) as total_dislike
+            from(
+                SELECT comment_info.*,
+                      (thread_anonymous.thread_id is not null) as comment_anonymous
+               from (SELECT comment.*, thread_comment.thread_id, thread_comment.choice_text, user.first_name, user.last_name,
+                            user.photo_path, user.username
+                     from thread_comment,comment, user
+                     where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
+                       and comment.user_id = user.id and comment.comment_status = 10) as comment_info
+                     left join thread_anonymous
+                      on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
+                     limit 1) chosen_comment
+            left join comment_vote user_vote
+            on chosen_comment.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
+            left join comment_vote total_vote
+            on total_vote.comment_id  = chosen_comment.comment_id";
 
-        const COMMENT_BY_CHOICE_TEXT = "SELECT comments.*,
-                        (case comment_vote.user_id when :user_id then vote else null end) as vote,
-                        COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
-                        COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike,
-                        (thread_anonymous.user_id is not null) as comment_anonymous
-                FROM (
-                    SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name,
-                     								user.last_name, user.username, user.photo_path
-                    from thread_comment,comment, user, thread_anonymous
-                    where thread_comment.thread_id = :thread_id and
-                    thread_comment.choice_text= :choice_text and
-                    thread_comment.comment_id = comment.comment_id 	and
-                    user.id = comment.user_id and
-                    comment_status = 10
-                    ) comments
-                LEFT JOIN comment_vote
-                on comment_vote.comment_id = comments.comment_id
-                left join thread_anonymous
-                on thread_anonymous.thread_id = comments.thread_id and thread_anonymous.user_id  = comments.user_id
-                group by
-                 comments.comment_id
-                order by total_like desc";
+        const COMMENT_BY_CHOICE_TEXT = "
+            SELECT comments.*,
+                    (case comment_vote.user_id when :user_id then vote else null end) as vote,
+                    COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
+                    COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike,
+                    (thread_anonymous.user_id is not null) as comment_anonymous
+            FROM (
+                SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name,
+                                                user.last_name, user.username, user.photo_path
+                from thread_comment,comment, user, thread_anonymous
+                where thread_comment.thread_id = :thread_id and
+                thread_comment.choice_text= :choice_text and
+                thread_comment.comment_id = comment.comment_id 	and
+                user.id = comment.user_id and
+                comment_status = 10
+                ) comments
+            LEFT JOIN comment_vote
+            on comment_vote.comment_id = comments.comment_id
+            left join thread_anonymous
+            on thread_anonymous.thread_id = comments.thread_id and thread_anonymous.user_id  = comments.user_id
+            group by
+             comments.comment_id
+            order by total_like desc";
 
         CONST THREAD_INFO = "SELECT TU.*, thread_vote.choice_text as current_user_vote, issues, choices
                         FROM (SELECT thread.*, user.id, user.first_name, user.last_name
@@ -82,12 +83,14 @@ on total_vote.comment_id  = chosen_comment.comment_id";
                               where choice.thread_id = :thread_id
                               ) thread_choices
                         on thread_choices.thread_id = TU.thread_id";
+
         const THREAD_INFO_FOR_COMMENT_INPUT_BOX = "SELECT (SElect thread_anonymous.thread_id is not null as anonymous from thread_anonymous
                                                             where thread_id = :thread_id  and user_id = :user_id) as anonymous,
                                                             (SELECT thread_vote.choice_text from thread_vote
                                                              where thread_id = :thread_id  and user_id = :user_id) as choice_text
                                                     FROM THREAD
                                                     limit 1";
+
         CONST THREAD_CHOICE = "Select choice_and_its_voters.choice_text as choice_text,
                                     total_voters,
                                     count(comment_id) as total_comments
@@ -153,7 +156,7 @@ on total_vote.comment_id  = chosen_comment.comment_id";
         $limit = 5;
         foreach($thread_choices as $thread_choice){
             //$thread_choice contains the choice of the thread, e.g = "Agree", "Disagree"
-            $allModels = self::getCommentByChoiceText($thread_id, $thread_choice, $user_id, $builder);
+            $allModels = self::getCommentByChoiceText($thread_id, $thread_choice['choice_text'], $user_id, $builder);
             $dataProvider =new ArrayDataProvider([
                 'allModels' => $allModels,
                 'pagination' => [
@@ -162,7 +165,7 @@ on total_vote.comment_id  = chosen_comment.comment_id";
                 ],
 
             ]);
-            $all_providers[$thread_choice . ' (' . count($allModels) . ')' ] = $dataProvider;
+            $all_providers[$thread_choice['choice_text'] . ' (' . count($allModels) . ')' ] = $dataProvider;
         }
 
         $builder->setThreadCommentList($all_providers);

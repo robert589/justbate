@@ -2,7 +2,12 @@
 
 namespace frontend\controllers;
 
+use common\creator\CreatorFactory;
+use common\creator\ThreadCommentCreator;
 use common\entity\ChildCommentVo;
+use common\entity\ThreadCommentEntity;
+use common\models\Thread;
+use common\models\ThreadComment;
 use frontend\models\ChildCommentForm;
 use frontend\models\NotificationForm;
 use frontend\service\ServiceFactory;
@@ -50,21 +55,16 @@ class CommentController extends Controller{
             if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
                 //error
             }
-            //bad practice
-            $thread_id = \common\models\ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
 
+            $thread_id = ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
             if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
                 //error
             }
-
             if(!($new_comment_id = $child_comment_form->store())){
                 //error
             }
-
             $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
             $vo  = $service->getChildCommentInfo($user_id, $new_comment_id);
-
-
             return $this->renderAjax('child-comment',
                 ['child_comment' => $vo
                 ]);
@@ -82,6 +82,22 @@ class CommentController extends Controller{
         if($notification_form->submitChildCommentNotification($thread_id, $comment_id) == true){
             return true;
         }
+    }
+
+    public function actionGetChildComment(){
+        if(!(isset($_GET['comment_id']) && isset($_GET['thread_id']))) {
+            Yii::$app->end('comment_id not poster');
+        }
+        $comment_id = $_GET['comment_id'];
+        $thread_id = $_GET['thread_id'];
+
+        $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
+        $vo  = $service->getChildCommentList(Yii::$app->user->getId(), $comment_id, $thread_id);
+        $child_comment_form = new ChildCommentForm();
+        return $this->renderAjax('child-comment-list', ['thread_comment' => $vo,
+            'retrieved' => true,
+            'is_thread_comment' => false,
+            'child_comment_form' => $child_comment_form]);
 
     }
 
