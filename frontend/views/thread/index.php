@@ -55,7 +55,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 	<?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
 <?php } ?>
 
-<div class="col-xs-12 col-md-8" id="thread-main-body" style="background: white">
+<div class="col-xs-12 col-md-8" id="thread-main-body" style="background: white; padding-bottom: 30px;">
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
 		<div id="thread-details" class="col-xs-12">
 			<?= $this->render('_title_description_vote',

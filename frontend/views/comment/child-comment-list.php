@@ -44,9 +44,9 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
         'style' => 'margin-left:15px; float:left'])?>
 
         <?php if($belongs_to_current_user){ ?>
-            <div id="dropdown-button" role="group" aria-label="group" class="btn-group dropdown-toggle" type="button" data-toggle="dropdown">
-                <button class="btn btn-secondary" type="button"><span class="glyphicon glyphicon-chevron-down"></span></button>
-                <ul class="dropdown-menu" id="comment-options">
+            <div id="dropdown-button-<?= $comment_id ?>" role="group" aria-label="group" class="btn-group dropdown-toggle" type="button" data-toggle="dropdown">
+                <button data-service="<?= $comment_id ?>" id="button-dropdown" class="btn btn-secondary comment-options-button" type="button"><span class="glyphicon glyphicon-chevron-down"></span></button>
+                <ul class="dropdown-menu" id="comment-options-<?= $comment_id ?>">
                     <li data-service="<?= $comment_id ?>" class="item edit_comment"><a href="#">Edit</a></li>
                     <li data-service="<?= $comment_id ?>" class="item delete-comment"><a href="#">Delete</a></li>
                 </ul>

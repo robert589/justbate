@@ -467,22 +467,20 @@ $(document).ready(function(){
         });
     });
 
-
     //comment_votes part
-    $("div#dropdown-button").click(function() {
-        if (($("ul#comment-options").is(":visible"))) {
-            $("div#dropdown-button").css("margin-bottom", "0");
+    $("button.comment-options-button").click(function() {
+        var dropdown_comment_id = $(this).attr("data-service");
+        if (($("ul#comment-options-"+dropdown_comment_id).is(":visible"))) {
+            $("div#dropdown-button-"+dropdown_comment_id).css("margin-bottom", "0");
         } else {
-            $("div#dropdown-button").css("margin-bottom", "35.09px");
+            $("div#dropdown-button-"+dropdown_comment_id).css("margin-bottom", "35.09px");
         }
-        $("ul#comment-options").slideToggle();
+        $("ul#comment-options-"+dropdown_comment_id).slideToggle();
     })
 
     $(document).on("click",".submit-comment-vote-button", function(){
         var vote = $(this).val();
-
         var comment_id = $(this).closest("form").find('.hi-comment-vote-comment-id').val();
-
         $("#hi-comment-vote-" + comment_id).val(vote);
     });
 
