@@ -29,17 +29,18 @@ $last_comment_id_current_user = isset($last_comment_id_current_user) ? $last_com
     <?= Html::hiddenInput('user_id', \Yii::$app->getUser()->getId(), ['id' => 'current_user_login_id_' . $comment_id]) ?>
     <?= Html::hiddenInput('parent_id' , $comment_id, ['id' => 'child-comment-input-box-' . $comment_id]) ?>
     <div class="col-xs-12">
-        <div class="col-md-11">
+        <div class="col-xs-12">
             <?= $form->field($child_comment_form, 'child_comment')->textarea([
                 'data-service' => $comment_id,
-                'rows' => 1,
+                'rows' => 3,
+                'cols' => 3,
                 'style' => 'width:100%',
                 'placeholder' => 'add comment here..' ])
                 ->label(false)?>
         </div>
-        <div class="col-md-1">
+        <div class="col-xs-offset-6 col-xs-6">
             <?= Html::submitButton('Submit',
-                ['class' => 'btn btn-md  submit-child-comment-form-button',
+                ['class' => 'btn btn-md submit-child-comment-form-button',
                     'style' => 'float:left',
                     'data-service' => $comment_id,
                     'id' => 'submit-child-comment-form-button-'  . $comment_id
