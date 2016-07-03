@@ -546,11 +546,6 @@ div#threadList div.ias-noneleft {
     width: calc(100% - 15px);
 }
 
-div#threadList div.item article div.commentator-moderate {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-}
-
 /* COMMENT */
 div#comment {
     margin-left: -15px !important;
@@ -583,11 +578,14 @@ div.give-comment-button {
     width: 20%;
 }
 
-
 input[type="text"]#give-comment-text,
 select#give-comment-select {
     border: 1px solid #ccc;
     border-radius: 0;
+}
+
+div/user-comment-reaction div.col-xs-12:last-child {
+    z-index: -1;
 }
 
 /* USER COMMENT REACTION */
@@ -602,6 +600,18 @@ div#shown_part {
 
 div#shown_part + div.row {
     padding: 15px !important;
+}
+
+div#dropdown-button {
+    margin-left: 15px;
+}
+
+div#dropdown-button ul#comment-options {
+    margin-left: -40.23px;
+    margin-top: 35.09px;
+    position: relative;
+    display: none;
+    z-index: 1000;
 }
 
 div#first-part div.tabs-above li {
@@ -792,6 +802,7 @@ div.comment-votes {
 
 article.block-for-comment {
     margin-top: 20px;
+    z-index: -1000;
 }
 
 div.comment-created {
@@ -805,7 +816,6 @@ div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
 }
 
 div.commentator-moderate {
-    margin-bottom: 20px;
     margin-top: 15px;
     padding: 0;
 }

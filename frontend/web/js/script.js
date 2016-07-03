@@ -193,8 +193,6 @@ $(document).ready(function(){
         }}
     );
 
-
-
     $(document).on('click', '#resend-unverified-email-button',function(){
         $("#resendchangeemailform-command").val("resend");
         $("#change-verify-email-form").submit();
@@ -266,9 +264,6 @@ $(document).ready(function(){
         $("div#create-thread-main-form").slideToggle("fast");
         event.stopPropagation();
     });
-
-
-
 
     $(document).on('click', '#comment_hide_list_thread_btn', function(){
         if($(this).text() == 'Comment'){
@@ -474,6 +469,10 @@ $(document).ready(function(){
 
 
     //comment_votes part
+    $("div#dropdown-button").click(function() {
+        $("ul#comment-options").slideToggle();
+    })
+
     $(document).on("click",".submit-comment-vote-button", function(){
         var vote = $(this).val();
 
