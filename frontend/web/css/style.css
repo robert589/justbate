@@ -272,9 +272,9 @@ div.modal-body button#sign-up {
 div#login-form {
     padding: 15px;
     padding-top: 0;
+    padding-right: 0;
     background: #FFF;
 }
-
 div#login-form div.form-group label.control-label {
     width: 25%;
     height: 100%;
@@ -284,6 +284,15 @@ div#login-form div.form-group label.control-label {
     text-align: center;
 }
 
+div#facebook-signup-wrapper {
+    padding-right: 15px;
+    height: 34.44px;
+}
+
+div#email-signup-wrapper {
+    padding-left: 15px;
+    height: 34.44px;
+}
 
 div#login-form input[class="form-control"] {
     border: 0;
@@ -293,8 +302,11 @@ div#login-form input[class="form-control"] {
     text-align: center;
 }
 
-div#login-form div[class^='col-xs-'] {
-    padding-left: 0;
+div#login-form div.col-xs-12:last-child {
+    padding-top: 0;
+}
+
+div#login-form div.col-xs-6:last-child {
     padding-right: 0;
 }
 
@@ -346,10 +358,28 @@ div.site-login h1 {
     display: none;
 }
 
-div.site-login div.row div.col-xs-12 {
+div.site-login div.row {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+div.site-login div.row div.col-xs-12 {
+    padding: 0;
+}
+
+div.site-login div.row div.col-xs-12:first-child {
+    padding-left: 0px;
+}
+
+div.site-login div.row div.col-xs-12:last-child {
+    padding-right: 0px;
+}
+
+div#signup-title,
+div#login-label {
+    margin-bottom: 15px;
+}
+
 
 /* SIGN UP */
 div#signup-page {
@@ -428,6 +458,7 @@ div#signup-table div.col-xs-6:last-child {
 div#signup-table input[type="text"] {
     cursor: pointer;
     text-align: center;
+    height: 34.44px;
 }
 
 div#signup-label {
@@ -620,6 +651,11 @@ div#shown_part + div.row {
 
 div[id^='dropdown-button'] {
     margin-left: 15px;
+}
+
+div[id^='dropdown-button'] button#button-dropdown {
+    background: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
 div[id^='dropdown-button'] ul[id^='comment-options'] {
@@ -1400,21 +1436,13 @@ button.btn {
 
 /* MEDIA QUERY */
 @media screen and (max-width: 400px) {
-    /* a.navbar-brand {
-        width: 50% !important;
-    }
-
-    a.navbar-brand img {
-        margin-left: -45px !important;
-    } */
-
     div.navbar-header {
         margin: 0 !important;
         float: left !important;
         width: calc(100% + 45px) !important;
     }
 
-     div.navbar-header button.navbar-toggle {
+    div.navbar-header button.navbar-toggle {
         margin-right: 60px;
     }
 
@@ -1481,8 +1509,18 @@ button.btn {
         width: 100%;
     }
 
+    /* LOGIN AND SIGN UP */
+    div#signup-title,
+    div#signup-table {
+        width: calc(100% + 15px);
+    }
 
-    /* LOGIN */
+    div.site-login div.row:last-child {
+        padding-left: 0;
+        padding-right: 0;
+        width: calc(100% + 15px);
+    }
+
     div.site-login div.row div.col-xs-12 div#signup-form {
         padding: 15px;
         padding-bottom: 0;
@@ -1491,6 +1529,23 @@ button.btn {
     div.site-login div.row div.col-xs-12 div#signup-form div.col-xs-6 {
         padding-top: 15px;
         padding-bottom: 15px;
+    }
+
+    div.site-login div.row div.col-xs-12 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* LOGIN */
+    div#login-form {
+        padding: 0;
+        padding-left: 15px !important;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    button#sign-up {
+        height: 50px;
     }
 
     div.checkbox {
@@ -1599,12 +1654,6 @@ button.btn {
     }
 }
 
-@media all and (min-width: 884px) and (max-width: 887px) {
-    img {
-        display: block !important
-    }
-}
-
 @media screen and (width: 888px) {
     /* SEARCH BOX */
     .navbar-header {
@@ -1649,8 +1698,6 @@ button.btn {
 }
 
 @media screen and (max-width: 900px) {
-
-
     ul#menubar-left {
         display: none !important;
     }
@@ -1658,12 +1705,21 @@ button.btn {
     li#search-box {
         width: 25%;
     }
+
+    div#signup-table {
+        margin-bottom: 15px;
+    }
 }
 
 @media screen and (max-width: 950px) {
     /* ADDITIONAL ELEMENT ON HOME */
     div#left-sidebar {
         display: none !important;
+    }
+
+    /* LOGIN */
+    div#login-form {
+        padding-left: 0;
     }
 
     /* PROFILE PAGE */
@@ -2008,4 +2064,21 @@ button.btn {
     .nav-container {
         margin-left:100px;
     }
+
+    /* SIGN UP */
+    div#signup-table {
+        margin-bottom: 15px;
+    }
+
+    div#facebook-signup-wrapper,
+    div#email-signup-wrapper {
+        padding: 0;
+    }
+
+    /* LOGIN */
+    div#signin-table {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
 }

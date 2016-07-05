@@ -11,7 +11,7 @@ use dektrium\user\widgets\Connect;
 $this->title = 'Login';
 ?>
 <div class="site-login">
-    <div class="row">
+    <div class="row" id="signup-wrapper">
         <div align="center">
             <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>"
                  style="height:130px">
@@ -23,12 +23,12 @@ $this->title = 'Login';
             <div id="signup-form">
                 <div class="col-xs-12" id="signup-title">SIGN UP</div>
                 <div class="col-xs-12" id="signup-table">
-                    <div class="col-xs-6"><?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?></div>
-                    <div class="col-xs-6"><?= Html::a('<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="text" class="form-control" value="Sign up with Email" readonly="true" /></div>', ['site/signup']) ?></div>
+                    <div id="facebook-signup-wrapper"  class="col-xs-12 col-md-6"><?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?></div>
+                    <div id="email-signup-wrapper" class="col-xs-12 col-md-6"><?= Html::a('<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="text" class="form-control" value="Sign up with Email" readonly="true" /></div>', ['site/signup']) ?></div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6" style="padding-right: 0; padding-left: 0;">
+        <div class="col-xs-12 col-md-6" id-"signin-table">
             <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'post']) ?>
                 <div id="login-form">
                     <div id="login-label">SIGN IN</div>
