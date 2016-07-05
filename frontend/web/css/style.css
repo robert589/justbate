@@ -1979,13 +1979,10 @@ button.btn {
         padding-left: 15px;
     }
 
-    div.site-login div.row div#signup-form {
-        padding-left: 0;
-        padding-right: 15px;
-    }
-
+    div.site-login div.row div#signup-form,
     div.site-login div.row div#login-form {
-        padding-left: 0;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     div#signup-page {
@@ -2015,6 +2012,16 @@ button.btn {
 }
 
 @media screen and (min-width: 1200px) {
+    /* SIGN UP */
+    div#facebook-signup-wrapper,
+    div#email-signup-wrapper {
+        width: calc(50% - 15px);
+    }
+
+    div#email-signup-wrapper {
+        margin-left: 15px !important;
+    }
+
     div#thread-issue {
         display: block;
         padding-left: 15px;
@@ -2029,7 +2036,6 @@ button.btn {
     }
 
     /* ANONYMOUS */
-
     div#comment-input-anonymous-section-anonymous-1 div.inline label {
         padding: 15px;
         background: #ddd;
@@ -2072,13 +2078,13 @@ button.btn {
 
     div#facebook-signup-wrapper,
     div#email-signup-wrapper {
-        padding: 0;
+        padding: 0 !important;
     }
 
     /* LOGIN */
-    div#signin-table {
-        padding-left: 0;
-        padding-right: 0;
+    div#login-form {
+        margin-left: -15px;
+        padding-left: 15px;
     }
 
 }
