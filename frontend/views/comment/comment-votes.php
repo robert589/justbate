@@ -13,8 +13,8 @@ $vote_down = ($vote == -1);
 $current_user_login_id = $comment->getCurrentUserLoginId();
 
 if(($is_thread_comment)){
-    $upvote = "Pro";
-    $downvote = "Against";
+    $upvote = "<span class='glyphicon glyphicon-thumbs-up'></span>";
+    $downvote = "<span class='glyphicon glyphicon-thumbs-down'></span>";
 }
 else{
     $upvote = "<span class='glyphicon glyphicon-chevron-up'></span>";
