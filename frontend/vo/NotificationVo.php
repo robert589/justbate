@@ -3,6 +3,7 @@
 namespace frontend\vo;
 
 use common\components\DateTimeFormatter;
+use common\libraries\CommentUtility;
 use common\models\Notification;
 use common\models\NotificationType;
 use Yii;
@@ -36,6 +37,10 @@ class NotificationVo implements Vo{
 
     private $anonymous;
 
+    private $time;
+
+    private $notification_id;
+
     static function createBuilder(){
         return new NotificationVoBuilder();
     }
@@ -54,6 +59,8 @@ class NotificationVo implements Vo{
         $this->notification_verb_name = $builder->getNotificationVerbName();
         $this->extra_value = $builder->getExtraValue();
         $this->anonymous = $builder->getAnonymous();
+        $this->time = $builder->getTime();
+        $this->notification_id = $builder->getNotificationId();
     }
 
     /**
@@ -62,6 +69,10 @@ class NotificationVo implements Vo{
     public function getRead()
     {
         return $this->read;
+    }
+
+    public function getTime() {
+        return DateTimeFormatter::getTimeText($this->time);
     }
 
     /**
@@ -80,31 +91,6 @@ class NotificationVo implements Vo{
 
         return null;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getTextTemplate()
-    {
-        return $this->text_template;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTextTemplateTwoPeople()
-    {
-        return $this->text_template_two_people;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTextTemplateMoreThanTwoPeople()
-    {
-        return $this->text_template_more_than_two_people;
-    }
-
 
     /**
      * @return mixed
@@ -136,13 +122,14 @@ class NotificationVo implements Vo{
     }
 
     private function getCommentText(){
+        $cut_text_value = CommentUtility::cutText($this->extra_value);
         if($this->anonymous){
             $actors[] = 'Anonymous';
         }
         else {
             $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
         }
-        $actors[] = $this->extra_value;
+        $actors[] = $cut_text_value;
 
         switch(count($this->actors)){
             case 1:
@@ -150,16 +137,16 @@ class NotificationVo implements Vo{
                 break;
             case 2:
                 if($this->anonymous){
-                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $this->extra_value));
+                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $cut_text_value));
                 }
                 else{
                     $text= $this->replace($this->text_template_two_people, $actors);
                 }
                 break;
-            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1, $this->extra_value ]);
+            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1, $cut_text_value ]);
                 break;
             default:
-                $actors[] = $this->extra_value;
+                $actors[] = $cut_text_value;
                 $text = $this->replace($this->text_template, $actors);
                 break;
         }
@@ -169,30 +156,31 @@ class NotificationVo implements Vo{
 
 
     private function getThreadText(){
+        $cut_thread_text = CommentUtility::cutText($this->extra_value);
         if($this->anonymous){
             $actors[] = 'Anonymous';
         }
         else {
             $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
         }
-        $actors[] = $this->extra_value;
+        $actors[] =  $cut_thread_text;
         switch(count($this->actors)){
             case 1:
                 $text= $this->replace($this->text_template, $actors);
                 break;
             case 2:
                 if($this->anonymous){
-                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $this->extra_value));
+                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $cut_thread_text));
                 }
                 else{
-                    $actors[] = $this->extra_value;
+                    $actors[] =  $cut_thread_text;
                     $text= $this->replace($this->text_template_two_people, $actors);
                 }
                 break;
-            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1, $this->extra_value]);
+            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1, $cut_thread_text]);
                 break;
             default:
-                $actors[] = $this->extra_value;
+                $actors[] = $cut_thread_text;
                 $text = $this->replace($this->text_template, $actors);
                 break;
         }
@@ -206,5 +194,15 @@ class NotificationVo implements Vo{
 
         return $text;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNotificationId()
+    {
+        return $this->notification_id;
+    }
+
+
 
 }

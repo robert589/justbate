@@ -45,5 +45,11 @@ class NotificationController extends Controller{
         }
     }
 
+    public function actionUpdateReadNotification() {
+        if(!Yii::$app->user->isGuest) {
+            
+        }
+    }
+
 }
 

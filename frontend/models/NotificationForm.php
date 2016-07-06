@@ -35,8 +35,8 @@ class NotificationForm extends Model
 
     public function submitChildCommentNotification( $thread_id, $comment_id){
         if($this->validate()){
-            $notification_id = $this->getNotificationId($thread_id . '%,%' .$comment_id, NotificationType::COMMENT_TYPE, NotificationVerb::PEOPLE_COMMENT_ON_YOUR_COMMENT);
-            if(is_null($notification_id)){
+            $notification = $this->getNotification($thread_id . '%,%' .$comment_id, NotificationType::COMMENT_TYPE, NotificationVerb::PEOPLE_COMMENT_ON_YOUR_COMMENT);
+            if(is_null($notification)){
                 $notification = new Notification();
                 $notification->notification_verb_name = NotificationVerb::PEOPLE_COMMENT_ON_YOUR_COMMENT;
                 $notification->notification_type_name = NotificationType::COMMENT_TYPE;
@@ -61,7 +61,15 @@ class NotificationForm extends Model
                 if(!$notification_extra_value->save()){
                     //error
                 }
+            } else {
+                $notification->is_read = false;
+                if(!$notification->update()) {
+                    //error
+                }
+                $notification_id = $notification->notification_id;
+
             }
+
 
 
             $notification_actor = $this->getNotificationActor($notification_id, $this->actor_id);
@@ -90,8 +98,8 @@ class NotificationForm extends Model
      */
     public function submitCommentNotification($thread_id){
         if($this->validate()){
-            $notification_id = $this->getNotificationId($thread_id, NotificationType::THREAD_TYPE, NotificationVerb::PEOPLE_COMMENT_ON_YOUR_THREAD);
-            if(is_null($notification_id)){
+            $notification = $this->getNotification($thread_id, NotificationType::THREAD_TYPE, NotificationVerb::PEOPLE_COMMENT_ON_YOUR_THREAD);
+            if(is_null($notification)){
                 $notification = new Notification();
                 $notification->notification_verb_name = NotificationVerb::PEOPLE_COMMENT_ON_YOUR_THREAD;
                 $notification->notification_type_name = NotificationType::THREAD_TYPE;
@@ -116,7 +124,13 @@ class NotificationForm extends Model
                     //error
                 }
             }
-
+            else  {
+                $notification->is_read = false;
+                if(!$notification->update()) {
+                    //error
+                }
+                $notification_id = $notification->notification_id;
+            }
             $notification_actor = $this->getNotificationActor($notification_id, $this->actor_id);
             if(is_null($notification_actor)){
                 $notification_actor = new NotificationActor();
@@ -141,17 +155,11 @@ class NotificationForm extends Model
         return NotificationActor::find()->where(['notification_id' => $notification_id, 'actor_id' => $actor_id])->one();
     }
 
-    private function getNotificationId($url_key_value, $notification_type_name, $notification_verb_name){
+    private function getNotification($url_key_value, $notification_type_name, $notification_verb_name){
 
-        $notification = Notification::find()->where(['url_key_value' => $url_key_value,
+        return Notification::find()->where(['url_key_value' => $url_key_value,
                                                     'notification_type_name' => $notification_type_name,
                                                     'notification_verb_name' => $notification_verb_name])->one();
-
-        if($notification !== null){
-            return $notification->notification_id;
-        }
-
-        return null;
     }
 
     /**

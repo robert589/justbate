@@ -7,9 +7,15 @@ use common\components\Constant;
 class CommentUtility{
 
     public static function cutText($comment){
+        $length_of_string = strlen($comment);
         $comment = Constant::removeAllHtmlTag($comment);
-        $comment = substr($comment, 0 , 65);
-        return $comment;
+
+
+        if($length_of_string <= 30) {
+            return $comment;
+        }
+        $comment = substr($comment, 0 , 30);
+        return $comment . '. . .';
     }
 
     public static function getCommentForLink($comment){

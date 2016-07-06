@@ -26,6 +26,27 @@ class NotificationVoBuilder{
 
     private $anonymous;
 
+    private $time;
+
+    private $notification_id;
+
+    /**
+     * @return mixed
+     */
+    public function getNotificationId()
+    {
+        return $this->notification_id;
+    }
+
+    /**
+     * @param mixed $notification_id
+     */
+    public function setNotificationId($notification_id)
+    {
+        $this->notification_id = $notification_id;
+    }
+
+
     function __construct(){
 
     }
@@ -77,6 +98,10 @@ class NotificationVoBuilder{
 
     function extraValue($extra_value){
         $this->extra_value = $extra_value;
+    }
+
+    function setTime($time) {
+        $this->time = $time;
     }
 
     /**
@@ -168,6 +193,9 @@ class NotificationVoBuilder{
         return $this->anonymous;
     }
 
+    public function getTime() {
+        return $this->time;
+    }
 
     function build(){
         return new NotificationVo($this);

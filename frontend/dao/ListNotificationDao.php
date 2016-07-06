@@ -35,7 +35,7 @@ class ListNotificationDao{
                                 where last_actor.actor_id is not null and updated_at > (SELECT notif_last_seen from user where id = :user_id)";
 
     const NOTIFICATION_SQL = "SELECT notification_entity.*,
-		notification_actors.actors,
+		notification_actors.actors, notification_actors.updated_at,
         last_actor.photo_path, last_actor.updated_at, last_actor.actor_id,
         notification_extra_value.extra_value, thread_anonymous.anonymous_id as anonymous
                                 from (SELECT notification_type.url_template,
@@ -50,6 +50,7 @@ class ListNotificationDao{
                                             and notification_receiver.receiver_id = :user_id) notification_entity
                                 left join
                                     (SELECT n.notification_id,
+                                           na.updated_at,
                                            group_concat(actor.first_name SEPARATOR '%,%') as actors
                                     FROM notification n, notification_actor na, user actor
                                     WHERE n.notification_id = na.notification_id
@@ -103,6 +104,8 @@ class ListNotificationDao{
             $notification_builder->notificationVerbName($result['notification_verb_name']);
             $notification_builder->extraValue($result['extra_value']);
             $notification_builder->anonymous($result['anonymous']);
+            $notification_builder->setTime($result['updated_at']);
+            $notification_builder->setNotificationId($result['notification_id']);
             $list_notification[] = $notification_builder->build();
         }
 

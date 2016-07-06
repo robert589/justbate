@@ -34,7 +34,8 @@ class SiteDao{
     const THREAD_LISTS = "Select parent_thread_info.* ,
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
-                               ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
+                               ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 3
+                               + (parent_thread_info.total_comments <> 0) * 3 as parameter   ,
                                (anonymous.anonymous_id) as thread_anonymous
                         from(
 							Select thread_info.*, count(comments.comment_id) as total_comments
@@ -44,7 +45,7 @@ class SiteDao{
 								  thread_status = 10
 							) thread_info
 							left join (select thread_comment.comment_id, thread_comment.thread_id
-										from thread_comment, comment
+							    			from thread_comment, comment
 									  where thread_comment.comment_id = comment.comment_id and
 									  comment.comment_status = 10) comments
 							on thread_info.thread_id = comments.thread_id
@@ -113,6 +114,8 @@ class SiteDao{
             $results = \Yii::$app->db->createCommand(self::THREAD_LISTS)->
                 bindParam(':user_id', $current_user_id)
                 ->queryAll();
+
+
         }
         $thread_list = array();
 

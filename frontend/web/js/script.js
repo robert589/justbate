@@ -4,7 +4,7 @@ function checkNewNotification() {
         url: $("#base-url").val() + "/notification/count-new-notification",
         type: 'post',
         success: function(data) {
-            if(data !== '0') {
+            if(data != '' && data !== '0') {
                 document.title = "(" + data + ") " + document.title;
                 $("#notification-count").html("(" + data + ")");
             }
@@ -435,8 +435,7 @@ $(document).ready(function(){
     $(document).on('pjax:complete', '.pjax_user_vote', function(){
         var thread_id = $(this).data('service');
 
-        $("#retrieve-input-box-button-" + thread_id).click();
-        $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
+        $("#retrieve-input-box-button-" + thread_id).prop('disabled', false).click();
     });
 
     $(document).on('pjax:send','.comment_input_pjax', function(event){
@@ -456,6 +455,18 @@ $(document).ready(function(){
         var services = '' + $(this).data('pjax');
         $.pjax.submit(event,  services, {push:false});
         return false;
+    });
+
+    $(document).on('click', '.notification-item', function(event) {
+        var notification_id = $(this).data('arg');
+        $.ajax({
+            url: $("#base-url").val() + "/notification/update-read-notification",
+            type: 'post',
+            data : {id: notification_id},
+            success: function(data) {
+            }
+        });
+
     });
 
     $(document).on('pjax:send','.comment_section_pjax', function(event){

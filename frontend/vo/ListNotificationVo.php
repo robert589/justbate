@@ -34,7 +34,7 @@ class ListNotificationVo implements Vo{
             'pagination' => [
                 'pageSize' => 10,
             ],
-        ]);;
+        ]);
     }
 
     /**
@@ -42,7 +42,7 @@ class ListNotificationVo implements Vo{
      */
     public function getNumOfNewNotification()
     {
-        return $this->num_of_new_notification();
+        return $this->num_of_new_notification;
     }
 
     public function convertTitle($title){
