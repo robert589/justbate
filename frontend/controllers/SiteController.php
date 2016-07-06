@@ -266,7 +266,7 @@ class SiteController extends Controller
 			if($success == true){
 				$user_is_follower = UserFollowedIssue::isFollower($user_follow_issue_form->user_id, $user_follow_issue_form->issue_name);
 				$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($user_follow_issue_form->issue_name);
-				return $this->renderPartial('_home_issue-header',
+				return $this->renderPartial('home-issue-header',
 											['issue_name' => $user_follow_issue_form->issue_name,
 											 'issue_num_followers' => $issue_num_followers,
 											 'user_is_follower' => $user_is_follower]

@@ -46,12 +46,12 @@ $this->title = "Home";
 
 		<!-- Issue header if exist-->
 		<?php if($has_issue){ ?>
-		<div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
-			<?= $this->render('_home_issue-header',
-							['issue_name' => $issue_name,
-							'issue_num_followers' => $num_followers_of_issue,
-							'user_is_follower' => $user_follow_issue]) ?>
-		</div>
+			<div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
+				<?= $this->render('home-issue-header',
+								['issue_name' => $issue_name,
+								'issue_num_followers' => $num_followers_of_issue,
+								'user_is_follower' => $user_follow_issue]) ?>
+			</div>
 		<?php }	?>
 
 		<?= $this->render('home-create-thread', ['create_thread_form' => $create_thread_form]) ?>
