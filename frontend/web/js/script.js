@@ -467,6 +467,7 @@ $(document).ready(function(){
             }
         });
 
+
     });
 
     $(document).on('pjax:send','.comment_section_pjax', function(event){

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\UpdateNotificationRead;
 use frontend\models\UpdateUserNotifLastSeenUserForm;
 use frontend\service\ServiceFactory;
 use Yii;
@@ -46,9 +47,13 @@ class NotificationController extends Controller{
     }
 
     public function actionUpdateReadNotification() {
-        if(!Yii::$app->user->isGuest) {
-            
+        if(!Yii::$app->user->isGuest && isset($_POST['id'])) {
+            $notification_receiver = new UpdateNotificationRead();
+            $notification_receiver->user_id = Yii::$app->user->getId();
+            $notification_receiver->notification_id = $_POST['id'];
+            return $notification_receiver->update();
         }
+
     }
 
 }

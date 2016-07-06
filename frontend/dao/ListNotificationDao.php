@@ -41,7 +41,8 @@ class ListNotificationDao{
                                 from (SELECT notification_type.url_template,
                                       		notification_verb.text_template,
                                             notification_verb.text_template_two_people,
-                                            notification_verb.text_template_more_than_two_people, notification.*
+                                            notification_verb.text_template_more_than_two_people, notification.*,
+                                            notification_receiver.is_read
                                       from notification_type, notification_verb, notification, notification_receiver
                                       where notification_type.notification_type_name = notification_verb.notification_type_name
                                             and notification_verb.notification_verb_name = notification.notification_verb_name

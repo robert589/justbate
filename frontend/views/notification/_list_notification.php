@@ -7,7 +7,7 @@
 <div class="col-xs-12 notification list">
     <div class="col-xs-11 notification-list-content">
         <a href="<?= $notification_vo->getUrl() ?>"
-           data-arg=""
+           data-arg="<?= $notification_vo->getNotificationId() ?>"
            class="notification-item col-xs-12 inline"
            data-pjax="0">
             <div class="inline" style="margin-right: 5px">
