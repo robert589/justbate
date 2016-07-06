@@ -7,6 +7,33 @@ use frontend\vo\NotificationVo;
 use frontend\vo\NotificationVoBuilder;
 
 class ListNotificationDao{
+    const NUM_OF_NEW_NOTIFICATION = "SELECT count(*)
+                                from (SELECT notification.*
+                                      from notification, notification_receiver
+                                      where notification_receiver.notification_id = notification.notification_id
+                                            and notification_receiver.receiver_id = :user_id) notification_entity
+                                left join
+                                    (SELECT n.notification_id,
+                                           group_concat(actor.first_name SEPARATOR '%,%') as actors
+                                    FROM notification n, notification_actor na, user actor
+                                    WHERE n.notification_id = na.notification_id
+                                    and actor.id = na.actor_id and actor.id <> :user_id
+                                    group by na.notification_id
+                                    order by na.updated_at desc
+                                    ) notification_actors
+                                on notification_actors.notification_id = notification_entity.notification_id
+                                left join(
+                                    SELECT na.updated_at,na.actor_id, n.notification_id
+                                    from notification n, notification_actor na
+                                    where n.notification_id = na.notification_id and
+                                          na.updated_at = (SELECT max(na1.updated_at)
+                                                           from notification_actor na1
+                                                           where n.notification_id = na1.notification_id
+                                                           and na1.actor_id <> :user_id)
+                                  ) last_actor
+                                on notification_entity.notification_id = last_actor.notification_id
+                                where last_actor.actor_id is not null and updated_at > (SELECT notif_last_seen from user where id = :user_id)";
+
     const NOTIFICATION_SQL = "SELECT notification_entity.*,
 		notification_actors.actors,
         last_actor.photo_path, last_actor.updated_at, last_actor.actor_id,
@@ -84,5 +111,15 @@ class ListNotificationDao{
         return $builder;
 
 
+    }
+
+    function getNumOfNewNotification($user_id) {
+        // DAO
+        $result =  \Yii::$app->db
+            ->createCommand(self::NUM_OF_NEW_NOTIFICATION)
+            ->bindValues([':user_id' => $user_id])
+            ->queryScalar();
+
+        return $result;
     }
 }

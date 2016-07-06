@@ -50,12 +50,12 @@ class ThreadDao{
             FROM (
                 SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name,
                                                 user.last_name, user.username, user.photo_path
-                from thread_comment,comment, user, thread_anonymous
+                from thread_comment,comment, user
                 where thread_comment.thread_id = :thread_id and
                 thread_comment.choice_text= :choice_text and
                 thread_comment.comment_id = comment.comment_id 	and
                 user.id = comment.user_id and
-                comment_status = 10
+                comment.comment_status = 10
                 ) comments
             LEFT JOIN comment_vote
             on comment_vote.comment_id = comments.comment_id

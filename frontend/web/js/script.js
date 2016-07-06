@@ -1,4 +1,17 @@
 //new string library
+function checkNewNotification() {
+    $.ajax({
+        url: $("#base-url").val() + "/notification/count-new-notification",
+        type: 'post',
+        success: function(data) {
+            if(data !== '0') {
+                document.title = "(" + data + ") " + document.title;
+                $("#notification-count").html("(" + data + ")");
+            }
+
+        }
+    });
+}
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
@@ -158,6 +171,9 @@ $(document).ready(function(){
                       'skipOuterContainers':true,
                       'scrollTo':false});
     });
+
+    checkNewNotification();
+
 
     $("span.auth-icon").remove();
     $("a.auth-link").removeAttr("data-popup-width");
@@ -601,6 +617,10 @@ $(document).ready(function(){
 
     $("button.comment_post").click(function() {
         $("div#w6-container").slideToggle("fast");
+    });
+
+    $(document).on("pjax:complete", "#notifbar", function(e) {
+       document.title = document.title.slice(document.title.indexOf(')') + 1);
     });
     $.pjax.defaults.scrollTo = false;
     $.pjax.defaults.skipOuterContainers = true;

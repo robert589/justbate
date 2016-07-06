@@ -51,7 +51,7 @@ class ThreadAnonymousForm extends Model
     private function checkMaxNumber() {
         if(ThreadAnonymous::find()->where(['thread_id' => $this->thread_id])->exists()){
             return
-                ThreadAnonymous::find()->where(['thread_id' => $this->thread_id])->orderBy("anonymous_id")->one()->anonymous_id;
+                ThreadAnonymous::find()->where(['thread_id' => $this->thread_id])->orderBy("anonymous_id desc")->one()->anonymous_id;
 
         }
         return 0;

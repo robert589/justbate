@@ -136,26 +136,23 @@ class NotificationVo implements Vo{
     }
 
     private function getCommentText(){
+        if($this->anonymous){
+            $actors[] = 'Anonymous';
+        }
+        else {
+            $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
+        }
+        $actors[] = $this->extra_value;
 
-        $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
-
-        switch(count($actors)){
+        switch(count($this->actors)){
             case 1:
-                if($this->anonymous){
-                    $text= $this->replace($this->text_template, array('Anonymous'));
-                }
-                else{
-                    $actors[] = $this->extra_value;
-                    $text= $this->replace($this->text_template, $actors);
-                }
-
+                $text= $this->replace($this->text_template, $actors);
                 break;
             case 2:
                 if($this->anonymous){
-                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1));
+                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $this->extra_value));
                 }
                 else{
-                    $actors[] = $this->extra_value;
                     $text= $this->replace($this->text_template_two_people, $actors);
                 }
                 break;
@@ -172,31 +169,27 @@ class NotificationVo implements Vo{
 
 
     private function getThreadText(){
-
-        $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
-
-        switch(count($actors)){
+        if($this->anonymous){
+            $actors[] = 'Anonymous';
+        }
+        else {
+            $actors = array_map(function($actor) { return ucfirst($actor); }, $this->actors);
+        }
+        $actors[] = $this->extra_value;
+        switch(count($this->actors)){
             case 1:
-                if($this->anonymous){
-                    $text= $this->replace($this->text_template, array('Anonymous'));
-                }
-                else{
-                    $actors[] = $this->extra_value;
-                    $text= $this->replace($this->text_template, $actors);
-                }
-
+                $text= $this->replace($this->text_template, $actors);
                 break;
             case 2:
-
                 if($this->anonymous){
-                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1));
+                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $this->extra_value));
                 }
                 else{
                     $actors[] = $this->extra_value;
                     $text= $this->replace($this->text_template_two_people, $actors);
                 }
                 break;
-            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1]);
+            case 3: $text= $this->replace($this->text_template_more_than_two_people, [$actors[0], count($actors) - 1, $this->extra_value]);
                 break;
             default:
                 $actors[] = $this->extra_value;
