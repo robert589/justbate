@@ -172,11 +172,28 @@ li#notification {
 
 a.notification-item {
     display: block;
-    height:50px;
+    /*height:50px;*/
     width:100%;
     margin-bottom: 5px;
     margin-top:5px;
     text-transform: none;
+}
+
+div.notification.list,
+div.notification-list-content,
+div.notification-list-status {
+    padding: 0 !important;
+}
+
+div.notification-list-status i.fa {
+    color: #fff;
+    margin-top: 27px;
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+div#list-wrapper div div.col-xs-12 {
+    background: #A9D0F5 !important;
 }
 
 div.notification-list:hover {
@@ -682,7 +699,7 @@ div#first-part div.tabs-above li {
 }
 
 div#first-part div.tabs-above li.active {
-    background: #29B6F6;
+    background: #0277BD;
 }
 
 div#first-part div.tabs-above div.tab-content div#post-description p {
@@ -809,7 +826,7 @@ div.comment-tab div.tabs-above ul.nav-tabs li {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-    background: #29B6F6 !important;
+    background: #3b5998 !important;
     color: #fff !important;
 }
 

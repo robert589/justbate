@@ -5,10 +5,16 @@
     /** @var $notification_vo \frontend\vo\NotificationVo */
 ?>
 <div class="col-xs-12 notification list">
-    <a href="<?= $notification_vo->getUrl() ?>" class="notification-item col-xs-12 inline" data-pjax="0">
-        <div class="inline" style="margin-right: 5px">
-            <?= Html::img($notification_vo->getPhotoPath(), ['style' => 'height:50px;width:50px'] ) ?>
-        </div>
-        <?= $notification_vo->getText() ?>
-    </a>
+    <div class="col-xs-11 notification-list-content">
+        <a href="<?= $notification_vo->getUrl() ?>" class="notification-item col-xs-12 inline" data-pjax="0">
+            <div class="inline" style="margin-right: 5px">
+                <?= Html::img($notification_vo->getPhotoPath(), ['style' => 'height:50px;width:50px'] ) ?>
+            </div>
+            <?= $notification_vo->getText() ?><br />
+            <span>01 January 1900, 01:00:00 AM</span>
+        </a>
+    </div>
+    <div class="col-xs-1 notification-list-status">
+        <i class="fa fa-circle notification-read" aria-hidden="true"></i> 
+    </div>
 </div>
