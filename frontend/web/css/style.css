@@ -552,6 +552,10 @@ div.thread-details {
     padding-right: 0;
 }
 
+div#submitthreadvoteform-choice_text label.btn-warning {
+    margin: 0 !important;
+}
+
 div#left-part-of-thread {
     width: 100%;
 }

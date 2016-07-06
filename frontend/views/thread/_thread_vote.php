@@ -51,8 +51,7 @@ foreach($thread_choices as $item){
                                          'data-service' => $thread_id,
                                          'disabledItems' => [$submit_thread_vote_form->choice_text],
                                          'itemOptions' => ['labelOptions' =>
-                                                            ['class' => 'btn btn-md btn-warning',
-                                                             'style' => 'margin-right:15px'
+                                                            ['class' => 'btn btn-md btn-warning'
                                                             ]
                                                         ]
                                         ]) ?>
