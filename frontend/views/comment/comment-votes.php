@@ -55,7 +55,7 @@ Pjax::begin([
             <div class="btn-group" id="button-vote-up">
                 <?= Html::submitButton($upvote , [
                     'id' => "btn_vote_up_" . $comment_id ,
-                    'class' => 'btn btn-default submit-comment-vote-button',
+                    'class' => 'btn btn-sm btn-default submit-comment-vote-button',
                     'value' => 1,
                     'disabled' => true])
                 ?>

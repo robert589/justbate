@@ -40,7 +40,7 @@ $last_comment_id_current_user = isset($last_comment_id_current_user) ? $last_com
         </div>
         <div class="col-xs-offset-6 col-xs-6">
             <?= Html::submitButton('Submit',
-                ['class' => 'btn btn-md submit-child-comment-form-button',
+                ['class' => 'btn btn-sm submit-child-comment-form-button',
                     'style' => 'float:left',
                     'data-service' => $comment_id,
                     'id' => 'submit-child-comment-form-button-'  . $comment_id
