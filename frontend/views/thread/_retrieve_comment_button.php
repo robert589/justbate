@@ -17,8 +17,8 @@ $form1 = ActiveForm::begin(['action' =>['thread/retrieve-comment-input'],
 
 ?>
     <?= Html::hiddenInput('thread_id', $thread_id) ?>
-    <?= Html::submitButton('Comment',
-                        ['class' => 'btn btn-primary give-comment inline',
+    <?= Html::submitButton('Give Comment',
+                        ['class' => 'btn btn-default give-comment inline',
                          'data-service' => $thread_id,
                          'disabled' => ($current_user_has_vote) ? false: true,
                          'id' => 'retrieve-input-box-button-' . $thread_id
