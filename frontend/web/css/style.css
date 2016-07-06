@@ -83,7 +83,7 @@ li#dropdown-menu-settings:hover a:hover,
 li.item a:hover {
     text-decoration: none;
     color: #fff !important;
-    background: #0E5A94 !important;
+    background: #29B6F6 !important;
 }
 
 li#dropdown-menu-settings li.item a {
@@ -177,6 +177,10 @@ a.notification-item {
     text-transform: none;
 }
 
+div.notification-list:hover {
+    background:#29B6F6;
+}
+
 .notification-status {
     content: "\25cf";
 }
@@ -219,7 +223,7 @@ li#notif-expansion {
 li#notif-expansion:hover {
     color: #fff;
     transition:0;
-    background: #0E5A94 !important;
+    background: #29B6F6 !important;
 }
 
 li#notif-expansion ul.dropdown-menu,
@@ -560,7 +564,7 @@ div.ias-trigger a {
     width: 100% !important;
     text-align: center;
     padding: 15px;
-    background: #0E5A94;
+    background: #29B6F6;
     color: #fff;
     text-decoration: none;
 }
