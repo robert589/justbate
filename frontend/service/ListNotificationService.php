@@ -19,4 +19,8 @@ class ListNotificationService{
         return $builder->build();
     }
 
+    public function getCountNewNotification($user_id) {
+        return $this->list_notification_dao->getNumOfNewNotification($user_id);
+    }
+
 }

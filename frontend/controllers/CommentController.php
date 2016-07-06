@@ -36,6 +36,9 @@ class CommentController extends Controller{
                 return $this->redirect(Yii::$app->request->baseUrl . '/site/not-found');
             }
             else if($vo instanceof ThreadCommentVo){
+                if($vo->getCommentStatus() == 0){
+                    return $this->render('comment-deleted');
+                }
                 return $this->render('index', ['thread_comment' => $vo] );
             }
         }
@@ -110,13 +113,9 @@ class CommentController extends Controller{
     public function actionDeleteComment(){
         if(isset($_POST['comment_id'])){
             $delete_comment_form = new DeleteCommentForm();
-
             $delete_comment_form->comment_id = $_POST['comment_id'];
-
             if($delete_comment_form->delete()){
-
                 $thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
-
                 return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
             }
         }
