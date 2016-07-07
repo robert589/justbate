@@ -27,7 +27,6 @@ var Application  = function(template){
 
 Application.prototype.setTimeZoneToCookie = function(){
     if (navigator.cookieEnabled) {
-        console.log('heelo');
         document.cookie = "tzo=" + (- new Date().getTimezoneOffset());
     }
 };
