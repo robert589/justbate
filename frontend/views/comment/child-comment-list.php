@@ -31,60 +31,64 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
         'data-service' => $comment_id,
         'container'=>'#child_comment_' . $comment_id,
     ],
-    ]);
+]);
 
 ?>
 
-    <?= Dialog::widget(); ?>
-    <div class="inline">
-        <?= Html::a("Comment",    $child_comment_request_url,
-                    ['class' => 'btn btn-primary inline retrieve-child-comment-link',
-                    'data-pjax' => "#child_comment_$thread_id",
-                    'data-service' => $comment_id,
-                    'style' => 'margin-left:15px; float:left'])?>
-        <?php if($belongs_to_current_user){ ?>
-            <div id="dropdown-button-<?= $comment_id ?>" role="group" aria-label="group" class="btn-group dropdown-toggle" type="button" data-toggle="dropdown">
-                <button data-service="<?= $comment_id ?>" id="button-dropdown" class="btn btn-secondary comment-options-button" type="button"><span class="glyphicon glyphicon-chevron-down"></span></button>
-                <ul class="dropdown-menu" id="comment-options-<?= $comment_id ?>">
-                    <li data-service="<?= $comment_id ?>" class="item edit_comment"><a href="#">Edit</a></li>
-                    <li data-service="<?= $comment_id ?>" class="item delete-comment"><a href="#">Delete</a></li>
-                </ul>
+<?= Dialog::widget(); ?>
+<div class="inline">
+    <?= Html::a("Comment",    $child_comment_request_url,
+    ['class' => 'btn btn-primary inline retrieve-child-comment-link',
+    'data-pjax' => "#child_comment_$thread_id",
+    'data-service' => $comment_id,
+    'style' => 'margin-left:15px; float:left'])?>
+    <?php if($belongs_to_current_user){ ?>
+        <div style="margin-left: 120px; margin-bottom: 60px;" class="dropdown-comment-menu" data-service="<?= $comment_id ?>">
+            <a class="outer">
+                <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span></button>
+                <table class="first" style="margin-bottom: 30px;">
+                    <tbody>
+                        <tr><td><button class="inner btn btn-block btn-default">Edit</button></td></tr>
+                        <tr><td><button class="inner btn btn-block btn-danger">Delete</button></td></tr>
+                    </tbody>
+                </table>
+            </a>
+        </div>
+        <?php } ?>
+    </div>
+    <div  align="center" class="col-xs-12" >
+        <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
+        ['style' => 'display:none;max-height:50px' ,
+        'id' => 'child_comment_loading_gif_' . $comment_id])?>
+    </div>
+    <?php
+    if($thread_comment->isRetrieved()) {
+        $child_comment_provider = $thread_comment->getChildCommentList();
+        ?>
+        <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
+            <div class="col-xs-12" style="margin-top: 15px;">
+                <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
+            </div>
+            <div class="col-xs-12 text-center">
+                <div id="child-comment-list-new-comment-<?= $comment_id ?>">
+                </div>
+                <?= ListView::widget([
+                    'id' => 'threadList',
+                    'dataProvider' => $child_comment_provider,
+                    'summary' => false,
+                    'itemOptions' => ['class' => 'item'],
+                    'layout' => "{summary}\n{items}\n{pager}",
+                    'itemView' => function ($child_comment, $key, $index, $widget) {
+                        return $this->render('child-comment', ['child_comment' => $child_comment]);
+                    }
+                    ]) ?>
+                </div>
             </div>
             <?php } ?>
-        </div>
-        <div  align="center" class="col-xs-12" >
-            <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
-            ['style' => 'display:none;max-height:50px' ,
-            'id' => 'child_comment_loading_gif_' . $comment_id])?>
-        </div>
-        <?php
-        if($thread_comment->isRetrieved()) {
-            $child_comment_provider = $thread_comment->getChildCommentList();
-        ?>
-            <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
-                <div class="col-xs-12" style="margin-top: 15px;">
-                    <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id, 'child_comment_form' => $child_comment_form]) ?>
-                </div>
-                <div class="col-xs-12 text-center">
-                    <div id="child-comment-list-new-comment-<?= $comment_id ?>">
-                    </div>
-                    <?= ListView::widget([
-                        'id' => 'threadList',
-                        'dataProvider' => $child_comment_provider,
-                        'summary' => false,
-                        'itemOptions' => ['class' => 'item'],
-                        'layout' => "{summary}\n{items}\n{pager}",
-                        'itemView' => function ($child_comment, $key, $index, $widget) {
-                            return $this->render('child-comment', ['child_comment' => $child_comment]);
-                        }
-                        ]) ?>
-                    </div>
-                </div>
-        <?php } ?>
-    <?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
-                        'method' => 'post',
-                        'id' => 'delete_comment_form_' . $comment_id]) ?>
-        <?= Html::hiddenInput('comment_id', $comment_id) ?>
-        <?= Html::hiddenInput('thread_id', $thread_id) ?>
-    <?php ActiveForm::end() ?>
-<?php Pjax::end() ?>
+            <?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
+            'method' => 'post',
+            'id' => 'delete_comment_form_' . $comment_id]) ?>
+            <?= Html::hiddenInput('comment_id', $comment_id) ?>
+            <?= Html::hiddenInput('thread_id', $thread_id) ?>
+            <?php ActiveForm::end() ?>
+            <?php Pjax::end() ?>

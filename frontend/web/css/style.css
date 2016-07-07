@@ -688,7 +688,7 @@ div[id^='dropdown-button'] ul[id^='comment-options'] {
     top: 35.09px;
     margin-left: -40.23px;
     position: relative;
-    display: none;
+    /*display: none;*/
 }
 
 div#first-part div.tabs-above li {
@@ -838,6 +838,14 @@ div#commentator-action div.commentator-moderate {
     float: left;
 }
 
+article.block-for-comment {
+    padding-bottom: 60px;
+}
+
+article.block-for-comment div.commentator-moderate {
+    margin-bottom: 15px !important;
+}
+
 div#button-vote-up,
 div#button-vote-down {
     padding: 0;
@@ -869,7 +877,6 @@ img.profile-picture-comment {
 }
 
 div.commentator-name a {
-    margin-left: 20px;
     font-weight: bold;
 }
 
@@ -890,6 +897,10 @@ div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
     line-height: 26px;
     margin: 0;
     margin-bottom: 15px;
+}
+
+div[id^="comment_shown_part"] p {
+    margin-left: 0 !important;
 }
 
 div.commentator-moderate {
