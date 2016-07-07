@@ -23,6 +23,7 @@ else{
     $profile_link = Yii::$app->request->baseUrl . '/user/' . User::getUsername(Yii::$app->getUser()->id);
 }
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
+$this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/dropdown.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/bootstrap-social.css');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery-ias.min.js');

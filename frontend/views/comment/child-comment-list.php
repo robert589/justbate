@@ -48,8 +48,8 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
                 <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span></button>
                 <table class="first" style="margin-bottom: 30px;">
                     <tbody>
-                        <tr><td><button class="inner btn btn-block btn-default">Edit</button></td></tr>
-                        <tr><td><button class="inner btn btn-block btn-danger">Delete</button></td></tr>
+                        <tr><td><button class="inner item edit_comment btn btn-block btn-default">Edit</button></td></tr>
+                        <tr><td><button class="inner item delete_comment btn btn-block btn-danger">Delete</button></td></tr>
                     </tbody>
                 </table>
             </a>
