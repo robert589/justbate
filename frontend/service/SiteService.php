@@ -27,6 +27,7 @@ class SiteService{
      * @return \frontend\vo\ThreadVo
      */
     public function getHomeInfo($user_id, $issue_name, SiteVoBuilder $builder){
+        $builder->setIssueName($issue_name);
         $builder = $this->site_dao->getThreadLists($user_id, $issue_name, $builder);
         $builder = $this->site_dao->issueNumFollowers($issue_name, $builder);
         $builder = $this->site_dao->userFollowedIssue($user_id,$issue_name,$builder);

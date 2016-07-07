@@ -65,7 +65,7 @@ class SiteVo implements Vo {
      */
     public function getHasIssue()
     {
-        return $this->has_issue;
+        return $this->issue_name !== null;
     }
 
     /**

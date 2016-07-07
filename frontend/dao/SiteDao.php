@@ -153,22 +153,23 @@ class SiteDao{
      */
     public function issueNumFollowers($issue_name, SiteVoBuilder $builder){
         $issue_num_followers = null;
-        if($builder->getHasIssue()){
+        if($issue_name !== null){
             $issue_num_followers = (int) \Yii::$app->db->createCommand(self::ISSUE_NUM_FOLLOWERS)->
                         bindParam(":issue_name", $issue_name)->
                         queryScalar();
+            $builder->setNumFollowersOfIssues($issue_num_followers);
         }
-        $builder->setNumFollowersOfIssues($issue_num_followers);
         return $builder;
     }
 
     public function userFollowedIssue($current_user_id, $issue_name, SiteVoBuilder $builder) {
         $userFollowedIssue = null;
-        if($issue_name === null) {
+        if($issue_name !== null) {
             $userFollowedIssue = UserFollowedIssue::find()->where(['user_id' => $current_user_id, 'issue_name' => $issue_name])
                     ->exists();
+            $builder->setUserFollowIssue($userFollowedIssue);
+
         }
-        $builder->setUserFollowIssue($userFollowedIssue);
         return $builder;
 
     }
@@ -180,6 +181,8 @@ class SiteDao{
         foreach($issue_list as $item) {
             $issue['url'] = \Yii::$app->request->baseUrl . '/issue/' . $item['issue_name'];
             $issue['label'] = $item['issue_name'];
+            $issue['template'] =  '<a href="{url}" data-pjax="0">{icon}{label}</a>';
+
             $issues[] = $issue;
         }
         $builder->setIssueFollowedByUser($issues);
@@ -197,6 +200,7 @@ class SiteDao{
             $mapped_trending_topic['label'] = $trending_topic['title'];
             $mapped_trending_topic['url'] = \Yii::$app->request->baseUrl . '/thread/' . $trending_topic['thread_id']. '/'
                 . str_replace(' ', '-' , strtolower($trending_topic['title']));
+
             $mapped_trending_topic_list[] = $mapped_trending_topic;
         }
         $builder->setTrendingTopicList($mapped_trending_topic_list);

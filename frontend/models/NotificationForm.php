@@ -62,11 +62,8 @@ class NotificationForm extends Model
                     //error
                 }
             } else {
-                $notification->is_read = false;
-                if(!$notification->update()) {
-                    //error
-                }
                 $notification_id = $notification->notification_id;
+                NotificationReceiver::updateAll(['is_read' => 1], 'notification_id = '. $notification_id);
 
             }
 
@@ -125,12 +122,10 @@ class NotificationForm extends Model
                 }
             }
             else  {
-                $notification->is_read = false;
-                if(!$notification->update()) {
-                    //error
-                }
                 $notification_id = $notification->notification_id;
+                NotificationReceiver::updateAll(['is_read' => 1], 'notification_id = '. $notification_id);
             }
+
             $notification_actor = $this->getNotificationActor($notification_id, $this->actor_id);
             if(is_null($notification_actor)){
                 $notification_actor = new NotificationActor();
