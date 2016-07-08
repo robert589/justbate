@@ -17,9 +17,12 @@
             <span><?= $notification_vo->getTime() ?></span>
         </a>
     </div>
+    <div class="col-xs-1 notification-list-status">
+        <i class="fa fa-circle notification-unread" aria-hidden="true"></i>
+    </div>
     <?php if(!$notification_vo->getRead()) { ?>
         <div class="col-xs-1 notification-list-status">
-            <i class="fa fa-circle notification-read" aria-hidden="true"></i>
+            <i style="color: #000;" class="fa fa-circle notification-read" aria-hidden="true"></i>
         </div>
     <?php } ?>
 </div>

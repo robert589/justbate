@@ -20,7 +20,7 @@ $comment = Html::encode($child_comment->getComment());
 <article>
     <div class="col-xs-12" style="margin-bottom:10px">
         <div class="inline">
-            <img class="img img-rounded profile-picture-comment" style="height:60px; height: 60px;" src=<?= $commentator_user_photo_path_link ?>>
+            <img class="img img-rounded profile-picture-comment" src=<?= $commentator_user_photo_path_link ?>>
         </div>
         <div class="inline commentator-name" style="margin-left: 15px" >
             <?= Html::a("<b>" .Html::encode($comment_creator_full_name) .  "</b>", $commentator_user_profile_link )?>

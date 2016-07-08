@@ -25,7 +25,7 @@ $comment_thread_id = $thread_comment->getParentThreadId();
 <article class="block-for-comment">
     <div class="col-xs-12">
         <div class="inline image-commentator">
-            <img class="img img-circle profile-picture-comment" style="width: 60px;height:60px" src="<?= $commentator_user_photo_path_link ?>">
+            <img class="img img-circle profile-picture-comment" style="width: 60px;height:60px;" src="<?= $commentator_user_photo_path_link ?>">
         </div>
         <div class="inline non-image-commentator">
             <div class="col-xs-12 commentator-name">

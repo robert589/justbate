@@ -206,7 +206,11 @@ div.notification-list-content a:hover {
     color: white;
 }
 
-.notification-status-unread {
+i.notification-unread {
+    color: #FFF;
+}
+
+i.notification-unread {
     color: #1097FF;
 }
 
@@ -873,8 +877,8 @@ div.list-view div.item {
 }
 
 img.profile-picture-comment {
-    width: 20px;
-    height: 20px;
+    width: 60px;
+    height: 60px;
 }
 
 div.commentator-name a {
