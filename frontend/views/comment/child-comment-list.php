@@ -36,34 +36,34 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
 ?>
 
 <?php
-    if($thread_comment->isRetrieved()) {
-        $child_comment_provider = $thread_comment->getChildCommentList();
+if($thread_comment->isRetrieved()) {
+    $child_comment_provider = $thread_comment->getChildCommentList();
     ?>
-        <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
-            <div class="col-xs-12" style="margin-top: 15px;">
-                <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id,
-                                                              'child_comment_form' => $child_comment_form]) ?>
+    <div class="col-xs-12" style="background-color: #dff0d8; " id="<?= 'comment_part_' . $comment_id ?>">
+        <div class="col-xs-12" style="margin-top: 15px;">
+            <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id,
+            'child_comment_form' => $child_comment_form]) ?>
+        </div>
+        <div class="col-xs-12 text-center">
+            <div id="child-comment-list-new-comment-<?= $comment_id ?>">
             </div>
-            <div class="col-xs-12 text-center">
-                <div id="child-comment-list-new-comment-<?= $comment_id ?>">
-                </div>
-                <?= ListView::widget([
-                    'id' => 'threadList',
-                    'dataProvider' => $child_comment_provider,
-                    'summary' => false,
-                    'itemOptions' => ['class' => 'item'],
-                    'layout' => "{summary}\n{items}\n{pager}",
-                    'itemView' => function ($child_comment, $key, $index, $widget) {
-                        return $this->render('child-comment', ['child_comment' => $child_comment]);
-                    }
+            <?= ListView::widget([
+                'id' => 'threadList',
+                'dataProvider' => $child_comment_provider,
+                'summary' => false,
+                'itemOptions' => ['class' => 'item'],
+                'layout' => "{summary}\n{items}\n{pager}",
+                'itemView' => function ($child_comment, $key, $index, $widget) {
+                    return $this->render('child-comment', ['child_comment' => $child_comment]);
+                }
                 ]) ?>
             </div>
         </div>
-    <?php } ?>
-<?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
-                                'method' => 'post',
-                                'id' => 'delete_comment_form_' . $comment_id]) ?>
-    <?= Html::hiddenInput('comment_id', $comment_id) ?>
-    <?= Html::hiddenInput('thread_id', $thread_id) ?>
-<?php ActiveForm::end() ?>
-<?php Pjax::end() ?>
+        <?php } ?>
+        <?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
+        'method' => 'post',
+        'id' => 'delete_comment_form_' . $comment_id]) ?>
+        <?= Html::hiddenInput('comment_id', $comment_id) ?>
+        <?= Html::hiddenInput('thread_id', $thread_id) ?>
+        <?php ActiveForm::end() ?>
+        <?php Pjax::end() ?>

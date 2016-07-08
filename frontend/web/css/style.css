@@ -829,6 +829,15 @@ div.comment-tab div.tabs-above ul.nav-tabs li {
     color: #fff !important;
 }
 
+input[id^="dropdown-comment-input-"],
+table[id^='user-table-comment-'] {
+    display: none;
+}
+
+input[id^="dropdown-comment-input-"]:checked ~ table[id^='user-table-comment-'] {
+    display: block;
+}
+
 div#commentator-action div.commentator-comment {
     float: left;
 }
