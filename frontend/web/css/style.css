@@ -843,7 +843,8 @@ div#commentator-action div.commentator-moderate {
 }
 
 
-article.block-for-comment div.commentator-moderate {
+article.block-for-comment div.col-xs-12 {
+    padding-left: 0;
 }
 
 div#button-vote-up,
