@@ -184,6 +184,10 @@ div.notification-list-status {
     padding: 0 !important;
 }
 
+div.notification.list:hover {
+    background: #00E5FF !important;
+}
+
 div.notification-list-status i.fa {
     margin-top: 27px;
     text-align: center;
