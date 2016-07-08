@@ -39,7 +39,7 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
                 </tbody>
             </table>
         </div>
-        <?php } ?>
+    <?php } ?>
     </div>
     <div  align="center" class="col-xs-12" >
         <?= Html::img(Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
@@ -47,6 +47,6 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
         'id' => 'child_comment_loading_gif_' . $comment_id])?>
     </div>
 
-    <?= $this->render('child-comment-list', ['thread_comment' => $thread_comment,
-    'retrieved' => false,
-    'child_comment_form' => new \frontend\models\ChildCommentForm() ]) ?>
+<?= $this->render('child-comment-list', ['thread_comment' => $thread_comment,
+                                        'retrieved' => false,
+                                        'child_comment_form' => new \frontend\models\ChildCommentForm() ]) ?>

@@ -36,7 +36,7 @@ Pjax::begin([
 
 <!-- The vote -->
 <!-- The form only be used as refresh page -->
-<?= Html::beginForm(["thread/comment-vote" ],
+<?= Html::beginForm(["comment/comment-vote" ],
                     'post',
                     ['id' => 'submit-vote-form-' . $comment_id,
                      'data-pjax' => '#comment_likes_' . $comment_id,

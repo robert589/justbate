@@ -25,18 +25,18 @@ $comment_thread_id = $thread_comment->getParentThreadId();
 <article class="block-for-comment">
     <div class="col-xs-12">
         <div class="inline image-commentator">
-            <img class="img img-circle profile-picture-comment" style="width: 60px;height:60px;" src="<?= $commentator_user_photo_path_link ?>">
+            <img class="img img-circle profile-picture-comment" style="width: 40px;height:40px;" src="<?= $commentator_user_photo_path_link ?>">
         </div>
         <div class="inline non-image-commentator">
             <div class="col-xs-12 commentator-name">
                 <?php if($thread_comment->getAnonymous()) { ?>
-                    <span><label><?= $comment_creator_full_name ?></label></span>
+                    <label><?= $comment_creator_full_name ?></label>
                 <?php } else { ?>
-                    <span><?= Html::a($comment_creator_full_name,
+                    <?= Html::a($comment_creator_full_name,
                             $commentator_user_profile_link,
-                            ['data-pjax' => 0])?></span>
-                <?php } ?><br />
-                <span class="comment-created"><?= $comment_created_at ?></span>
+                            ['data-pjax' => 0])?>
+                <?php } ?>
+                <br> <?= $comment_created_at ?>
             </div>
         </div>
     </div>

@@ -173,39 +173,6 @@ class ThreadController extends Controller
 		]);
 	}
 
-	/**
-	 *
-	 */
-	public function actionCommentVote(){
-		//Yii::$app->end(var_dump($_POST));
-		if(!(isset($_POST['comment_id']) && isset($_POST['vote']) && isset($_POST['is_thread_comment']))) {
-			Yii::$app->end('Fail to like: Contact Admin');
-		}
-
-		$trigger_login_form = false;
-		$comment_vote_form = new CommentVoteForm();
-		$comment_vote_form->user_id = Yii::$app->user->getId();
-		$comment_vote_form->vote = $_POST['vote'];
-		$comment_vote_form->comment_id =  $_POST['comment_id'];
-
-		if (!$comment_vote_form->validate()) {
-			Yii::$app->end('Failed to validate votes');
-		}
-
-		if ($comment_vote_form->store() !== true) {
-			Yii::$app->end('Failed to store votes');
-		}
-		//use thread comment entity, although it is child comment entity
-		//bad practice, use it for a while
-
-		$comment_entity = new ThreadCommentEntity($comment_vote_form->comment_id, $comment_vote_form->user_id);
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
-		$comment_entity =$creator->get([CommentCreator::NEED_COMMENT_VOTE]);
-		return $this->renderAjax('_comment_votes',
-			['comment' => $comment_entity,
-			'trigger_login_form' => $trigger_login_form,
-			'is_thread_comment' => $_POST['is_thread_comment']]);
-	}
 
 	/**
 	 * @return string

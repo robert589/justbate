@@ -66,15 +66,11 @@ Application.prototype.unsubscribe = function(){
  */
 var ChildCommentWebSocket = function(comment_id, template){
     this.comment_id = comment_id;
-     var child_comment_template = template;
-
-
+    var child_comment_template = template;
     this.conn = new WebSocket('ws://52.6.157.157:8080?' + comment_id);
-
     this.conn.onopen = function(msg) {
         console.log('Connection successfully opened (readyState ' + this.readyState+')');
     };
-
     this.conn.onclose = function(msg) {
         if(this.readyState == 2) {
             console.log(
@@ -93,17 +89,13 @@ var ChildCommentWebSocket = function(comment_id, template){
             console.log('Connection closed... (unhandled readyState ' + this.readyState + ')');
         }
     };
-
     this.conn.onmessage = function(e){
         applyTemplate(JSON.parse(e.data));
 
     };
-
-
     this.conn.onerror = function(event) {
         console.log("error");
     };
-
 };
 
 
@@ -517,6 +509,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.edit_comment',function(e){
         e.preventDefault();
+        //initialize redactor
         var comment_id = $(this).data('service');
         $("#comment_shown_part_" + comment_id).hide();
         $("#comment_edit_part_" + comment_id).show();

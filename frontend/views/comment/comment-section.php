@@ -4,6 +4,7 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
+use common\components\Constant;
 /** @var $thread_comment \common\entity\ThreadCommentEntity */
 /** @var $comment string */
 /** @var $edit_comment_form \frontend\models\EditCommentForm */
@@ -34,10 +35,12 @@ Pjax::begin([
         'data-pjax' => '#edit_comment_data_pjax_' . $comment_id]])?>
 
     <?= \yii\redactor\widgets\Redactor::widget([
-        'id' => 'edit_redactor_' . $comment_id,
+        'id' => 'comment-section-edit-redactor-' . $comment_id,
         'name' => 'comment',
         'value' => \yii\helpers\HtmlPurifier::process($comment),
         'clientOptions' => [
+            'buttons' => Constant::defaultButtonRedactorConfig(),
+            'plugins' => Constant::defaultPluginRedactorConfig(),
             'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
         ],
     ]) ?>

@@ -1,3 +1,8 @@
+.submit_child_comment_form {
+    padding-left: 3px !important;
+    padding-top: 0 !important;
+}
+
 body {
     background: #E6E6E6 !important;
     color: #000 !important;
@@ -595,7 +600,6 @@ div.ias-trigger a {
 }
 
 div[id^='comment_part'] {
-    margin: 15px;
     width: calc(100% - 15px);
     padding-bottom: 15px;
 }
@@ -853,6 +857,7 @@ div#commentator-action div.commentator-moderate {
 
 article.block-for-comment div.col-xs-12 {
     padding-left: 0;
+    padding-right: 1px;
 }
 
 div#button-vote-up,
@@ -881,12 +886,20 @@ div.list-view div.item {
 }
 
 img.profile-picture-comment {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
 }
 
 div.commentator-name a {
     font-weight: bold;
+}
+div.commentator-name {
+    margin-top:1px;
+    line-height: 18px;
+}
+
+div.image-commentator {
+    margin-right: 3px;
 }
 
 div.comment-votes {
@@ -905,7 +918,13 @@ div.comment-created {
 div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
     line-height: 26px;
     margin: 0;
-    margin-bottom: 15px;
+}
+
+div.commentator-comment {
+    padding-left: 3px;
+}
+div.child-comment-list-container {
+    background-color: #dff0d8;
 }
 
 div[id^="comment_shown_part"] p {
@@ -1520,7 +1539,6 @@ button.btn {
 
     div#button-vote-down {
         float: right;
-        margin-left: 15px;
     }
 
     div#child_comment_1 div.inline {
@@ -1678,11 +1696,6 @@ button.btn {
         margin-right: 15px;
     }
 
-    /* USER COMMENT */
-    form[id^='submit_child_comment_form'] div.col-xs-12 {
-        padding: 15px !important;
-        padding-top: 0 !important;
-    }
 
     form[id^='submit_child_comment_form'] div.col-xs-12 button {
         color: #fff;
@@ -1794,8 +1807,13 @@ button.btn {
     }
 }
 
-
+@media screen and (max-width: 992px) {
+    .home-right-side {
+        display: none;
+    }
+}
 @media screen and (min-width: 935px) and (max-width: 992px) {
+
     /* Search Menu */
     ul#menubar-left {
         display: none;
