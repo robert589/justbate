@@ -172,7 +172,6 @@ li#notification {
 
 a.notification-item {
     display: block;
-    /*height:50px;*/
     width:100%;
     margin-bottom: 5px;
     margin-top:5px;
@@ -186,7 +185,6 @@ div.notification-list-status {
 }
 
 div.notification-list-status i.fa {
-    color: #A9D0F5;
     margin-top: 27px;
     text-align: center;
     margin-bottom: 27px;
@@ -195,24 +193,21 @@ div.notification-list-status i.fa {
 div#list-wrapper div div.col-xs-12 {
     background: #FFFFFF;
 }
-div.notification-list:hover {
-    background:#29B6F6;
+
+div.notification-list-content a:hover {
+    background: none !important;
 }
 
 .notification-status {
     content: "\25cf";
 }
 
-.notification-status-read {
+.notification-read {
     color: white;
 }
 
 .notification-status-unread {
     color: #1097FF;
-}
-
-.notification-item:hover{
-    background: #29B6F6;
 }
 
 a#trigger_notification {
