@@ -20,6 +20,7 @@ $thread_id = $thread->getThreadId();
 $thread_issues = $thread->getThreadIssues();
 $comment_request_url = $thread->getCommentRequestUrl();
 $has_chosen_comment = $thread->hasChosenComment();
+$has_another_comment = (($thread->getTotalComments() - 1) > 0);
 ?>
 
 <article data-service="<?= $thread_id ?>" class="list-thread">
@@ -53,6 +54,7 @@ $has_chosen_comment = $thread->hasChosenComment();
 				$commentator_choice = $chosen_comment->getCurrentUserVote();
 				$commentator_full_name = $chosen_comment->getFullName();
 				$comment  = $chosen_comment->getComment();
+
 			?>
 
 			<hr>
@@ -61,7 +63,9 @@ $has_chosen_comment = $thread->hasChosenComment();
 			</div>
 			<div class="col-xs-12">
 				<hr style="margin-bottom: 0">
-				<?= Html::a('View other comments <span class="glyphicon glyphicon-arrow-right"></span>', $link_to_thread, ['target' => '_blank']) ?>
+				<?php if($has_another_comment) { ?>
+					<?= Html::a('View all comments <span class="glyphicon glyphicon-arrow-right"></span>', $link_to_thread, ['target' => '_blank']) ?>
+				<?php } ?>
 			</div>
 		<?php
 		}
