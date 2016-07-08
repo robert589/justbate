@@ -23,19 +23,21 @@ $comment_thread_id = $thread_comment->getParentThreadId();
 ?>
 
 <article class="block-for-comment">
-    <div class="col-xs-1 image-commentator">
-        <img class="img img-circle profile-picture-comment" style="width: 45px;height:45px" src="<?= $commentator_user_photo_path_link ?>">
-    </div>
-    <div class="col-xs-11 non-image-commentator">
-        <div class="col-xs-12 commentator-name">
-            <?php if($thread_comment->getAnonymous()) { ?>
-                <span><label><?= $comment_creator_full_name ?></label></span>
-            <?php } else { ?>
-                <span><?= Html::a($comment_creator_full_name,
-                        $commentator_user_profile_link,
-                        ['data-pjax' => 0])?></span>
-              <?php } ?><br />
-            <span class="comment-created"><?= $comment_created_at ?></span>
+    <div class="col-xs-12">
+        <div class="inline image-commentator">
+            <img class="img img-circle profile-picture-comment" style="width: 45px;height:45px" src="<?= $commentator_user_photo_path_link ?>">
+        </div>
+        <div class="inline non-image-commentator">
+            <div class="col-xs-12 commentator-name">
+                <?php if($thread_comment->getAnonymous()) { ?>
+                    <span><label><?= $comment_creator_full_name ?></label></span>
+                <?php } else { ?>
+                    <span><?= Html::a($comment_creator_full_name,
+                            $commentator_user_profile_link,
+                            ['data-pjax' => 0])?></span>
+                <?php } ?><br />
+                <span class="comment-created"><?= $comment_created_at ?></span>
+            </div>
         </div>
     </div>
     <div class="col-xs-12 commentator-moderate">

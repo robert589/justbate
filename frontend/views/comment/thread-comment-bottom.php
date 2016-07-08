@@ -17,7 +17,7 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
             'is_thread_comment' => true  ]) ?>
     </div>
 
-    <div class="inline" class="comment-votes" style="margin-left: 12px">
+    <div class="inline" class="comment-votes">
         <?= $this->render('comment-votes', [ 'comment' => $thread_comment ,
             'is_thread_comment' => $is_thread_comment])?>
     </div>

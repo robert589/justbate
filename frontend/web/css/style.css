@@ -838,12 +838,8 @@ div#commentator-action div.commentator-moderate {
     float: left;
 }
 
-article.block-for-comment {
-    padding-bottom: 60px;
-}
 
 article.block-for-comment div.commentator-moderate {
-    margin-bottom: 15px !important;
 }
 
 div#button-vote-up,
@@ -1662,9 +1658,6 @@ button.btn {
         padding-right: 15px;
     }
 
-    div.user-comment-reaction div.col-xs-12 {
-        margin-bottom: 15px;
-    }
 
     div#first-part,
     div#comment-tab-container {
