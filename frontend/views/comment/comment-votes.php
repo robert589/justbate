@@ -37,63 +37,55 @@ Pjax::begin([
 <!-- The vote -->
 <!-- The form only be used as refresh page -->
 <?= Html::beginForm(["thread/comment-vote" ],
-    'post',
-    ['id' => 'submit-vote-form-' . $comment_id,
-        'data-pjax' => '#comment_likes_' . $comment_id,
-        'class' => 'form-inline submit-vote-form']); ?>
-
-<?= Html::hiddenInput("comment_id", $comment_id, ['class' => 'hi-comment-vote-comment-id']) ?>
-
-<?= Html::hiddenInput("vote", $vote, ['id' => 'hi-comment-vote-' . $comment_id]) ?>
-
-<?= Html::hiddenInput("is_thread_comment", $is_thread_comment) ?>
-
-<?= Html::hiddenInput("user_id",$current_user_login_id) ?>
-
-<span>
+                    'post',
+                    ['id' => 'submit-vote-form-' . $comment_id,
+                     'data-pjax' => '#comment_likes_' . $comment_id,
+                     'class' => 'form-inline submit-vote-form']); ?>
+    <?= Html::hiddenInput("comment_id", $comment_id, ['class' => 'hi-comment-vote-comment-id']) ?>
+    <?= Html::hiddenInput("vote", $vote, ['id' => 'hi-comment-vote-' . $comment_id]) ?>
+    <?= Html::hiddenInput("is_thread_comment", $is_thread_comment) ?>
+    <?= Html::hiddenInput("user_id",$current_user_login_id) ?>
+    <span>
         <?php if($vote_up == true) {  ?>
-            <div class="btn-group" id="button-vote-up">
-                <?= Html::submitButton($upvote , [
-                    'id' => "btn_vote_up_" . $comment_id ,
-                    'class' => 'btn btn-sm btn-default submit-comment-vote-button',
-                    'value' => 1,
-                    'disabled' => true])
-                ?>
-                <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
-
-            </div>
+        <div class="btn-group" id="button-vote-up">
+            <?= Html::submitButton($upvote , [
+                'id' => "btn_vote_up_" . $comment_id ,
+                'class' => 'btn btn-sm btn-default submit-comment-vote-button',
+                'value' => 1,
+                'disabled' => true])
+            ?>
+            <button type="button" class="btn btn-sm btn-disabled"><?= $total_like ?></button>
+        </div>
         <?php } else { ?>
-            <div class="btn-group" id="button-vote-up">
-                <?= Html::submitButton($upvote , [
-                    'id' => "btn_vote_up_" . $comment_id ,
-                    'class' => 'btn btn-default submit-comment-vote-button',
-                    'value' => 1
-                ]) ?>
-                <button type="button" class="btn btn-disabled"><?= $total_like ?></button>
-            </div>
+        <div class="btn-group" id="button-vote-up">
+            <?= Html::submitButton($upvote , [
+                'id' => "btn_vote_up_" . $comment_id ,
+                'class' => 'btn btn-sm btn-default submit-comment-vote-button',
+                'value' => 1
+            ]) ?>
+            <button type="button" class="btn btn-sm btn-disabled"><?= $total_like ?></button>
+        </div>
         <?php } ?>
-
     </span>
-
-<span>
+    <span>
         <?php if($vote_down) {  ?>
             <div class="btn-group" id="button-vote-down">
                 <?= Html::submitButton($downvote , [
                     'id' => "btn_vote_down_" . $comment_id ,
-                    'class' => 'btn btn-default submit-comment-vote-button',
+                    'class' => 'btn btn-sm btn-default submit-comment-vote-button',
                     'value' => -1,
                     'disabled' => true
                 ]) ?>
-                <button type="button" class="btn btn-disabled"><?= $total_dislike ?></button>
+                <button type="button" class="btn btn-sm btn-disabled"><?= $total_dislike ?></button>
             </div>
         <?php } else { ?>
             <div class="btn-group" id="button-vote-down">
                 <?= Html::submitButton($downvote , [
                     'id' => "btn_vote_down_" . $comment_id ,
                     'value' => -1,
-                    'class' => 'btn btn-default submit-comment-vote-button',
+                    'class' => 'btn btn-sm btn-default submit-comment-vote-button',
                 ]) ?>
-                <button type="button" class="btn btn-disabled"><?= $total_dislike ?></button>
+                <button type="button" class="btn btn-sm btn-disabled"><?= $total_dislike ?></button>
             </div>
         <?php } ?>
     </span>

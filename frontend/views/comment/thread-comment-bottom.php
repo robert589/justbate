@@ -24,14 +24,14 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
 
     <div class="inline">
         <?= Html::a("Comment",    $child_comment_request_url,
-            ['class' => 'btn btn-primary inline retrieve-child-comment-link',
+            ['class' => 'btn btn-sm btn-primary inline retrieve-child-comment-link',
                 'data-pjax' => "#child_comment_$thread_id",
                 'data-service' => $comment_id,
                 'style' => 'margin-left:15px; float:left'])?>
         <?php if($belongs_to_current_user) { ?>
-            <div style="margin-left: 120px; margin-bottom: 60px;" class="dropdown-comment-menu" data-service="<?= $comment_id ?>">
+            <div style="margin-left: 10px; margin-bottom: 5px;" class="inline dropdown-comment-menu" data-service="<?= $comment_id ?>">
                 <a class="outer">
-                    <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span></button>
+                    <button class="btn btn-sm btn-default"><span class="glyphicon glyphicon-chevron-down"></span></button>
                     <table class="first" style="margin-bottom: 30px;">
                         <tbody>
                         <tr>

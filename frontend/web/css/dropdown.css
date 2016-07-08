@@ -1,5 +1,5 @@
 .dropdown-comment-menu {display:none;}
-.dropdown-comment-menu {display:block; position:absolute;}
+.dropdown-comment-menu {display:block;}
 .dropdown-comment-menu a.outer, .dropdown-comment-menu a.outer:visited {
     display:block;
     float:left;
@@ -7,7 +7,6 @@
 }
 
 .dropdown-comment-menu a.outer table.first {
-    position: absolute;
     z-index: 1000;
     overflow:visible;
     display: none;
