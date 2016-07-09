@@ -79,13 +79,9 @@ class ThreadController extends Controller
 		if(!(isset($_GET['comment_id']) && isset($_GET['thread_id']))) {
 			Yii::$app->end('comment_id not poster');
 		}
-
 		$comment_id = $_GET['comment_id'];
-
 		$thread_id = $_GET['thread_id'];
-
 		$thread_comment = new ThreadCommentEntity($comment_id, Yii::$app->user->getId());
-
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $thread_comment);
 		/** remove this in the future for comment info, bad practice */
 		$thread_comment = $creator->get([ThreadCommentCreator::NEED_CHILD_COMMENTS, ThreadCommentCreator::NEED_COMMENT_INFO]);

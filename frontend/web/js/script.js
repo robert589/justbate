@@ -332,6 +332,7 @@ $(document).ready(function(){
     });
 
     $(document).on('pjax:send', '.child_comment_pjax', function(event){
+        console.log("sending");
         event.preventDefault();
         var comment_id = $(this).data('service');
 
@@ -346,8 +347,9 @@ $(document).ready(function(){
         event.preventDefault();
         var comment_id = $(this).data('service');
         $('#child_comment_loading_gif_' + comment_id).css("display","none");
-        app.subscribeChildCommentConn(comment_id);
+
         return false;
+
 
     });
 

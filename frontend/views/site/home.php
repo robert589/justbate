@@ -60,7 +60,7 @@ $this->title = "Home";
 		<div class="col-xs-12 home-thread-list">
 			<div class="col-xs-12" id="main-post-desc">
 				<?= ListView::widget([
-					'id' => 'threadList',
+					'id' => 'home-thread-list',
 					'dataProvider' => $thread_list_provider,
 					'summary' => false,
 					'itemOptions' => ['class' => 'item'],

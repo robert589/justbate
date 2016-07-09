@@ -100,7 +100,7 @@ class CommentController extends Controller{
         $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
         $vo  = $service->getChildCommentList(Yii::$app->user->getId(), $comment_id, $thread_id);
         $child_comment_form = new ChildCommentForm();
-        return $this->renderAjax('child-comment-list', ['thread_comment' => $vo,
+        return $this->render('child-comment-list', ['thread_comment' => $vo,
             'retrieved' => true,
             'is_thread_comment' => false,
             'child_comment_form' => $child_comment_form]);
