@@ -20,8 +20,7 @@ use kop\y2sp\ScrollPager;
 $comment_id = $thread_comment->getCommentId();
 $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
 $thread_id = $thread_comment->getParentThreadId();
-$child_comment_request_url = $thread_comment->getChildCommentRequestURL();
-
+$child_comment_request_url = $thread_comment->getNewChildCommentRequestUrl();
 ?>
 
 <?php Pjax::begin([
@@ -38,9 +37,9 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
 ?>
 
 <?php
-if($thread_comment->isRetrieved()) {
+    if($thread_comment->isRetrieved()) {
     $child_comment_provider = $thread_comment->getChildCommentList();
-    ?>
+?>
     <div class="col-xs-12 child-comment-list-container"  id="<?= 'comment_part_' . $comment_id ?>">
         <div class="col-xs-12 col-md-12" style="margin-top: 15px;">
             <?= $this->render('child-comment-input-box', ['comment_id' => $comment_id,
@@ -49,23 +48,21 @@ if($thread_comment->isRetrieved()) {
         <div class="col-xs-12 col-md-12 text-center">
             <div id="child-comment-list-new-comment-<?= $comment_id ?>">
             </div>
-            <?= ListView::widget([
-                'id' => 'threadList',
+            <?= \common\widgets\InfiniteScroll::widget([
+                'suffixId' => 'child-comment-list-' . $comment_id,
                 'dataProvider' => $child_comment_provider,
-                'summary' => false,
-                'itemOptions' => ['class' => 'item'],
-                'layout' => "{summary}\n{items}\n{pager}",
-                'itemView' => function ($child_comment, $key, $index, $widget) {
-                    return $this->render('child-comment', ['child_comment' => $child_comment]);
-                }
-                ]) ?>
+                'targetFile' => 'child-comment',
+                'requestUrl' => $child_comment_request_url
+            ]);  ?>
+
         </div>
     </div>
 <?php } ?>
-<?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
-'method' => 'post',
-'id' => 'delete_comment_form_' . $comment_id]) ?>
-    <?= Html::hiddenInput('comment_id', $comment_id) ?>
-    <?= Html::hiddenInput('thread_id', $thread_id) ?>
-<?php ActiveForm::end() ?>
+
+    <?php $form = ActiveForm::begin(['action' => ['comment/delete-comment'],
+    'method' => 'post',
+    'id' => 'delete_comment_form_' . $comment_id]) ?>
+        <?= Html::hiddenInput('comment_id', $comment_id) ?>
+        <?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?php ActiveForm::end() ?>
 <?php Pjax::end() ?>

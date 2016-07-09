@@ -36,6 +36,10 @@ class ThreadCommentVo extends CommentVo{
         return \Yii::$app->request->baseUrl . '/comment/get-child-comment?thread_id=' . $this->parent_thread_id . '&comment_id=' . $this->comment_id ;
     }
 
+    public function getNewChildCommentRequestUrl() {
+        return \Yii::$app->request->baseUrl . '/comment/get-new-child-comment?comment_id=' . $this->comment_id ;
+    }
+
     /**
      * @return mixed
      */
@@ -45,7 +49,7 @@ class ThreadCommentVo extends CommentVo{
     }
 
     /**
-     * @return mixed
+     * @return ArrayDataProvider
      */
     public function getChildCommentList()
     {

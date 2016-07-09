@@ -96,7 +96,6 @@ class CommentController extends Controller{
         }
         $comment_id = $_GET['comment_id'];
         $thread_id = $_GET['thread_id'];
-
         $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
         $vo  = $service->getChildCommentList(Yii::$app->user->getId(), $comment_id, $thread_id);
         $child_comment_form = new ChildCommentForm();
@@ -107,6 +106,25 @@ class CommentController extends Controller{
 
     }
 
+    /**
+     * @ajax
+     * @return string
+     * @throws \yii\base\ExitException
+     */
+    public function actionGetNewChildComment() {
+        if(!(isset($_GET['comment_id']))) {
+            Yii::$app->end('comment_id not poster');
+        }
+        $comment_id = $_GET['comment_id'];
+        $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
+        $thread_comment_vo  = $service->getNewChildCommentList(Yii::$app->user->getId(), $comment_id, $_GET['page'], $_GET['per-page']);
+        $child_comment_vos = $thread_comment_vo->getChildCommentList();
+        $view ="";
+        foreach($child_comment_vos->getModels() as $child_comment) {
+            $view .= $this->renderPartial('child-comment', ['child_comment' => $child_comment]);
+        }
+        return $view;
+    }
 
 
     /**

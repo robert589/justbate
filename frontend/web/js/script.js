@@ -393,7 +393,7 @@ $(document).ready(function(){
             data: form.serialize(),
             success: function(data) {
                 $("#submit_child_comment_form_" + comment_id).find("#childcommentform-child_comment").val("");
-                $("#child-comment-list-new-comment-" + comment_id).append(data);
+                $("#child-comment-list-new-comment-" + comment_id).prepend(data);
             }
         });
 

@@ -49,5 +49,18 @@ class CommentService{
 
     }
 
+    /**
+     * From ajax request
+     * @param $user_id
+     * @param $comment_id
+     * @param $thread_id
+     * @param $perPage
+     * @param $pageSize
+     */
+    public function getNewChildCommentList($user_id, $comment_id, $page, $pageSize) {
+        $builder = new ThreadCommentVoBuilder();
+        $builder->setCommentId($comment_id);
+        return $this->comment_dao->buildNextChildCommentList($comment_id, $user_id, $page, $pageSize, $builder)->build();
+    }
 
 }
