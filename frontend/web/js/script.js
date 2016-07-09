@@ -491,16 +491,10 @@ $(document).ready(function(){
         });
     });
 
-    // $(document).on("click", "button.comment-options-button", function() {
-    //     var dropdown_comment_id = $(this).attr("data-service");
-    //     $("ul#comment-options-"+dropdown_comment_id).dropdown();
-    //     if (($("ul#comment-options-"+dropdown_comment_id).is(":visible"))) {
-    //         $("div#dropdown-button-"+dropdown_comment_id).css("margin-bottom", "0");
-    //     } else {
-    //         $("div#dropdown-button-"+dropdown_comment_id).css("margin-bottom", "35.09px");
-    //     }
-    //     $("ul#comment-options-"+dropdown_comment_id).slideToggle();
-    // });
+    $(document).on("click", "table[id^='user-table-comment'] tbody tr td button", function() {
+        var table_unique_id = $(this).attr("data-service");
+        $("input#dropdown-comment-input-"+table_unique_id).trigger('click');
+    });
 
     $(document).on("click",".submit-comment-vote-button", function(){
         var vote = $(this).val();
