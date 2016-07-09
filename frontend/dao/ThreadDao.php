@@ -65,7 +65,9 @@ class ThreadDao{
              comments.comment_id
             order by total_like desc";
 
-        CONST THREAD_INFO = "SELECT TU.*, thread_vote.choice_text as current_user_vote, issues, choices
+        CONST THREAD_INFO = "SELECT TU.*, thread_vote.choice_text as current_user_vote, issues, choices,
+                               (anonymous.anonymous_id) as thread_anonymous
+
                         FROM (SELECT thread.*, user.id, user.first_name, user.last_name
                               from thread, user
                               where thread.user_id = user.id and thread_id = :thread_id) TU
@@ -82,7 +84,11 @@ class ThreadDao{
                               FROM choice
                               where choice.thread_id = :thread_id
                               ) thread_choices
-                        on thread_choices.thread_id = TU.thread_id";
+                        on thread_choices.thread_id = TU.thread_id
+                        left join (SELECT thread_id, anonymous_id
+                                   from thread_anonymous
+                                   where thread_anonymous.user_id = :user_id) anonymous
+                        on TU.thread_id = anonymous.thread_id";
 
         const THREAD_INFO_FOR_COMMENT_INPUT_BOX = "SELECT (SElect thread_anonymous.anonymous_id as anonymous from thread_anonymous
                                                             where thread_id = :thread_id  and user_id = :user_id) as anonymous,
@@ -119,6 +125,7 @@ class ThreadDao{
             ->bindValue(':thread_id', $thread_id)
             ->bindValue(':user_id', $user_id)
             ->queryOne();
+        $builder->setCurrentUserAnonymous($result['thread_anonymous']);
         $builder->setTitle($result['title']);
         $builder->setDescription($result['description']);
         $builder->setThreadCreatorUserId($result['user_id']);

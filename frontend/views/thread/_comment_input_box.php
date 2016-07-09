@@ -37,12 +37,8 @@ if(isset($comment_input_retrieved)) {
                     'options' => ['class' => 'comment-form',
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
 
-        <div class="col-xs-12" id="comment_input_box_section_<?= $thread_id ?>" style="padding: 0;">
+        <div class="row" id="comment_input_box_section_<?= $thread_id ?>">
             <hr>
-            <div class="col-xs-12">
-                <?= \frontend\widgets\CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
-                                                                     'thread_id' => $thread_id ]) ?>
-            </div>
             <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>" style="padding-top: 8px">
                 <?= $form->field($comment_model,
                                   'comment',

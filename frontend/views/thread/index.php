@@ -18,7 +18,7 @@ $choices_in_thread = $thread->getChoices();
 $thread_id = $thread->getThreadId();
 $thread_belongs_to_current_user = $thread->belongToCurrentUser();
 $guest = $thread->isGuest();
-
+$current_user_anonymous = $thread->getCurrentUserAnonymous();
 $first = 1;
 foreach($comment_providers as $thread_choice_item => $comment_provider){
 	$content_comment_item['label'] = $thread_choice_item;
@@ -74,10 +74,14 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 				<div class="inline">
 					<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
 				</div>
+				<div class="inline" style="margin-left: 5px">
+					<?= \frontend\widgets\CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
+						'thread_id' => $thread_id ]) ?>
+				</div>
 				<?php if($thread_belongs_to_current_user) { ?>
 					<div class="inline">
-						<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn inline', 'style' => 'background: #d9534f;']) ?>
-						<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn inline','data-guest' => $guest]) ?>
+						<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn btn-sm inline', 'style' => 'background: #d9534f;']) ?>
+						<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn btn-sm inline','data-guest' => $guest]) ?>
 					</div>
 				<?php } ?>
 			</div>

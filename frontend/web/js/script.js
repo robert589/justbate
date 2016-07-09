@@ -136,6 +136,8 @@ $(document).ready(function(){
     var $this = $(this);
     var child_comment_template = $this.find("#child-comment-template").html();
     var app = new Application(child_comment_template);
+
+
     //facebook
     (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -172,7 +174,7 @@ $(document).ready(function(){
     $("span.auth-icon").remove();
     $("a.auth-link").removeAttr("data-popup-width");
     $("a.auth-link").removeAttr("data-popup-height");
-    $("a.auth-link").append($('<div class="input-group"><span style="width: 37.78px;" class="input-group-addon"><i class="fa fa-facebook"></i></span><input type="text" class="form-control" value="Login with Facebook" readonly="true" /></div>'));
+    $("a.auth-link").append($('<div class="input-group"><span style="width: 37.78px;" class="input-group-addon"><i class="fa fa-facebook"></i></span><input type="text" class="form-control" value="Continue with Facebook" readonly="true" /></div>'));
     $("div#facebook-signup input[type='text']").val("Join Us With Facebook");
 
     var total_width = $('div#first-part').width();

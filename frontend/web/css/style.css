@@ -376,7 +376,7 @@ div.site-login {
     color: #FFF;
     padding: 15px;
     /*background: url('/frontend/web/img/login_bg.jpg');*/
-    background: url('/frontend/web/img/login_bg.jpg');
+    background: url('/startUp/frontend/web/img/login_bg.jpg');
     background-repeat: repeat;
 }
 
@@ -810,9 +810,6 @@ div.home-comment-tab {
     padding-top: 5px;
 }
 
-div.home-comment-tab div.col-xs-12:last-child {
-    padding-left: 0;
-}
 
 div[id^='comment_edit_part'] form[method='POST'] div.row {
     margin-right: 0;

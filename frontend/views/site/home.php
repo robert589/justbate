@@ -2,8 +2,9 @@
 use yii\widgets\ListView;
 use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
-
+use kartik\dialog\Dialog;
 use yii\helpers\Html;
+
 /** @var $home \frontend\vo\SiteVo */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
@@ -24,12 +25,11 @@ $popular_issue_list = $home->getPopularIssueList();
 $this->title = "Home";
 ?>
 
+<?= Dialog::widget() ?>
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
-
 		<?= $this->render('home-popular-issue',
 						['popular_issue_list' => $popular_issue_list])?>
-
 		<?= $this->render('home-sidenav-issue',
 						 ['issue_list' => $issue_followed_by_user,
 						  'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>

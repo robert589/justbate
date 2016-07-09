@@ -38,11 +38,12 @@ $(document).ready(function(){
                     $("#comment-input-anonymous-section-anonymous-" + thread_id).hide();
                     $("#comment-input-anonymous-section-non-anonymous-" + thread_id).show();
                 }
-                $("#comment-input-anonymous-cancel-btn-" + thread_id).text("Cancel").prop("disabled", false);
+                $("#comment-input-anonymous-cancel-btn-" + thread_id).text("Cancel Anonymous").prop("disabled", false);
 
             }
         })
 
 
     });
+
 });

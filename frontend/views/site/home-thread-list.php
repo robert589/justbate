@@ -45,7 +45,6 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
 				<?= $this->render('home-thread-list-bottom', ['thread' => $thread]) ?>
 			</div>
 			<hr>
-
 			<?php if($has_chosen_comment){
 				/** Used Variable */
 				$chosen_comment = $thread->getChosenComment();
@@ -56,7 +55,6 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
 				$comment  = $chosen_comment->getComment();
 
 			?>
-
 			<hr>
 			<div class="col-xs-12">
 				<?= $this->render('../comment/thread-comment', ['thread_comment' => $chosen_comment]) ?>
