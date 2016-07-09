@@ -19,8 +19,10 @@ Pjax::begin([
     'id' => 'edit_comment_pjax_' . $comment_id,
     'timeout' => false,
     'enablePushState' => false,
-    'clientOptions'=>[
-        'container' => '#edit_comment_data_pjax_' . $comment_id,
+    'options'=>[
+        'class' => 'comment-section-edit-pjax',
+        'skipOuterContainers' => true,
+        'container' => '#edit_comment_pjax_' . $comment_id,
     ]
 ]);
 ?>
@@ -30,22 +32,20 @@ Pjax::begin([
 </div>
 
 <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
+    <?php $form = ActiveForm::begin([
+        'id' => 'comment-section-edit-form-' . $comment_id,
+        'action' => ['thread/edit-comment'], 'method' => 'post',
+        'options' => [
+            'data-pjax' => '#edit_comment_pjax_' . $comment_id,
+            'class' => 'comment-section-edit-form',
+        ]
+    ])?>
 
-    <?php $form = ActiveForm::begin(['action' => ['thread/edit-comment'], 'method' => 'post', 'options' => [
-        'data-pjax' => '#edit_comment_data_pjax_' . $comment_id]])?>
+        <?= Html::textarea('comment',\yii\helpers\HtmlPurifier::process($comment), [
+            'id' => 'comment-section-edit-redactor-' . $comment_id
+        ]) ?>
 
-    <?= \yii\redactor\widgets\Redactor::widget([
-        'id' => 'comment-section-edit-redactor-' . $comment_id,
-        'name' => 'comment',
-        'value' => \yii\helpers\HtmlPurifier::process($comment),
-        'clientOptions' => [
-            'buttons' => Constant::defaultButtonRedactorConfig(),
-            'plugins' => Constant::defaultPluginRedactorConfig(),
-            'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),
-        ],
-    ]) ?>
-
-    <?= $form->field($edit_comment_form, 'parent_id')->hiddenInput(['value' => $comment_id ])->label(false) ?>
+        <?= $form->field($edit_comment_form, 'parent_id')->hiddenInput(['value' => $comment_id ])->label(false) ?>
 
     <div align="right" class="row">
         <?= Html::submitButton('Update', ['class' => 'btn btn-sm btn-primary']) ?>

@@ -29,7 +29,7 @@ Pjax::begin([
         'class' => 'comment_votes_pjax',
         'skipOuterContainers' => true,
         'container'=>'#comment_likes_' . $comment_id,
-    ],
+    ]
 ]);
 
 ?>
