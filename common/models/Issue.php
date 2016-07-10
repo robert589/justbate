@@ -69,11 +69,11 @@ class Issue extends ActiveRecord{
         $q = '%' . $q . '%';
 
         if($q === '' || $q === null){
-            $sql = "Select issue_name as id, issue_name as text from issue order by issue_name " ;
+            $sql = "Select issue_name as id, issue_name as text from issue where issue_status = 10  order by issue_name " ;
         }
         else{
 
-            $sql = "Select issue_name as id, issue_name as text from issue where issue_name like :query";
+            $sql = "Select issue_name as id, issue_name as text from issue where issue_name like :query and issue_status = 10";
 
         }
         if($except === true){

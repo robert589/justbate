@@ -20,6 +20,7 @@ $description = $thread->getDescription();
 $title = $thread->getTitle();
 $thread_id = $thread->getThreadId();
 $thread_issues  = $thread->getThreadIssues();
+
 $edit_thread_form->issues = $thread_issues;
 $edit_thread_form->title = $title;
 $edit_thread_form->description = HtmlPurifier::process($description, Constant::DefaultPurifierConfig());

@@ -28,8 +28,6 @@ $this->title = "Home";
 <?= Dialog::widget() ?>
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
-		<?= $this->render('home-popular-issue',
-						['popular_issue_list' => $popular_issue_list])?>
 		<?= $this->render('home-sidenav-issue',
 						 ['issue_list' => $issue_followed_by_user,
 						  'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>

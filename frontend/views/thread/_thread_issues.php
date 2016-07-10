@@ -1,5 +1,6 @@
 <?php
     use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
     /** @var $thread \frontend\vo\ThreadVo */
     $link_to_thread = $thread->getThreadLink();
     $thread_issues = $thread->getThreadIssues();
@@ -19,7 +20,7 @@
             }
             ?>
             <span style="padding-top: 15px !important;">
-              <?= \yii\helpers\Html::a('<span>' . $issue . '</span>', Yii::$app->request->baseUrl . '/issue/' . $issue) ?>
+              <?= \yii\helpers\Html::a('<span>' . HTMLPurifier::process($issue) . '</span>', Yii::$app->request->baseUrl . '/issue/' . HTMLPurifier::process($issue)) ?>
             </span>
         <?php } ?>
 

@@ -1,3 +1,8 @@
+.help-block{
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
 .submit_child_comment_form {
     padding-left: 3px !important;
     padding-top: 0 !important;

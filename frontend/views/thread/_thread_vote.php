@@ -2,6 +2,7 @@
 use yii\widgets\Pjax;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\HTMLPurifier;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $submit_thread_vote_form \frontend\models\SubmitThreadVoteForm */
 
@@ -31,7 +32,7 @@ $submit_thread_vote_form->choice_text = $current_user_choice;
 $propered_choice_text = array();
 foreach($thread_choices as $item){
     $item_values = array_values($item);
-    $propered_choice_text[$item_values[0]]  = $item_values[0] . " (" . $item['total_voters'] . ")";
+    $propered_choice_text[$item_values[0]]  = HTMLPurifier::process($item_values[0] . " (" . $item['total_voters'] . ")");
 }
 
     //Start form

@@ -21,7 +21,7 @@ $guest = $thread->isGuest();
 $current_user_anonymous = $thread->getCurrentUserAnonymous();
 $first = 1;
 foreach($comment_providers as $thread_choice_item => $comment_provider){
-	$content_comment_item['label'] = $thread_choice_item;
+	$content_comment_item['label'] = Html::encode($thread_choice_item);
 	$content_comment_item['content'] =  ListView::widget([
 		'dataProvider' => $comment_provider,
 		'summary' => false,
@@ -88,10 +88,8 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 		</div>
 	</div>
 	<div  id="comment_section" class="section col-xs-12">
-		<div class="row" >
-			<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
+		<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
 	 												'thread' => $thread]) ?>
-		</div>
 	</div>
 	<div class="col-xs-12 section">
 		<div id="comment-tab">

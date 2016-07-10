@@ -57,7 +57,7 @@ Modal::end();
 <!-- Page Content -->
 <!-- <div class="container" style="margin-left: 0; margin-right: 0;"> -->
 <div class="col-xs-12" id="profile-picture-main-body">
-	<div class="row">
+	<div class="col-xs-12" style="margin-bottom: 10px">
 		<div class="inline">
 			<img class="img-rounded" src="<?= Yii::$app->request->baseUrl . '/frontend/web/photos/' . $user->photo_path ?>"
 			alt="Profile Picture"

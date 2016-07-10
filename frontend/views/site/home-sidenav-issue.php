@@ -102,7 +102,6 @@ Pjax::begin([
             'options' => ['data-pjax' => '#sidenav-issue']])?>
         <?= $form->field($add_issue_form, 'user_id')->hiddenInput(['value' => \Yii::$app->user->getId()]) ?>
         <?= $form->field($add_issue_form, 'issue_name')->hiddenInput(['id' => 'add-issue-form-issue-name']) ?>
-
     <?php ActiveForm::end() ?>
 
 <?php Pjax::end(); ?>

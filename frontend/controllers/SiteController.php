@@ -413,7 +413,6 @@ class SiteController extends Controller
 		$out = ['results' => ['id' => '', 'text' => '']];
 		$data = Thread::getThreadBySearch($q);
 		$out['results'] = array_values($data);
-
 		echo Json::encode($out);
 	}
 
