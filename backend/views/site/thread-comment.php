@@ -16,6 +16,7 @@ $this->title = "Thread Comment List" ;
         'choice_text',
         'thread_id',
         'comment',
+        'comment_status',
         ['class' => 'yii\grid\ActionColumn',
             'template' => '{edit}{banned}',
             'buttons' => [
@@ -26,7 +27,10 @@ $this->title = "Thread Comment List" ;
                 },
                 'banned' => function ($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, [
-                        'title' => Yii::t('app', 'Banned'),'data-service' => $model['comment_id'], 'class' => ' banned_comment_button service-link'
+                        'title' => Yii::t('app', 'Banned'),
+                        'data-service' => $model['comment_id'],
+                        'id' => 'banned_comment_button',
+                        'class' => ' banned_comment_button service-link'
                     ]);
                 },
 

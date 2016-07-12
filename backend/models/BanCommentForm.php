@@ -22,12 +22,13 @@ class BanCommentForm extends Model {
         if($this->validate()) {
             $comment  = Comment::findOne(['comment_id' => $this->comment_id]);
             $comment->comment_status = Comment::STATUS_BANNED;
-            if($comment->update()){
-                return true;
-            }
-            else{
-                return false;
-            }
+            $comment->update();
+            // if($comment->update()){
+            //     return true;
+            // }
+            // else{
+            //     return false;
+            // }
         }
         return true;
     }

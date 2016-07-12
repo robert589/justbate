@@ -27,7 +27,10 @@ $this->title = "Thread list" ;
                 },
                 'banned' => function ($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, [
-                        'title' => Yii::t('app', 'Banned'),'data-service' => $model['issue_name'],  'class' => ' banned_issue_button service-link'
+                        'title' => Yii::t('app', 'Banned'),
+                        'data-service' => $model['issue_name'],
+                        'id' => 'banned_issue_button',
+                        'class' => ' banned_issue_button service-link'
                     ]);
                 },
 

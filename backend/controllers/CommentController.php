@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use backend\models\BanThreadForm;
+use backend\models\BanCommentForm;
 use backend\models\EditChoiceThreadCommentForm;
 use backend\models\EditCommentForm;
 use common\models\ChildComment;
@@ -57,12 +58,12 @@ class CommentController extends Controller
     public function actionBanned(){
         if(isset($_GET['id'])){
             $id = $_GET['id'];
-            $ban_thread_form = new BanThreadForm();
-            $ban_thread_form->thread_id = $id;
-            if(!$ban_thread_form->update()){
+            $ban_comment_form = new BanCommentForm();
+            $ban_comment_form->comment_id = $id;
+            if(!$ban_comment_form->update()){
                 return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
             }
-            return $this->redirect(Yii::$app->request->baseUrl . '/site/thread');
+            return $this->redirect(Yii::$app->request->baseUrl . '/site/thread-comment');
 
         }
         else{

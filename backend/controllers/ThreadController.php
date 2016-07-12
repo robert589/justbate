@@ -166,8 +166,9 @@ class ThreadController extends Controller
 
                     if($edit_thread_form->update()){
                         foreach($edit_choice_forms as $form){
-                            if(!$form->update()){
-                            }
+                            $form->update();
+                            // if(!$form->update()){
+                            // }
                         }
 
                         return $this->redirect(Yii::$app->request->baseUrl . '/site/thread/');

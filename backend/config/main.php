@@ -42,6 +42,11 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'rules' =>[
+                'site/thread/<page:\d+>/<per-page:\d+>' => 'site/thread',
+                'site/thread/<page:\d+>' => 'site/thread',
+
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

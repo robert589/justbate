@@ -15,6 +15,9 @@ AppAsset::register($this);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/../backend/web/js/jquery.js');
 ?>
+
+<?= Html::hiddenInput('base-url', Yii::$app->request->baseUrl, ['id' => 'base-url']) ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">

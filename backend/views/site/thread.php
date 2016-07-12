@@ -30,7 +30,10 @@
                 },
                 'banned' => function ($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, [
-                        'title' => Yii::t('app', 'Banned'),'data-service' => $model['thread_id'], 'id' => 'banned_thread_button', 'class' => ' banned_thread_button service-link'
+                        'title' => Yii::t('app', 'Banned'),
+                        'data-service' => $model['thread_id'],
+                        'id' => 'banned_thread_button',
+                        'class' => ' banned_thread_button service-link'
                     ]);
                 },
 
@@ -46,8 +49,5 @@
                 }
             }
         ]
-
-
-        // ...
     ],
 ]) ?>

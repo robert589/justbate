@@ -25,14 +25,14 @@ class EditChoiceForm extends Model {
     public function update() {
         if($this->validate()) {
 
-            if($this->old_choice_text == $this->new_choice_text){
+            // if($this->old_choice_text == $this->new_choice_text){
                 $choice_ptr = Choice::findOne(['thread_id' => $this->thread_id, 'choice_text' => $this->old_choice_text]);
                 $choice_ptr->choice_text = $this->new_choice_text;
                 if(!$choice_ptr->update()){
                     //error
                     return false;
                 }
-            }
+            // }
 
             return true;
         }
