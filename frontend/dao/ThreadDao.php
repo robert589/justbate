@@ -288,7 +288,7 @@ class ThreadDao{
         $comment_builder->setTotalLike($result['total_like']);
         $comment_builder->setTotalDislike($result['total_dislike']);
         $comment_builder->setCommentId($result['comment_id']);
-
+        $comment_builder->setChoiceText($result['choice_text']);
 
         $builder->setChosenComment($comment_builder->build());
         return $builder;

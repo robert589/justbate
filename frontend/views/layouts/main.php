@@ -109,61 +109,68 @@ AppAsset::register($this);
                             <li class="user_item dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
                             <li class="user_item item"><a href="<?= $profile_link ?>"><img id="profile-picture-home" src=<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?> height="20px;" /><?= User::findOne(Yii::$app->getUser()->id)->first_name ?></a></li>
                             <li class="user_item dropdown item" id="dropdown-menu-settings">
-                                <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle">
+                                    <span class="glyphicon glyphicon-chevron-down">
+                                    </span>
+                                </a>
                                 <ul class="dropdown-menu">
-                                    <li class="item"><a href="#">Settings</a></li>
-                                    <li id="logout" class="item"><a  data-method="post" href="<?= $logout_link ?>">Logout</a></li>
+                                    <li class="item">
+                                        <a href="#">Settings</a>
+                                    </li>
+                                    <li id="logout" class="item">
+                                        <a  data-method="post" href="<?= $logout_link ?>">Logout</a>
+                                    </li>
                                 </ul>
                             </li>
                             <?php } ?>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-            <?php
-            Modal::begin([
-                'id' => 'loginModal',
-                'size' => Modal::SIZE_LARGE
-            ]);
+    <?php
+        Modal::begin([
+            'id' => 'loginModal',
+            'size' => Modal::SIZE_LARGE
+        ]);
             $login_form = new \common\models\LoginForm();
             echo $this->render('../site/login', ['login_form' => $login_form, 'model' => new \frontend\models\SignupForm()]);
-            Modal::end();
+        Modal::end();
+    ?>
+
+    <div class="container" id="home-container" >
+        <?= Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+        <?= Alert::widget() ?>
+        <?= $content ?>
+        <div id="loading-bar" style="left: 0; right: 0; display: none; margin-top: -73px; margin-left: -100%; margin-right: -18.65%; height: 100% !important;">
+            <div style='z-index:0;left:0;top:0;width:100% !important;height:100% !important;background:#ddd;opacity: 0.4;'>Loading</div>
+        </div>
+    </div>
+
+
+    <?= Html::hiddenInput('base_url', Yii::$app->request->baseUrl, ['id' => 'base-url' ]) ?>
+    <!-- hidden input -->
+
+    <?= Html::hiddenInput('user_id',
+    (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
+    ['id' => 'user-login-id']) ?>
+
+    <!-- Javascript template -->
+    <div style="display: none" id="child-comment-template">
+        <div class="item" >
+            <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
+            $child_comment_dummy->convertToTemplate();
             ?>
+            <?= $this->render('../thread/_listview_child_comment',
+            ['child_comment' => $child_comment_dummy]) ?>
+        </div>
+    </div>
 
-            <div class="container" id="home-container" >
-                <?= Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                    ]) ?>
-                    <?= Alert::widget() ?>
-                    <?= $content ?>
-                    <div id="loading-bar" style="left: 0; right: 0; display: none; margin-top: -73px; margin-left: -100%; margin-right: -18.65%; height: 100% !important;">
-                        <div style='z-index:0;left:0;top:0;width:100% !important;height:100% !important;background:#ddd;opacity: 0.4;'>Loading</div>
-                    </div>
-                </div>
-
-
-                <?= Html::hiddenInput('base_url', Yii::$app->request->baseUrl, ['id' => 'base-url' ]) ?>
-                <!-- hidden input -->
-
-                <?= Html::hiddenInput('user_id',
-                (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
-                ['id' => 'user-login-id']) ?>
-
-                <!-- Javascript template -->
-                <div style="display: none" id="child-comment-template">
-                    <div class="item" >
-                        <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
-                        $child_comment_dummy->convertToTemplate();
-                        ?>
-                        <?= $this->render('../thread/_listview_child_comment',
-                        ['child_comment' => $child_comment_dummy]) ?>
-                    </div>
-                </div>
-
-                <?php
-                $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
-                $this->endBody();
-                ?>
-                </html>
-                <?php $this->endPage() ?>
+<?php
+    $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/script.js');
+    $this->endBody();
+?>
+</html>
+<?php $this->endPage() ?>

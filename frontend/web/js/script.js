@@ -196,14 +196,10 @@ $(document).ready(function(){
     });
 
     $("#home-issue-edit-popover").click(function(){
-        if($("#home-add-issue-popover-content").is(':visible')) {
-            $("#home-add-issue-popover-content").hide();
-
-        }
-        else{
-            $("#home-add-issue-popover-content").show();
-        }}
-    );
+       $("#home-search-issue-modal").modal("show")
+            .find('#home-search-issue-modal')
+            .load($(this).attr("value"));
+    });
 
     $(document).on('click', '#resend-unverified-email-button',function(){
         $("#resendchangeemailform-command").val("resend");

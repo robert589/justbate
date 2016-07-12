@@ -428,6 +428,19 @@ class SiteController extends Controller
 
 		echo Json::encode($out);
 	}
+
+	/**
+	 *
+	 */
+	public function actionSearchAllIssues() {
+		if(Yii::$app->user->isGuest) {
+			return Json::encode("Not authorized");
+		}
+		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+		$results = $service->getAllIssues(Yii::$app->user->getId());
+		echo Json::encode($results);
+	}
+
 	/**
 	 * Signs user up.
 	 *
@@ -538,6 +551,5 @@ class SiteController extends Controller
 	private function getDefaultChoice(&$create_thread_form){
 		$create_thread_form->choices = ['Agree','Disagree'];
 	}
-
 
 }

@@ -1,16 +1,13 @@
 <?php
-
     /** @var $issue_name string optional */
     /** @var $issue_num_followers integer */
     /** @var $user_is_follower boolean */
-
     use yii\helpers\Html;
     use yii\widgets\Pjax;
     use yii\widgets\ActiveForm;
 ?>
 
 <?php
-
 Pjax::begin([
     'id' => 'follow-issue-pjax',
     'timeout' => false,
@@ -19,15 +16,13 @@ Pjax::begin([
     'clientOptions' => [
         'container' => '#follow-issue'
     ]
-])
-
+]);
 ?>
 <div class="col-xs-12" style="padding: 10px;background: white">
     <?php $form = ActiveForm::begin(['action' => ['site/follow-issue'],
         'method' => 'post',
         'id' => 'follow-issue-form',
         'options' => ['data-pjax' => '#follow-issue'] ]);?>
-
         <div style="font-size: 20px;horiz-align: center">
             <h3><?= $issue_name ?></h3>
         </div>

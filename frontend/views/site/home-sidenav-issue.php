@@ -5,12 +5,12 @@
 
 /** @var $issue_list array */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
-    use kartik\widgets\Select2;
-    use yii\web\JsExpression;
-    use yii\widgets\Pjax;
-    use kartik\sidenav\SideNav;
-    use yii\widgets\ActiveForm;
-    use yii\helpers\Html;
+use kartik\widgets\Select2;
+use yii\web\JsExpression;
+use yii\widgets\Pjax;
+use kartik\sidenav\SideNav;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
 $select2_content =
     Select2::widget([

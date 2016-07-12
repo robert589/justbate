@@ -139,6 +139,9 @@ class ThreadVo implements Vo{
      */
     public function getThreadIssues()
     {
+        if($this->thread_issues === null) {
+            return array();
+        }
         return $this->thread_issues;
     }
 

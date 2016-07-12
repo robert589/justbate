@@ -11,9 +11,6 @@ body {
 }
 
 
-body{
-    font-family:Arial;
-}
 
 a{
     color:black;
@@ -77,7 +74,6 @@ a.asc:after, a.desc:after {
     position: relative;
     top: 1px;
     display: inline-block;
-    font-family: 'Glyphicons Halflings';
     font-style: normal;
     font-weight: normal;
     line-height: 1;

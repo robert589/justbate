@@ -103,6 +103,12 @@ class SiteDao{
                         group by(parent_thread_info.thread_id)
                         order by(parameter) desc";
 
+    const SEARCH_ALL_ISSUES = "SELECT issue.issue_name, (current_user_followed_issue.user_id is not null) as follow_by_current_user
+                            FROM `issue`
+                            left join
+                            (SELECT * from user_followed_issue where user_id = :user_id) current_user_followed_issue
+                            on issue.issue_name = current_user_followed_issue.issue_name
+";
     public function getThreadLists( $current_user_id, $issue_name, SiteVoBuilder $builder){
         if($issue_name !== null){
             $results = \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE)->
@@ -182,8 +188,7 @@ class SiteDao{
             $issue['url'] = \Yii::$app->request->baseUrl . '/issue/' . $item['issue_name'];
             $issue['label'] = $item['issue_name'];
             $issue['template'] =  '<a href="{url}" data-pjax="0">{icon}{label}</a>';
-
-            $issues[] = $issue;
+             $issues[] = $issue;
         }
         $builder->setIssueFollowedByUser($issues);
         return $builder;
@@ -215,5 +220,15 @@ class SiteDao{
         $popular_issue_list = Issue::getPopularIssue();
         $builder->setPopularIssueList($popular_issue_list);
         return $builder;
+    }
+
+    /**
+     * Json response
+     */
+    public function getAllIssues($user_id) {
+        $results = \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE)->
+                                    bindParam(':user_id', $user_id)
+                                  ->queryAll();
+        return $results;
     }
 }

@@ -38,5 +38,13 @@ class SiteService{
         return $builder->build();
     }
 
+    /**
+     * For Ajax Response
+     * @param $user_id
+     */
+    public function getAllIssues($user_id) {
+        return $this->site_dao->getAllIssues($user_id);
+    }
+
 
 }

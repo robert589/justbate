@@ -5,6 +5,9 @@ use kartik\sidenav\SideNav;
 use kartik\dialog\Dialog;
 use yii\helpers\Html;
 
+use yii\helpers\ArrayHelper;
+use yii\bootstrap\Modal;
+use frontend\widgets\SearchIssue;
 /** @var $home \frontend\vo\SiteVo */
 /** @var $create_thread_form \frontend\models\CreateThreadForm */
 /** @var $add_issue_form \frontend\models\UserFollowIssueForm */
@@ -13,7 +16,6 @@ use yii\helpers\Html;
  * Variable used
  */
 $issue_followed_by_user = $home->getIssueFollowedByUser();
-
 $trending_topic_list = $home->getTrendingTopicList();
 $user_follow_issue = $home->getUserFollowIssue();
 $num_followers_of_issue = $home->getNumFollowersOfIssue();
@@ -21,8 +23,15 @@ $has_issue = $home->getHasIssue();
 $issue_name = $home->getIssueName();
 $thread_list_provider = $home->getThreadListProvider();
 $popular_issue_list = $home->getPopularIssueList();
-
 $this->title = "Home";
+?>
+
+<?php
+    Modal::begin([
+        'id' => 'home-search-issue-modal'
+            ]);
+         echo SearchIssue::widget(['all_issues' => ArrayHelper::map($issue_followed_by_user, 'label', 'label')	]);
+    Modal::end();
 ?>
 
 <?= Dialog::widget() ?>

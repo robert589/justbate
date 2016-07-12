@@ -30,14 +30,15 @@ $comment_thread_id = $thread_comment->getParentThreadId();
         <div class="inline non-image-commentator">
             <div class="col-xs-12 commentator-name">
                 <?php if($thread_comment->getAnonymous()) { ?>
-                    <label><?= $comment_creator_full_name ?></label>
+                    <label><?= $comment_creator_full_name ?></label> chose <?= $thread_comment->getChoiceText() ?>
                 <?php } else { ?>
-                    <?= Html::a($comment_creator_full_name,
+                    <?= Html::a($comment_creator_full_name ,
                             $commentator_user_profile_link,
-                            ['data-pjax' => 0])?>
+                            ['data-pjax' => 0])?>  chose <?= $thread_comment->getChoiceText() ?>
                 <?php } ?>
                 <br> <?= $comment_created_at ?>
             </div>
+
         </div>
     </div>
     <div class="col-xs-12 commentator-moderate">
