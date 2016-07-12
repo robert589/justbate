@@ -18,7 +18,7 @@ body {
 div#home-container {
     padding: 0;
     position: relative;
-    margin-top: 73px;
+    /*margin-top: 73px;*/
 }
 
 div#main-container {
@@ -304,112 +304,80 @@ div.modal-body button#sign-up {
 }
 
 /* LOGIN FORM */
+div#justbate-logo-wrapper {
+    top: 25%;
+    left: 50%;
+    padding: 30px;
+    position: fixed;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+div#login-register-form {
+    top: 63%;
+    left: 50%;
+    padding: 30px;
+    position: fixed;
+    background: #fff;
+    transform: translate(-50%, -50%);
+}
+
+div#login-form form[action="/startUp/login"] div {
+    padding: 0;
+    padding-left: 15px;
+    margin-right: -15px;
+}
+
+div#login-form form.form-group div,
+div#register-form,
 div#login-form {
-    padding: 15px;
-    padding-top: 0;
-    padding-right: 0;
-    background: #FFF;
-}
-div#login-form div.form-group label.control-label {
-    width: 25%;
-    height: 100%;
-    float: left;
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
+    padding: 0;
 }
 
-div#facebook-signup-wrapper {
-    padding-right: 15px;
-    height: 34.44px;
-}
+div#register-form { padding-right: 45px !important; }
 
-div#email-signup-wrapper {
-    padding-left: 15px;
-    height: 34.44px;
-}
-
-div#login-form input[class="form-control"] {
-    border: 0;
-    height: 100%;
-    padding: 15px;
-    border-radius: 0;
-    text-align: center;
-}
-
-div#login-form div.col-xs-12:last-child {
-    padding-top: 0;
-}
-
-div#login-form div.col-xs-6:last-child {
-    padding-right: 0;
-}
-
-div#login-form button {
-    border: 0;
+span.login-data,
+span.register-data {
     width: 100%;
+}
+
+div#login-form {
+    border-left: 1px solid #ddd;
+}
+
+span.register-data span.input-group-addon, 
+span.login-data span.input-group-addon,
+span.register-data input,
+span.login-data input,
+button#lupa-password,
+button#button-login {
     padding: 15px;
     border-radius: 0;
-    background: #0288F0;
-    text-transform: capitalize;
-}
-
-div#login-form .checkbox {
-    margin: 0;
-}
-
-div#login-label {
-    padding: 15px;
     text-align: center;
-    background: #1097FF;
+    border: 1px solid #ddd;
 }
 
-div#login-box.fade.in {
-    opacity: 1 !important;
+span.register-data span.input-group-addon,
+span.login-data span.input-group-addon {
+    width: 46px;
 }
 
-div#remember-me {
-    width: 50%;
-    padding: 15px;
-    text-align: center;
-    background: #1097FF;
-    text-transform: capitalize;
+button#lupa-password, 
+button#button-login {
+    border: 0;
 }
 
-/* SITE LOGIN */
-div.site-login {
-    color: #FFF;
-    padding: 15px;
-    /*background: url('/frontend/web/img/login_bg.jpg');*/
-    background: url('/startUp/frontend/web/img/login_bg.jpg');
-    background-repeat: repeat;
+span.login-data input,
+span.register-data input {
+    height: 100%;
 }
 
-div.site-login form {
-    padding: 0;
+input#loginform-email,
+input#loginform-password {
+    margin-left: -15px;
 }
 
-div.site-login h1 {
-    display: none;
-}
-
-div.site-login div.row {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-div.site-login div.row div.col-xs-12 {
-    padding: 0;
-}
-
-div.site-login div.row div.col-xs-12:first-child {
-    padding-left: 0px;
-}
-
-div.site-login div.row div.col-xs-12:last-child {
-    padding-right: 0px;
-}
-
+/* SIGN UP */
 div#signup-title,
 div#login-label {
     margin-bottom: 15px;
@@ -501,6 +469,7 @@ div#signup-label {
     padding: 15px;
     text-align: center;
 }
+
 
 /* FACEBOOK */
 hr#facebook-separator {
@@ -1523,6 +1492,24 @@ button.btn {
         margin-left: 0 !important;
     }
 
+    /* LOGIN */
+    div#justbate-logo-wrapper img {
+        width: 100% !important;
+    }
+
+    div#login-form {
+        width: calc(100% - 15px) !important;
+    }
+
+    div#login-form form div {
+        width: calc(100% + 15px) !important;
+    }
+
+    input#loginform-email,
+    input#loginform-password {
+        width: calc(100% - 15px) !important;
+    }
+
     div.home-comment-tab div.inline {
         width: 100% !important;
         margin: 0 !important;
@@ -1575,50 +1562,41 @@ button.btn {
         width: 100%;
     }
 
+    .hide-xs {
+        display: none !important;
+    }
+
+    .show-xs {
+        display: block !important;
+    }
+
     /* LOGIN AND SIGN UP */
-    div#signup-title,
-    div#signup-table {
-        width: calc(100% + 15px);
+    div#login-register-form {
+        padding: 30px !important;
+        padding-left: 0 !important;
+        width: calc(100% - 15px;) !important;
     }
 
-    div.site-login div.row:last-child {
-        padding-left: 0;
-        padding-right: 0;
-        width: calc(100% + 15px);
+    div#register-form {
+        background: none;
+        margin-right: 15px;
+        padding-right: 0 !important;
     }
 
-    div.site-login div.row div.col-xs-12 div#signup-form {
-        padding: 15px;
-        padding-bottom: 0;
+    div#login-form { 
+        border: 0;
     }
 
-    div.site-login div.row div.col-xs-12 div#signup-form div.col-xs-6 {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
+    div#login-form form[action="/startUp/login"] div {
+        width: calc(100% - 15px);
+    }    
 
-    div.site-login div.row div.col-xs-12 {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+    input#loginform-email,
+    input#loginform-password {
+        margin-left: 0.25px !important;
+        width: calc(100% + 30px);
     }
-
-    /* LOGIN */
-    div#login-form {
-        padding: 0;
-        padding-left: 15px !important;
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-
-    button#sign-up {
-        height: 50px;
-    }
-
-    div.checkbox {
-        padding: 15px;
-        vertical-align: middle;
-    }
-
+    
     /* HOME */
     div#home-container.container {
         width: 100%;
@@ -1743,7 +1721,7 @@ button.btn {
 
 @media screen and (min-width: 887px) and (max-width: 899px) {
     .navbar-header {
-        width: 25% !important;
+        width: 25% !important; 
     }
 
     ul#menubar-left {
@@ -1813,7 +1791,61 @@ button.btn {
     .home-right-side {
         display: none;
     }
+
+    .hide-sm {
+        display: none !important;
+    }
+
+    .show-sm {
+        display: block !important;
+    }
+
+    /* LOGIN */
+    div#login-register-form {
+        padding: 15px !important;
+        top: 68%;
+        left: 50%;
+        padding: 30px;
+        position: fixed;
+        background: #fff;
+        transform: translate(-50%, -50%);
+    }
+
+    div#login-form form div {
+        padding-left: 0 !important;
+        width: 100%;
+    }
+
+    div#register-form, 
+    div#login-form {
+        border: 0;
+    }
+
+    input#loginform-email,
+    input#loginform-password {
+        margin-left: 0.25px;
+    }
+
+    div#login-form { 
+        padding: 0;
+        width: calc(100% + 15px);
+    }
+
+    div#register-form { 
+        padding-right: 0 !important;
+    }
 }
+
+@media screen and (min-width: 992px) {
+    .hide-md {
+        display: none !important;
+    }
+
+    .show-md {
+        display: block !important;
+    }
+}
+
 @media screen and (min-width: 935px) and (max-width: 992px) {
 
     /* Search Menu */
@@ -1868,7 +1900,7 @@ button.btn {
     }
 
     div#home-container {
-        margin-top: 73px !important;
+        /*margin-top: 73px !important;*/
         margin-left: -15px;
         width: calc(100% + 30px);
         padding-left: 0;
