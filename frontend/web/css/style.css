@@ -307,22 +307,19 @@ div.modal-body button#sign-up {
 }
 
 /* LOGIN FORM */
-div#justbate-logo-wrapper {
-    top: 25%;
-    left: 50%;
-    padding: 30px;
-    position: fixed;
-    text-align: center;
-    transform: translate(-50%, -50%);
-}
-
 div#login-register-form {
-    top: 63%;
+    top: 50%;
     left: 50%;
     padding: 30px;
     position: fixed;
     background: #fff;
     transform: translate(-50%, -50%);
+}
+
+div#justbate-image-logo {
+    padding: 0;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 div#login-form form[action="/startUp/login"] div {
@@ -1474,7 +1471,23 @@ button.btn {
 }
 
 /* MEDIA QUERY */
+@media screen and (max-height: 400px) {
+    /* LOGIN */
+    div#login-register-form {
+        top: 50% !important;
+        margin-top: 50px;
+        max-height: 100% !important;
+        overflow-y: auto !important;
+        position: initial;
+    }
+}
+
 @media screen and (max-width: 400px) {
+    body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
     div.navbar-header {
         margin: 0 !important;
         float: left !important;
@@ -1496,23 +1509,19 @@ button.btn {
     }
 
     /* LOGIN */
-    div#justbate-logo-wrapper img {
-        width: 100% !important;
-    }
-
-    div#login-form {
-        width: calc(100% - 15px) !important;
-    }
-
-    div#login-form form div {
-        width: calc(100% + 15px) !important;
+    div#login-register-form {
+        top: 65% !important;
+        max-height: 100% !important;
+        overflow-y: scroll !important;
     }
 
     input#loginform-email,
     input#loginform-password {
-        width: calc(100% - 15px) !important;
+        margin-left: 15px !important;
+        width: calc(100% + 15px) !important;
     }
 
+    /* HOME */
     div.home-comment-tab div.inline {
         width: 100% !important;
         margin: 0 !important;
@@ -1578,6 +1587,10 @@ button.btn {
         padding: 30px !important;
         padding-left: 0 !important;
         width: calc(100% - 15px;) !important;
+    }
+
+    div#justbate-image-logo img {
+        width: 75%;
     }
 
     div#register-form {
@@ -1806,7 +1819,7 @@ button.btn {
     /* LOGIN */
     div#login-register-form {
         padding: 15px !important;
-        top: 68%;
+        top: 50%;
         left: 50%;
         padding: 30px;
         position: fixed;

@@ -59,22 +59,22 @@
     </div>
 </div> -->
 <div class="container-fluid">
-    <div class="col-md-6 col-xs-9" id="justbate-logo-wrapper">
-        <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>" style="height:130px"/>
-    </div>
     <div class="col-md-6 col-xs-9" id="login-register-form">
+        <div class="col-xs-12" id="justbate-image-logo">
+            <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>" style="height:130px"/>
+        </div>
         <div class="col-md-6 col-xs-12" id="register-form">
             <a href="https://www.justbate.com/site/auth?authclient=facebook">
                 <span class="input-group register-data">
                     <span class="input-group-addon"><span class="fa fa-facebook"></span></span>
-                    <input type="text" class="form-control" value="Sign Up With Facebook" readonly="true" />
+                    <input type="text" class="form-control" value="Register With Facebook" readonly="true" />
                 </span>
             </a>
 
             <a href="<?= Yii::$app->request->baseUrl . '/signup' ?>"">
                 <span class="input-group register-data">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                    <input type="text" class="form-control" value="Sign Up With Email" readonly="true" />
+                    <input type="text" class="form-control" value="Register With Email" readonly="true" />
                 </span>
             </a>
             <hr class="hide-sm" />
