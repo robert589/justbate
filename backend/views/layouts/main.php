@@ -34,7 +34,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/../backend/web/js/jquery.j
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Opilage',
+        'brandLabel' => 'JustBate Administrator',
         'brandUrl' => Yii::$app->request->baseUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',

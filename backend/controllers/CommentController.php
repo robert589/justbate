@@ -63,7 +63,7 @@ class CommentController extends Controller
             if(!$ban_comment_form->update()){
                 return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
             }
-            return $this->redirect(Yii::$app->request->baseUrl . '/site/thread-comment');
+            return $this->redirect(Yii::$app->request->baseUrl . '/site');
 
         }
         else{

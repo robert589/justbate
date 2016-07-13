@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use common\models\Comment;
+use common\models\ChildComment;
 use yii\base\Model;
 
 use common\models\Thread;
@@ -23,6 +24,7 @@ class BanCommentForm extends Model {
             $comment  = Comment::findOne(['comment_id' => $this->comment_id]);
             $comment->comment_status = Comment::STATUS_BANNED;
             $comment->update();
+
             // if($comment->update()){
             //     return true;
             // }

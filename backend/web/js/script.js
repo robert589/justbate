@@ -38,4 +38,15 @@ $(document).ready(function(){
         return false;
     })
 
+    //banned child-comment button
+    $(".banned_child_comment").click(function(e){
+        e.preventDefault();
+        var id = $(this).data('service')       ;
+        krajeeDialog.confirm("Are you sure you want to ban comment " + id + "?", function (result) {
+            if (result) {
+                return window.location.href =  $("#base-url").val() + '/comment/banned?id=' + id;
+            }
+        });
+        return false;
+    })
 })
