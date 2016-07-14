@@ -349,7 +349,6 @@ span.register-data span.input-group-addon,
 span.login-data span.input-group-addon,
 span.register-data input,
 span.login-data input,
-button#lupa-password,
 button#button-login {
     padding: 15px;
     border-radius: 0;
@@ -362,7 +361,11 @@ span.login-data span.input-group-addon {
     width: 46px;
 }
 
-button#lupa-password, 
+div#lupa-password {
+    padding: 15px !important;
+    text-align: center;
+}
+
 button#button-login {
     border: 0;
 }
@@ -1472,20 +1475,21 @@ button.btn {
 
 /* MEDIA QUERY */
 @media screen and (max-height: 400px) {
-    /* LOGIN */
+    div#justbate-image-logo {
+        margin-bottom: 15px;
+    }
+
     div#login-register-form {
         top: 50% !important;
-        margin-top: 50px;
-        max-height: 100% !important;
+        width: 100%;
         overflow-y: auto !important;
-        position: initial;
+        max-height: calc(100% - 90px);
     }
 }
 
 @media screen and (max-width: 400px) {
-    body {
-        overflow-x: hidden;
-        overflow-y: scroll;
+    .yii-debug-toolbar__bar {
+        display: none !important;
     }
 
     div.navbar-header {
@@ -1511,8 +1515,13 @@ button.btn {
     /* LOGIN */
     div#login-register-form {
         top: 65% !important;
-        max-height: 100% !important;
-        overflow-y: scroll !important;
+        margin-top: -30px;
+        width: 100%;
+        height: 100vh;
+    }
+
+    div#justbate-image-logo {
+        margin-bottom: 15px;
     }
 
     input#loginform-email,
@@ -1559,6 +1568,20 @@ button.btn {
     }
 }
 
+@media and (max-height: 436px) {
+    div#login-register-form {
+        padding: 30px !important;
+        padding-left: 0 !important;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    input#loginform-email,
+    input#loginform-password {
+        width: calc(100% - 30px) !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
     body {
         overflow-x: hidden;
@@ -1584,9 +1607,10 @@ button.btn {
 
     /* LOGIN AND SIGN UP */
     div#login-register-form {
+        top: 60% !important;
         padding: 30px !important;
-        padding-left: 0 !important;
-        width: calc(100% - 15px;) !important;
+        height: 100vh;
+        width: 100%;
     }
 
     div#justbate-image-logo img {
@@ -1818,12 +1842,14 @@ button.btn {
 
     /* LOGIN */
     div#login-register-form {
-        padding: 15px !important;
         top: 50%;
         left: 50%;
-        padding: 30px;
+        padding: 15px;
+        padding-top: 30px;
         position: fixed;
         background: #fff;
+        overflow-y: auto;
+        max-height: calc(100vh - 60px);
         transform: translate(-50%, -50%);
     }
 
@@ -1837,9 +1863,14 @@ button.btn {
         border: 0;
     }
 
+    div#lupa-password {
+        width: calc(100% + 15px) !important;
+    }
+
     input#loginform-email,
     input#loginform-password {
-        margin-left: 0.25px;
+        width: 100%;
+        margin-left: 0;
     }
 
     div#login-form { 
