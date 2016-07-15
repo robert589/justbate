@@ -3,6 +3,7 @@
 /** @var $edit_user_issue_form frontend\models\EditUserIssueForm */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\libraries\ImageUtility;
 ?>
 
 <div class="container-fluid">
@@ -17,7 +18,11 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-xs-12" id="search-issue-searched-list">
-    	
+        <?= Html::img(ImageUtility::getResourceUrl(ImageUtility::LOADING_GIF), 
+                    ['id' => 'search-issue-searched-list-loading', 
+                     'style' => 'display:none']) ?>
+        <div id="search-issue-searched-list-section">
+        </div>
     </div>
 
     <div class="col-xs-12" id="search-issue-bottom">

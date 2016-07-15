@@ -5,7 +5,7 @@ use yii\helpers\HtmlPurifier;
     $link_to_thread = $thread->getThreadLink();
     $thread_issues = $thread->getThreadIssues();
     $belongs = $thread->belongToCurrentUser();
-
+    
     $first = true;
 ?>
 <div class="col-xs-9">

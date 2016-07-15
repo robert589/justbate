@@ -42,8 +42,8 @@ class SiteService{
      * For Ajax Response
      * @param $user_id
      */
-    public function getAllIssues($user_id) {
-        return $this->site_dao->getAllIssues($user_id);
+    public function getAllIssues($user_id, $query) {
+        return $this->site_dao->getAllIssues($user_id, $query);
     }
 
 

@@ -108,7 +108,7 @@ class SiteDao{
                             left join
                             (SELECT * from user_followed_issue where user_id = :user_id) current_user_followed_issue
                             on issue.issue_name = current_user_followed_issue.issue_name
-";
+                            where issue.issue_status = 10 ";
     public function getThreadLists( $current_user_id, $issue_name, SiteVoBuilder $builder){
         if($issue_name !== null){
             $results = \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE)->
@@ -225,10 +225,16 @@ class SiteDao{
     /**
      * Json response
      */
-    public function getAllIssues($user_id) {
-        $results = \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE)->
+    public function getAllIssues($user_id, $query) {
+        if($q !== null || $q !== '') {
+
+            return \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE . ' and issue.issue_name like :query')->
+                                    bindParam(':user_id', $user_id)
+                                    ->bindParam(':query', $query)
+                                  ->queryAll();
+        }
+            return \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE)->
                                     bindParam(':user_id', $user_id)
                                   ->queryAll();
-        return $results;
     }
 }
