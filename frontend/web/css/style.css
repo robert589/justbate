@@ -834,13 +834,13 @@ article.block-for-comment div.col-xs-12 {
     padding-right: 1px;
 }
 
-div#button-vote-up,
-div#button-vote-down {
+div.button-vote-up,
+div.button-vote-down {
     padding: 0;
 }
 
-div#button-vote-up button,
-div#button-vote-down button {
+div.button-vote-up button,
+div.button-vote-down button {
     border-radius: 0;
 }
 
@@ -1542,12 +1542,12 @@ button.btn {
         margin: 0 !important;
     }
 
-    div#button-vote-up {
+    div.button-vote-up {
         float: left;
         margin-right: 15px;
     }
 
-    div#button-vote-down {
+    div.button-vote-down {
         float: right;
     }
 

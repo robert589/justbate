@@ -1,6 +1,5 @@
 <?php
 //Rendered from: _listview_child_comment
-use yii\widgets\Pjax;
 use yii\helpers\Html;
 /** @var $comment \common\entity\CommentEntity */
 /** @var $is_thread_comment boolean */
@@ -21,73 +20,46 @@ else{
     $downvote = "<span class='glyphicon glyphicon-chevron-down'></span>";
 }
 
-Pjax::begin([
-    'id' => 'comment_likes_' . $comment_id,
-    'timeout' => false,
-    'enablePushState' => false,
-    'options'=>[
-        'class' => 'comment_votes_pjax',
-        'skipOuterContainers' => true,
-        'container'=>'#comment_likes_' . $comment_id,
-    ]
-]);
 
 ?>
-
-<!-- The vote -->
-<!-- The form only be used as refresh page -->
-<?= Html::beginForm(["comment/comment-vote" ],
-                    'post',
-                    ['id' => 'submit-vote-form-' . $comment_id,
-                     'data-pjax' => '#comment_likes_' . $comment_id,
-                     'class' => 'form-inline submit-vote-form']); ?>
-    <?= Html::hiddenInput("comment_id", $comment_id, ['class' => 'hi-comment-vote-comment-id']) ?>
-    <?= Html::hiddenInput("vote", $vote, ['id' => 'hi-comment-vote-' . $comment_id]) ?>
-    <?= Html::hiddenInput("is_thread_comment", $is_thread_comment) ?>
-    <?= Html::hiddenInput("user_id",$current_user_login_id) ?>
-    <span>
+<div id="comment-vote-section-<?= $comment_id ?>">
+    <?= Html::hiddenInput('comment-vote-old-value', $vote, ['class' => 'comment-vote-old-value']) ?>
+    <span class="btn-group comment-vote-up-section">
         <?php if($vote_up == true) {  ?>
-        <div class="btn-group" id="button-vote-up">
-            <?= Html::submitButton($upvote , [
-                'id' => "btn_vote_up_" . $comment_id ,
-                'class' => 'btn btn-sm btn-default submit-comment-vote-button',
+            <?= Html::button($upvote , [
+                'id' => "comment-vote-button-up-" . $comment_id ,
+                'class' => 'btn btn-default comment-vote-button',
                 'value' => 1,
+                'data-arg' => $comment_id,
                 'disabled' => true])
             ?>
-            <button type="button" class="btn btn-sm btn-disabled"><?= $total_like ?></button>
-        </div>
         <?php } else { ?>
-        <div class="btn-group" id="button-vote-up">
-            <?= Html::submitButton($upvote , [
-                'id' => "btn_vote_up_" . $comment_id ,
-                'class' => 'btn btn-sm btn-default submit-comment-vote-button',
+            <?= Html::button($upvote , [
+                'id' => "comment-vote-button-up-" . $comment_id ,
+                'class' => 'btn btn-default comment-vote-button',
+                'data-arg' => $comment_id,
                 'value' => 1
             ]) ?>
-            <button type="button" class="btn btn-sm btn-disabled"><?= $total_like ?></button>
-        </div>
         <?php } ?>
+        <button type="button" class="btn btn-disabled comment-vote-total"><?= $total_like ?></button>
     </span>
-    <span>
+    <span class="btn-group comment-vote-down-section">
         <?php if($vote_down) {  ?>
-            <div class="btn-group" id="button-vote-down">
-                <?= Html::submitButton($downvote , [
-                    'id' => "btn_vote_down_" . $comment_id ,
-                    'class' => 'btn btn-sm btn-default submit-comment-vote-button',
-                    'value' => -1,
-                    'disabled' => true
-                ]) ?>
-                <button type="button" class="btn btn-sm btn-disabled"><?= $total_dislike ?></button>
-            </div>
+            <?= Html::button($downvote , [
+                'id' => "comment-vote-button-down" . $comment_id ,
+                'class' => 'btn btn-default comment-vote-button',
+                'value' => -1,
+                'data-arg' => $comment_id,
+                'disabled' => true
+            ]) ?>
         <?php } else { ?>
-            <div class="btn-group" id="button-vote-down">
-                <?= Html::submitButton($downvote , [
-                    'id' => "btn_vote_down_" . $comment_id ,
-                    'value' => -1,
-                    'class' => 'btn btn-sm btn-default submit-comment-vote-button',
-                ]) ?>
-                <button type="button" class="btn btn-sm btn-disabled"><?= $total_dislike ?></button>
-            </div>
+            <?= Html::button($downvote , [
+                'id' => "comment-vote-button-down" . $comment_id ,
+                'value' => -1,
+                'data-arg' => $comment_id,
+                'class' => 'btn btn-default comment-vote-button',
+            ]) ?>
         <?php } ?>
+        <button type="button" class="btn btn-disabled comment-vote-total"><?= $total_dislike ?></button>
     </span>
-<?= Html::endForm() ?>
-<?php Pjax::end(); ?>
+</div>

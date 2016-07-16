@@ -34,16 +34,16 @@ $this->title = "Home";
 <?= Dialog::widget() ?>
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
-		<?= $this->render('home-sidenav-issue',
-						 ['issue_list' => $issue_followed_by_user,
-						  'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
+            <?= $this->render('home-sidenav-issue',
+                            ['issue_list' => $issue_followed_by_user,
+                             'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
 
-		<div class="col-xs-12">
-			<?= SideNav::widget([
-					'type' => SideNav::TYPE_DEFAULT,
-					'heading' => 'Trending Topic',
-					'items' => $trending_topic_list	]) ?>
-		</div>
+            <div class="col-xs-12">
+                <?= SideNav::widget([
+                    'type' => SideNav::TYPE_DEFAULT,
+                    'heading' => 'Trending Topic',
+                    'items' => $trending_topic_list	]) ?>
+            </div>
 	</div>
 
 	<div class="col-xs-12 col-md-7 home-main-section">

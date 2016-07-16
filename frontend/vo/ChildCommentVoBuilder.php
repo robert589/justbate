@@ -32,4 +32,19 @@ class ChildCommentVoBuilder extends CommentVoBuilder {
 
 
 
+
+    public function convertToTemplate(){
+        $this->parent_id = '~parent_id';
+        $this->comment_id = '~comment_id';
+        $this->setCommentCreatorFirstName("~first_name");
+        $this->setCommentCreatorLastName("~last_name");
+        $this->setCurrentUserVote("~current_user_vote");
+        $this->setTotalLike("~total_like");
+        $this->setTotalDislike("~total_dislike");
+        $this->setCommentCreatorPhotoPath("default.png");
+        $this->setCommentCreatorUsername("~username");
+        $this->setComment("~comment");
+    }
+
+
 }

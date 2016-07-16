@@ -67,7 +67,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 		<!-- First tab part -->
 		<div class="row" id="first-part">
 			<div class="col-xs-12" style="margin-bottom:12px">
-				<?=	$this->render('_thread_vote', ['thread' => $thread,'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
+				<?=	$this->render('thread-vote', ['thread' => $thread,'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
 				?>
 			</div>
 			<div class="col-xs-12">

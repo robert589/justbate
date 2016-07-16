@@ -126,7 +126,7 @@ function applyTemplate(data){
         .replaceAll('~last_name', data.last_name)
         .replaceAll('~total_like', data.total_like)
         .replaceAll('~total_dislike', data.total_dislike)
-        .replaceAll('~photo_path', data.photo_path)
+        .replaceAll('default.png', data.photo_path)
         .replaceAll('~username', data.username)
         .replaceAll('~comment', data.comment);
 
@@ -148,8 +148,57 @@ $(document).ready(function(){
     }(document, 'script', 'facebook-jssdk'));
 
     $('#loading-bar').height($(document).height());
-
-    $(".thread-vote-radio-button").click(function(element) {
+    
+    $(document).on("click", ".comment-vote-button", function(element) {
+        var is_up = parseInt($(this).val());
+        var comment_id = $(this).data('arg');
+        var comment_vote_section = $("#comment-vote-section-" + comment_id);
+        var comment_vote_old_value = parseInt(comment_vote_section.find(".comment-vote-old-value").val());
+        if(comment_vote_old_value === is_up) {
+            return false;
+        } 
+        var comment_vote_up_section = comment_vote_section.find('.comment-vote-up-section');
+        var comment_vote_down_section = comment_vote_section.find('.comment-vote-down-section');
+        var comment_vote_total_like = parseInt(comment_vote_up_section.find('.comment-vote-total').text());
+        var comment_vote_total_dislike = parseInt(comment_vote_down_section.find('.comment-vote-total').text());
+            
+        if(is_up === 1) {
+            comment_vote_up_section.find('.comment-vote-button').prop('disabled', true);                        
+            comment_vote_down_section.find('.comment-vote-button').prop('disabled', false);
+            comment_vote_up_section.find('.comment-vote-total').text(comment_vote_total_like + 1);
+            if(comment_vote_old_value !== null && !isNaN(comment_vote_old_value)) {
+                comment_vote_down_section.find('.comment-vote-total').text(comment_vote_total_dislike - 1);
+            }
+        } else {
+            comment_vote_down_section.find('.comment-vote-button').prop('disabled', true);                        
+            comment_vote_up_section.find('.comment-vote-button').prop('disabled', false);
+            
+            comment_vote_down_section.find('.comment-vote-total').text(comment_vote_total_dislike + 1);
+            if(comment_vote_old_value !== null && !isNaN(comment_vote_old_value) ) {
+                comment_vote_up_section.find('.comment-vote-total').text(comment_vote_total_like - 1);
+            }
+        }
+        
+        
+        $.ajax({
+            url: $("#base-url").val() + '/comment/comment-vote',
+            type: 'post',
+            data: {comment_id: comment_id, vote: is_up},
+            success: function(data) {
+                if(data) {
+                    
+                } else {
+                    
+                }
+            }
+        });
+        comment_vote_section.find(".comment-vote-old-value").val(is_up); 
+       
+        
+        
+    });
+    
+    $(document).on("click",".thread-vote-radio-button",function(element) {
         var thread_id = $(this).data('arg');
         var thread_vote_section = $("#thread-vote-" + thread_id);
         
@@ -353,7 +402,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.retrieve-child-comment-link', function(event){
         var comment_id = $(this).data('service');
-        if($("#comment_part_" + comment_id).length == 1){
+        if($("#comment_part_" + comment_id).length === 1){
             event.preventDefault();
             if($("#comment_part_" + comment_id).is(":visible")){
                 $("#comment_part_" + comment_id).css("display", "none");
@@ -395,10 +444,6 @@ $(document).ready(function(){
 
     });
 
-    $(document).on('pjax:send', '.comment_votes_pjax', function(event){
-        event.preventDefault();
-        event.stopPropagation();
-    });
 
     $(document).on('pjax:send', '.comment-section-edit-pjax', function(event){
         event.preventDefault();
@@ -443,20 +488,8 @@ $(document).ready(function(){
         });
         return false;
     })
-    .on('submit', '.submit-vote-form', function(event){
-        event.preventDefault();
-        $.pjax.submit(event,
-                      $(this).data('pjax'),
-                        {'push' : false,
-                         'replace' : false,
-                         'timeout' : false,
-                         'skipOuterContainers':true});
-
-        return false;
-    });
 
     $(document).on('submit', '.comment-section-edit-form', function(event){
-
         event.preventDefault();
         $.pjax.submit(event,
             $(this).data('pjax'),
@@ -546,23 +579,6 @@ $(document).ready(function(){
                 return false;
             }
         });
-    });
-
-    // $(document).on("click", "button.comment-options-button", function() {
-    //     var dropdown_comment_id = $(this).attr("data-service");
-    //     $("ul#comment-options-"+dropdown_comment_id).dropdown();
-    //     if (($("ul#comment-options-"+dropdown_comment_id).is(":visible"))) {
-    //         $("div#dropdown-button-"+dropdown_comment_id).css("margin-bottom", "0");
-    //     } else {
-    //         $("div#dropdown-button-"+dropdown_comment_id).css("margin-bottom", "35.09px");
-    //     }
-    //     $("ul#comment-options-"+dropdown_comment_id).slideToggle();
-    // });
-
-    $(document).on("click",".submit-comment-vote-button", function(){
-        var vote = $(this).val();
-        var comment_id = $(this).closest("form").find('.hi-comment-vote-comment-id').val();
-        $("#hi-comment-vote-" + comment_id).val(vote);
     });
 
 

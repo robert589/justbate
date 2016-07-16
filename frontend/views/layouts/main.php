@@ -11,8 +11,7 @@ use yii\bootstrap\Modal;
 use common\models\User;
 use yii\web\JsExpression;
 use common\libraries\UserUtility;
-use common\entity\ChildCommentEntity;
-
+use frontend\vo\ChildCommentVoBuilder;
 //all links
 if(Yii::$app->user->isGuest){
     //all links
@@ -157,7 +156,10 @@ AppAsset::register($this);
                         (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
                         ['id' => 'user-login-id']) ?>
     
-    <?= Html::hiddenInput('username',
+    <?php if(!Yii::$app->user->isGuest) { ?>
+        
+        <?= Html::hiddenInput('username',
+    
                         (UserUtility::buildUserLink(Yii::$app->user->identity->username)) ,
                         ['id' => 'user-login-user-link']) ?>
     
@@ -169,13 +171,16 @@ AppAsset::register($this);
                           UserUtility::buildPhotoPath(Yii::$app->user->identity->photo_path),
                         ['id' => 'user-login-photo-url']) ?>
     
+    <?php } ?>
     <!-- Javascript template -->
     <div style="display: none" id="child-comment-template">
         <div class="item" >
-            <?php $child_comment_dummy = new ChildCommentEntity('comment_id', Yii::$app->user->getId());
-            $child_comment_dummy->convertToTemplate();
+            <?php $builder = new ChildCommentVoBuilder();
+            $builder->setCommentCreatorId(Yii::$app->user->getId());
+            $builder->convertToTemplate();
+            $child_comment_dummy = $builder->build();
             ?>
-            <?= $this->render('../thread/_listview_child_comment',
+            <?= $this->render('../comment/child-comment',
             ['child_comment' => $child_comment_dummy]) ?>
         </div>
     </div>

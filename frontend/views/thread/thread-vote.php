@@ -1,12 +1,9 @@
 <?php
-use yii\widgets\Pjax;
-use kartik\widgets\ActiveForm;
 use yii\helpers\HTMLPurifier;
 use yii\helpers\Html;
 use common\widgets\SimpleRadioButton;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $submit_thread_vote_form \frontend\models\SubmitThreadVoteForm */
-
 $thread_id = $thread->getThreadId();
 $submit_thread_vote_form->thread_id = $thread_id;
 $thread_choices = $thread->getMappedChoices();
