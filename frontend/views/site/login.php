@@ -44,7 +44,7 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                     <?= $form->field($login_form, 'password')->passwordInput(['placeholder' => 'Your Password'], ['class' => 'form-control']) ?>
                 </span>
-                <a href="#"><div id="lupa-password" class="col-xs-12">Forgot Password</div></a>
+                <a href="#"><div id="forgot-password" class="col-xs-12">Forgot Password</div></a>
                 <button id="button-login" class="btn btn-block btn-primary">Login</button>                      
             </div>
             <?php ActiveForm::end() ?>
