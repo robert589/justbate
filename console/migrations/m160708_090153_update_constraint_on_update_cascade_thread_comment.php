@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160708_090153_update_constraint_on_update_cascade extends Migration
+class m160708_090153_update_constraint_on_update_cascade_thread_comment extends Migration
 {
     public function up()
     {

@@ -117,7 +117,7 @@ class RbacController extends Controller
 		$auth->addChild($admin, $promoteUser);
 
 		// assign 'admin' role to user_id
-		$auth->assign($admin, 72);
+		$auth->assign($admin, 79);
 	}
 }
 

@@ -7,7 +7,7 @@ class m160708_095601_update_constraint_on_update_cascade_thread_vote extends Mig
     public function up()
     {
         $this->execute("
-            ALTER TABLE `thread_comment`
+            ALTER TABLE `thread_vote`
                 DROP FOREIGN KEY `thread_vote_ibfk_2`;
 
             ALTER TABLE `thread_vote`
