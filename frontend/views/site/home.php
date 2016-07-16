@@ -4,7 +4,6 @@ use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
 use kartik\dialog\Dialog;
 use yii\helpers\Html;
-
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use frontend\widgets\SearchIssue;
@@ -27,9 +26,7 @@ $this->title = "Home";
 ?>
 
 <?php
-    Modal::begin([
-        'id' => 'home-search-issue-modal'
-            ]);
+    Modal::begin(['id' => 'home-search-issue-modal']);
          echo SearchIssue::widget(['all_issues' => ArrayHelper::map($issue_followed_by_user, 'label', 'label')	]);
     Modal::end();
 ?>

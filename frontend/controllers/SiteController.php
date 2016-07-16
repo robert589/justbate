@@ -35,7 +35,6 @@ use common\models\Comment;
 use common\models\User;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
-use yii\data\ArrayDataProvider;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -432,12 +431,12 @@ class SiteController extends Controller
 	/**
 	 *
 	 */
-	public function actionSearchAllIssues() {
+	public function actionSearchAllIssues($q  = null) {
 		if(Yii::$app->user->isGuest) {
 			return Json::encode("Not authorized");
 		}
 		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
-		$results = $service->getAllIssues(Yii::$app->user->getId());
+		$results = $service->getAllIssues(Yii::$app->user->getId(), $q);
 		echo Json::encode($results);
 	}
 

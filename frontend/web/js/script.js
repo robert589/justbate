@@ -149,9 +149,50 @@ $(document).ready(function(){
 
     $('#loading-bar').height($(document).height());
 
-    $(document).on('change',".user-vote",function() {
-        var service = $(this).data('service');
-        $("form#form_user_vote_"+service).submit();
+    $(".thread-vote-radio-button").click(function(element) {
+        var thread_id = $(this).data('arg');
+        var thread_vote_section = $("#thread-vote-" + thread_id);
+        
+        //update new choice
+        var new_choice_value = $(this).data('label');
+        var old_choice_value = thread_vote_section.find("#thread-vote-old-value-" + thread_id).val();
+        if(old_choice_value === new_choice_value) {
+            return false;
+        }
+        var new_choice_value_section =thread_vote_section.find('.simple-button-group-label-' + new_choice_value);
+        var new_choice_text = new_choice_value_section.text();                
+        var new_choice_total_comments = new_choice_text.substring(new_choice_text.lastIndexOf("(")+1,
+                                                                  new_choice_text.lastIndexOf(")"));
+                                                                   
+        var new_new_choice_text = new_choice_value + " (" + (parseInt(new_choice_total_comments) + 1) + ")";
+        new_choice_value_section.text(new_new_choice_text);
+        new_choice_value_section.parent().addClass(" active disabled");
+       
+        // update old choice text
+        if(old_choice_value !== null) {
+            var old_choice_label_section = thread_vote_section.find('.simple-button-group-label-' + old_choice_value);
+            var old_choice_label_text = old_choice_label_section.text();
+            var old_choice_total_comments = old_choice_label_text.substring(old_choice_label_text.lastIndexOf("(")+1,
+                                                                               old_choice_label_text.lastIndexOf(")"));
+            var new_old_choice_text = old_choice_value + " (" + (parseInt(old_choice_total_comments) - 1) + ")";
+            old_choice_label_section.text(new_old_choice_text);
+            old_choice_label_section.parent().removeClass("disabled");
+       
+        }  
+        $.ajax({
+            url: $("#base-url").val() + '/thread/submit-vote',
+            type: 'post',
+            data: {thread_id: thread_id, vote: new_choice_value},
+            success: function(data) {
+                if(data) {
+                    
+                } else {
+                    
+                }
+            }
+        });
+        thread_vote_section.find("#thread-vote-old-value-" + thread_id).val(new_choice_value);
+        
     });
 
     $(document).on('submit', '.form_user_thread_vote', function(event){

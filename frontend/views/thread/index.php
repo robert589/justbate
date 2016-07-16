@@ -21,28 +21,28 @@ $guest = $thread->isGuest();
 $current_user_anonymous = $thread->getCurrentUserAnonymous();
 $first = 1;
 foreach($comment_providers as $thread_choice_item => $comment_provider){
-	$content_comment_item['label'] = Html::encode($thread_choice_item);
-	$content_comment_item['content'] =  ListView::widget([
-		'dataProvider' => $comment_provider,
-		'summary' => false,
-		'itemOptions' => ['class' => 'item'],
-		'layout' => "{summary}\n{items}\n{pager}",
-		'itemView' => function ($thread_comment, $key, $index, $widget) {
-			return $this->render('../comment/thread-comment'	,
-									['thread_comment' => $thread_comment,
-									 'child_comment_form' => new \frontend\models\ChildCommentForm()]);
-		}
-	]);
+    $content_comment_item['label'] = Html::encode($thread_choice_item);
+    $content_comment_item['content'] =  ListView::widget([
+            'dataProvider' => $comment_provider,
+            'summary' => false,
+            'itemOptions' => ['class' => 'item'],
+            'layout' => "{summary}\n{items}\n{pager}",
+            'itemView' => function ($thread_comment, $key, $index, $widget) {
+                    return $this->render('../comment/thread-comment'	,
+                                        ['thread_comment' => $thread_comment,
+                                         'child_comment_form' => new \frontend\models\ChildCommentForm()]);
+            }
+    ]);
 
-	if($first == 1){
-		$content_comment_item['active'] = true;
-		$first = 0;
-	}
-	else{
-		$content_comment_item['active'] = false;
-	}
+    if($first == 1){
+            $content_comment_item['active'] = true;
+            $first = 0;
+    }
+    else{
+            $content_comment_item['active'] = false;
+    }
 
-	$content_comment[] = $content_comment_item;
+    $content_comment[] = $content_comment_item;
 }
 
 //start of html

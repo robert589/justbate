@@ -35,7 +35,7 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
 			<?= HtmlPurifier::process($thread_description, Constant::DefaultPurifierConfig()) ?>
 		</div>
 		<div align="center">
-			<?= $this->render('../thread/_thread_vote',
+			<?= $this->render('../thread/thread-vote',
 							 ['thread' => $thread,
 							  'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
 		</div>
