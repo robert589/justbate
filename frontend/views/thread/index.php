@@ -58,7 +58,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 <div class="col-xs-12 col-md-8" id="thread-main-body" style="background: white; padding-bottom: 30px;">
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
 		<div id="thread-details" class="col-xs-12">
-			<?= $this->render('_title_description_vote',
+			<?= $this->render('thread-section',
 				['thread' => $thread ,
 				 'edit_thread_form' => new \frontend\models\EditThreadForm(),
 				 'submit_vote_form' => $submit_vote_form])
@@ -67,12 +67,14 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 		<!-- First tab part -->
 		<div class="row" id="first-part">
 			<div class="col-xs-12" style="margin-bottom:12px">
-				<?=	$this->render('thread-vote', ['thread' => $thread,'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
+				<?=	
+                                    $this->render('thread-vote', ['thread' => $thread,
+                                        'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
 				?>
 			</div>
 			<div class="col-xs-12">
 				<div class="inline">
-					<?= $this->render('_retrieve_comment_button', ['thread' => $thread]) ?>
+					<?= $this->render('retrieve-comment-button', ['thread' => $thread]) ?>
 				</div>
 				<div class="inline" style="margin-left: 5px">
 					<?= \frontend\widgets\CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
@@ -88,8 +90,8 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 		</div>
 	</div>
 	<div  id="comment_section" class="section col-xs-12">
-		<?= $this->render('_comment_input_box', ['comment_model' => $comment_model,
-	 												'thread' => $thread]) ?>
+		<?= $this->render('thread-comment-input-box', ['comment_model' => $comment_model,
+                                                            'thread' => $thread]) ?>
 	</div>
 	<div class="col-xs-12 section">
 		<div id="comment-tab">
@@ -107,5 +109,5 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 </div>
 
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
-	<?= Html::hiddenInput('thread_id', $thread_id) ?>
+    <?= Html::hiddenInput('thread_id', $thread_id) ?>
 <?php ActiveForm::end() ?>

@@ -11,10 +11,14 @@ use \yii\helpers\Html;
 </div>
 
 <hr>
+<?php if($totalCount >= $perPage) { ?>
 <div class="col-xs-12" id="<?= $id . '-load-btn-container' ?>">
-    <?= Html::button($navigationText, ['data-url' => $requestUrl, 'data-arg' => $id, 'class' =>'infinite-scroll-load-btn',
+    <?= Html::button($navigationText, ['data-url' => $requestUrl, 
+                                        'data-arg' => $id, 'class' =>'infinite-scroll-load-btn',
                                         'align' => 'left']) ?>
 </div>
+
+<?php } ?>
 
 <?= Html::hiddenInput('page', 1, ['id' => $id . '-current-page'] ) ?>
 <?= Html::hiddenInput('per-page', $perPage, ['id' => $id . '-per-page'] ) ?>

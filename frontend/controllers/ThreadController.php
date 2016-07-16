@@ -108,7 +108,7 @@ class ThreadController extends Controller
 		$thread = $service->getThreadInfoForRetrieveCommentInput( $_POST['thread_id'],Yii::$app->user->getId(), new ThreadVoBuilder());
 
 
-		return $this->renderAjax('../thread/_comment_input_box',
+		return $this->renderAjax('../thread/thread-comment-input-box',
 				['thread' => $thread,
 	             'comment_input_retrieved' => true,
 				 'comment_model' => new CommentForm()]);

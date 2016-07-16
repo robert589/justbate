@@ -25,7 +25,7 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
 
 <article data-service="<?= $thread_id ?>" class="list-thread">
 	<div class="row" id="thread-issue">
-		<?= $this->render('../thread/_thread_issues', ['thread' => $thread]) ?>
+		<?= $this->render('../thread/thread-issues', ['thread' => $thread]) ?>
 	</div>
 	<div class="col-xs-12 thread-view">
 		<div class="col-xs-12 thread-link" align="center">

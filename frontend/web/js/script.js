@@ -234,7 +234,10 @@ $(document).ready(function(){
             data: {thread_id: thread_id, vote: new_choice_value},
             success: function(data) {
                 if(data) {
-                    
+                     if($("#comment_input_box_section_" + thread_id).length === 0) {
+                        $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
+                        $("#retrieve-input-box-button-" + thread_id).click();
+                     }
                 } else {
                     
                 }
