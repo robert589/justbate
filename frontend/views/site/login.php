@@ -19,7 +19,7 @@
             <a href="https://www.justbate.com/site/auth?authclient=facebook">
                 <span class="input-group register-data">
                     <span class="input-group-addon"><span class="fa fa-facebook"></span></span>
-                    <input type="text" class="form-control" value="Register With Facebook" readonly="true" />
+                    <input type="text" class="form-control" value="Continue With Facebook" readonly="true" />
                 </span>
             </a>
 

@@ -147,8 +147,11 @@ input[type='checkbox'].select-issue-checkbox {
 }
 
 label.search-issue {
-    padding: 3px;
+    padding: 5px;
+    font-size: 12pt;
     background: #ddd;
+    font-weight: 100;
+    border-radius: 5px;
     border: 1px solid #ddd;
     font-family: 'Montserrat', sans-serif;
 }
@@ -627,6 +630,14 @@ div.user-comment-reaction {
     padding-top: 15px;
 }
 
+div.user-comment-reaction div.col-xs-12:first-child {
+    z-index: 99999;
+}
+
+div.user-comment-reaction div.col-xs-12:last-child {
+    z-index: 99997;
+}
+
 div.user-comment-reaction div.col-xs-11 hr {
     margin-top: 5px !important;
     margin-bottom: 5px !important;
@@ -835,6 +846,12 @@ div.comment-tab div.tabs-above ul.nav-tabs li {
 input[id^="dropdown-comment-input-"],
 table[id^='user-table-comment-'] {
     display: none;
+    position: absolute;
+    z-index: 99999;
+}
+
+div.user-comment-reaction {
+    z-index: 0 !important;
 }
 
 input[id^="dropdown-comment-input-"]:checked ~ table[id^='user-table-comment-'] {
