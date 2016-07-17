@@ -20,7 +20,7 @@ use common\components\Constant;
                         <?= $form->field($create_thread_form,
                                         'title',
                                         ['addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-pencil"></i>']]])
-                                  ->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Topic title"]) ?>
+                                 ->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Topic title"]) ?>
                     </div>
                 </div>
             </div> <!-- div.col-xs-12 -->

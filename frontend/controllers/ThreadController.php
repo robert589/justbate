@@ -2,28 +2,21 @@
 namespace frontend\controllers;
 
 use common\components\LinkConstructor;
-use common\creator\CommentCreator;
 use common\creator\CreatorFactory;
 use common\creator\ThreadCommentCreator;
 use common\creator\ThreadCreator;
 use common\entity\CommentEntity;
 use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
-use common\models\ThreadAnonymous;
-use frontend\models\CommentVoteForm;
+use frontend\models\ThreadViewForm;
 use frontend\models\DeleteCommentForm;
 use frontend\models\DeleteThreadForm;
 use frontend\models\EditCommentForm;
 use frontend\models\NotificationForm;;
 use frontend\models\SubmitThreadVoteForm;
 use frontend\models\ThreadAnonymousForm;
-
 use frontend\service\ServiceFactory;
-use frontend\vo\ChildCommentVo;
-use frontend\vo\ChildCommentVoBuilder;
-use frontend\vo\ThreadVo;
 use frontend\vo\ThreadVoBuilder;
-use frontend\widgets\ThreadComment;
 use Yii;
 use yii\web\Controller;
 use frontend\models\CommentForm;
@@ -36,14 +29,12 @@ use common\models\Thread;
  */
 class ThreadController extends Controller
 {
-
 	/**
 	 * @var ServiceFactory
 	 */
 	private $serviceFactory;
 
-
-	public function init() {
+        public function init() {
 		$this->serviceFactory = new ServiceFactory();
 	}
 
@@ -54,6 +45,7 @@ class ThreadController extends Controller
 		if(empty($_GET['id'])) {
 			return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
 		}
+                
 		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
 		$thread = $service->getThreadInfo( $_GET['id'],Yii::$app->user->getId(), new ThreadVoBuilder());
 		$commentModel = new CommentForm();
@@ -64,7 +56,9 @@ class ThreadController extends Controller
 		if($thread->getThreadStatus() === Thread::STATUS_BANNED) {
 			return $this->render('banned');
 		}
-		return $this->render('index', ['thread' => $thread,
+		$this->updateThreadView($_GET['id']);
+                    
+                return $this->render('index', ['thread' => $thread,
 			                           'comment_model' => $commentModel,
 									   'submit_vote_form' => $submit_vote_form,
 		                               ]);
@@ -189,6 +183,8 @@ class ThreadController extends Controller
             if(!$submit_thread_vote_form->submitVote()){
                 Yii::$app->end("Failed to store votes, please try again later ");
             }
+            $this->updateThreadView($_POST['thread_id']);
+                    
             return true;
 	}
 
@@ -296,14 +292,17 @@ class ThreadController extends Controller
 
 	public function actionRequestAnonymous(){
 		if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
-			$thread_id = $_POST['thread_id'];
-			$user_id = $_POST['user_id'];
+                    $thread_id = $_POST['thread_id'];
+                    $user_id = $_POST['user_id'];
 
-			//bad practice, please remove during refactoring
-			$thread_anon_form = new ThreadAnonymousForm();
-			$thread_anon_form->thread_id = $thread_id;
-			$thread_anon_form->user_id = $user_id;
-			return $thread_anon_form->requestAnon();
+                    //bad practice, please remove during refactoring
+                    $thread_anon_form = new ThreadAnonymousForm();
+                    $thread_anon_form->thread_id = $thread_id;
+                    $thread_anon_form->user_id = $user_id;
+                    
+                    $this->updateThreadView($thread_id);
+                    
+                    return $thread_anon_form->requestAnon();
 		}
 	}
 
@@ -321,5 +320,11 @@ class ThreadController extends Controller
 		}
 	}
         
+        private function updateThreadView($thread_id) {
+            $thread_view_form = new ThreadViewForm();
+            $thread_view_form->user_id = Yii::$app->user->getId();
+            $thread_view_form->thread_id = $thread_id;
+            $thread_view_form->store();            
+        }
 
 }
