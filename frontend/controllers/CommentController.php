@@ -52,34 +52,27 @@ class CommentController extends Controller{
      * return: render
      */
     public function actionSubmitChildComment() {
-        $child_comment_form = new ChildCommentForm();
-        if(isset($_POST['user_id'])  && isset($_POST['parent_id'])) {
-            $user_id = $_POST['user_id'];
-            $parent_id = $_POST['parent_id'];
-            $child_comment_form->user_id = $user_id;
-            $child_comment_form->parent_id = $parent_id;
-            if(!($child_comment_form->load(Yii::$app->request->post()) && $child_comment_form->validate())){
-                //error
+        if(isset($_POST['text']) && isset($_POST['comment_id'])) {
+            $child_comment_form = new ChildCommentForm();
+            $child_comment_form->user_id = Yii::$app->user->getId();
+            $child_comment_form->parent_id = $_POST['comment_id'];
+            $child_comment_form->child_comment = $_POST['text'];
+            if(!$child_comment_form->validate()){
+                return false;
             }
-
-            $thread_id = ThreadComment::findOne(['comment_id' => $parent_id])->thread_id;
-            if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
-                //error
+            $comment_id = $child_comment_form->parent_id;
+            $thread_id = ThreadComment::findOne(['comment_id' =>$comment_id])->thread_id;
+            if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $comment_id)){
+                return false;
             }
             if(!($new_comment_id = $child_comment_form->store())){
-                //error
+                return false;
             }
-            $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
-            $vo  = $service->getChildCommentInfo($user_id, $new_comment_id);
-            return $this->renderAjax('child-comment',
-                ['child_comment' => $vo
-                ]);
-
+            return true;
         }
         else{
-            return $this->renderAjax('error');
-        }
-
+           return false;
+        }   
     }
 
     private function updateChildCommentNotification($actor_id, $thread_id, $comment_id){

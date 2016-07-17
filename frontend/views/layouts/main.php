@@ -159,17 +159,20 @@ AppAsset::register($this);
     <?php if(!Yii::$app->user->isGuest) { ?>
         
         <?= Html::hiddenInput('username',
+                            Yii::$app->user->identity->username ,
+                            ['id' => 'user-login-username']) ?>
     
-                        (UserUtility::buildUserLink(Yii::$app->user->identity->username)) ,
-                        ['id' => 'user-login-user-link']) ?>
+        <?= Html::hiddenInput('first-name',
+                            (Yii::$app->user->identity->first_name) ,
+                            ['id' => 'user-login-first-name']) ?>
+
+        <?= Html::hiddenInput('first-name',
+                        (Yii::$app->user->identity->last_name) ,
+                        ['id' => 'user-login-last-name']) ?>
     
-    <?= Html::hiddenInput('full-name',
-                        (Yii::$app->user->identity->first_name . ' ' . Yii::$app->user->identity->last_name) ,
-                        ['id' => 'user-login-full-name']) ?>
-    
-    <?= Html::hiddenInput('photo-url', 
-                          UserUtility::buildPhotoPath(Yii::$app->user->identity->photo_path),
-                        ['id' => 'user-login-photo-url']) ?>
+        <?= Html::hiddenInput('photo-path', 
+                              Yii::$app->user->identity->photo_path,
+                            ['id' => 'user-login-photo-path']) ?>
     
     <?php } ?>
     <!-- Javascript template -->

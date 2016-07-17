@@ -118,20 +118,6 @@ ChildCommentWebSocket.prototype.getCommentId = function(){
     return this.comment_id;
 };
 
-
-function applyTemplate(data){
-    var copied = template;
-    copied = copied .replaceAll('~comment_id', data.comment_id)
-        .replaceAll('~first_name', data.first_name)
-        .replaceAll('~last_name', data.last_name)
-        .replaceAll('~total_like', data.total_like)
-        .replaceAll('~total_dislike', data.total_dislike)
-        .replaceAll('default.png', data.photo_path)
-        .replaceAll('~username', data.username)
-        .replaceAll('~comment', data.comment);
-
-    $("#comment_part_" + data.parent_id + " .list-view").prepend(copied);
-}
 $(document).ready(function(){
     var $this = $(this);
     var child_comment_template = $this.find("#child-comment-template").html();
@@ -446,51 +432,55 @@ $(document).ready(function(){
 
 
     });
+    
+    $(document).on('click', '.child-comment-input-box-submit-button', function(event){
+        var comment_id = $(this).data('service');
+        var text_to_submit = $("#child-comment-input-box-text-area-" + comment_id).val();
+        if(text_to_submit.trim() === null || text_to_submit.trim() === ''){
+            return false;
+        }
+        var data ={comment_id: comment_id, 
+                    first_name: $("#user-login-first-name").val(),
+                    last_name: $("#user-login-last-name").val(),
+                    total_like: 0, total_dislike: 0,
+                    photo_path: $("#user-login-photo-path").val(),
+                    username: $("#user-login-username").val(), 
+                    comment: text_to_submit};
+                
+        var html_data = applyTemplate(data);
+        $("#child-comment-input-box-text-area-" + comment_id).val("");
+        $("#child-comment-list-new-comment-" + comment_id).prepend(html_data);
+        $.ajax({
+            url: $("#base-url").val() + "/comment/submit-child-comment",
+            type: 'post',
+            data : {comment_id: comment_id, text: text_to_submit},
+            success: function(data) {
+            }
+        });
+        
+        
+    });
+    
+    
 
-
+    function applyTemplate(data){
+        var copied = $("#child-comment-template").html();
+        copied = copied .replaceAll('~comment_id', data.comment_id)
+            .replaceAll('~first_name', data.first_name)
+            .replaceAll('~last_name', data.last_name)
+            .replaceAll('~total_like', data.total_like)
+            .replaceAll('~total_dislike', data.total_dislike)
+            .replaceAll('default.png', data.photo_path)
+            .replaceAll('~username', data.username)
+            .replaceAll('~comment', data.comment);
+        return copied;
+    }
+    
     $(document).on('pjax:send', '.comment-section-edit-pjax', function(event){
         event.preventDefault();
         event.stopPropagation();
     });
-
-    $(document).on('pjax:complete', '.child-comment-input-box-pjax', function(){
-        var parent_id = $(this).data('service');
-        return false;
-    });
-
-    $(document).on('pjax:send', '.child-comment-input-box-pjax', function(event){
-        event.preventDefault();
-        event.stopPropagation();
-    });
-
-    $(document).on('pjax:timeout', '.child-comment-input-box-pjax', function(){
-       event.preventDefault();
-        alert('timeout');
-       return false;
-    });
-
-    $(document).on('pjax:error', '.child-comment-input-box-pjax', function(){
-        event.preventDefault();
-        alert('error');
-    })
-
-    .on('beforeSubmit', '.submit_child_comment_form',function(event, jqXHR, settings) {
-        var form = $(this);
-        if(form.find('.has-error').length) {
-            return false;
-        }
-         var comment_id = form.attr('data-service');
-        $.ajax({
-            url: form.attr('action'),
-            type: 'post',
-            data: form.serialize(),
-            success: function(data) {
-                $("#submit_child_comment_form_" + comment_id).find("#childcommentform-child_comment").val("");
-                $("#child-comment-list-new-comment-" + comment_id).prepend(data);
-            }
-        });
-        return false;
-    })
+     
 
     $(document).on('submit', '.comment-section-edit-form', function(event){
         event.preventDefault();

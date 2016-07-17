@@ -79,7 +79,8 @@ class ListNotificationDao{
                                 left join thread_anonymous
                                 on notification_entity.url_key_value = thread_anonymous.thread_id
                                 and thread_anonymous.user_id = last_actor.actor_id and notification_entity.notification_type_name = 'thread'
-             					where last_actor.actor_id is not null ";
+             					where last_actor.actor_id is not null
+                                order by notification_actors.updated_at desc";
 
 
     function buildListNotification($user_id ,ListNotificationVoBuilder $builder){
