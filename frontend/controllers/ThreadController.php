@@ -108,7 +108,7 @@ class ThreadController extends Controller
 		$thread = $service->getThreadInfoForRetrieveCommentInput( $_POST['thread_id'],Yii::$app->user->getId(), new ThreadVoBuilder());
 
 
-		return $this->renderAjax('../thread/_comment_input_box',
+		return $this->renderAjax('../thread/thread-comment-input-box',
 				['thread' => $thread,
 	             'comment_input_retrieved' => true,
 				 'comment_model' => new CommentForm()]);
@@ -171,22 +171,25 @@ class ThreadController extends Controller
 
 
 	/**
+         * API
 	 * @return string
 	 * @throws \yii\base\ExitException
 	 */
 	public function actionSubmitVote() {
-		$submit_thread_vote_form  = new SubmitThreadVoteForm();
-		$submit_thread_vote_form->user_id = Yii::$app->user->getId();
-		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
-		if($submit_thread_vote_form->load(Yii::$app->request->post()) && $submit_thread_vote_form->validate()) {
-			if(!$submit_thread_vote_form->submitVote()){
-				Yii::$app->end("Failed to store votes, please try again later ");
-			}
-		}
-		$thread = $service->getThreadInfoVote( $submit_thread_vote_form->thread_id,Yii::$app->user->getId(), new ThreadVoBuilder());
-		return $this->renderAjax('../thread/_thread_vote',
-			['thread' => $thread, 'submit_thread_vote_form' => new SubmitThreadVoteForm()]);
-
+            if(!isset($_POST['thread_id']) || !isset($_POST['vote'])) {
+                return false;
+            }            
+            if(Yii::$app->user->isGuest){
+                return false;
+            }            
+            $submit_thread_vote_form  = new SubmitThreadVoteForm();
+            $submit_thread_vote_form->user_id = Yii::$app->user->getId();
+            $submit_thread_vote_form->thread_id = $_POST['thread_id'];
+            $submit_thread_vote_form->choice_text = $_POST['vote'];
+            if(!$submit_thread_vote_form->submitVote()){
+                Yii::$app->end("Failed to store votes, please try again later ");
+            }
+            return true;
 	}
 
 	/**
@@ -317,6 +320,6 @@ class ThreadController extends Controller
 			return $thread_anon_form->cancelAnon();
 		}
 	}
-
+        
 
 }

@@ -29,9 +29,4 @@ class ChildCommentVo extends CommentVo{
     {
         return $this->parent_id;
     }
-
-
-
-
-
 }

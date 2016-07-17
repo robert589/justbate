@@ -4,7 +4,6 @@ use kop\y2sp\ScrollPager;
 use kartik\sidenav\SideNav;
 use kartik\dialog\Dialog;
 use yii\helpers\Html;
-
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use frontend\widgets\SearchIssue;
@@ -27,9 +26,7 @@ $this->title = "Home";
 ?>
 
 <?php
-    Modal::begin([
-        'id' => 'home-search-issue-modal'
-            ]);
+    Modal::begin(['id' => 'home-search-issue-modal']);
          echo SearchIssue::widget(['all_issues' => ArrayHelper::map($issue_followed_by_user, 'label', 'label')	]);
     Modal::end();
 ?>
@@ -37,16 +34,16 @@ $this->title = "Home";
 <?= Dialog::widget() ?>
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
-		<?= $this->render('home-sidenav-issue',
-						 ['issue_list' => $issue_followed_by_user,
-						  'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
+            <?= $this->render('home-sidenav-issue',
+                            ['issue_list' => $issue_followed_by_user,
+                             'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
 
-		<div class="col-xs-12">
-			<?= SideNav::widget([
-					'type' => SideNav::TYPE_DEFAULT,
-					'heading' => 'Trending Topic',
-					'items' => $trending_topic_list	]) ?>
-		</div>
+            <div class="col-xs-12">
+                <?= SideNav::widget([
+                    'type' => SideNav::TYPE_DEFAULT,
+                    'heading' => 'Trending Topic',
+                    'items' => $trending_topic_list	]) ?>
+            </div>
 	</div>
 
 	<div class="col-xs-12 col-md-7 home-main-section">

@@ -10,9 +10,8 @@ use common\widgets\Alert;
 use yii\bootstrap\Modal;
 use common\models\User;
 use yii\web\JsExpression;
-use kartik\widgets\Typeahead;
-use yii\helpers\Url;
-
+use common\libraries\UserUtility;
+use frontend\vo\ChildCommentVoBuilder;
 //all links
 if(Yii::$app->user->isGuest){
     //all links
@@ -99,7 +98,6 @@ AppAsset::register($this);
                             ],
                         ])?>
                     </li>
-
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id="menubar-right">
                     <?php if(Yii::$app->user->isGuest){ ?>
@@ -153,17 +151,36 @@ AppAsset::register($this);
     <?= Html::hiddenInput('base_url', Yii::$app->request->baseUrl, ['id' => 'base-url' ]) ?>
     <!-- hidden input -->
 
+    <!-- User stored session -->
     <?= Html::hiddenInput('user_id',
-    (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
-    ['id' => 'user-login-id']) ?>
-
+                        (Yii::$app->user->getId() !== null) ? Yii::$app->user->getId() : null,
+                        ['id' => 'user-login-id']) ?>
+    
+    <?php if(!Yii::$app->user->isGuest) { ?>
+        
+        <?= Html::hiddenInput('username',
+    
+                        (UserUtility::buildUserLink(Yii::$app->user->identity->username)) ,
+                        ['id' => 'user-login-user-link']) ?>
+    
+    <?= Html::hiddenInput('full-name',
+                        (Yii::$app->user->identity->first_name . ' ' . Yii::$app->user->identity->last_name) ,
+                        ['id' => 'user-login-full-name']) ?>
+    
+    <?= Html::hiddenInput('photo-url', 
+                          UserUtility::buildPhotoPath(Yii::$app->user->identity->photo_path),
+                        ['id' => 'user-login-photo-url']) ?>
+    
+    <?php } ?>
     <!-- Javascript template -->
     <div style="display: none" id="child-comment-template">
         <div class="item" >
-            <?php $child_comment_dummy = new \common\entity\ChildCommentEntity('comment_id', Yii::$app->user->getId());
-            $child_comment_dummy->convertToTemplate();
+            <?php $builder = new ChildCommentVoBuilder();
+            $builder->setCommentCreatorId(Yii::$app->user->getId());
+            $builder->convertToTemplate();
+            $child_comment_dummy = $builder->build();
             ?>
-            <?= $this->render('../thread/_listview_child_comment',
+            <?= $this->render('../comment/child-comment',
             ['child_comment' => $child_comment_dummy]) ?>
         </div>
     </div>

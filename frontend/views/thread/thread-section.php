@@ -36,7 +36,7 @@ Pjax::begin([
 );?>
     <div id="shown_title_description_part">
         <div id="thread-issue-wrapper" class="col-xs-12">
-            <?= $this->render('_thread_issues', [ 'thread' => $thread]) ?>
+            <?= $this->render('thread-issues', [ 'thread' => $thread]) ?>
         </div>
         <div class="col-xs-12 thread-title">
             <?= Html::encode($title) ?>

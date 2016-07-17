@@ -35,7 +35,6 @@ use common\models\Comment;
 use common\models\User;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
-use yii\data\ArrayDataProvider;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -354,15 +353,12 @@ class SiteController extends Controller
 		$create_thread_form->user_id = Yii::$app->user->getId();
 
 		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
-			if($thread_id = $create_thread_form->create()){
-				return $this->redirect(LinkConstructor::threadLinkConstructor($thread_id, $create_thread_form->title));
-			}
-		}
-		else{
-			Yii::$app->end(print_r($create_thread_form->getErrors()));
+                    if($thread_id = $create_thread_form->create()){
+                            return $this->redirect(LinkConstructor::threadLinkConstructor($thread_id, $create_thread_form->title));
+                    }
 		}
 
-		return $this->renderAjax('home', ['create_thread_form' => $create_thread_form]);
+		return $this->renderAjax('home-create-thread', ['create_thread_form' => $create_thread_form]);
 	}
 
 	/**
@@ -432,12 +428,12 @@ class SiteController extends Controller
 	/**
 	 *
 	 */
-	public function actionSearchAllIssues() {
+	public function actionSearchAllIssues($q  = null) {
 		if(Yii::$app->user->isGuest) {
 			return Json::encode("Not authorized");
 		}
 		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
-		$results = $service->getAllIssues(Yii::$app->user->getId());
+		$results = $service->getAllIssues(Yii::$app->user->getId(), $q);
 		echo Json::encode($results);
 	}
 
