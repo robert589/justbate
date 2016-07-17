@@ -64,7 +64,7 @@ Application.prototype.unsubscribe = function(){
  * @param self
  * @constructor
  */
-var ChildCommentWebSocket = function(comment_id, template){
+ var ChildCommentWebSocket = function(comment_id, template){
     this.comment_id = comment_id;
     var child_comment_template = template;
     this.conn = new WebSocket('ws://52.6.157.157:8080?' + comment_id);
@@ -76,13 +76,13 @@ var ChildCommentWebSocket = function(comment_id, template){
             console.log(
                 'Closing... The connection is going throught'
                 + 'the closing handshake (readyState ' + this.readyState + ')'
-            );
+                );
         }
         else if(this.readyState == 3) {
             console.log(
                 'Connection closed... The connection has been closed'
                 + 'or could not be opened (readyState ' + this.readyState + ')'
-            );
+                );
             console.log(msg);
         }
         else {
@@ -110,13 +110,19 @@ ChildCommentWebSocket.prototype.subscribe = function(){
 ChildCommentWebSocket.prototype.sendMessage = function(comment_id, user_id){
     console.log("Sending data");
     this.conn.send(JSON.stringify({command: "message",
-                                   comment_id: comment_id,
-                                   user_id: user_id}));
+     comment_id: comment_id,
+     user_id: user_id}));
 };
 
 ChildCommentWebSocket.prototype.getCommentId = function(){
     return this.comment_id;
 };
+
+// search-issue 
+$('label.search-issue').on('click', function() {
+    $(this).toggleClass('checked');
+    $(this).toggleClass('unchecked');
+});
 
 $(document).ready(function(){
     var $this = $(this);
@@ -126,11 +132,11 @@ $(document).ready(function(){
 
     //facebook
     (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-            fjs.parentNode.insertBefore(js, fjs);
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
     $('#loading-bar').height($(document).height());
@@ -147,7 +153,7 @@ $(document).ready(function(){
         var comment_vote_down_section = comment_vote_section.find('.comment-vote-down-section');
         var comment_vote_total_like = parseInt(comment_vote_up_section.find('.comment-vote-total').text());
         var comment_vote_total_dislike = parseInt(comment_vote_down_section.find('.comment-vote-total').text());
-            
+        
         if(is_up === 1) {
             comment_vote_up_section.find('.comment-vote-button').prop('disabled', true);                        
             comment_vote_down_section.find('.comment-vote-button').prop('disabled', false);
@@ -179,7 +185,7 @@ $(document).ready(function(){
             }
         });
         comment_vote_section.find(".comment-vote-old-value").val(is_up); 
-       
+        
         
         
     });
@@ -197,22 +203,22 @@ $(document).ready(function(){
         var new_choice_value_section =thread_vote_section.find('.simple-button-group-label-' + new_choice_value);
         var new_choice_text = new_choice_value_section.text();                
         var new_choice_total_comments = new_choice_text.substring(new_choice_text.lastIndexOf("(")+1,
-                                                                  new_choice_text.lastIndexOf(")"));
-                                                                   
+          new_choice_text.lastIndexOf(")"));
+        
         var new_new_choice_text = new_choice_value + " (" + (parseInt(new_choice_total_comments) + 1) + ")";
         new_choice_value_section.text(new_new_choice_text);
         new_choice_value_section.parent().addClass(" active disabled");
-       
+        
         // update old choice text
         if(old_choice_value !== null) {
             var old_choice_label_section = thread_vote_section.find('.simple-button-group-label-' + old_choice_value);
             var old_choice_label_text = old_choice_label_section.text();
             var old_choice_total_comments = old_choice_label_text.substring(old_choice_label_text.lastIndexOf("(")+1,
-                                                                               old_choice_label_text.lastIndexOf(")"));
+             old_choice_label_text.lastIndexOf(")"));
             var new_old_choice_text = old_choice_value + " (" + (parseInt(old_choice_total_comments) - 1) + ")";
             old_choice_label_section.text(new_old_choice_text);
             old_choice_label_section.parent().removeClass("disabled");
-       
+            
         }  
         $.ajax({
             url: $("#base-url").val() + '/thread/submit-vote',
@@ -220,15 +226,15 @@ $(document).ready(function(){
             data: {thread_id: thread_id, vote: new_choice_value},
             success: function(data) {
                 if(data) {
-                     if($("#comment_input_box_section_" + thread_id).length === 0) {
-                        $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
-                        $("#retrieve-input-box-button-" + thread_id).click();
-                     }
-                } else {
-                    
+                   if($("#comment_input_box_section_" + thread_id).length === 0) {
+                    $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
+                    $("#retrieve-input-box-button-" + thread_id).click();
                 }
+            } else {
+                
             }
-        });
+        }
+    });
         thread_vote_section.find("#thread-vote-old-value-" + thread_id).val(new_choice_value);
         
     });
@@ -237,11 +243,11 @@ $(document).ready(function(){
         var data_pjax = $(this).data('pjax');
 
         $.pjax.submit(event, data_pjax ,
-                     {'push' : false,
-                      'replace' : false,
-                      'timeout' : false,
-                      'skipOuterContainers':true,
-                      'scrollTo':false});
+           {'push' : false,
+           'replace' : false,
+           'timeout' : false,
+           'skipOuterContainers':true,
+           'scrollTo':false});
     });
 
     checkNewNotification();
@@ -275,10 +281,10 @@ $(document).ready(function(){
     });
 
     $("#home-issue-edit-popover").click(function(){
-       $("#home-search-issue-modal").modal("show")
-            .find('#home-search-issue-modal')
-            .load($(this).attr("value"));
-    });
+     $("#home-search-issue-modal").modal("show")
+     .find('#home-search-issue-modal')
+     .load($(this).attr("value"));
+ });
 
     $(document).on('click', '#resend-unverified-email-button',function(){
         $("#resendchangeemailform-command").val("resend");
@@ -326,7 +332,7 @@ $(document).ready(function(){
     /**
      *
      */
-    $("img#avatar").mouseout(function() {
+     $("img#avatar").mouseout(function() {
         $("img#avatar").css("opacity","1");
         $("button#upload-image").css("opacity","0");
     });
@@ -334,7 +340,7 @@ $(document).ready(function(){
     /**
      *
      */
-    $("#upload-image").click(function(){
+     $("#upload-image").click(function(){
         $("#uploadProfilePicModal").modal("show")
         .find('#uploadProfilePicModal')
         .load($(this).attr("value"));
@@ -379,12 +385,12 @@ $(document).ready(function(){
         }
         else{
             $.pjax.click(event,
-                        {container: "#comment_section_" + thread_id,
-                         push:false,
-                         scrollTo:false,
-                         timeout:6000,
-                         skipOuterContainers:true}
-                        );
+                {container: "#comment_section_" + thread_id,
+                push:false,
+                scrollTo:false,
+                timeout:6000,
+                skipOuterContainers:true}
+                );
         }
     });
 
@@ -404,10 +410,10 @@ $(document).ready(function(){
         }
         else{
             $.pjax.click(event,{container: "#child_comment_" + comment_id,
-                                push:false,
-                                scrollTo : false,
-                                timeout:false,
-                                skipOuterContainers:true});
+                push:false,
+                scrollTo : false,
+                timeout:false,
+                skipOuterContainers:true});
         }
     });
 
@@ -450,6 +456,7 @@ $(document).ready(function(){
         var html_data = applyTemplate(data);
         $("#child-comment-input-box-text-area-" + comment_id).val("");
         $("#child-comment-list-new-comment-" + comment_id).prepend(html_data);
+
         $.ajax({
             url: $("#base-url").val() + "/comment/submit-child-comment",
             type: 'post',
@@ -487,9 +494,9 @@ $(document).ready(function(){
         $.pjax.submit(event,
             $(this).data('pjax'),
             {'push' : false,
-                'replace' : false,
-                'timeout' : false,
-                'skipOuterContainers':true});
+            'replace' : false,
+            'timeout' : false,
+            'skipOuterContainers':true});
 
         return false;
     });
@@ -585,7 +592,7 @@ $(document).ready(function(){
             buttons: ['undo', 'redo', 'format', 'bold', 'italic', 'image', 'lists'],
             imageUpload: '/frontend/web/photos'
 
-    });
+        });
         $("#comment_shown_part_" + comment_id).hide();
         $("#comment_edit_part_" + comment_id).show();
     });
@@ -649,12 +656,12 @@ $(document).ready(function(){
         event.preventDefault();
         var data_pjax = $(this).data('pjax');
         $.pjax.submit(event,
-                    data_pjax ,
-                    {'push' : false,
-                     'replace' : false,
-                     'timeout' : false,
-                     'skipOuterContainers':true,
-                     'scrollTo':false});
+            data_pjax ,
+            {'push' : false,
+            'replace' : false,
+            'timeout' : false,
+            'skipOuterContainers':true,
+            'scrollTo':false});
         return false;
     });
 
@@ -697,8 +704,8 @@ $(document).ready(function(){
     });
 
     $(document).on("pjax:complete", "#notifbar", function(e) {
-       document.title = document.title.slice(document.title.indexOf(')') + 1);
-    });
+     document.title = document.title.slice(document.title.indexOf(')') + 1);
+ });
     $.pjax.defaults.scrollTo = false;
     $.pjax.defaults.skipOuterContainers = true;
 });
