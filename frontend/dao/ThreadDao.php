@@ -19,27 +19,41 @@ use frontend\vo\ThreadVo;
 use frontend\vo\ThreadVoBuilder;
 use yii\data\ArrayDataProvider;
 
-class ThreadDao{
+class ThreadDao {
         const GET_ONE_COMMENT = "
             SELECT chosen_comment.*,
-                    CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
-                    count(case when total_vote.vote = 1 then 1 else null end) as total_like,
-                    count(case when total_vote.vote = -1 then 1 else null end) as total_dislike
+                  (chosen_comment.not_viewed * 5 + chosen_comment.total_like * 3) as parameter
             from(
                 SELECT comment_info.*,
-                      (thread_anonymous.anonymous_id) as comment_anonymous
-               from (SELECT comment.*, thread_comment.thread_id, thread_comment.choice_text, user.first_name, user.last_name,
-                            user.photo_path, user.username
+                      (thread_anonymous.anonymous_id) as comment_anonymous, 
+                      (viewed.comment_id is null) as not_viewed,
+                      CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
+                      count(case when total_vote.vote = 1 then 1 else null end) as total_like,
+                      count(case when total_vote.vote = -1 then 1 else null end) as total_dislike  
+                from (SELECT comment.*, 
+                            thread_comment.thread_id, 
+                            thread_comment.choice_text, 
+                            user.first_name, 
+                            user.last_name,
+                            user.photo_path, 
+                            user.username                         
                      from thread_comment,comment, user
                      where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
-                       and comment.user_id = user.id and comment.comment_status = 10) as comment_info
-                     left join thread_anonymous
-                      on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
-                     limit 1) chosen_comment
-            left join comment_vote user_vote
-            on chosen_comment.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
-            left join comment_vote total_vote
-            on total_vote.comment_id  = chosen_comment.comment_id";
+                     and comment.user_id = user.id and comment.comment_status = 10) as comment_info
+                left join thread_anonymous
+                 on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
+                left join (SELECT comment_id from comment_view where comment_view.user_id = :user_id) viewed
+                on viewed.comment_id = comment_info.comment_id  
+                left join comment_vote user_vote
+                on comment_info.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
+                left join comment_vote total_vote
+                on total_vote.comment_id  = comment_info.comment_id
+                group by comment_info.comment_id
+            ) chosen_comment
+            order by chosen_comment.not_viewed desc, parameter desc
+            limit 1
+
+        ";
 
         const COMMENT_BY_CHOICE_TEXT = "
             SELECT comments.*,

@@ -32,39 +32,44 @@ class SiteDao{
     const ISSUE_NUM_FOLLOWERS = "SELECT count(*) from user_followed_issue where issue_name = :issue_name";
 
     const THREAD_LISTS = "Select parent_thread_info.* ,
-                        		thread_vote.choice_text,
+                                thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
-                               ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 3
-                               + (parent_thread_info.total_comments <> 0) * 3 as parameter   ,
-                               (anonymous.anonymous_id) as thread_anonymous
-                        from(
-							Select thread_info.*, count(comments.comment_id) as total_comments
-							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
-								  from thread, user
-									  where thread.user_id = user.id and
-								  thread_status = 10
-							) thread_info
-							left join (select thread_comment.comment_id, thread_comment.thread_id
-							    			from thread_comment, comment
-									  where thread_comment.comment_id = comment.comment_id and
-									  comment.comment_status = 10) comments
-							on thread_info.thread_id = comments.thread_id
-							group by thread_info.thread_id
-							order by (created_at) desc
+                                (viewed.thread_id is null) * (5) + 
+                                (parent_thread_info.total_comments <> 0) * 3 as parameter   ,
+                                (anonymous.anonymous_id) as thread_anonymous
+                                
+                          from(
+                                Select thread_info.*, count(comments.comment_id) as total_comments
+                                from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
+                                      from thread, user
+                                      where thread.user_id = user.id and
+                                            thread_status = 10
+                                ) thread_info
+                                left join (select thread_comment.comment_id, thread_comment.thread_id
+                                                        from thread_comment, comment
+                                                  where thread_comment.comment_id = comment.comment_id and
+                                                  comment.comment_status = 10) comments
+                                on thread_info.thread_id = comments.thread_id
+                                group by thread_info.thread_id
+                                order by (created_at) desc
 
-						) parent_thread_info
-						left join thread_vote
-						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
-                        left join (SELECT thread_id, user_followed_issue.issue_name as issue_followed_name from thread_issue, user_followed_issue
-                                   where thread_issue.issue_name = user_followed_issue.issue_name
-                                  and user_followed_issue.user_id = :user_id) followed_issue
-                        on followed_issue.thread_id = parent_thread_info.thread_id
-                        left join (SELECT thread_id, anonymous_id
-                                   from thread_anonymous
-                                   where thread_anonymous.user_id = :user_id) anonymous
-                        on parent_thread_info.thread_id = anonymous.thread_id
-                        group by(parent_thread_info.thread_id)
-                        order by(parameter) desc";
+                            ) parent_thread_info
+                            left join thread_vote
+                            on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
+                            left join (SELECT thread_id, user_followed_issue.issue_name as issue_followed_name from thread_issue, user_followed_issue
+                                       where thread_issue.issue_name = user_followed_issue.issue_name
+                                      and user_followed_issue.user_id = :user_id) followed_issue
+                            on followed_issue.thread_id = parent_thread_info.thread_id
+                            left join (SELECT thread_id, anonymous_id
+                                       from thread_anonymous
+                                       where thread_anonymous.user_id = :user_id) anonymous
+                            on parent_thread_info.thread_id = anonymous.thread_id
+                            left join (SELECT thread_id
+                                        from thread_view
+                                        where thread_view.user_id = :user_id) viewed
+                            on parent_thread_info.thread_id = viewed.thread_id
+                            group by(parent_thread_info.thread_id)
+                            order by(parameter) desc";
 
     const THREAD_LISTS_WITH_ISSUE = "Select parent_thread_info.* ,
                         		thread_vote.choice_text,
@@ -109,6 +114,7 @@ class SiteDao{
                             (SELECT * from user_followed_issue where user_id = :user_id) current_user_followed_issue
                             on issue.issue_name = current_user_followed_issue.issue_name
                             where issue.issue_status = 10 ";
+    
     public function getThreadLists( $current_user_id, $issue_name, SiteVoBuilder $builder){
         if($issue_name !== null){
             $results = \Yii::$app->db->createCommand(self::THREAD_LISTS_WITH_ISSUE)->
