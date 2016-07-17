@@ -135,6 +135,28 @@ ul.dropdown-menu div.kv-spin-center {
     padding: 15px;
 }
 
+/* SEARCH ISSUE WIDGET */
+div#search-issue-selector {
+    text-align: left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+input[type='checkbox'].select-issue-checkbox {
+    display: none;
+}
+
+label.search-issue {
+    padding: 3px;
+    background: #ddd;
+    border: 1px solid #ddd;
+    font-family: 'Montserrat', sans-serif;
+}
+
+label.search-issue.checked {
+    opacity: 0.25;
+}
+
 /* SEARCH BOX */
 li#search-box {
     width: 50%;
