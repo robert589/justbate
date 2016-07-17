@@ -118,6 +118,19 @@ ChildCommentWebSocket.prototype.getCommentId = function(){
     return this.comment_id;
 };
 
+// register dropdown
+$(document).ready(function() {
+    $("a#register-dropdown").click(function() {
+        $("div#email-register").slideToggle(0);
+        $("a#register-dropdown").css("display", "none");
+    });
+
+    $("div#email-register").click(function() {
+        $("div#email-register").slideToggle(0);
+        $("a#register-dropdown").css("display", "block");
+    });    
+});
+
 // search-issue 
 $('label.search-issue').on('click', function() {
     $(this).toggleClass('checked');

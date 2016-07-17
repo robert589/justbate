@@ -10,25 +10,38 @@
 
  $this->title = 'Login';
  ?>
-<div class="container-fluid" id="login-register-wrapper">
+ <div class="container-fluid" id="login-register-wrapper">
     <div class="col-md-6 col-sm-12" id="login-register-form">
         <div class="col-xs-12" id="justbate-image-logo">
             <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>" style="height:130px"/>
         </div>
         <div class="col-md-6 col-xs-12" id="register-form">
-            <a href="https://www.justbate.com/site/auth?authclient=facebook">
+            <a href="https://www.justbate.com/site/auth?authclient=facebook" id="register-dropdown">
                 <span class="input-group register-data">
                     <span class="input-group-addon"><span class="fa fa-facebook"></span></span>
                     <input type="text" class="form-control" value="Continue With Facebook" readonly="true" />
                 </span>
             </a>
 
-            <a href="<?= Yii::$app->request->baseUrl . '/signup' ?>"">
+            <a href="#" id="register-dropdown">
                 <span class="input-group register-data">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
                     <input type="text" class="form-control" value="Register With Email" readonly="true" />
                 </span>
             </a>
+
+            <div class="col-xs-12" id="email-register">
+                <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+                <div class="col-xs-6"><input class="form-control" type="text" name="Signupform[first_name]" placeholder="First Name" /></div>
+                <div class="col-xs-6"><input class="form-control" type="text" name="Signupform[last_name]" placeholder="Last Name" /></div>
+                <input class="form-control" type="email" name="Signupform[email]" placeholder="Email Address" />
+                <input class="form-control" type="password" name="Signupform[password]" placeholder="Your Password" />
+                <div class="col-xs-12">
+                    <div class="col-xs-9"><button class="btn btn-primary btn-block" id="register-button">Submit</button></div>
+                    <div class="col-xs-3"><a href="#" id="cancel-register"><div class="col-xs-12">Cancel</div></a></div>
+                </div>
+                <?php ActiveForm::end(); ?>
+            </div>
             <hr class="hide-md" />
         </div>
 

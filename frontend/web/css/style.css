@@ -62,6 +62,32 @@ li.user_item a[href$='home'] {
     overflow: visible;
 }
 
+/* REGISTER */
+div#email-register {
+    display: none;
+    padding: 15px;
+}
+
+a#register-dropdown {
+    width: 100%;
+}
+
+a#cancel-register {
+    float: right;
+    margin-top: 15px;
+    padding: 7.5px;
+}
+
+form#form-signup,
+div#email-register,
+div#email-register div[class^='col-xs-'] {
+    padding: 0 !important;
+}
+
+button#register-button {
+    margin-top: 15px;
+}
+
 /* DROPDOWN */
 .item > .dropdown {
     overflow:hidden
@@ -353,21 +379,22 @@ div#login-form form[action="/startUp/login"] div {
     margin-right: -15px;
 }
 
+div#register-form {
+    padding-right: 45px !important;
+}
+
 div#login-form form.form-group div,
-div#register-form,
 div#login-form {
     padding: 0;
 }
 
-div#register-form { padding-right: 45px !important; }
+div#login-form {
+    border-left: 1px solid #ddd;
+}
 
 span.login-data,
 span.register-data {
     width: 100%;
-}
-
-div#login-form {
-    border-left: 1px solid #ddd;
 }
 
 span.register-data span.input-group-addon, 
@@ -1628,6 +1655,12 @@ button.btn {
         font-size: 8pt;
     }
 
+    /* REGISTER */
+    div#email-register {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
     div.navbar-header button {
         margin-right: 45px;
     }
@@ -1660,10 +1693,6 @@ button.btn {
         background: none;
         margin-right: 15px;
         padding-right: 0 !important;
-    }
-
-    div#login-form { 
-        border: 0;
     }
 
     div#login-form form[action="/startUp/login"] div {
@@ -1908,7 +1937,7 @@ button.btn {
 
     input#loginform-email,
     input#loginform-password {
-        width: 100%;
+        width: calc(100% + 15px);
         margin-left: 0;
     }
 
