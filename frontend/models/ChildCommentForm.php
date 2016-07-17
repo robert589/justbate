@@ -1,12 +1,9 @@
 <?php
 namespace frontend\models;
-
-use common\models\ChildComment;
-use common\models\User;
 use common\models\Comment;
-
 use yii\base\Model;
-use Yii;
+use common\models\ChildComment;
+
 
 /**
  * Signup form

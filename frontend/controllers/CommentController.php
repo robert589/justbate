@@ -3,9 +3,7 @@
 namespace frontend\controllers;
 
 use common\creator\CommentCreator;
-use common\creator\CreatorFactory;
-use common\creator\ThreadCommentCreator;
-use common\entity\ChildCommentVo;
+use frontend\models\CommentViewForm;
 use common\entity\ThreadCommentEntity;
 use common\models\Thread;
 use common\models\ThreadComment;
@@ -34,6 +32,8 @@ class CommentController extends Controller{
         if(isset($_GET['comment_id']) && isset($_GET['id'])){
             $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
             $vo = $service->getThreadCommentInfo(Yii::$app->user->getId(), $_GET['id'], $_GET['comment_id']);
+            $this->updateCommentView($_GET['comment_id']);
+        
             if($vo === null){
                 return $this->redirect(Yii::$app->request->baseUrl . '/site/not-found');
             }
@@ -68,6 +68,7 @@ class CommentController extends Controller{
             if(!($new_comment_id = $child_comment_form->store())){
                 return false;
             }
+            $this->updateCommentView($_POST['comment_id']);
             return true;
         }
         else{
@@ -92,6 +93,8 @@ class CommentController extends Controller{
         $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
         $vo  = $service->getChildCommentList(Yii::$app->user->getId(), $comment_id, $thread_id);
         $child_comment_form = new ChildCommentForm();
+        $this->updateCommentView($_GET['comment_id']);
+        
         return $this->render('child-comment-list', ['thread_comment' => $vo,
             'retrieved' => true,
             'is_thread_comment' => false,
@@ -113,6 +116,7 @@ class CommentController extends Controller{
         $thread_comment_vo  = $service->getNewChildCommentList(Yii::$app->user->getId(), $comment_id, $_GET['page'], $_GET['per-page']);
         $child_comment_vos = $thread_comment_vo->getChildCommentList();
         $view ="";
+        
         foreach($child_comment_vos->getModels() as $child_comment) {
             $view .= $this->renderPartial('child-comment', ['child_comment' => $child_comment]);
         }
@@ -146,6 +150,8 @@ class CommentController extends Controller{
         $comment_vote_form->user_id = Yii::$app->user->getId();
         $comment_vote_form->vote = $_POST['vote'];
         $comment_vote_form->comment_id =  $_POST['comment_id'];
+        
+        $this->updateCommentView($_POST['comment_id']);
         if (!$comment_vote_form->validate()) {
             return false;
         }
@@ -180,12 +186,20 @@ class CommentController extends Controller{
         $comment_entity = new ThreadCommentEntity($comment_vote_form->comment_id, $comment_vote_form->user_id);
         $creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
         $comment_entity =$creator->get([CommentCreator::NEED_COMMENT_VOTE]);
+        
+        $this->updateCommentView($comment_vote_form->comment_id);
         return $this->renderAjax('child-comment-votes',
             ['comment' => $comment_entity,
                 'trigger_login_form' => $trigger_login_form,
                 'is_thread_comment' => $_POST['is_thread_comment']]);
     }
 
-
+    private function updateCommentView($comment_id) {
+        $comment_view_form = new CommentViewForm();
+        $comment_view_form->user_id = Yii::$app->user->getId();
+        $comment_view_form->comment_id = $comment_id;
+        $comment_view_form->store();
+        
+    }
 }
 

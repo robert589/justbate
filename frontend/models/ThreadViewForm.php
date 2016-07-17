@@ -1,6 +1,7 @@
 <?php
-
+namespace frontend\models;
 use common\models\ThreadView;
+use yii\base\Model;
 /**
  * Signup form
  */
