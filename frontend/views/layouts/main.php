@@ -10,7 +10,6 @@ use common\widgets\Alert;
 use yii\bootstrap\Modal;
 use common\models\User;
 use yii\web\JsExpression;
-use common\libraries\UserUtility;
 use frontend\vo\ChildCommentVoBuilder;
 //all links
 if(Yii::$app->user->isGuest){
@@ -175,7 +174,6 @@ AppAsset::register($this);
                             ['id' => 'user-login-photo-path']) ?>
     
     <?php } ?>
-    <!-- Javascript template -->
     <div style="display: none" id="child-comment-template">
         <div class="item" >
             <?php $builder = new ChildCommentVoBuilder();

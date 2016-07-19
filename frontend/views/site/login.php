@@ -11,7 +11,7 @@
  $this->title = 'Login';
  ?>
  <div class="container-fluid" id="login-register-wrapper">
-    <div class="col-md-6 col-sm-12" id="login-register-form">
+    <div class="col-md-10 col-md-offset-1 col-sm-12" id="login-register-form">
         <div class="col-xs-12" id="justbate-image-logo">
             <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>" style="height:130px"/>
         </div>

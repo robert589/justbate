@@ -367,16 +367,6 @@ div.modal-body button#sign-up {
     border-radius: 0;
 }
 
-/* LOGIN FORM */
-div#login-register-form {
-    top: 50%;
-    left: 50%;
-    padding: 30px;
-    position: fixed;
-    background: #fff;
-    transform: translate(-50%, -50%);
-}
-
 div#justbate-image-logo {
     padding: 0;
     text-align: center;
@@ -387,6 +377,10 @@ div#login-form form[action="/startUp/login"] div {
     padding: 0;
     padding-left: 15px;
     margin-right: -15px;
+}
+
+div#login-register-form {
+    background:white;
 }
 
 div#register-form {
@@ -1565,20 +1559,6 @@ button.btn {
     cursor: pointer;
 }
 
-/* MEDIA QUERY */
-@media screen and (max-height: 400px) {
-    div#justbate-image-logo {
-        margin-bottom: 15px;
-    }
-
-    div#login-register-form {
-        top: 50% !important;
-        width: 100%;
-        overflow-y: auto !important;
-        max-height: calc(100% - 90px);
-    }
-}
-
 @media screen and (max-width: 400px) {
     .yii-debug-toolbar__bar {
         display: none !important;
@@ -1660,19 +1640,6 @@ button.btn {
     }
 }
 
-@media screen and (max-height: 436px) {
-    div#login-register-form {
-        padding: 30px !important;
-        padding-left: 0 !important;
-        max-height: 100vh;
-        overflow-y: auto;
-    }
-
-    input#loginform-email,
-    input#loginform-password {
-        width: calc(100% - 30px) !important;
-    }
-}
 
 @media screen and (max-width: 768px) {
     body {
@@ -2303,13 +2270,8 @@ button.btn {
 @media screen and (min-width: 768px) {
     .nav-container {
         margin-left:100px;
-
     }
 
-    /* SIGN UP */
-    div#signup-table {
-        margin-bottom: 15px;
-    }
 
     div#facebook-signup-wrapper,
     div#email-signup-wrapper {

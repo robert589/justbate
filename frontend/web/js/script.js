@@ -167,6 +167,9 @@ $(document).ready(function(){
     $('#loading-bar').height($(document).height());
     
     $(document).on("click", ".comment-vote-button", function(element) {
+        if(checkGuest() === true){
+            return false;
+        };
         var is_up = parseInt($(this).val());
         var comment_id = $(this).data('arg');
         var comment_vote_section = $("#comment-vote-section-" + comment_id);
@@ -216,6 +219,9 @@ $(document).ready(function(){
     });
     
     $(document).on("click",".thread-vote-radio-button",function(element) {
+        if(checkGuest() === true){
+            return false;
+        };
         var thread_id = $(this).data('arg');
         var thread_vote_section = $("#thread-vote-" + thread_id);
         
@@ -373,10 +379,24 @@ $(document).ready(function(){
 
     //menu bar
     $("#loginMenu").click(function(){
+        beginLoginModal();
+    });
+    
+    function checkGuest() {
+        var login_id = $("#user-login-id").val();
+        if(login_id === ''  || login_id === null || login_id === undefined ) {
+            beginLoginModal();
+            return true;
+        }
+        
+        return false;
+    }
+    function beginLoginModal() {
         $("#loginModal").modal("show")
         .find('#loginModal')
         .load($(this).attr("value"));
-    });
+        
+    }
 
     $("div#create-thread-dropdown").click(function(event) {
         $("div#create-thread-main-form").slideToggle("fast");
@@ -465,6 +485,9 @@ $(document).ready(function(){
     });
     
     $(document).on('click', '.child-comment-input-box-submit-button', function(event){
+        if(checkGuest() === true){
+            return false;
+        };
         var comment_id = $(this).data('service');
         var text_to_submit = $("#child-comment-input-box-text-area-" + comment_id).val();
         if(text_to_submit.trim() === null || text_to_submit.trim() === ''){
