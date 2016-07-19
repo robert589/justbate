@@ -38,7 +38,7 @@
                 <input class="form-control" type="password" name="Signupform[password]" placeholder="Your Password" />
                 <div class="col-xs-12">
                     <div class="col-xs-9"><button class="btn btn-primary btn-block" id="register-button">Submit</button></div>
-                    <div class="col-xs-3"><a href="#" id="cancel-register"><div class="col-xs-12">Cancel</div></a></div>
+                    <div id="cancel-register-button" class="col-xs-3"><a href="#" id="cancel-register"><div class="col-xs-12">Cancel</div></a></div>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
@@ -57,10 +57,17 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                     <?= $form->field($login_form, 'password')->passwordInput(['placeholder' => 'Your Password'], ['class' => 'form-control']) ?>
                 </span>
-                <a href="#"><div id="forgot-password" class="col-xs-12">Forgot Password</div></a>
+                <div id="forgot-password" class="col-xs-12">Forgot Password</div>
+                <div class="col-xs-12" id="forgot-password-wrapper">
+                    <div class="col-xs-9"><input type="email" class="form-control" placeholder="Your Email" /></div>
+                    <div class="col-xs-3"><button style="width: calc(100% + 15px);" class="btn btn-primary btn-block">Submit</button></div>
+                    <div class="col-xs-12" id="cancel-button">Cancel</div>
+                </div>
                 <button id="button-login" class="btn btn-block btn-primary">Login</button>                      
             </div>
             <?php ActiveForm::end() ?>
         </div>
     </div>
+</div>
+</div>
 </div>

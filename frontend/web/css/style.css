@@ -438,6 +438,22 @@ div#login-label {
     margin-bottom: 15px;
 }
 
+/* FORGOT PASSWORD */
+div#forgot-password-wrapper {
+    display: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+div#forgot-password-wrapper,
+div#forgot-password-wrapper div {
+    padding: 0 !important;
+}
+
+div#forgot-password-wrapper div.col-xs-12 {
+    margin-top: 15px;
+    text-align: right;
+}
 
 /* SIGN UP */
 div#signup-page {
@@ -1704,6 +1720,11 @@ button.btn {
         margin-left: 0.25px !important;
         width: calc(100% + 30px);
     }
+
+    /* FORGOT PASSWORD */
+    div#forgot-password-wrapper div.col-xs-3 button { 
+        width: calc(100% + 30px) !important;
+    }
     
     /* HOME */
     div#home-container.container {
@@ -1949,6 +1970,10 @@ button.btn {
     div#register-form { 
         padding-right: 0 !important;
     }
+
+    /* FORGOT PASSWORD */
+    div#forgot-password-wrapper div.col-xs-9 { width: 75% !important; }
+    div#forgot-password-wrapper div.col-xs-3 { width: 25% !important; }
 }
 
 @media screen and (min-width: 992px) {

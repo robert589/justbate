@@ -118,17 +118,29 @@ ChildCommentWebSocket.prototype.getCommentId = function(){
     return this.comment_id;
 };
 
-// register dropdown
+
 $(document).ready(function() {
+    // register dropdown
     $("a#register-dropdown").click(function() {
         $("div#email-register").slideToggle(0);
         $("a#register-dropdown").css("display", "none");
     });
 
-    $("div#email-register").click(function() {
+    $("div#cancel-register-button").click(function() {
         $("div#email-register").slideToggle(0);
         $("a#register-dropdown").css("display", "block");
     });    
+
+    // forgot password 
+    $("div#forgot-password").click(function() {
+        $("div#forgot-password-wrapper").slideToggle(0);
+        $("div#forgot-password").css("display", "none");
+    });
+
+    $("div#cancel-button").click(function() {
+        $("div#forgot-password-wrapper").slideToggle(0);
+        $("div#forgot-password").css("display", "block");
+    });
 });
 
 // search-issue 
