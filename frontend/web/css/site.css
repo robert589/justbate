@@ -14,7 +14,6 @@ body {
 
 a{
     color:black;
-    letter-spacing: -0.8px;
 }
 
 a:hover{
@@ -241,8 +240,5 @@ a.desc:after {
         width: calc(100% + 30px);
     }
 
-    div.home-main-section{
-        margin-top: 0;
-    }
 
 }

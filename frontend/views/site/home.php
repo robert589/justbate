@@ -47,53 +47,50 @@ $this->title = "Home";
 	</div>
 
 	<div class="col-xs-12 col-md-7 home-main-section">
+            <?php if($has_issue){ ?>
+            <div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
+                    <?= $this->render('home-issue-header',
+                                                    ['issue_name' => $issue_name,
+                                                    'issue_num_followers' => $num_followers_of_issue,
+                                                    'user_is_follower' => $user_follow_issue]) ?>
+            </div>
+            <?php } ?>
 
-		<!-- Issue header if exist-->
-		<?php if($has_issue){ ?>
-			<div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
-				<?= $this->render('home-issue-header',
-								['issue_name' => $issue_name,
-								'issue_num_followers' => $num_followers_of_issue,
-								'user_is_follower' => $user_follow_issue]) ?>
-			</div>
-		<?php }	?>
+            <?= $this->render('home-create-thread', ['create_thread_form' => $create_thread_form]) ?>
 
-		<?= $this->render('home-create-thread', ['create_thread_form' => $create_thread_form]) ?>
-
-
-		<div class="col-xs-12 home-thread-list">
-			<div class="col-xs-12" id="main-post-desc">
-				<?= ListView::widget([
-					'id' => 'home-thread-list',
-					'dataProvider' => $thread_list_provider,
-					'summary' => false,
-					'itemOptions' => ['class' => 'item'],
-					'pager' => [
-						'class' => ScrollPager::class,
-						'enabledExtensions' => [
-							ScrollPager::EXTENSION_TRIGGER,
-							ScrollPager::EXTENSION_SPINNER,
-							ScrollPager::EXTENSION_NONE_LEFT,
-							ScrollPager::EXTENSION_PAGING,
-						],
-						'triggerOffset' => 100,
-					],
-					'itemView' => function ($thread, $key, $index, $widget) {
-						return $this->render('home-thread-list',[
-							'thread' => $thread]
-						);
-					}])?>
-			</div>
-		</div>
+            <div class="col-xs-12 home-thread-list">
+                <div class="col-xs-12" id="main-post-desc">
+                    <?= ListView::widget([
+                        'id' => 'home-thread-list',
+                        'dataProvider' => $thread_list_provider,
+                        'summary' => false,
+                        'itemOptions' => ['class' => 'item'],
+                        'pager' => [
+                            'class' => ScrollPager::class,
+                            'enabledExtensions' => [
+                                ScrollPager::EXTENSION_TRIGGER,
+                                ScrollPager::EXTENSION_SPINNER,
+                                ScrollPager::EXTENSION_NONE_LEFT,
+                                ScrollPager::EXTENSION_PAGING,
+                            ],
+                            'triggerOffset' => 100,
+                        ],
+                        'itemView' => function ($thread, $key, $index, $widget) {
+                            return $this->render('home-thread-list',[
+                                    'thread' => $thread]
+                            );
+                        }])?>
+                </div>
+            </div>
 	</div>
 
 	<div class="col-md-2 hidden-xs home-right-side">
-		<div class="col-md-12" style="margin: 5px">
-			<div class="fb-page" data-href="https://www.facebook.com/justbate/" data-tabs="timeline" data-width="180" data-height="150" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/justbate/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/justbate/">Justbate</a></blockquote></div>
-		</div>
-		<div class="col-md-12">
-			<b></a><?= Html::a("About us", ['site/about'], ['style' => 'font-size:10px']) ?></b>
-		</div>
+            <div class="home-right-side-facebook-like">
+                <div class="fb-page" data-href="https://www.facebook.com/justbate/" data-tabs="timeline" data-width="180" data-height="150" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/justbate/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/justbate/">Justbate</a></blockquote></div>
+            </div>
+            <div class="home-right-side-information">
+                <b></a><?= Html::a("About us", ['site/about'], ['style' => 'font-size:10px']) ?></b>
+            </div>
 	</div>
 </div>
 

@@ -11,6 +11,16 @@
     padding-top: 0 !important;
 }
 
+.home-right-side-facebook-like {
+    margin-left:0;
+    margin-top: 0;
+}
+
+.home-right-side-information {
+    margin-top:8px;
+    margin-left: 0;
+    padding-left: 0;
+}
 body {
     background: #E6E6E6 !important;
     color: #000 !important;
@@ -298,7 +308,7 @@ li#notification-bar div#notifbar:hover {
 
 li#notif-expansion {
     background: none !important;
-    padding: 15px;
+    padding: 16px;
     padding-left: 15px;
     padding-right: 0;
     margin-left: 15px;
@@ -701,7 +711,7 @@ select#give-comment-select {
     border-radius: 0;
 }
 
-div/user-comment-reaction div.col-xs-12:last-child {
+div.user-comment-reaction div.col-xs-12:last-child {
     z-index: -1;
 }
 
@@ -1650,7 +1660,7 @@ button.btn {
     }
 }
 
-@media and (max-height: 436px) {
+@media screen and (max-height: 436px) {
     div#login-register-form {
         padding: 30px !important;
         padding-left: 0 !important;
@@ -1881,7 +1891,10 @@ button.btn {
     div#left-sidebar {
         display: none !important;
     }
-
+    
+    div.nav-container {
+        margin-right : 10%;
+    }
     /* LOGIN */
     div#login-form {
         padding-left: 0;
@@ -1986,8 +1999,12 @@ button.btn {
     }
 }
 
-@media screen and (min-width: 935px) and (max-width: 992px) {
 
+@media screen and (min-width: 935px) and (max-width: 992px) {
+    
+    div.nav-container {
+        margin-right:10%;
+    }
     /* Search Menu */
     ul#menubar-left {
         display: none;
@@ -2021,28 +2038,23 @@ button.btn {
         overflow-y: scroll;
         font-size: 8pt;
     }
+    
+    .user_item {
+        margin-left:4px;
+    }
 
     div.home-main-section {
         margin-top: 0px;
+        width: 70%;
     }
 
-    ul.nav li.item {
-        padding-left: 15px;
-    }
 
-    div.container {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    div#left-sidebar {
+    div.home-right-side {
         display: none;
     }
-
+    
+    
     div#home-container {
-        /*margin-top: 73px !important;*/
-        margin-left: -15px;
-        width: calc(100% + 30px);
         padding-left: 0;
         padding-right: 0;
     }
@@ -2066,9 +2078,6 @@ button.btn {
         width: 50% !important;
     }
 
-    li#home_menu_bar{
-        width: 20%;
-    }
     li#notification-bar{
         width:35%;
         white-space: nowrap;
@@ -2145,12 +2154,9 @@ button.btn {
 
     li#notif-expansion a.dropdown-toggle {
         margin-left: -10px;
+        text-align: center;
     }
 
-    div#create-thread {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
 
     div#main-content {
         margin-left: 0;
@@ -2160,9 +2166,6 @@ button.btn {
         margin-bottom: 0;
     }
 
-    div.container {
-        width: 100%;
-    }
 
     div#verify-email {
         margin-left: 0;
@@ -2181,10 +2184,6 @@ button.btn {
         padding-left: -15px;
     }
 
-    li#notif-expansion {
-        text-align: left;
-        padding-left: 30px;
-    }
 
     a#trigger_notification {
         padding-left: 10px;
@@ -2304,6 +2303,7 @@ button.btn {
 @media screen and (min-width: 768px) {
     .nav-container {
         margin-left:100px;
+
     }
 
     /* SIGN UP */
