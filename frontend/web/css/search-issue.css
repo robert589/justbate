@@ -5,3 +5,18 @@
 #search-issue-searched-list {
 	  width : 100%;
 }
+
+label.search-issue {
+    padding: 5px;
+    font-size: 12pt;
+    background: #ddd;
+    font-weight: 100;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.search-issue-followed-by-user label,
+#search-issue-searched-list label.default {
+	opacity: 1;
+}
