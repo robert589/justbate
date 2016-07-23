@@ -143,12 +143,6 @@ $(document).ready(function() {
     });
 });
 
-// search-issue 
-$('label.search-issue').on('click', function() {
-    $(this).toggleClass('checked');
-    $(this).toggleClass('unchecked');
-});
-
 $(document).ready(function(){
     var $this = $(this);
     var child_comment_template = $this.find("#child-comment-template").html();

@@ -9,3 +9,9 @@ $(function(){
     	});
 	});
 });
+
+$('label.search-issue').on('click', function() {
+    $(this).toggleClass('search-issue-checked');
+    $(this).toggleClass('search-issue-unchecked');
+});
+
