@@ -375,6 +375,7 @@ div#login-form form[action="/startUp/login"] div {
 
 div#login-register-form {
     background:white;
+    padding-bottom: 30px;
 }
 
 div#register-form {
@@ -412,6 +413,7 @@ span.login-data span.input-group-addon {
 }
 
 div#forgot-password {
+    cursor: pointer;
     padding: 15px !important;
     text-align: center;
 }
@@ -427,6 +429,11 @@ span.register-data input {
 
 input#loginform-email,
 input#loginform-password {
+    margin-left: -15px;
+}
+
+div.field-loginform-email p.help-block-error {
+    width: 100%;
     margin-left: -15px;
 }
 
