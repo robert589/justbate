@@ -15,6 +15,7 @@ use frontend\widgets\SearchIssue;
  * Variable used
  */
 $issue_followed_by_user = $home->getIssueFollowedByUser();
+$issue_followed_by_user_for_sidenav = $home->getIssueFollowedByUserForSidenav();
 $trending_topic_list = $home->getTrendingTopicList();
 $user_follow_issue = $home->getUserFollowIssue();
 $num_followers_of_issue = $home->getNumFollowersOfIssue();
@@ -27,7 +28,8 @@ $this->title = "Home";
 
 <?php
     Modal::begin(['id' => 'home-search-issue-modal']);
-         echo SearchIssue::widget(['all_issues' => ArrayHelper::map($issue_followed_by_user, 'label', 'label')	]);
+         echo SearchIssue::widget([
+                                'issue_followed_by_user' => $issue_followed_by_user]);
     Modal::end();
 ?>
 
@@ -35,7 +37,7 @@ $this->title = "Home";
 <div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-3" id="left-sidebar">
             <?= $this->render('home-sidenav-issue',
-                            ['issue_list' => $issue_followed_by_user,
+                            ['issue_list' => $issue_followed_by_user_for_sidenav,
                              'add_issue_form' => new \frontend\models\UserFollowIssueForm()]) ?>
 
             <div class="col-xs-12">
@@ -50,9 +52,9 @@ $this->title = "Home";
             <?php if($has_issue){ ?>
             <div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">
                     <?= $this->render('home-issue-header',
-                                                    ['issue_name' => $issue_name,
-                                                    'issue_num_followers' => $num_followers_of_issue,
-                                                    'user_is_follower' => $user_follow_issue]) ?>
+                                    ['issue_name' => $issue_name,
+                                     'issue_num_followers' => $num_followers_of_issue,
+                                     'user_is_follower' => $user_follow_issue]) ?>
             </div>
             <?php } ?>
 

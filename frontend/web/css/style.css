@@ -171,12 +171,6 @@ ul.dropdown-menu div.kv-spin-center {
     padding: 15px;
 }
 
-/* SEARCH ISSUE WIDGET */
-div#search-issue-selector {
-    text-align: left;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
 
 input[type='checkbox'].select-issue-checkbox {
     display: none;

@@ -31,9 +31,24 @@ class SiteVo implements Vo {
         if($this->issue_followed_by_user === null){
             return [];
         }
-
+        
 
         return $this->issue_followed_by_user;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getIssueFollowedByUserForSidenav() {
+        $issues = [];
+        foreach($this->issue_followed_by_user as $item) {
+            $issue['url'] = \Yii::$app->request->baseUrl . '/issue/' . $item;
+            $issue['label'] = $item;
+            $issue['template'] =  '<a href="{url}" data-pjax="0">{icon}{label}</a>';
+            $issues[] = $issue;
+        }
+        return $issues;
+
     }
 
     /**

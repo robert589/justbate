@@ -1,14 +1,7 @@
 <?php
 namespace frontend\service;
-
-use common\models\ThreadVote;
-use frontend\dao\ListNotificationDao;
 use frontend\dao\SiteDao;
-use frontend\dao\ThreadDao;
-use frontend\vo\ListNotificationVoBuilder;
-use frontend\vo\SiteVo;
 use frontend\vo\SiteVoBuilder;
-use frontend\vo\ThreadVo;
 use frontend\vo\ThreadVoBuilder;
 
 class SiteService{
@@ -45,6 +38,9 @@ class SiteService{
     public function getAllIssues($user_id, $query) {
         return $this->site_dao->getAllIssues($user_id, $query);
     }
-
+    
+    public function getIssueWithStatus($user_id, $query) {
+        
+    }
 
 }
