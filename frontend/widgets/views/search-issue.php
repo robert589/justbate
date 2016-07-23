@@ -19,17 +19,18 @@ use common\libraries\ImageUtility;
     </div>    
     <div class="col-xs-12" id="search-issue-search">
         <?= Html::textInput('issue[]', null, 
-                [
-                    'id' => 'search-issue-search-input', 
+               [    'id' => 'search-issue-search-input', 
                     'class' => 'form-control', 
                     'placeholder' => 'Search for issues', 
                     'align' => 'left']) ?>
     </div>
+
     <?= Html::img(ImageUtility::getResourceUrl(ImageUtility::LOADING_GIF), 
             ['id' => 'search-issue-searched-list-loading', 
-            'style' => 'display:none']) ?>
+            'style' => 'display:none', 'align' => 'center']) ?>
         
-    <div class="col-xs-12" class="search-issue-selector" id="search-issue-selector">
+    <div class="col-xs-12" class="search-issue-selector" id="search-issue-searched-list">
+            
     </div>
     <div class="col-xs-12" id="search-issue-bottom">
         <?php $form = ActiveForm::begin(['action' => ['site/user-issue'], 'id' => 'search-issue-form', 'method' => 'post']) ?>

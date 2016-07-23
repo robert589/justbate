@@ -28,8 +28,7 @@ $this->title = "Home";
 
 <?php
     Modal::begin(['id' => 'home-search-issue-modal']);
-         echo SearchIssue::widget([
-                                'issue_followed_by_user' => $issue_followed_by_user]);
+        echo SearchIssue::widget(['issue_followed_by_user' => $issue_followed_by_user]);
     Modal::end();
 ?>
 

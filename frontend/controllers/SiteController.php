@@ -434,12 +434,12 @@ class SiteController extends Controller
 	 * JSON response
 	 */
 	public function actionSearchAllIssues($q  = null) {
-		if(Yii::$app->user->isGuest) {
-			return Json::encode("Not authorized");
-		}
-		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
-		$results = $service->getAllIssues(Yii::$app->user->getId(), $q);
-		echo Json::encode($results);
+            if(Yii::$app->user->isGuest) {
+                    return Json::encode("Not authorized");
+            }
+            $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+            $results = $service->getAllIssues(Yii::$app->user->getId(), $q);
+            echo Json::encode($results);
 	}
 
 	/**
