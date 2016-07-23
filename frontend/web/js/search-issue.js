@@ -3,7 +3,7 @@ $(function(){
         $("#search-issue-searched-list-loading").show();
         $("#search-issue-searched-list").hide();
         $.ajax({
-            url: $("#base-url").val() + "/site/search-issue",
+            url: $("#base-url").val() + "/site/search-issue?except-own=true",
             type: 'post',
             success: function(data) {
                 // flush search-issue-searched-list
@@ -30,7 +30,7 @@ $(function(){
                 }
 
                 // flush array
-                issue_list = []; 
+                issue_list = [];
 
                 $("#search-issue-searched-list-loading").hide();
                 $("#search-issue-searched-list").show();

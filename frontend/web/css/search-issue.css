@@ -1,20 +1,43 @@
-#search-issue-search-input {
-	  background-color : #E6E6E6;
-}
+#search-issue-search-input { background-color : #E6E6E6; }
+#search-issue-searched-list { width : 100%; }
 
-#search-issue-searched-list {
-	  width : 100%;
-}
-
+#search-issue-searched-list label,
+.search-issue-followed-by-user label,
 label.search-issue {
-    padding: 5px;
+	float: left;
+    padding: 3px;
+    margin-left: 3px;
+    margin-top: 3px;
     font-size: 12pt;
-    background: #ddd;
-    font-weight: 100;
+    background: #F5F5F5;
+    width: 24.5% !important;
+    color: #000;
+	font-weight: normal;
+    text-align: center;
     border-radius: 5px;
     border: 1px solid #ddd;
     font-family: 'Montserrat', sans-serif;
 }
+
+#search-issue-searched-list label:nth-child(4n),
+.search-issue-followed-by-user label:nth-child(4n),
+label.search-issue:nth-child(4n) {
+	margin-left: 3px;
+	margin-right: 0;
+}
+
+.search-issue-followed-by-user label:nth-child(4n+1),
+#search-issue-searched-list label:nth-child(4n+1),
+label.search-issue:nth-child(4n+1),
+.search-issue-followed-by-user label:first-child,
+#search-issue-searched-list label:first-child,
+label.search-issue:first-child {
+	margin: 0;
+	margin-top: 3px;
+}
+
+form#search-issue-form { margin-top: 15px; }
+.search-issue-followed-by-user div.col-xs-4 { padding: 0; }
 
 .search-issue-followed-by-user label,
 #search-issue-searched-list label.default {
