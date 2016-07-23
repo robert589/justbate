@@ -1,22 +1,10 @@
 <?php
 namespace frontend\dao;
 
-use common\entity\ChildCommentVo;
-use common\models\ChildComment;
 use common\models\Issue;
-use common\models\Notification;
 use common\models\Thread;
-use common\models\ThreadComment;
-use common\models\ThreadVote;
-use common\models\UserEmailAuthentication;
 use common\models\UserFollowedIssue;
-use frontend\vo\ChildCommentVoBuilder;
-use frontend\vo\CommentVoBuilder;
-use frontend\vo\ListNotificationVoBuilder;
-use frontend\vo\NotificationVo;
-use frontend\vo\NotificationVoBuilder;
 use frontend\vo\SiteVoBuilder;
-use frontend\vo\ThreadCommentVoBuilder;
 use frontend\vo\ThreadVoBuilder;
 use yii\data\ArrayDataProvider;
 
@@ -178,9 +166,8 @@ class SiteDao{
         $userFollowedIssue = null;
         if($issue_name !== null) {
             $userFollowedIssue = UserFollowedIssue::find()->where(['user_id' => $current_user_id, 'issue_name' => $issue_name])
-                    ->exists();
+                    ->exists();    
             $builder->setUserFollowIssue($userFollowedIssue);
-
         }
         return $builder;
 
@@ -189,12 +176,8 @@ class SiteDao{
     public function getFollowedIssueList($current_user_id, SiteVoBuilder $builder){
         $issue_list = UserFollowedIssue::find()->where(['user_id' => $current_user_id])->all();
         $issues = [];
-
         foreach($issue_list as $item) {
-            $issue['url'] = \Yii::$app->request->baseUrl . '/issue/' . $item['issue_name'];
-            $issue['label'] = $item['issue_name'];
-            $issue['template'] =  '<a href="{url}" data-pjax="0">{icon}{label}</a>';
-             $issues[] = $issue;
+            $issues[] = $item['issue_name'];
         }
         $builder->setIssueFollowedByUser($issues);
         return $builder;

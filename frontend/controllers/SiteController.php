@@ -3,10 +3,7 @@ namespace frontend\controllers;
 
 use common\components\LinkConstructor;
 use common\creator\CreatorFactory;
-use common\creator\HomeCreator;
 use common\creator\ThreadCreator;
-use common\entity\HomeEntity;
-use common\entity\ThreadCommentEntity;
 use common\entity\ThreadEntity;
 use common\models\Issue;
 use common\models\ThreadAnonymous;
@@ -159,22 +156,22 @@ class SiteController extends Controller
 	*/
 	public function actionHome()
 	{
-		$this->setMetaTag();
-		if(Yii::$app->user->isGuest){
-			return $this->render('login',
-				['login_form' => new LoginForm(),
-				 'model' => new SignupForm()
-				]);
-		}
-		$user_id = Yii::$app->user->getId();
-		$issue = isset($_GET['issue']) ? $_GET['issue'] : null;
-		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
-		$home = $service->getHomeInfo($user_id, $issue, new SiteVoBuilder());
-		$create_thread_form = new CreateThreadForm();
-		$this->getDefaultChoice($create_thread_form);
-		return $this->render('home', ['home' => $home,
-									'change_email_form' => new ResendChangeEmailForm(),
-									'create_thread_form' => $create_thread_form]);
+            $this->setMetaTag();
+            if(Yii::$app->user->isGuest){
+                    return $this->render('login',
+                            ['login_form' => new LoginForm(),
+                             'model' => new SignupForm()
+                            ]);
+            }
+            $user_id = Yii::$app->user->getId();
+            $issue = isset($_GET['issue']) ? $_GET['issue'] : null;
+            $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+            $home = $service->getHomeInfo($user_id, $issue, new SiteVoBuilder());
+            $create_thread_form = new CreateThreadForm();
+            $this->getDefaultChoice($create_thread_form);
+            return $this->render('home', ['home' => $home,
+                                          'change_email_form' => new ResendChangeEmailForm(),
+                                          'create_thread_form' => $create_thread_form]);
 	}
 
 	/**
@@ -412,7 +409,15 @@ class SiteController extends Controller
 		echo Json::encode($out);
 	}
 
+        /** JSON **/
+        public function actionSearchIssueWithUserStatus($query = null) {
+            $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+            $results = $service->getIssueWithStatus(Yii::$app->user->getId(), $query);
+            
+        }
+        
 	/**
+         * Json response
 	 * @param null $q
 	 */
 	public function actionSearchIssue($q =null){
@@ -426,15 +431,15 @@ class SiteController extends Controller
 	}
 
 	/**
-	 *
+	 * JSON response
 	 */
 	public function actionSearchAllIssues($q  = null) {
-		if(Yii::$app->user->isGuest) {
-			return Json::encode("Not authorized");
-		}
-		$service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
-		$results = $service->getAllIssues(Yii::$app->user->getId(), $q);
-		echo Json::encode($results);
+            if(Yii::$app->user->isGuest) {
+                    return Json::encode("Not authorized");
+            }
+            $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+            $results = $service->getAllIssues(Yii::$app->user->getId(), $q);
+            echo Json::encode($results);
 	}
 
 	/**
