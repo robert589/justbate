@@ -171,23 +171,8 @@ ul.dropdown-menu div.kv-spin-center {
     padding: 15px;
 }
 
-
 input[type='checkbox'].select-issue-checkbox {
     display: none;
-}
-
-label.search-issue {
-    padding: 5px;
-    font-size: 12pt;
-    background: #ddd;
-    font-weight: 100;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-family: 'Montserrat', sans-serif;
-}
-
-label.search-issue.checked {
-    opacity: 0.25;
 }
 
 /* SEARCH BOX */
