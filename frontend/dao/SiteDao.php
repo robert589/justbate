@@ -23,10 +23,11 @@ class SiteDao{
                                 thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                 (viewed.thread_id is null) * (5) + 
-                                (parent_thread_info.total_comments <> 0) * 3 as parameter   ,
-                                (anonymous.anonymous_id) as thread_anonymous
-                                
-                          from(
+                                (parent_thread_info.total_comments <> 0) * 3 as parameter,
+                                (anonymous.anonymous_id) as thread_anonymous,
+                                (thread_comment_info.thread_id is not null) as has_comment
+
+                            from(
                                 Select thread_info.*, count(comments.comment_id) as total_comments
                                 from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
                                       from thread, user
@@ -52,6 +53,12 @@ class SiteDao{
                                        from thread_anonymous
                                        where thread_anonymous.user_id = :user_id) anonymous
                             on parent_thread_info.thread_id = anonymous.thread_id
+                            left join (SELECT thread_comment.thread_id
+                                       from thread_comment inner join comment 
+                                       on thread_comment.comment_id = comment.comment_id
+                                      where comment.user_id = :user_id) thread_comment_info
+                            on parent_thread_info.thread_id = thread_comment_info.thread_id
+
                             left join (SELECT thread_id
                                         from thread_view
                                         where thread_view.user_id = :user_id) viewed
@@ -63,32 +70,39 @@ class SiteDao{
                         		thread_vote.choice_text,
                                 count(parent_thread_info.thread_id) * 8 +
                                ((100000 * parent_thread_info.created_at + 100000) / now()- 7) * 2 as parameter   ,
-                               (anonymous.anonymous_id) as thread_anonymous
-                        from(
-							Select thread_info.*, count(comments.comment_id) as total_comments
-							from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
-								  from thread, user, thread_issue, issue
-									  where thread.user_id = user.id and
-								  thread_status = 10 and
-								  thread_issue.thread_id = thread.thread_id
-								and issue.issue_name = :issue_name
-								and issue.issue_name = thread_issue.issue_name
-							) thread_info
-							left join (select thread_comment.comment_id, thread_comment.thread_id
-										from thread_comment, comment
-									  where thread_comment.comment_id = comment.comment_id and
-									  comment.comment_status = 10) comments
-							on thread_info.thread_id = comments.thread_id
-							group by thread_info.thread_id
-							order by (created_at) desc
+                               (anonymous.anonymous_id) as thread_anonymous,
+                               (thread_comment_info.thread_id is not null) as has_comment
+                       from(
+                                Select thread_info.*, count(comments.comment_id) as total_comments
+                                from (Select thread.*, user.id, user.first_name, user.last_name, user.photo_path
+                                          from thread, user, thread_issue, issue
+                                                  where thread.user_id = user.id and
+                                          thread_status = 10 and
+                                          thread_issue.thread_id = thread.thread_id
+                                        and issue.issue_name = :issue_name
+                                        and issue.issue_name = thread_issue.issue_name
+                                ) thread_info
+                                left join (select thread_comment.comment_id, thread_comment.thread_id
+                                                        from thread_comment, comment
+                                                  where thread_comment.comment_id = comment.comment_id and
+                                                  comment.comment_status = 10) comments
+                                on thread_info.thread_id = comments.thread_id
+                                group by thread_info.thread_id
+                                order by (created_at) desc
 
-						) parent_thread_info
-						left join thread_vote
-						on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
+                        ) parent_thread_info
+                        left join thread_vote
+                        on parent_thread_info.thread_id = thread_vote.thread_id and thread_vote.user_id = :user_id
                         left join (SELECT thread_id, user_followed_issue.issue_name as issue_followed_name from thread_issue, user_followed_issue
                                    where thread_issue.issue_name = user_followed_issue.issue_name
                                   and user_followed_issue.user_id = :user_id) followed_issue
                         on followed_issue.thread_id = parent_thread_info.thread_id
+                        left join (SELECT thread_comment.thread_id
+                            from thread_comment inner join comment 
+                            on thread_comment.comment_id = comment.comment_id
+                           where comment.user_id = :user_id) thread_comment_info
+                        on parent_thread_info.thread_id = thread_comment_info.thread_id
+
                         left join (SELECT thread_id, anonymous_id
                                    from thread_anonymous
                                    where thread_anonymous.user_id = :user_id) anonymous
@@ -131,6 +145,7 @@ class SiteDao{
             $thread_builder->setUpdatedAt($result['updated_at']);
             $thread_builder->setTotalComments($result['total_comments']);
             $thread_builder->setCurrentUserVote($result['choice_text']);
+            $thread_builder->setHasCurrentUserComment($result['has_comment']);
             $thread_builder = $this->thread_dao->getOneComment($result['thread_id'], $current_user_id, $thread_builder);
             $thread_builder = $this->thread_dao->getThreadIssues($result['thread_id'], $thread_builder);
             $thread_builder = $this->thread_dao->getUserChoiceOnly($result['thread_id'] , $current_user_id, $thread_builder);

@@ -4,6 +4,7 @@
     /** @var $thread \frontend\vo\ThreadVo */
     $thread_id = $thread->getThreadId();
     $current_user_has_vote = $thread->hasVote();
+    $has_comment = $thread->hasCurrentUserComment();
 ?>
 
 <?php
@@ -17,7 +18,7 @@ $form1 = ActiveForm::begin(['action' =>['thread/retrieve-comment-input'],
 
 ?>
     <?= Html::hiddenInput('thread_id', $thread_id) ?>
-    <?= Html::submitButton('Give Comment',
+    <?= Html::submitButton(!$has_comment ? 'Give Comment' : 'Edit Comment',
                         ['class' => 'btn btn-sm btn-default give-comment inline',
                          'data-service' => $thread_id,
                          'disabled' => ($current_user_has_vote) ? false: true,

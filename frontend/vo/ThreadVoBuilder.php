@@ -33,7 +33,28 @@ class ThreadVoBuilder implements  Builder{
     private $total_comments;
 
     private $chosen_comment;
-    /**
+    
+    private $has_current_user_comment;
+    
+    private $current_user_comment;
+    
+    public function setCurrentUserComment($current_user_comment) {
+        $this->current_user_comment = $current_user_comment;
+    }
+    
+    public function getCurrentUserComment() {
+        return $this->current_user_comment;
+    }
+    
+    public function hasCurrentUserComment() {
+        return $this->has_current_user_comment;
+    }
+
+    public function setHasCurrentUserComment($has_current_user_comment) {
+        $this->has_current_user_comment = $has_current_user_comment;
+    }
+
+        /**
      * @return mixed
      */
     public function getCurrentUserAnonymous()

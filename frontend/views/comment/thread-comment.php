@@ -22,7 +22,7 @@ $comment_created_at = $thread_comment->getCreatedAt();
 $comment_thread_id = $thread_comment->getParentThreadId();
 ?>
 
-<article class="block-for-comment">
+<div class="block-for-comment">
     <div class="col-xs-12">
         <div class="inline image-commentator">
             <img class="img img-circle profile-picture-comment" style="width: 40px;height:40px;" src="<?= $commentator_user_photo_path_link ?>">
@@ -44,4 +44,4 @@ $comment_thread_id = $thread_comment->getParentThreadId();
     <div class="col-xs-12 commentator-moderate">
         <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
     </div>
-</article>
+</div>

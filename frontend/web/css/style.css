@@ -678,14 +678,6 @@ div.user-comment-reaction {
     padding-top: 15px;
 }
 
-div.user-comment-reaction div.col-xs-12:first-child {
-    z-index: 99999;
-}
-
-div.user-comment-reaction div.col-xs-12:last-child {
-    z-index: 99997;
-}
-
 div.user-comment-reaction div.col-xs-11 hr {
     margin-top: 5px !important;
     margin-bottom: 5px !important;
@@ -706,9 +698,6 @@ select#give-comment-select {
     border-radius: 0;
 }
 
-div.user-comment-reaction div.col-xs-12:last-child {
-    z-index: -1;
-}
 
 /* USER COMMENT REACTION */
 div.empty {
@@ -779,8 +768,8 @@ div#main-post-desc div#threadList div.item:first-child {
     margin-top: -15px !important;
 }
 
-div.list-view div.item:first-child {
-    margin-top: 0 !important;
+div.list-view div.item {
+    margin-top: 15px;
 }
 
 ul.pagination {
@@ -891,19 +880,22 @@ div.comment-tab div.tabs-above ul.nav-tabs li {
     color: #fff !important;
 }
 
-input[id^="dropdown-comment-input-"],
+input[id^="dropdown-comment-input-"] {
+    display: none;
+    position: absolute;
+}
+
 table[id^='user-table-comment-'] {
     display: none;
     position: absolute;
-    z-index: 99999;
-}
-
-div.user-comment-reaction {
-    z-index: 0 !important;
 }
 
 input[id^="dropdown-comment-input-"]:checked ~ table[id^='user-table-comment-'] {
     display: block;
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    
 }
 
 div#commentator-action div.commentator-comment {
@@ -916,7 +908,7 @@ div#commentator-action div.commentator-moderate {
 }
 
 
-article.block-for-comment div.col-xs-12 {
+div.block-for-comment div.col-xs-12 {
     padding-left: 0;
     padding-right: 1px;
 }
@@ -941,10 +933,6 @@ div.list-view {
     margin: 0 !important;
 }
 
-div.list-view div.item {
-    padding: 15px !important;
-    margin: -15px !important;
-}
 
 img.profile-picture-comment {
     width: 40px;
@@ -967,7 +955,7 @@ div.comment-votes {
     padding: 0;
 }
 
-article.block-for-comment {
+div.block-for-comment {
     margin-top: 20px;
     z-index: -1000;
 }
@@ -1248,10 +1236,24 @@ div.thread-title-list {
     padding-left: 0;
 }
 
+div.thread-comment-input-box-section {
+    background: #ededed;
+    margin-top: 8px;
+}
+
+.thread-comment-redactor-box {
+    padding-left:1px;
+    padding-right: 1px;
+    padding-top: 8px;
+}
+
 .list-thread{
     background: #fff;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
     padding-left: 10px;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
 }
 
 div#action-button,
@@ -1508,9 +1510,6 @@ div.inline{
 }
 
 /* CUSTOM HTML STYLE */
-article {
-    overflow:hidden;
-}
 
 select {
     border: 0 !important;
@@ -1715,7 +1714,7 @@ button.btn {
         padding: 0;
     }
 
-    article.list-thread div#thread-issue {
+    div.list-thread div#thread-issue {
         padding-left: 15px;
         padding-right: 15px;
     }

@@ -10,11 +10,17 @@
            data-arg="<?= $notification_vo->getNotificationId() ?>"
            class="notification-item col-xs-12 inline"
            data-pjax="0">
-            <div class="inline" style="margin-right: 5px">
-                <?= Html::img($notification_vo->getPhotoPath(), ['style' => 'height:50px;width:50px'] ) ?>
+            <div class="row">
+                <div class="inline">
+                    <?= Html::img($notification_vo->getPhotoPath(), ['style' => 'height:50px;width:50px'] ) ?>
+                </div>
+                <span>
+                        
+                    <?= $notification_vo->getText() ?> <br>
+                    <?= $notification_vo->getTime() ?>
+                
+                </span>
             </div>
-            <?= $notification_vo->getText() ?><br />
-            <span><?= $notification_vo->getTime() ?></span>
         </a>
     </div>
     <?php if(!$notification_vo->getRead()) { ?>

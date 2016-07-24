@@ -3,12 +3,11 @@
 namespace frontend\vo;
 
 use common\components\LinkConstructor;
-use frontend\vo\CommentVo;
-use frontend\vo\ThreadCommentVoBuilder;
-use yii\data\ArrayDataProvider;
 
 class ThreadVo implements Vo{
 
+    private $has_current_user_comment;
+    
     private $thread_id;
 
     private $thread_comment_list;
@@ -36,7 +35,9 @@ class ThreadVo implements Vo{
     private $current_user_anonymous;
 
     private $total_comments;
-
+    
+    private $current_user_comment;
+    
     /**
      * @var ThreadCommentVo
      */
@@ -50,8 +51,9 @@ class ThreadVo implements Vo{
         return $this->current_user_anonymous;
     }
 
-
-
+    public function getCurrentUserComment() {
+        return $this->current_user_comment;
+    }
 
     function __construct(ThreadVoBuilder $builder){
         $this->thread_id = $builder->getThreadId();
@@ -69,6 +71,8 @@ class ThreadVo implements Vo{
         $this->current_user_anonymous = $builder->getCurrentUserAnonymous();
         $this->total_comments = $builder->getTotalComments();
         $this->chosen_comment = $builder->getChosenComment();
+        $this->has_current_user_comment = $builder->hasCurrentUserComment();
+        $this->current_user_comment = $builder->getCurrentUserComment();
     }
     /**
      * @return mixed
@@ -166,7 +170,6 @@ class ThreadVo implements Vo{
         return new ThreadVoBuilder();
     }
 
-
     /**
      * @return mixed
      */
@@ -235,6 +238,8 @@ class ThreadVo implements Vo{
         return $this->chosen_comment;
     }
 
-
+    public function hasCurrentUserComment() {
+        return $this->has_current_user_comment;
+    }
 
 }

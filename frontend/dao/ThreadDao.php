@@ -1,25 +1,21 @@
 <?php
 namespace frontend\dao;
 
-use common\entity\ChildCommentVo;
-use common\models\ChildComment;
-use common\models\Notification;
-use common\models\Thread;
 use common\models\ThreadAnonymous;
-use common\models\ThreadComment;
 use common\models\ThreadIssue;
 use common\models\ThreadVote;
-use frontend\vo\ChildCommentVoBuilder;
-use frontend\vo\CommentVoBuilder;
-use frontend\vo\ListNotificationVoBuilder;
-use frontend\vo\NotificationVo;
-use frontend\vo\NotificationVoBuilder;
 use frontend\vo\ThreadCommentVoBuilder;
-use frontend\vo\ThreadVo;
 use frontend\vo\ThreadVoBuilder;
 use yii\data\ArrayDataProvider;
 
 class ThreadDao {
+        const GET_CURRENT_USER_COMMENT = "SELECT comment.comment
+                                        from comment inner join thread_comment 
+                                        on comment.comment_id = thread_comment.comment_id 
+                                        where comment.user_id = :user_id and thread_comment.thread_id = :thread_id
+                                        order by comment.created_at desc
+                                        limit 1";
+        
         const GET_ONE_COMMENT = "
             SELECT chosen_comment.*,
                   (chosen_comment.not_viewed * 5 + chosen_comment.total_like * 3) as parameter
@@ -32,14 +28,15 @@ class ThreadDao {
                       count(case when total_vote.vote = -1 then 1 else null end) as total_dislike  
                 from (SELECT comment.*, 
                             thread_comment.thread_id, 
-                            thread_comment.choice_text, 
+                            thread_vote.choice_text, 
                             user.first_name, 
                             user.last_name,
                             user.photo_path, 
                             user.username                         
-                     from thread_comment,comment, user
+                     from thread_comment,comment, user, thread_vote
                      where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.comment_id
-                     and comment.user_id = user.id and comment.comment_status = 10) as comment_info
+                     and comment.user_id = user.id and comment.comment_status = 10 and thread_vote.user_id = comment.user_id
+                     and thread_vote.thread_id = thread_comment.thread_id) as comment_info
                 left join thread_anonymous
                  on thread_anonymous.user_id = comment_info.user_id and thread_anonymous.thread_id = comment_info.thread_id
                 left join (SELECT comment_id from comment_view where comment_view.user_id = :user_id) viewed
@@ -62,13 +59,15 @@ class ThreadDao {
                     COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike,
                     (thread_anonymous.anonymous_id) as comment_anonymous
             FROM (
-                SELECT  comment.* , thread_comment.choice_text , thread_comment.thread_id, user.first_name,
+                SELECT  comment.* , thread_vote.choice_text , thread_comment.thread_id, user.first_name,
                                                 user.last_name, user.username, user.photo_path
-                from thread_comment,comment, user
+                from thread_comment,comment, user, thread_vote
                 where thread_comment.thread_id = :thread_id and
-                thread_comment.choice_text= :choice_text and
+                thread_vote.choice_text= :choice_text and
                 thread_comment.comment_id = comment.comment_id 	and
                 user.id = comment.user_id and
+                thread_vote.user_id =  comment.user_id and
+                thread_comment.thread_id = thread_vote.thread_id and
                 comment.comment_status = 10
                 ) comments
             LEFT JOIN comment_vote
@@ -126,8 +125,10 @@ class ThreadDao {
                                     group by(thread_choice.choice_text)
                                     ) choice_and_its_voters
                                 left join
-                                    ( select thread_comment.* from thread_comment,comment where thread_id = :thread_id and
-                                     comment.comment_id = thread_comment.comment_id and comment.comment_status = 10) comment_with_id
+                                    ( select thread_comment.*, thread_vote.choice_text from thread_comment,comment, thread_vote 
+                                     where thread_comment.thread_id = :thread_id and
+                                     comment.comment_id = thread_comment.comment_id and thread_vote.user_id = comment.user_id and
+                                     thread_vote.thread_id = thread_comment.thread_id and comment.comment_status = 10) comment_with_id
                                 on comment_with_id.choice_text = choice_and_its_voters.choice_text
                                 group by (choice_and_its_voters.choice_text)
                                 order by total_comments desc";
@@ -163,8 +164,8 @@ class ThreadDao {
 
     public function getThreadChoices($thread_id, ThreadVoBuilder $builder){
         $result =  \Yii::$app->db->createCommand(self::THREAD_CHOICE)->
-        bindParam(':thread_id', $thread_id)->
-        queryAll();
+                    bindParam(':thread_id', $thread_id)->
+                    queryAll();
         $builder->setMappedChoices($result);
         return $builder;
     }
@@ -308,6 +309,20 @@ class ThreadDao {
         return $builder;
     }
 
-
+    public function getCurrentUserComment($thread_id, $current_user_id, ThreadVoBuilder $builder) {
+        $comment = \Yii::$app->db
+            ->createCommand(self::GET_CURRENT_USER_COMMENT)
+            ->bindValues([':thread_id' => $thread_id])
+            ->bindValue(':user_id', $current_user_id)
+            ->queryOne()['comment'];
+        
+        if(count($comment) === 0) {
+            $builder->setCurrentUserComment(null);
+        }
+        else {
+            $builder->setCurrentUserComment($comment);
+        }
+        return $builder;
+    }
 
 }

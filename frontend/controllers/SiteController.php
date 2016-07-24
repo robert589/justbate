@@ -15,7 +15,6 @@ use frontend\models\ChangeEmailForm;
 use frontend\models\CommentForm;
 use frontend\models\CreateThreadForm;
 use frontend\models\ResendChangeEmailForm;
-use frontend\models\SubmitThreadVoteForm;
 use frontend\models\UploadProfilePicForm;
 use frontend\models\UserFollowIssueForm;
 use frontend\models\ValidateAccountForm;
@@ -427,7 +426,7 @@ class SiteController extends Controller
 
 		$out['results'] = array_values($data);
 
-		echo Json::encode($out);
+    		echo Json::encode($out);
 	}
 
 	/**

@@ -12,7 +12,7 @@ use common\components\Constant;
  */
 $thread_id = $thread->getThreadId();
 $current_user_choice = $thread->getCurrentUserVote();
-$comment_model->choice_text = $current_user_choice;
+$comment_model->comment = $thread->getCurrentUserComment();
 Pjax::begin([
     'id' => 'comment_input_' . $thread_id,
     'enablePushState' => false,
@@ -36,10 +36,8 @@ if(isset($comment_input_retrieved)) {
     $form = ActiveForm::begin(['action' => ['thread/submit-comment'],
                     'options' => ['class' => 'comment-form',
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
-
-        <div class="row" id="comment_input_box_section_<?= $thread_id ?>">
-            <hr>
-            <div class="col-xs-12" id="redactor_box_<?= $thread_id ?>" style="padding-top: 8px">
+        <div class="col-xs-12 thread-comment-input-box-section" id="comment_input_box_section_<?= $thread_id ?>">
+            <div class="row thread-comment-redactor-box" id="redactor_box_<?= $thread_id ?>">
                 <?= $form->field($comment_model,
                                   'comment',
                                   ['selectors' => ['input' => '#comment-input-' . $thread_id]])
@@ -51,22 +49,12 @@ if(isset($comment_input_retrieved)) {
                                      'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image'])]])
                           ->label(false)?>
             </div>
-            <div class="row">
-                <div class="col-xs-6" align="center">
-                    <b>You chose for </b>
-                    <div id="choice-text-comment-input-box-<?= $thread_id ?>" >
-                        <?= $comment_model->choice_text ?>
-                    </div>
-                    <?= $form->field($comment_model, 'choice_text')->hiddenInput(['value' => $thread->getCurrentUserVote()])->label(false) ?>
-                </div>
-                <div align="right" class="col-xs-6">
-                    <?= Html::hiddenInput('thread_id', $thread_id) ?>
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'width: 100%;']) ?>
-                </div>
+            
+            <div class="row" align="right">
+                <?= Html::hiddenInput('thread_id', $thread_id) ?>
+                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
             </div>
-            <hr>
         </div>
-
     <?php ActiveForm::end();
 }
 

@@ -95,20 +95,22 @@ class ThreadController extends Controller
 	 * @throws \yii\base\ExitException
 	 */
 	public function actionRetrieveCommentInput(){
-		if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
-			Yii::$app->end('Something went wrong, we will fix it as soon as possible');
-		}
-		$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
-		$thread = $service->getThreadInfoForRetrieveCommentInput( $_POST['thread_id'],Yii::$app->user->getId(), new ThreadVoBuilder());
-
-
-		return $this->renderAjax('../thread/thread-comment-input-box',
-				['thread' => $thread,
-	             'comment_input_retrieved' => true,
-				 'comment_model' => new CommentForm()]);
-
-
-	}
+            if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
+                Yii::$app->end('Something went wrong, we will fix it as soon as possible');
+            }
+            $service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
+            $thread = $service->getThreadInfoForRetrieveCommentInput( $_POST['thread_id'],Yii::$app->user->getId(), new ThreadVoBuilder());
+            $current_user_comment = $thread->getCurrentUserComment();
+            
+            $comment_model = new CommentForm();
+            if(!is_null($current_user_comment)) {
+                $comment_model->comment = $current_user_comment;
+            }
+            return $this->renderAjax('../thread/thread-comment-input-box',
+                            ['thread' => $thread,
+                             'comment_input_retrieved' => true,
+                             'comment_model' => new CommentForm()]);
+        }
 
 
 	/**
@@ -234,13 +236,12 @@ class ThreadController extends Controller
 			$comment_entity = new CommentEntity($edit_comment_form->parent_id, \Yii::$app->user->getId());
 			$comment_entity->setComment($edit_comment_form->comment);
 			return $this->render('_view_edit_comment_part', [
-															'thread_comment' => $comment_entity,
-															'edit_comment_form'=> new EditCommentForm()]);
-
+                                            'thread_comment' => $comment_entity,
+                                            'edit_comment_form'=> new EditCommentForm()]);
 		}
 		else{
-			Yii::$app->end('error');
-			//error
+                    Yii::$app->end('error');
+                    //error
 		}
 	}
 

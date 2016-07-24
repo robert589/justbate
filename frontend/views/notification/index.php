@@ -11,25 +11,22 @@ Pjax::begin([
     ]
 ]);
 ?>
-    <?= Html::beginForm(['notification/index'], 'post',['id' => 'notification-form', 'data-pjax' => '#notifbar', 'class' => 'form-inline'])?>
-    <!-- id notif-expansion is used in js to check whether the dropdown is opened or closed -->
+    <?= Html::beginForm(['notification/index'], 'post',
+            ['id' => 'notification-form', 'data-pjax' => '#notifbar', 'class' => 'form-inline'])?>
         <?php if (isset($list_notification_vo)) { ?>
-
-        <li id='notif-expansion' class='item dropdown open'>
-
+            <li id='notif-expansion' class='item dropdown open'>
         <?php } else { ?>
-
-        <li id='notif-expansion' class='item dropdown' >
-
+            <li id='notif-expansion' class='item dropdown' >
         <?php } ?>
             <a href="#" class="dropdown-toggle" style="display: block" id="trigger_notification" data-toggle="dropdown">
                 Notification
                 <span id="notification-count"></span>
                 <span style="padding-right: 15px;" id="left-icon" class="glyphicon glyphicon-chevron-down"></span>
             </a>
-            <ul class="dropdown-menu container-fluid" style="background: #fff !important;
-                color: black !important;
-                height:300px;width:400px;overflow-y: scroll;overflow-x: hidden">
+            <ul class="dropdown-menu container-fluid" 
+                style="background: #fff !important;
+                    color: black !important;
+                    height:300px;width:400px;overflow-y: scroll;overflow-x: hidden">
                 <div align="center" id="dropdown-menu" style="font-size: 10px">
                     <h4>Notifications</h4>
                 </div>
@@ -40,7 +37,7 @@ Pjax::begin([
                 <?php } else { ?>
                     <?= Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']) ?>
                 <?php } ?>
-            </ul> <!-- ul.dropdown-menu -->
-        </li> <!-- li#notif-expansion -->
+            </ul> 
+        </li> 
     <?=  Html::endForm() ?>
 <?php Pjax::end(); ?>

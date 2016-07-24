@@ -38,11 +38,19 @@ class ThreadService{
         $builder = $this->thread_dao->getUserChoiceOnly($thread_id,$user_id, $builder);
         return $builder->build();
     }
-
+    
+    /**
+     * 
+     * @param type $thread_id
+     * @param type $user_id
+     * @param ThreadVoBuilder $builder
+     * @return ThreadVo 
+     */
     public function getThreadInfoForRetrieveCommentInput($thread_id, $user_id, ThreadVoBuilder $builder) {
         $builder->setThreadId($thread_id);
         $builder = $this->thread_dao->getUserChoiceOnly($thread_id,$user_id, $builder);
         $builder = $this->thread_dao->getAnonymous($thread_id, $user_id, $builder);
+        $builder = $this->thread_dao->getCurrentUserComment($thread_id, $user_id, $builder);
         return $builder->build();
     }
 

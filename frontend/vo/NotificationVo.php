@@ -137,7 +137,7 @@ class NotificationVo implements Vo{
                 break;
             case 2:
                 if($this->anonymous){
-                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $cut_text_value));
+                    $text= $this->replace($this->text_template_two_people, array('Anonymous', $cut_text_value));
                 }
                 else{
                     $text= $this->replace($this->text_template_two_people, $actors);
@@ -170,7 +170,7 @@ class NotificationVo implements Vo{
                 break;
             case 2:
                 if($this->anonymous){
-                    $text= $this->replace($this->text_template_more_than_two_people, array('Anonymous', 1, $cut_thread_text));
+                    $text= $this->replace($this->text_template_two_people, array('Anonymous', $cut_thread_text));
                 }
                 else{
                     $actors[] =  $cut_thread_text;
@@ -191,7 +191,6 @@ class NotificationVo implements Vo{
         foreach($args as $index => $arg){
             $text = str_replace('%'. ($index + 1) . '$%',"$arg", $text);
         }
-
         return $text;
     }
 
