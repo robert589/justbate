@@ -4,6 +4,7 @@
  /* @var $form yii\bootstrap\ActiveForm */
  /* @var $model \frontend\models\SignupForm */
 
+ use frontend\models\SignupForm;
  use yii\helpers\Html;
  use yii\bootstrap\ActiveForm;
  use dektrium\user\widgets\Connect;
@@ -31,11 +32,14 @@
             </a>
 
             <div class="col-xs-12" id="email-register">
-                <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <div class="col-xs-6"><input class="form-control" type="text" name="Signupform[first_name]" placeholder="First Name" /></div>
-                <div class="col-xs-6"><input class="form-control" type="text" name="Signupform[last_name]" placeholder="Last Name" /></div>
-                <input class="form-control" type="email" name="Signupform[email]" placeholder="Email Address" />
-                <input class="form-control" type="password" name="Signupform[password]" placeholder="Your Password" />
+                <?php
+                $form = ActiveForm::begin(['id' => 'form-signup']);
+                $register_form = new SignupForm();
+                ?>
+
+                <div class="col-xs-6"><?= $form->field($register_form, 'first_name')->textInput(['placeholder' => 'First Name'], ['class' => 'form-control']) ?></div>
+                <div class="col-xs-6"><?= $form->field($register_form, 'last_name')->textInput(['placeholder' => 'Last Name'], ['class' => 'form-control']) ?></div>
+                <?= $form->field($register_form, 'email')->textInput(['placeholder' => 'Email Address']) ?>
                 <div class="col-xs-12">
                     <div class="col-xs-9"><button class="btn btn-primary btn-block" id="register-button">Submit</button></div>
                     <div id="cancel-register-button" class="col-xs-3"><a href="#" id="cancel-register"><div class="col-xs-12">Cancel</div></a></div>

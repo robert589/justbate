@@ -1,5 +1,5 @@
 $(function(){
-    $(document).on("change", "#search-issue-search-input", function(e){
+    $(document).on("keyup", "#search-issue-search-input", function(e){
         $("#search-issue-searched-list-loading").show();
         $("#search-issue-searched-list").hide();
         $.ajax({
@@ -7,11 +7,11 @@ $(function(){
             type: 'post',
             success: function(data) {
                    // flush search-issue-searched-list
-                $('#search-issue-searched-list').text('');
+                   $('#search-issue-searched-list').text('');
 
-                var issue_list = [];
-                var total_issue = 0;
-                var user_input = $('#search-issue-search-input').val();
+                   var issue_list = [];
+                   var total_issue = 0;
+                   var user_input = $('#search-issue-search-input').val();
 
                 // count how many issue(s)
                 // insert it to an array
