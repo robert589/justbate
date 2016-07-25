@@ -19,12 +19,18 @@ use backend\entity\HomeEntity;
 use backend\creator\CreatorFactory;
 use backend\creator\HomeCreator;
 
+// refactor
+use backend\service\ServiceFactory;
+use backend\service\SiteService;
+use backend\vo\SiteVoBuilder;
+
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
     private $isAuth = true;
+    private $serviceFactory;
 
     public function beforeAction($action)
     {
@@ -57,6 +63,10 @@ class SiteController extends Controller
             $this->isAuth = true;
         }
         return true;
+    }
+
+    public function init(){
+        $this->serviceFactory = new ServiceFactory();
     }
 
     /**
@@ -130,24 +140,28 @@ class SiteController extends Controller
             return $this->render('prohibit');
         }
 
-        $all_threads = Thread::find()->all();
+        // $all_threads = Thread::find()->all();
+        //
+        // //modify date format
+        // foreach ($all_threads as $row) {
+        //     foreach ($row as $key => $value) {
+        //         if($key === 'created_at' || $key === 'updated_at'){
+        //             $row[$key] = DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($value);
+        //         }
+        //     }
+        // }
+        //
+        // $thread_provider = new ArrayDataProvider([
+        //     'allModels' => $all_threads,
+        //     'pagination' => [
+        //         'pageSize' => 30
+        //     ]
+        // ]);
 
-        //modify date format
-        foreach ($all_threads as $row) {
-            foreach ($row as $key => $value) {
-                if($key === 'created_at' || $key === 'updated_at'){
-                    $row[$key] = DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($value);
-                }
-            }
-        }
-
-        $thread_provider = new ArrayDataProvider([
-            'allModels' => $all_threads,
-            'pagination' => [
-                'pageSize' => 30
-            ]
-        ]);
-
+        // refactor
+        $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+        $site = $service->getSiteInfo();
+        $thread_provider = $site->getThreadListProvider();
 
         return $this->render('thread', ['thread_provider' => $thread_provider]);
     }
