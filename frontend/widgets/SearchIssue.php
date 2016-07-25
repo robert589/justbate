@@ -2,9 +2,7 @@
 namespace frontend\widgets;
 
 use frontend\models\EditUserIssueForm;
-use frontend\widgets\CommentInputAnonymousAsset;
 use yii\base\Widget;
-use yii\helpers\Html;
 
 class SearchIssue extends Widget
 {

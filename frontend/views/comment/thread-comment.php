@@ -1,14 +1,5 @@
 <?php
-use kartik\rating\StarRating;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
-use yii\widgets\ListView;
-use yii\bootstrap\Modal;
-use frontend\models\EditCommentForm;
-use common\models\Comment;
-use yii\widgets\ActiveForm;
-use common\components\DateTimeFormatter;
 /** @var $thread_comment \frontend\vo\ThreadCommentVo */
 
 //used variable
@@ -44,4 +35,8 @@ $comment_thread_id = $thread_comment->getParentThreadId();
     <div class="col-xs-12 commentator-moderate">
         <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
     </div>
+    <div class="col-xs-12">
+        <hr>
+    </div>
+    
 </div>

@@ -124,9 +124,6 @@ class ThreadController extends Controller
 
 		$comment_model = new CommentForm();
 		$thread_id = $_POST['thread_id'];
-		$thread_entity = new ThreadEntity($thread_id, Yii::$app->user->getId());
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
-		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE]);
 		if(!($comment_model->load(Yii::$app->request->post()) && $comment_model->validate())) {
 			return $this->renderAjax('_comment_input_box', ['commentModel' => $comment_model, 'thread' => $thread_entity]);
 		}
@@ -228,21 +225,20 @@ class ThreadController extends Controller
 	 * CONCERN: There is a weakness in the redactor that cannot use form to store data
 	 */
 	public function actionEditComment(){
-		$edit_comment_form = new EditCommentForm();
-		$edit_comment_form->load(Yii::$app->request->post());
-		if(isset($_POST['comment']) ){
-			$edit_comment_form->comment = $_POST['comment'];
-			$edit_comment_form->update();
-			$comment_entity = new CommentEntity($edit_comment_form->parent_id, \Yii::$app->user->getId());
-			$comment_entity->setComment($edit_comment_form->comment);
-			return $this->render('_view_edit_comment_part', [
-                                            'thread_comment' => $comment_entity,
-                                            'edit_comment_form'=> new EditCommentForm()]);
-		}
-		else{
-                    Yii::$app->end('error');
-                    //error
-		}
+            $edit_comment_form = new EditCommentForm();
+            $edit_comment_form->load(Yii::$app->request->post());
+            if(isset($_POST['comment']) ){
+                $edit_comment_form->comment = $_POST['comment'];
+                $edit_comment_form->update();
+                $comment_entity = new CommentEntity($edit_comment_form->parent_id, \Yii::$app->user->getId());
+                $comment_entity->setComment($edit_comment_form->comment);
+                return $this->render('../comment/comment-section', [
+                                    'thread_comment' => $comment_entity,
+                                    'edit_comment_form'=> new EditCommentForm()]);
+            }
+            else{
+                Yii::$app->end('error');
+            }
 	}
 
 	/**

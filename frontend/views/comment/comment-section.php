@@ -4,7 +4,6 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
-use common\components\Constant;
 /** @var $thread_comment \common\entity\ThreadCommentEntity */
 /** @var $comment string */
 /** @var $edit_comment_form \frontend\models\EditCommentForm */
@@ -34,7 +33,7 @@ Pjax::begin([
 <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
     <?php $form = ActiveForm::begin([
         'id' => 'comment-section-edit-form-' . $comment_id,
-        'action' => ['thread/edit-comment'], 'method' => 'post',
+        'action' => ['thread/submit-comment'], 'method' => 'post',
         'options' => [
             'data-pjax' => '#edit_comment_pjax_' . $comment_id,
             'class' => 'comment-section-edit-form',

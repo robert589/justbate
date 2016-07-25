@@ -13,6 +13,14 @@ use frontend\vo\NotificationVoBuilder;
 use frontend\vo\ThreadCommentVoBuilder;
 
 class CommentDao{
+    
+    const GET_EXISTING_THREAD_COMMENT_ID = "SELECT comment.comment_id 
+                                            from comment inner join thread_comment
+                                        on thread_comment.comment_id = comment.comment_id
+                                        where thread_comment.thread_id = :thread_id and comment.user_id = :user_id
+                                        order by comment.created_at desc
+                                        limit 1;";
+    
     const CHILD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous
                                 from (
                                     SELECT child_comment_info.*, creator.first_name, creator.last_name, creator.photo_path, creator.username, thread_of_parent_comment.thread_id,
@@ -227,6 +235,19 @@ class CommentDao{
         return $builder;
 
     }
-
+    
+    public function getExistingCommentId($thread_id, $user_id) {
+        $result =  \Yii::$app->db
+            ->createCommand(self::GET_EXISTING_THREAD_COMMENT_ID)
+            ->bindValues([':thread_id' => $thread_id])
+            ->bindValues([':user_id' => $user_id])
+            ->queryScalar();
+        
+        if($result === null) {
+            return null;
+        } else {
+            return $result;
+        }
+    }
 
 }

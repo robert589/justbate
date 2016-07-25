@@ -6,7 +6,7 @@ $(function(){
             url: $("#base-url").val() + "/site/search-issue?except-own=true",
             type: 'post',
             success: function(data) {
-                // flush search-issue-searched-list
+                   // flush search-issue-searched-list
                 $('#search-issue-searched-list').text('');
 
                 var issue_list = [];

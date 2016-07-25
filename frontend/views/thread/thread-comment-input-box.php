@@ -1,6 +1,5 @@
 <?php
 use yii\widgets\ActiveForm;
-use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use common\components\Constant;
@@ -23,12 +22,7 @@ Pjax::begin([
         'container' => '#comment_input_' . $thread_id
     ]
 ]);
-
-
-
-
 if(isset($comment_input_retrieved)) {
-
 ?>
 
     <?php
@@ -36,7 +30,19 @@ if(isset($comment_input_retrieved)) {
     $form = ActiveForm::begin(['action' => ['thread/submit-comment'],
                     'options' => ['class' => 'comment-form',
                     'data-pjax' => '#comment_input_' . $thread_id]]) ?>
+        
         <div class="col-xs-12 thread-comment-input-box-section" id="comment_input_box_section_<?= $thread_id ?>">
+            <div class="row" style="padding-top:10px;padding-left:4px">
+                <span>
+                    <img class="img img-circle profile-picture-comment" style="width: 40px;height:40px;background:white" 
+                         src="<?= Yii::$app->getUser()->getIdentity()->getPhotoLink() ?>">
+                        </span>
+                <span>
+                    <label>
+                                    <?= Yii::$app->getUser()->getIdentity()->getFullName() ?>
+                    </label>
+                </span>
+            </div>
             <div class="row thread-comment-redactor-box" id="redactor_box_<?= $thread_id ?>">
                 <?= $form->field($comment_model,
                                   'comment',

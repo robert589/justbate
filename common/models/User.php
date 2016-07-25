@@ -174,5 +174,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function checkUsernameExist(){
         return $this->find()->where(['username' => $this->username])->exists();
     }
+    
+    public function getPhotoLink() {
+        return \common\libraries\UserUtility::buildPhotoPath($this->photo_path);
+    }
 
 }

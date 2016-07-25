@@ -239,7 +239,14 @@ class ThreadVo implements Vo{
     }
 
     public function hasCurrentUserComment() {
-        return $this->has_current_user_comment;
+        if( $this->has_current_user_comment !== null){
+            return $this->has_current_user_comment;
+            
+        }
+        if($this->current_user_comment !== null) {
+            return true;
+        }
+        return null;
     }
 
 }
