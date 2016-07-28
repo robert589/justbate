@@ -8,15 +8,12 @@ $(function(){
             success: function(data) {                
                 // set the initial issue(s) list
                 var current_issue_list = init();
-                var temp_issue_list = init();
-                console.log('Initial :: ' + current_issue_list);
 
                 // adding selected issue(s) to array
                 var selected_issue_array = [];
                 $('.search-issue-followed-by-user').children().each(function() {
                     selected_issue_array.push($(this).text());
                 });
-                console.log('Selected Issue Array :: ' + selected_issue_array);
 
                 // removing the selected issue(s) from list
                 // prevent use select sama issue
@@ -30,8 +27,6 @@ $(function(){
                         }
                     }
                 }
-
-                console.log('Current Issue List : ' + current_issue_list);
 
                 // flush search-issue-searched-list
                 $('#search-issue-searched-list').text('');
