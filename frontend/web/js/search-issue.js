@@ -52,11 +52,6 @@ $(function(){
                     $(this).appendTo($('#search-issue-searched-list'));
                 });
 
-                // compare user_selected_issue with current_issue_list
-                $('.search-issue-followed-by-user').children().each(function() {
-                    user_selected_issue.push($(this).text());
-                });
-
                 // display availables issue(s) to the webpage
                 for (var i = 0; i < current_issue_list.length; i++) {
                     if (current_issue_list[i].indexOf(user_input) != -1) {
