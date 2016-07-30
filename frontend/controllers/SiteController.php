@@ -315,12 +315,6 @@ class SiteController extends Controller
             
         }
         
-        /**
-         * 
-         */
-        public function actionProcessSignup() {
-            
-        }
 
 	/**
 	 *
@@ -328,15 +322,15 @@ class SiteController extends Controller
 	public function actionGetComment(){
 
 		if(!(Yii::$app->request->isPjax && isset($_GET['thread_id']))) {
-			Yii::$app->end("Failed to store votes: " . Yii::$app->request->isPjax . '&' . isset($_GET['thread_id']) );
+                    Yii::$app->end("Failed to store votes: " . Yii::$app->request->isPjax . '&' . isset($_GET['thread_id']) );
 		}
 
 		$thread_entity = new ThreadEntity($_GET['thread_id'], Yii::$app->user->getId() );
 		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
 		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
-										ThreadCreator::NEED_THREAD_COMMENTS,
-										ThreadCreator::NEED_TOTAL_COMMENTS
-										]);
+                                                ThreadCreator::NEED_THREAD_COMMENTS,
+                                                ThreadCreator::NEED_TOTAL_COMMENTS
+                                                ]);
 
 		return $this->renderPartial('_list_thread_thread_comment', ['thread' => $thread_entity,'comment_retrieved' => true]);
 
@@ -462,24 +456,23 @@ class SiteController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function actionSignup()
+	public function actionProcessSignup()
 	{
-		$model = new SignupForm();
-		$is_sign_up_with_fb = false;
-		if ($model->load(Yii::$app->request->post())) {
-			if ($user = $model->signup()) {
-				if (Yii::$app->getUser()->login($user)) {
-					return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
-				}
-				else{
-					Yii::$app->end("User" . print_r($user));
-				}
-			}
-		}
-		return $this->render('signup', [
-			'is_sign_up_with_fb' => $is_sign_up_with_fb,
-			'model' => $model,
-		]);
+            if(!isset($_POST['modal'])) {
+                return;
+            }
+            $model = new SignupForm();
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                if ($user = $model->signup()) {
+                    if (Yii::$app->getUser()->login($user)) {
+                        return $this->redirect(Yii::$app->request->baseUrl);
+                    }
+                }
+            }
+            return $this->render('login-email-register', [
+                    'signup_model' => $model,
+                    'modal' => $_POST['modal'],
+            ]);
 	}
 
 	/**

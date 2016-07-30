@@ -93,6 +93,12 @@ div.email-register div[class^='col-xs-'] {
     padding: 0 !important;
 }
 
+button.login-email-register-cancel-btn {
+    margin-top: 15px;
+    margin-left:4px;
+
+}
+
 
 button#register-button {
     margin-top: 15px;
@@ -428,7 +434,9 @@ div#signup-title,
 div#login-label {
     margin-bottom: 15px;
 }
-
+button.login-login-register-submit-btn {
+    margin-right: 4px;
+}
 /* FORGOT PASSWORD */
 div#forgot-password-wrapper {
     display: none;

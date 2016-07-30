@@ -136,13 +136,14 @@ $(document).ready(function(){
 
     $('#loading-bar').height($(document).height());
     
+    /** LOGIN PAGE **/
     $(document).on("click", ".login-register-with-email", function(event) {
         var service = $(this).data('service');
         $("#email-register"  +service).css("display", "block");
         $("#login-register-choice"  +service).css("display", "none");
     });
     
-    $(document).on("click",'.login-login-submit-btn', function(e) {
+    $(document).on("submit",'.login-login-form', function(e) {
         var service = $(this).data('service'); 
         $("#login-login-loading" + service).css("display", "block");
     });
@@ -152,12 +153,23 @@ $(document).ready(function(){
         $("#login-login-loading" + service).css("display", "none");
     });
     
-    $(document).on("click", ".login-register-with-email", function(event) {
-        var service = $(this).data('service');
-        $("#email-register"  +service).css("display", "block");
-        $("#login-register-choice"  +service).css("display", "none");
+    $(document).on("submit",'.login-email-register-form', function(e) {
+        var service = $(this).data('service'); 
+        $("#login-email-register-loading" + service).css("display", "block");
     });
     
+    $(document).on("pjax:complete",'.login-email-register-pjax', function(e) {
+        var service = $(this).data('service'); 
+        $("#login-email-register-loading" + service).css("display", "none");
+    });
+    
+    $(document).on("click", ".login-email-register-cancel-btn", function(e) {
+        var service = $(this).data('service');
+        $("#email-register"  +service).css("display", "none");
+        $("#login-register-choice"  +service).css("display", "block");
+    });
+    
+    /** **/
     
     $(document).on("click", ".comment-vote-button", function(element) {
         if(checkGuest() === true){

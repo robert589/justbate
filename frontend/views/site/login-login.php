@@ -22,7 +22,10 @@
         'action' => ['site/process-login'], 
         'method' => 'post', 
         'enableClientValidation' => true,
-        'options' => ['data-pjax' => '#login-login-form-container' .  $append_id ]]) ?>
+        'options' => [
+            'class' => 'login-login-form',
+            'data-service' => $append_id,
+            'data-pjax' => '#login-login-form-container' .  $append_id ]]) ?>
 
         <div class="col-xs-12">
             <span class="input-group login-data">
@@ -40,7 +43,7 @@
             </div>
             <button id="button-login" data-service="<?= $append_id ?>" class="btn btn-block btn-danger login-login-submit-btn">
                 Login
-                
+               
             </button>                      
         </div>
     <?php ActiveForm::end() ?>

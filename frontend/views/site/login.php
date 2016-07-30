@@ -4,7 +4,7 @@
    
 ?>
 <div class="container-fluid">
-    <div class="col-md-10 col-md-offset-1 col-sm-12 login-container">
+    <div class="col-md-12 col-sm-12 login-container">
         <div class="col-xs-12 justbate-image-logo">
             <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>" style="height:130px">
         </div>
