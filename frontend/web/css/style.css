@@ -73,26 +73,26 @@ li.user_item a[href$='home'] {
 }
 
 /* REGISTER */
-div#email-register {
+div.email-register {
     display: none;
-    padding: 15px;
+    padding-right: 32px;
 }
 
 a#register-dropdown {
     width: 100%;
 }
 
-a#cancel-register {
+a.login-email-register-cancel-btn {
     float: right;
     margin-top: 15px;
     padding: 7.5px;
 }
 
 form#form-signup,
-div#email-register,
-div#email-register div[class^='col-xs-'] {
+div.email-register div[class^='col-xs-'] {
     padding: 0 !important;
 }
+
 
 button#register-button {
     margin-top: 15px;
@@ -346,7 +346,7 @@ div.modal-body button#sign-up {
     border-radius: 0;
 }
 
-div#justbate-image-logo {
+div.justbate-image-logo {
     padding: 0;
     text-align: center;
     margin-bottom: 30px;
@@ -358,12 +358,12 @@ div#login-form form[action="/startUp/login"] div {
     margin-right: -15px;
 }
 
-div#login-register-form {
+div.login-container {
     background:white;
     padding-bottom: 30px;
 }
 
-div#register-form {
+div.login-register-form {
     padding-right: 45px !important;
 }
 
@@ -378,18 +378,24 @@ div#login-form {
 
 span.login-data,
 span.register-data {
+    margin-bottom:4px;
     width: 100%;
 }
 
 span.register-data span.input-group-addon, 
 span.login-data span.input-group-addon,
 span.register-data input,
-span.login-data input,
-button#button-login {
+span.login-data input {
     padding: 15px;
     border-radius: 0;
     text-align: center;
     border: 1px solid #ddd;
+    
+}
+
+button#button-login {
+    padding-top:10px;
+    margin-top: 8px;
 }
 
 span.register-data span.input-group-addon,
@@ -410,11 +416,6 @@ button#button-login {
 span.login-data input,
 span.register-data input {
     height: 100%;
-}
-
-input#loginform-email,
-input#loginform-password {
-    margin-left: -15px;
 }
 
 div.field-loginform-email p.help-block-error {
@@ -1570,14 +1571,14 @@ button.btn {
     }
 
     /* LOGIN */
-    div#login-register-form {
+    div.login-container {
         top: 65% !important;
         margin-top: -30px;
         width: 100%;
         height: 100vh;
     }
 
-    div#justbate-image-logo {
+    div.justbate-image-logo {
         margin-bottom: 15px;
     }
 
@@ -1634,7 +1635,7 @@ button.btn {
     }
 
     /* REGISTER */
-    div#email-register {
+    div.email-register {
         margin-top: 15px;
         margin-bottom: 15px;
     }
@@ -1656,32 +1657,12 @@ button.btn {
     }
 
     /* LOGIN AND SIGN UP */
-    div#login-register-form {
-        top: 60% !important;
-        padding: 30px !important;
-        height: 100vh;
-        width: 100%;
-    }
 
-    div#justbate-image-logo img {
+    div.justbate-image-logo img {
         width: 75%;
     }
+ 
 
-    div#register-form {
-        background: none;
-        margin-right: 15px;
-        padding-right: 0 !important;
-    }
-
-    div#login-form form[action="/startUp/login"] div {
-        width: calc(100% - 15px);
-    }    
-
-    input#loginform-email,
-    input#loginform-password {
-        margin-left: 0.25px !important;
-        width: calc(100% + 30px);
-    }
 
     /* FORGOT PASSWORD */
     div#forgot-password-wrapper div.col-xs-3 button { 
@@ -1895,7 +1876,7 @@ button.btn {
     }
 
     /* LOGIN */
-    div#login-register-form {
+    div.login-container {
         top: 50%;
         left: 50%;
         padding: 15px;
@@ -1912,7 +1893,7 @@ button.btn {
         width: 100%;
     }
 
-    div#register-form, 
+    div.login-register-form, 
     div#login-form {
         border: 0;
     }
@@ -1932,7 +1913,7 @@ button.btn {
         width: calc(100% + 15px);
     }
 
-    div#register-form { 
+    div.login-register-form { 
         padding-right: 0 !important;
     }
 
@@ -2265,7 +2246,6 @@ button.btn {
 
     /* LOGIN */
     div#login-form {
-        margin-left: -15px;
         padding-left: 15px;
     }
 

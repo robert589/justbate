@@ -6,13 +6,8 @@ use common\creator\CreatorFactory;
 use common\creator\ThreadCreator;
 use common\entity\ThreadEntity;
 use common\models\Issue;
-use common\models\ThreadAnonymous;
-use common\models\ThreadComment;
-use common\models\ThreadVote;
-use common\models\UserEmailAuthentication;
+use yii\widgets\ActiveForm;
 use common\models\UserFollowedIssue;
-use frontend\models\ChangeEmailForm;
-use frontend\models\CommentForm;
 use frontend\models\CreateThreadForm;
 use frontend\models\ResendChangeEmailForm;
 use frontend\models\UploadProfilePicForm;
@@ -47,41 +42,39 @@ class SiteController extends Controller
 	 */
 	private $serviceFactory;
 
-
 	public function init() {
-		$this->serviceFactory = new ServiceFactory();
+            $this->serviceFactory = new ServiceFactory();
 	}
-
 
 	/**
 	 * @inheritdoc
 	 */
 	public function behaviors()
 	{
-		return [
-			'access' => [
-				'class' => AccessControl::className(),
-				'only' => ['logout', 'signup'],
-				'rules' => [
-					[
-						'actions' => ['signup'],
-						'allow' => true,
-						'roles' => ['?'],
-					],
-					[
-						'actions' => ['logout'],
-						'allow' => true,
-						'roles' => ['@'],
-					],
-				],
-			],
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'logout' => ['post'],
-				],
-			],
-		];
+            return [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['logout', 'signup'],
+                    'rules' => [
+                        [
+                            'actions' => ['signup'],
+                            'allow' => true,
+                            'roles' => ['?'],
+                        ],
+                        [
+                            'actions' => ['logout'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                            'logout' => ['post'],
+                    ],
+                ],
+            ];
 	}
 
 	/**
@@ -152,16 +145,18 @@ class SiteController extends Controller
 
 	/**
 	* Generate Home page include Followed Issue, Trending Topic, and newest Topic
-	*/
+
+         **/
 	public function actionHome()
 	{
             $this->setMetaTag();
-            if(Yii::$app->user->isGuest){
-                    return $this->render('login',
-                            ['login_form' => new LoginForm(),
-                             'model' => new SignupForm()
-                            ]);
+            if(Yii::$app->user->isGuest) {
+                return $this->render('login',
+                        ['login_model' => new LoginForm(),
+                         'register_model' => new SignupForm(), 'modal' => false]);
             }
+            
+
             $user_id = Yii::$app->user->getId();
             $issue = isset($_GET['issue']) ? $_GET['issue'] : null;
             $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
@@ -247,37 +242,37 @@ class SiteController extends Controller
 
 
 	public function actionFollowIssue(){
-		if(isset($_POST['issue_name']) && isset($_POST['user_id']) && isset($_POST['command'])){
-			$command = $_POST['command'];
-			$user_follow_issue_form = new UserFollowIssueForm();
-			$user_follow_issue_form->issue_name = $_POST['issue_name'];
-			$user_follow_issue_form->user_id = $_POST['user_id'];
-			if($command == 'follow_issue'){
-				$success = $user_follow_issue_form->followIssue();
-			}
-			else{
-				$success = $user_follow_issue_form->unfollowIssue();
-			}
-			if($success == true){
-				$user_is_follower = UserFollowedIssue::isFollower($user_follow_issue_form->user_id, $user_follow_issue_form->issue_name);
-				$issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($user_follow_issue_form->issue_name);
-				return $this->renderPartial('home-issue-header',
-											['issue_name' => $user_follow_issue_form->issue_name,
-											 'issue_num_followers' => $issue_num_followers,
-											 'user_is_follower' => $user_is_follower]
-											);
-			}
-			else{
-				if($user_follow_issue_form->hasErrors()){
-					Yii::$app->end($user_follow_issue_form->getErrors());
-				}
-			}
-		}
-		else{
+            if(isset($_POST['issue_name']) && isset($_POST['user_id']) && isset($_POST['command'])){
+                $command = $_POST['command'];
+                $user_follow_issue_form = new UserFollowIssueForm();
+                $user_follow_issue_form->issue_name = $_POST['issue_name'];
+                $user_follow_issue_form->user_id = $_POST['user_id'];
+                if($command == 'follow_issue'){
+                    $success = $user_follow_issue_form->followIssue();
+                }
+                else{
+                    $success = $user_follow_issue_form->unfollowIssue();
+                }
+                if($success == true){
+                    $user_is_follower = UserFollowedIssue::isFollower($user_follow_issue_form->user_id, $user_follow_issue_form->issue_name);
+                    $issue_num_followers = UserFollowedIssue::getTotalFollowedIssue($user_follow_issue_form->issue_name);
+                    return $this->renderPartial('home-issue-header',
+                                                                            ['issue_name' => $user_follow_issue_form->issue_name,
+                                                                             'issue_num_followers' => $issue_num_followers,
+                                                                             'user_is_follower' => $user_is_follower]
+                                                                            );
+                }
+                else{
+                    if($user_follow_issue_form->hasErrors()){
+                            Yii::$app->end($user_follow_issue_form->getErrors());
+                    }
+                }
+            }
+            else{
 
-		}
+            }
 
-		return null;
+            return null;
 	}
 
 
@@ -288,23 +283,44 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		if (!\Yii::$app->user->isGuest) {
-			return $this->goHome();
-		}
-		$model = new SignupForm();
-
-
-		$login_model = new LoginForm();
-		if ($login_model->load(Yii::$app->request->post()) && $login_model->login()) {
-			return $this->redirect(Yii::$app->request->baseUrl);
-		}
-		else {
-			return $this->render('login', [
-				'login_form' => $login_model,
-				'model' => $model
-			]);
-		}
+            if (!\Yii::$app->user->isGuest) {
+                    return $this->goHome();
+            }
+            $signup_model = new SignupForm();
+            $login_model = new LoginForm();
+            
+            return $this->render('login', [
+                'login_model' => $login_model,
+                'signup_model' => $signup_model, 'modal' => true
+            ]);
 	}
+        
+        /**
+         * 
+         */
+        public function actionProcessLogin() {
+            
+            if(!isset($_POST['modal'])) {
+                return;
+            }
+            $login_model = new LoginForm();
+            $modal = $_POST['modal'];
+            if ($login_model->load(Yii::$app->request->post()) && $login_model->validate()) {
+                if($login_model->login()) {
+                    return $this->redirect(Yii::$app->request->baseUrl);
+                }
+            }
+            
+            return $this->renderPartial('login-login', ['login_model' => $login_model, 'modal' => $modal]);
+            
+        }
+        
+        /**
+         * 
+         */
+        public function actionProcessSignup() {
+            
+        }
 
 	/**
 	 *

@@ -8,6 +8,8 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\bootstrap\Modal;
+use common\models\LoginForm;
+use frontend\models\SignupForm;
 use common\models\User;
 use yii\web\JsExpression;
 use frontend\vo\ChildCommentVoBuilder;
@@ -101,25 +103,25 @@ AppAsset::register($this);
                 <ul class="nav navbar-nav navbar-right" id="menubar-right">
                     <?php if(Yii::$app->user->isGuest){ ?>
                         <li class="item"><a id="loginMenu">Login</a></li>
-                        <?php } else { ?>
-                            <li class="user_item item" id="home_menu_bar"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
-                            <li class="user_item dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
-                            <li class="user_item item"><a href="<?= $profile_link ?>"><img id="profile-picture-home" src=<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?> height="20px;" /><?= User::findOne(Yii::$app->getUser()->id)->first_name ?></a></li>
-                            <li class="user_item dropdown item" id="dropdown-menu-settings">
-                                <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle">
-                                    <span class="glyphicon glyphicon-chevron-down">
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="item">
-                                        <a href="#">Settings</a>
-                                    </li>
-                                    <li id="logout" class="item">
-                                        <a  data-method="post" href="<?= $logout_link ?>">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <?php } ?>
+                    <?php } else { ?>
+                        <li class="user_item item" id="home_menu_bar"><a href="<?=Yii::$app->request->baseUrl. '/site/home'?>">Home</a></li>
+                        <li class="user_item dropdown" id="notification-bar"><?= $this->render('../notification/index') ?></li>
+                        <li class="user_item item"><a href="<?= $profile_link ?>"><img id="profile-picture-home" src=<?= Yii::getAlias('@image_dir') . '/'. User::findOne(Yii::$app->getUser()->id)->photo_path ?> height="20px;" /><?= User::findOne(Yii::$app->getUser()->id)->first_name ?></a></li>
+                        <li class="user_item dropdown item" id="dropdown-menu-settings">
+                            <a href="#" style="color: white;" data-toggle="dropdown" class="dropdown-toggle">
+                                <span class="glyphicon glyphicon-chevron-down">
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="item">
+                                    <a href="#">Settings</a>
+                                </li>
+                                <li id="logout" class="item">
+                                    <a  data-method="post" href="<?= $logout_link ?>">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
@@ -130,8 +132,8 @@ AppAsset::register($this);
             'id' => 'loginModal',
             'size' => Modal::SIZE_LARGE
         ]);
-            $login_form = new \common\models\LoginForm();
-            echo $this->render('../site/login', ['login_form' => $login_form, 'model' => new \frontend\models\SignupForm()]);
+            echo $this->render('../site/login', 
+                ['login_model' => new LoginForm(), 'register_model' => new SignupForm(), 'modal' => true]);
         Modal::end();
     ?>
 
@@ -165,7 +167,7 @@ AppAsset::register($this);
                             (Yii::$app->user->identity->first_name) ,
                             ['id' => 'user-login-first-name']) ?>
 
-        <?= Html::hiddenInput('first-name',
+        <?= Html::hiddenInput('last-name',
                         (Yii::$app->user->identity->last_name) ,
                         ['id' => 'user-login-last-name']) ?>
     
