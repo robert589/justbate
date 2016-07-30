@@ -119,30 +119,6 @@ ChildCommentWebSocket.prototype.getCommentId = function(){
 };
 
 
-$(document).ready(function() {
-    // register dropdown
-    $("a#register-dropdown").click(function() {
-        $("div#email-register").slideToggle(0);
-        $("a#register-dropdown").css("display", "none");
-    });
-
-    $("div#cancel-register-button").click(function() {
-        $("div#email-register").slideToggle(0);
-        $("a#register-dropdown").css("display", "block");
-    });    
-
-    // forgot password 
-    $("div#forgot-password").click(function() {
-        $("div#forgot-password-wrapper").slideToggle(0);
-        $("div#forgot-password").css("display", "none");
-    });
-
-    $("div#cancel-button").click(function() {
-        $("div#forgot-password-wrapper").slideToggle(0);
-        $("div#forgot-password").css("display", "block");
-    });
-});
-
 $(document).ready(function(){
     var $this = $(this);
     var child_comment_template = $this.find("#child-comment-template").html();
@@ -159,6 +135,29 @@ $(document).ready(function(){
     }(document, 'script', 'facebook-jssdk'));
 
     $('#loading-bar').height($(document).height());
+    
+    $(document).on("click", ".login-register-with-email", function(event) {
+        var service = $(this).data('service');
+        $("#email-register"  +service).css("display", "block");
+        $("#login-register-choice"  +service).css("display", "none");
+    });
+    
+    $(document).on("click",'.login-login-submit-btn', function(e) {
+        var service = $(this).data('service'); 
+        $("#login-login-loading" + service).css("display", "block");
+    });
+    
+    $(document).on("pjax:complete",'.login-login-pjax', function(e) {
+        var service = $(this).data('service'); 
+        $("#login-login-loading" + service).css("display", "none");
+    });
+    
+    $(document).on("click", ".login-register-with-email", function(event) {
+        var service = $(this).data('service');
+        $("#email-register"  +service).css("display", "block");
+        $("#login-register-choice"  +service).css("display", "none");
+    });
+    
     
     $(document).on("click", ".comment-vote-button", function(element) {
         if(checkGuest() === true){
