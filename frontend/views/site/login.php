@@ -9,7 +9,7 @@
             <img src="<?= Yii::$app->request->baseUrl . '/frontend/web/img/logo.png' ?>" style="height:130px">
         </div>
         <div class="col-md-6 col-xs-12 login-register" id="login-register-choice<?= $append_id ?>">
-            <a href="https://www.justbate.com/site/auth?authclient=facebook" 
+            <a href="<?= Yii::$app->request->baseUrl ?>/site/auth?authclient=facebook" 
                id="login-continue-with-facebook<?= $append_id ?>" 
                class="login-continue-with-facebook"
                data-service="<?= $append_id ?>">

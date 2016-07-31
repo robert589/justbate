@@ -27,7 +27,7 @@ $this->title = "Home";
 ?>
 
 <?php
-    Modal::begin(['id' => 'home-search-issue-modal']);
+    Modal::begin(['id' => 'home-search-issue-modal', 'header' => 'Please follow at least 5 issues']);
         echo SearchIssue::widget(['issue_followed_by_user' => $issue_followed_by_user]);
     Modal::end();
 ?>

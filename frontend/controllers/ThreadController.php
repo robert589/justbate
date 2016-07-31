@@ -245,24 +245,24 @@ class ThreadController extends Controller
 	 * @return string
 	 */
 	public function actionEditThread() {
-		if(Yii::$app->request->isPjax){
-			$edit_thread_form = new EditThreadForm();
-			if($edit_thread_form->load(Yii::$app->request->post()) && $edit_thread_form->validate()){
-				if(!$edit_thread_form->update()) {
-					//FAIL
-				}
-			}
+            if(Yii::$app->request->isPjax){
+                $edit_thread_form = new EditThreadForm();
+                if($edit_thread_form->load(Yii::$app->request->post()) && $edit_thread_form->validate()){
+                    if(!$edit_thread_form->update()) {
+                            //FAIL
+                    }
+                }
 
-			$service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
-			$thread = $service->getThreadInfoAfterEdit( $edit_thread_form->thread_id,Yii::$app->user->getId(),
-				$edit_thread_form->title, $edit_thread_form->description, new ThreadVoBuilder());
+                $service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
+                $thread = $service->getThreadInfoAfterEdit( $edit_thread_form->thread_id,Yii::$app->user->getId(),
+                        $edit_thread_form->title, $edit_thread_form->description, new ThreadVoBuilder());
 
-			$submit_vote_form = new SubmitThreadVoteForm();
-			return $this->renderAjax('thread-section',
-				['thread' => $thread,
-				 'edit_thread_form' => $edit_thread_form,
-				 'submit_vote_form' => $submit_vote_form]);
-		}
+                $submit_vote_form = new SubmitThreadVoteForm();
+                return $this->renderAjax('thread-section    ',
+                        ['thread' => $thread,
+                         'edit_thread_form' => $edit_thread_form,
+                         'submit_vote_form' => $submit_vote_form]);
+            }
 	}
 
 	/**
@@ -305,16 +305,16 @@ class ThreadController extends Controller
 
 
 	public function actionCancelAnonymous(){
-		if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
-			$thread_id = $_POST['thread_id'];
-			$user_id = $_POST['user_id'];
+            if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
+                $thread_id = $_POST['thread_id'];
+                $user_id = $_POST['user_id'];
 
-			//bad practice, please remove during refactoring
-			$thread_anon_form = new ThreadAnonymousForm();
-			$thread_anon_form->thread_id = $thread_id;
-			$thread_anon_form->user_id = $user_id;
-			return $thread_anon_form->cancelAnon();
-		}
+                //bad practice, please remove during refactoring
+                $thread_anon_form = new ThreadAnonymousForm();
+                $thread_anon_form->thread_id = $thread_id;
+                $thread_anon_form->user_id = $user_id;
+                return $thread_anon_form->cancelAnon();
+            }
 	}
         
         private function updateThreadView($thread_id) {
