@@ -15,15 +15,15 @@ class EditUserIssueForm extends Model {
     public function rules() {
         return [
             ['user_id', 'integer'],
-            ['issue_list', 'each', 'rule' => ['string']],
-
+            ['issue_list', 'check_issue'],
         ];
     }
 
-    public function update() {
-
+    public function check_issue() {
+        if (count($issue_list) < 5) {
+            $this->addError('issue_list', 'Issue List is less than 5 items');
+        }
     }
-
 }
 
 ?>
