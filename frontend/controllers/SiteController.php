@@ -7,6 +7,7 @@ use common\creator\ThreadCreator;
 use common\entity\ThreadEntity;
 use common\models\Issue;
 use yii\widgets\ActiveForm;
+use frontend\models\EditUserIssueForm;
 use common\models\UserFollowedIssue;
 use frontend\models\CreateThreadForm;
 use frontend\models\ResendChangeEmailForm;
@@ -418,25 +419,51 @@ class SiteController extends Controller
 		echo Json::encode($out);
 	}
 
-        /** JSON **/
-        public function actionSearchIssueWithUserStatus($query = null) {
-            $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
-            $results = $service->getIssueWithStatus(Yii::$app->user->getId(), $query);
+        
+        public function actionEditUserIssue() {
+            if(Yii::$app->user->isGuest) {
+                return 0;
+            }
+            
+            if(!isset($_POST['selected_issue'])) {
+                return 0;
+            }
+            $edit_user_issue_form = new EditUserIssueForm();
+            $edit_user_issue_form->issue_list = json_decode($_POST['selected_issue']);
+            $edit_user_issue_form->user_id = Yii::$app->user->getId();
+            if($edit_user_issue_form->validate()) {
+                if($edit_user_issue_form->update()) {
+                    return 1;
+                }
+            }
+
+            if($edit_user_issue_form->hasErrors()) {
+                \Yii::$app->end(var_dump($edit_user_issue_form->errors));
+            }   
+            return 0;
             
         }
-        
 	/**
          * Json response
 	 * @param null $q
 	 */
-	public function actionSearchIssue($q =null){
-		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		$out = ['results' => ['id' => '', 'text' => '']];
-		$data = Issue::getIssueBySearch($q, isset($_GET['except-own']), Yii::$app->user->getId());
+	public function actionSearchIssue(){
+            $q = isset($_GET['query']) ? $_GET['query'] : '';
+            
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $out = ['results' => ['id' => '', 'text' => '']];
+            
+            if(isset($_GET['limit']) && is_numeric($_GET['limit'])) {
+                $limit = (int) $_GET['limit'];
+                $data = Issue::getIssueBySearch($q, isset($_GET['except-own']), Yii::$app->user->getId(), $limit);
 
-		$out['results'] = array_values($data);
+            }
+            else {
+                $data = Issue::getIssueBySearch($q, isset($_GET['except-own']), Yii::$app->user->getId());
+            }
+            $out['results'] = array_values($data);
 
-    		echo Json::encode($out);
+            echo Json::encode($out);
 	}
 
 	/**
@@ -543,17 +570,17 @@ class SiteController extends Controller
 	}
 
 	public function actionDeleteFollowList(){
-		if(isset($_POST['deleted_issue'])){
+            if(isset($_POST['deleted_issue'])){
 
-			$user_follow_issue_form = new UserFollowIssueForm();
+                $user_follow_issue_form = new UserFollowIssueForm();
 
-			$user_follow_issue_form->issue_name = $_POST['deleted_issue'];
-			$user_follow_issue_form->user_id = Yii::$app->user->getId();
+                $user_follow_issue_form->issue_name = $_POST['deleted_issue'];
+                $user_follow_issue_form->user_id = Yii::$app->user->getId();
 
-			$success = $user_follow_issue_form->unfollowIssue();
+                $success = $user_follow_issue_form->unfollowIssue();
 
-			echo $success;
-		}
+                echo $success;
+            }
 	}
 
 
