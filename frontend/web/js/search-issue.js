@@ -1,22 +1,17 @@
 $(function(){
+    var selected_issue_array = [];
     $(document).on("input", "#search-issue-search-input", function(e){
         $("#search-issue-searched-list-loading").show();
         $("#search-issue-searched-list").hide();
         $.ajax({
             url: $("#base-url").val() + "/site/search-issue?except-own=true",
             type: 'post',
-            success: function(data) {                
-                // set the initial issue(s) list
-                var current_issue_list = init();
-
-                // adding selected issue(s) to array
-                var selected_issue_array = [];
+            success: function(data) {        
                 $('.search-issue-followed-by-user').children().each(function() {
                     selected_issue_array.push($(this).text());
                 });
 
-                // removing the selected issue(s) from list
-                // prevent use select sama issue
+                var current_issue_list = init();
                 if (current_issue_list.length != 0) {
                     for (var i = 0; i < current_issue_list.length; i++) {
                         for (var j = 0; j < selected_issue_array.length; j++) {
@@ -30,27 +25,7 @@ $(function(){
 
                 // flush search-issue-searched-list
                 $('#search-issue-searched-list').text('');
-                var user_input = $('#search-issue-search-input').val();
-
-                $(document).on("click", 'label.default', function() {
-                    $(this).removeClass('default');
-                    $(this).appendTo($('.search-issue-followed-by-user'));
-                })
-
-                var user_selected_issue = [];
-                $(document).on("click", '#search-issue-searched-list label', function() {
-                    $(this).appendTo($('.search-issue-followed-by-user'));
-                    var selected_issue = current_issue_list.indexOf($(this).text());
-                    current_issue_list.splice(selected_issue, 1);
-                    user_selected_issue.push($(this).text());
-                });
-
-                $(document).on("click", '.search-issue-followed-by-user label', function() {
-                    current_issue_list.push($(this).text());
-                    var selected_issue = user_selected_issue.indexOf($(this).text());
-                    user_selected_issue.splice(selected_issue, 1);
-                    $(this).appendTo($('#search-issue-searched-list'));
-                });
+                var user_input = $('#search-issue-search-input').val();              
 
                 // display availables issue(s) to the webpage
                 for (var i = 0; i < current_issue_list.length; i++) {
@@ -75,4 +50,24 @@ $(function(){
             }
         });
     });
+
+    $(document).on("click", 'label.default', function() {
+        $(this).removeClass('default');
+        $(this).appendTo($('.search-issue-followed-by-user'));
+        selected_issue_array.push($(this).text());
+    });
+    
+    $(document).on("click", '#search-issue-searched-list label', function() {
+        $(this).appendTo($('.search-issue-followed-by-user'));
+        $("#search-issue-form").append("<input type='hidden' value='$(this).text()' />");
+        var selected_issue = current_issue_list.indexOf($(this).text());
+        selected_issue_array.push($(this).text());
+    });
+    
+    $(document).on("click", '.search-issue-followed-by-user label', function() {
+        var selected_issue = selected_issue_array.indexOf($(this).text());
+        selected_issue_array.splice(selected_issue, 1);
+        $(this).appendTo($('#search-issue-searched-list'));
+    });
+
 });
