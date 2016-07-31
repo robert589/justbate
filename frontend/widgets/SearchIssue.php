@@ -8,7 +8,7 @@ class SearchIssue extends Widget
 {
     /** @var  $array  array  */
     public $all_issues;
-    
+
     public $issue_followed_by_user;
 
     public function init()
