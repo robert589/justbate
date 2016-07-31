@@ -11,12 +11,6 @@ $(function(){
                     selected_issue_array.push($(this).text());
                 });
 
-                // checking selected_issue_array
-                for (var i = 0; i < selected_issue_array.length; i++) {
-                    console.log('Selected Issue Array');
-                    console.log(selected_issue_array[i]);
-                }
-
                 var current_issue_list = init();
                 if (current_issue_list.length != 0) {
                     for (var i = 0; i < current_issue_list.length; i++) {
@@ -27,12 +21,6 @@ $(function(){
                             }
                         }
                     }
-                }
-
-                // checking current_issue_list
-                for (var i = 0; i < current_issue_list.length; i++) {
-                    console.log('Current Issue List');
-                    console.log(current_issue_list[i]);
                 }
 
                 // flush search-issue-searched-list
