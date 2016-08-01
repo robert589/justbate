@@ -28,6 +28,8 @@
             'data-pjax' => '#login-login-form-container' .  $append_id ]]) ?>
 
         <div class="col-xs-12">
+            <label align="center" style="width:100%">Login</label>
+            
             <span class="input-group login-data">
                 <?= $form->field($login_model, 'email')->textInput(['placeholder' => 'Your Email'], ['class' => 'form-control']) ?>
             </span>

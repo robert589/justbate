@@ -10,7 +10,6 @@ use yii\web\JsExpression;
 use yii\widgets\Pjax;
 use kartik\sidenav\SideNav;
 use yii\widgets\ActiveForm;
-use yii\helpers\Html;
 
 $select2_content =
     Select2::widget([

@@ -1590,12 +1590,7 @@ button.btn {
         margin-bottom: 15px;
     }
 
-    input#loginform-email,
-    input#loginform-password {
-        margin-left: 15px !important;
-        width: calc(100% + 15px) !important;
-    }
-
+    
     /* HOME */
     div.home-comment-tab div.inline {
         width: 100% !important;
@@ -1912,13 +1907,11 @@ button.btn {
 
     input#loginform-email,
     input#loginform-password {
-        width: calc(100% + 15px);
         margin-left: 0;
     }
 
     div#login-form { 
         padding: 0;
-        width: calc(100% + 15px);
     }
 
     div.login-register-form { 
@@ -2035,7 +2028,6 @@ button.btn {
         margin-top: 15px;
         padding-top: 15px;
         padding-bottom: 15px;
-        width: calc(100%+ 30px) !important;
     }
 
     div#thread-main-body {

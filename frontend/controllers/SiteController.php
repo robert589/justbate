@@ -83,19 +83,19 @@ class SiteController extends Controller
 	 */
 	public function actions()
 	{
-		return [
-			'error' => [
-				'class' => 'yii\web\ErrorAction',
-			],
-			'captcha' => [
-				'class' => 'yii\captcha\CaptchaAction',
-				'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-			],
-			'auth' => [
-				'class' => 'yii\authclient\AuthAction',
-				'successCallback' => [$this, 'oAuthSuccess'],
-			],
-		];
+            return [
+                'error' => [
+                        'class' => 'yii\web\ErrorAction',
+                ],
+                'captcha' => [
+                        'class' => 'yii\captcha\CaptchaAction',
+                        'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                    ],
+                    'auth' => [
+                            'class' => 'yii\authclient\AuthAction',
+                            'successCallback' => [$this, 'oAuthSuccess'],
+                    ],
+            ];
 	}
 
 	/**
@@ -225,19 +225,19 @@ class SiteController extends Controller
 	}
 
 	public function actionAddIssue(){
-		$add_issue_form = new UserFollowIssueForm();
+            $add_issue_form = new UserFollowIssueForm();
 
-		if($add_issue_form->load(Yii::$app->request->post()) && $add_issue_form->validate()) {
-			if ($add_issue_form->followIssue()) {
-				$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
-				return $this->renderPartial('home-sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => new UserFollowIssueForm()]);
-			} else {
-				Yii::$app->end("Cannot follow issue");
-			}
-		}
+            if($add_issue_form->load(Yii::$app->request->post()) && $add_issue_form->validate()) {
+                if ($add_issue_form->followIssue()) {
+                    $issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
+                    return $this->renderPartial('home-sidenav-issue', ['issue_list' => $issue_list, 'add_issue_form' => new UserFollowIssueForm()]);
+                } else {
+                    Yii::$app->end("Cannot follow issue");
+                }
+            }
 
-		$issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
-		return $this->renderPartial('home-sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => $add_issue_form]);
+            $issue_list = UserFollowedIssue::getFollowedIssue($add_issue_form->user_id);
+            return $this->renderPartial('home-sidenav-issue', ['issue_list' => $issue_list , 'add_issue_form' => $add_issue_form]);
 
 	}
 
@@ -308,7 +308,7 @@ class SiteController extends Controller
             $modal = $_POST['modal'];
             if ($login_model->load(Yii::$app->request->post()) && $login_model->validate()) {
                 if($login_model->login()) {
-                    return $this->redirect(Yii::$app->request->baseUrl);
+                    return $this->redirect(Yii::$app->request->baseUrl . '/');
                 }
             }
             
@@ -322,18 +322,18 @@ class SiteController extends Controller
 	 */
 	public function actionGetComment(){
 
-		if(!(Yii::$app->request->isPjax && isset($_GET['thread_id']))) {
-                    Yii::$app->end("Failed to store votes: " . Yii::$app->request->isPjax . '&' . isset($_GET['thread_id']) );
-		}
+            if(!(Yii::$app->request->isPjax && isset($_GET['thread_id']))) {
+                Yii::$app->end("Failed to store votes: " . Yii::$app->request->isPjax . '&' . isset($_GET['thread_id']) );
+            }
 
-		$thread_entity = new ThreadEntity($_GET['thread_id'], Yii::$app->user->getId() );
-		$creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
-		$thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
-                                                ThreadCreator::NEED_THREAD_COMMENTS,
-                                                ThreadCreator::NEED_TOTAL_COMMENTS
-                                                ]);
+            $thread_entity = new ThreadEntity($_GET['thread_id'], Yii::$app->user->getId() );
+            $creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_CREATOR, $thread_entity);
+            $thread_entity = $creator->get([ThreadCreator::NEED_THREAD_CHOICE,
+                                            ThreadCreator::NEED_THREAD_COMMENTS,
+                                            ThreadCreator::NEED_TOTAL_COMMENTS
+                                            ]);
 
-		return $this->renderPartial('_list_thread_thread_comment', ['thread' => $thread_entity,'comment_retrieved' => true]);
+            return $this->renderPartial('_list_thread_thread_comment', ['thread' => $thread_entity,'comment_retrieved' => true]);
 
 	}
 
@@ -492,7 +492,7 @@ class SiteController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
-                        return $this->redirect(Yii::$app->request->baseUrl);
+                        return $this->redirect(Yii::$app->request->baseUrl . '/');
                     }
                 }
             }

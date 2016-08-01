@@ -15,7 +15,7 @@
                    data-label="<?= $value ?>" >
         <?php } ?>
             <input type="radio" value="<?= $value ?>" >
-            <div class="simple-button-group-label-<?= $value ?>"> <?= $text ?> </div>
+            <div class="simple-button-group-label-<?= str_replace(" ", "-" ,$value) ?>"> <?= $text ?> </div>
         </label>
     <?php } ?>
 </div>

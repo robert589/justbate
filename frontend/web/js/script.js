@@ -236,7 +236,7 @@ $(document).ready(function(){
         if(old_choice_value === new_choice_value) {
             return false;
         }
-        var new_choice_value_section =thread_vote_section.find('.simple-button-group-label-' + new_choice_value);
+        var new_choice_value_section =thread_vote_section.find('.simple-button-group-label-' + new_choice_value.replaceAll(' ' , '-'));
         var new_choice_text = new_choice_value_section.text();                
         var new_choice_total_comments = new_choice_text.substring(new_choice_text.lastIndexOf("(")+1,
           new_choice_text.lastIndexOf(")"));
@@ -247,7 +247,8 @@ $(document).ready(function(){
         
         // update old choice text
         if(old_choice_value !== null) {
-            var old_choice_label_section = thread_vote_section.find('.simple-button-group-label-' + old_choice_value);
+            var old_choice_label_section = thread_vote_section.find('.simple-button-group-label-' 
+                                                            + old_choice_value.replaceAll(' ' , '-'));
             var old_choice_label_text = old_choice_label_section.text();
             var old_choice_total_comments = old_choice_label_text.substring(old_choice_label_text.lastIndexOf("(")+1,
              old_choice_label_text.lastIndexOf(")"));
