@@ -1679,10 +1679,6 @@ button.btn {
         margin-right: 0;
     }
 
-    div#home-container div[class^='col-'] {
-        padding: 0;
-    }
-
     div.list-thread div#thread-issue {
         padding-left: 15px;
         padding-right: 15px;
@@ -1892,7 +1888,6 @@ button.btn {
     }
 
     div#login-form form div {
-        padding-left: 0 !important;
         width: 100%;
     }
 

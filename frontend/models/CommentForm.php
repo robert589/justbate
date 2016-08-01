@@ -45,11 +45,12 @@ class CommentForm extends Model
      */
     public function store()
     {
+ 
         if (!$this->validate()) {
             return null;
         }       
-        
-        if(($comment_id = $this->getExistingCommentId()) !== null) {
+        $comment_id = $this->getExistingCommentId();
+        if($comment_id === false) {
             return $this->createNewComment();
         } else {
             return $this->updateComment($comment_id);
@@ -60,14 +61,16 @@ class CommentForm extends Model
     private function updateComment($comment_id) {
         $comment = Comment::find()->where(['comment_id' => $comment_id])->one();
         $comment->comment = $this->comment;
-        return $comment->update();
+        if($comment->save()) {
+            return $comment->comment_id;
+        }
+        return null;
     }
     
     private function createNewComment() {
         $comment = new Comment();
         $comment->comment = $this->comment;
         $comment->user_id = $this->user_id;
-        
         if($comment->save()){
             $thread_comment = new ThreadComment();
             $thread_comment->comment_id = $comment->comment_id;

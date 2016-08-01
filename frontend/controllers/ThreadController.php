@@ -118,30 +118,33 @@ class ThreadController extends Controller
 	 * POST DATA: Comment Model;
 	 */
 	public function actionSubmitComment(){
-		if(Yii::$app->user->isGuest || !isset($_POST['thread_id'])) {
-			Yii::$app->end('You should login before submitting the comment');
-		}
-
-		$comment_model = new CommentForm();
-		$thread_id = $_POST['thread_id'];
-		if(!($comment_model->load(Yii::$app->request->post()) && $comment_model->validate())) {
-			return $this->renderAjax('_comment_input_box', ['commentModel' => $comment_model, 'thread' => $thread_entity]);
-		}
-		$comment_model->thread_id =  $thread_id;
-		$comment_model->user_id = \Yii::$app->user->getId();
-		if(!($comment_id = $comment_model->store())) {
-		}
-		if(!$this->updateCommentNotification($comment_model->user_id, $thread_id)){
-		}
-
-		$service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
-		$thread = $service->getThreadCommentInfo(Yii::$app->user->getId(), $thread_id, $comment_id);
-
-
-		return  $this->renderAjax('../comment/thread-comment', [
-			'thread_comment' => $thread,
-			'child_comment_form' => new ChildCommentForm()]);
-	}
+            if(Yii::$app->user->isGuest || !isset($_POST['thread_id'])) {
+                Yii::$app->end('You should login before submitting the comment');
+            }
+            $comment_model = new CommentForm();
+            $thread_id = $_POST['thread_id'];
+            $user_id = Yii::$app->user->getId();
+            $comment_model->thread_id =  $thread_id;
+            $comment_model->user_id = $user_id;
+            if(!($comment_model->load(Yii::$app->request->post()) && $comment_model->validate())) {
+                $service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
+                $thread = $service->getThreadInfo($thread_id, $user_id, new ThreadVoBuilder());
+                return $this->renderAjax('thread-comment-input-box', 
+                        ['comment_model' => $comment_model, 'thread' => $thread, 'comment_input_retrieved' => true]);
+            } else {        
+                if(!($comment_id = $comment_model->store())) {
+                    return false;
+                }
+                if(!$this->updateCommentNotification($comment_model->user_id, $thread_id)){
+                }   
+                $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
+                $thread_comment = $service->getThreadCommentInfo(Yii::$app->user->getId(), $thread_id, $comment_id);
+                return  $this->renderAjax('../comment/thread-comment', [
+                        'thread_comment' => $thread_comment,
+                        'child_comment_form' => new ChildCommentForm()]);
+            }
+        }
+        
 
 	private function setMetaTag($thread_id, $thread_title, $thread_description){
 		\Yii::$app->view->registerMetaTag([

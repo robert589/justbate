@@ -33,7 +33,7 @@ Pjax::begin([
 <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >
     <?php $form = ActiveForm::begin([
         'id' => 'comment-section-edit-form-' . $comment_id,
-        'action' => ['thread/submit-comment'], 'method' => 'post',
+        'action' => ['thread/edit-comment'], 'method' => 'post',
         'options' => [
             'data-pjax' => '#edit_comment_pjax_' . $comment_id,
             'class' => 'comment-section-edit-form',

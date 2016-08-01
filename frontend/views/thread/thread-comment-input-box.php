@@ -39,7 +39,7 @@ if(isset($comment_input_retrieved)) {
                         </span>
                 <span>
                     <label>
-                                    <?= Yii::$app->getUser()->getIdentity()->getFullName() ?>
+                          <?= Yii::$app->getUser()->getIdentity()->getFullName() ?>
                     </label>
                 </span>
             </div>

@@ -17,7 +17,7 @@ class CommentDao{
     const GET_EXISTING_THREAD_COMMENT_ID = "SELECT comment.comment_id 
                                             from comment inner join thread_comment
                                         on thread_comment.comment_id = comment.comment_id
-                                        where thread_comment.thread_id = :thread_id and comment.user_id = :user_id
+                                        where thread_comment.thread_id = :thread_id and comment.user_id = :user_id and comment.comment_status = 10
                                         order by comment.created_at desc
                                         limit 1;";
     
