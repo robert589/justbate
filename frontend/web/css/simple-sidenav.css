@@ -1,0 +1,27 @@
+.simple-sidenav-container {
+    padding-left: 10px;
+    margin-bottom: 16px;
+    
+}
+.simple-sidenav-title {
+    font-size: 18px;
+    min-height: 24px;
+    padding-top: 4px;
+    margin-right: 4px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid;
+    margin-bottom: 8px;
+}
+
+.simple-sidenav-item-class {
+    min-height: 24px;
+    margin-bottom: 4px;
+    font-size: 12px;
+    display: block;
+}
+
+.simple-sidenav-item-link {
+    width: 100%;
+    word-wrap: break-word;
+    font-size: 14px;
+}

@@ -27,6 +27,5 @@
     <div style="margin-right: -15px;" class="col-xs-12">
             <?= $this->render('../thread/thread-comment-input-box',
                 ['thread' => $thread,
-                    'comment_model' => new \frontend\models\CommentForm()])
-            ?>
+                'comment_model' => new \frontend\models\CommentForm()])?>
     </div>

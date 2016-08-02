@@ -114,11 +114,20 @@ $(function(){
     
     function checkActivateSearchIssueModal() {
         var totalSelectedIssue = selected_issue_array.length;
-        if(totalSelectedIssue < 5) {
+        if(totalSelectedIssue < 5 && !checkGuest()) {
             $("#home-search-issue-modal").modal("show")
             .find('#home-search-issue-modal')
             .load($(this).attr("value"));
         }
+    }
+    
+    function checkGuest() {
+        var login_id = $("#user-login-id").val();
+        if(login_id === ''  || login_id === null || login_id === undefined ) {
+            return true;
+        }
+        
+        return false;
     }
     
     

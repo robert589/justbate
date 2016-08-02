@@ -106,7 +106,16 @@ class SiteVo implements Vo {
     {
         return $this->popular_issue_list;
     }
-
+    
+    public function getFeedList() {
+        return [
+            ['label' => 'Feeds', 'url' => \Yii::$app->request->baseUrl . '/']
+        ];
+    }   
+    
+    public function getHomeSelected() {
+        return 'Feeds';
+    }
 
 
     static function createBuilder()

@@ -1,15 +1,9 @@
 <?php
 namespace frontend\dao;
 
-use common\entity\ChildCommentVo;
 use common\models\ChildComment;
-use common\models\Notification;
 use common\models\ThreadComment;
 use frontend\vo\ChildCommentVoBuilder;
-use frontend\vo\CommentVoBuilder;
-use frontend\vo\ListNotificationVoBuilder;
-use frontend\vo\NotificationVo;
-use frontend\vo\NotificationVoBuilder;
 use frontend\vo\ThreadCommentVoBuilder;
 
 class CommentDao{

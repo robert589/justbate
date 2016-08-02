@@ -3,15 +3,16 @@
 /** @var $items array **/
 /** @var $id string **/
 /** @var $arg string **/
+/** @var $item_class string **/
 ?>
 
-<div id="<?= $id ?>" data-toggle="buttons">
+<div id="<?= $id ?>" class="<?= $class ?>" data-toggle="buttons">
     <?php foreach($items as $value => $text) { ?>
         <?php if($value === $selected) { ?>
-            <label class="btn btn-md btn-warning btn-group <?= $class ?> active disabled"
+            <label class="btn btn-sm btn-warning btn-group <?= $item_class ?> active disabled"
                    data-arg="<?= $arg ?>" data-label="<?= $value ?>">
         <?php } else { ?>
-            <label class="btn btn-md btn-warning <?= $class ?> btn-group" data-arg="<?= $arg ?>"
+            <label class="btn btn-sm btn-warning <?= $item_class ?> btn-group" data-arg="<?= $arg ?>"
                    data-label="<?= $value ?>" >
         <?php } ?>
             <input type="radio" value="<?= $value ?>" >

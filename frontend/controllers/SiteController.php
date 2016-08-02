@@ -151,13 +151,7 @@ class SiteController extends Controller
 	public function actionHome()
 	{
             $this->setMetaTag();
-            if(Yii::$app->user->isGuest) {
-                return $this->render('login',
-                        ['login_model' => new LoginForm(),
-                         'register_model' => new SignupForm(), 'modal' => false]);
-            }
-            
-
+    
             $user_id = Yii::$app->user->getId();
             $issue = isset($_GET['issue']) ? $_GET['issue'] : null;
             $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);

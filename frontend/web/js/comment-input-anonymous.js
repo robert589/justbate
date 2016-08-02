@@ -1,6 +1,26 @@
 
 $(document).ready(function(){
+    function checkGuest() {
+        var login_id = $("#user-login-id").val();
+        if(login_id === ''  || login_id === null || login_id === undefined ) {
+            beginLoginModal();
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function beginLoginModal() {
+        $("#loginModal").modal("show")
+        .find('#loginModal')
+        .load($(this).attr("value"));
+        
+    }
+
     $(document).on('click',".comment-input-anonymous-btn", function(event){
+        if(checkGuest()) {
+            return false;
+        }
         var thread_id = $(this).data('service');
         var base_url = $("#base-url").val();
         var user_id = $("#user-login-id").val();
@@ -22,6 +42,9 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.comment-input-anonymous-cancel-btn', function(event){
+        if(checkGuest()) {
+            return false;
+        }
         var thread_id = $(this).data('service');
         var base_url = $("#base-url").val();
         var user_id = $("#user-login-id").val();

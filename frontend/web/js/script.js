@@ -317,7 +317,8 @@ $(document).ready(function(){
         $("#home-add-issue-form-div").show();
     });
 
-    $("#home-issue-edit-popover").click(function(){
+    $("#home-sidenav-followed-issue-edit").click(function(event){
+        event.preventDefault();
      $("#home-search-issue-modal").modal("show")
      .find('#home-search-issue-modal')
      .load($(this).attr("value"));

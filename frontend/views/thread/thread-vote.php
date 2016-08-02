@@ -16,15 +16,23 @@ foreach($thread_choices as $item){
 }
 ?>
 
-<div id="thread-vote-<?= $thread_id ?>" >
+<div class="col-xs-12" id="thread-vote-<?= $thread_id ?>" >
     <?= Html::hiddenInput('thread-vote-old-value', $submit_thread_vote_form->choice_text,
                         ['id' => 'thread-vote-old-value-' . $thread_id]) ?>
 
-    <div align="center">
-        <?= SimpleRadioButton::widget(['items' => $propered_choice_text, 
-            'selected' => $submit_thread_vote_form->choice_text,
-            'id' => 'thread-vote-radio-button-' . $thread_id,
-            'item_class' => 'thread-vote-radio-button',
-            'arg' => $thread_id]) ?>
+    <div align="left">
+        <span class="thread-vote-label">
+            <u>
+                Vote Here:
+            </u>
+        </span>
+            
+            <?= SimpleRadioButton::widget(['items' => $propered_choice_text, 
+                'selected' => $submit_thread_vote_form->choice_text,
+                'id' => 'thread-vote-radio-button-' . $thread_id,
+                'item_class' => 'thread-vote-radio-button',
+                'widget_class' => 'inline',
+                'arg' => $thread_id]) ?>
+
     </div>
 </div>

@@ -19,13 +19,17 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
             <?= $this->render('../thread/thread-issues', ['thread' => $thread]) ?>
     </div>
     <div class="col-xs-12 thread-view">
-        <div class="col-xs-12 thread-link" align="center">
+        <div class="col-xs-12 thread-link" align="left">
+            <div class="col-xs-12">
                 <?= Html::a(Html::encode($thread_title), $link_to_thread)?>
+            </div>
         </div>
-        <div class="col-xs-12" style="margin-bottom: 10px;" align="center">
+        <div class="col-xs-12" align="left">
+            <div class="col-xs-12">
                 <?= HtmlPurifier::process($thread_description, Constant::DefaultPurifierConfig()) ?>
+            </div>
         </div>
-        <div align="center">
+        <div class="col-xs-12 home-thread-list-vote" align="center" >
             <?= $this->render('../thread/thread-vote',
                     ['thread' => $thread,
                      'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
@@ -42,7 +46,6 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
                 $commentator_full_name = $chosen_comment->getFullName();
                 $comment  = $chosen_comment->getComment();
             ?>
-            <hr>
             <div class="col-xs-12">
                 <?= $this->render('../comment/thread-comment', ['thread_comment' => $chosen_comment]) ?>
             </div>

@@ -8,20 +8,15 @@ use yii\base\Widget;
  * and open the template in the editor.
  */
 
-class SimpleRadioButton extends Widget
+class BlockSidenav extends Widget
 {
+    public $items;      
     
-    public $item_class;
-    
-    public $items;
-    
-    public $widget_class;
-    
-    public $selected;
+    public $class;
     
     public $id;
-    
-    public $arg;
+        
+    public $selected;
     
     public function init()
     {
@@ -31,16 +26,22 @@ class SimpleRadioButton extends Widget
     
     public function registerAssets() {
         $view = $this->getView();
+        BlockSidenavAsset::register($view);
+            
     }
 
     public function run()
     {
-        return $this->render('simple-radio-button', 
+        
+        if($this->class === null) {
+            $this->class = 'block-sidenav-container';
+        }
+        
+        return $this->render('block-sidenav', 
                 ['items' => $this->items, 
                  'id' => $this->id,
-                'selected' => $this->selected, 
-                'item_class' => $this->item_class, 
-                'class' => $this->widget_class,
-                'arg' => $this->arg]);
+                 'class' => $this->class,
+                 'selected' => $this->selected
+                ]);
     }
 }
