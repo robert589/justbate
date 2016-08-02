@@ -11,6 +11,7 @@
     padding-bottom: 2px;
     border-bottom: 1px solid;
     margin-bottom: 8px;
+    color: #4c4c4c;
 }
 
 .simple-sidenav-item-class {
@@ -22,6 +23,7 @@
 
 .simple-sidenav-item-link {
     width: 100%;
+    color: #4c4c4c;
     word-wrap: break-word;
     font-size: 14px;
 }

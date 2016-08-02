@@ -30,9 +30,12 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
             </div>
         </div>
         <div class="col-xs-12 home-thread-list-vote" align="center" >
+            <div class="col-xs-12">
+            
             <?= $this->render('../thread/thread-vote',
                     ['thread' => $thread,
                      'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
+            </div>
         </div>
          <div class="user-comment-reaction col-xs-12">
             <div class="home-comment-tab">

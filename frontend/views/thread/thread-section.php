@@ -35,14 +35,20 @@ Pjax::begin([
     ]
 );?>
     <div id="shown_title_description_part">
-        <div id="thread-issue-wrapper" class="col-xs-12">
+        <div id="thread-issue">
             <?= $this->render('thread-issues', [ 'thread' => $thread]) ?>
         </div>
-        <div class="col-xs-12 thread-title">
-            <?= Html::encode($title) ?>
-        </div>
-        <div id='post-description' class="col-xs-12" align="center">
-            <?= HtmlPurifier::process($description, Constant::DefaultPurifierConfig()) ?>
+        <div class="col-xs-12">
+            
+            <div class="thread-view">
+
+                <div class="thread-link">
+                    <?= Html::encode($title) ?>
+                </div>
+                <div id='post-description' align="left">
+                    <?= HtmlPurifier::process($description, Constant::DefaultPurifierConfig()) ?>
+                </div>
+            </div>
         </div>
     </div>
     <div id="edit_title_description_part" style="display: none">

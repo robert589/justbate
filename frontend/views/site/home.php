@@ -52,7 +52,7 @@ $this->title = "Home";
         </div>
 
 	<div class="col-xs-12 col-md-7 home-main-section">
-            <div class="col-md-11 home-main-section-container" >
+            <div class="home-main-section-container col-md-11" >
                 
                 <?php if($has_issue){ ?>
                 <div class="col-xs-12" style="padding-right: 0;margin-bottom: 10px">

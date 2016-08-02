@@ -16,7 +16,7 @@ foreach($thread_choices as $item){
 }
 ?>
 
-<div class="col-xs-12" id="thread-vote-<?= $thread_id ?>" >
+<div id="thread-vote-<?= $thread_id ?>" >
     <?= Html::hiddenInput('thread-vote-old-value', $submit_thread_vote_form->choice_text,
                         ['id' => 'thread-vote-old-value-' . $thread_id]) ?>
 

@@ -18,13 +18,13 @@ Pjax::begin([
     ]
 ]);
 ?>
-<div class="col-xs-12" style="padding: 10px;background: white">
+<div class="col-xs-12" style="background: white;padding:8px">
     <?php $form = ActiveForm::begin(['action' => ['site/follow-issue'],
         'method' => 'post',
         'id' => 'follow-issue-form',
         'options' => ['data-pjax' => '#follow-issue'] ]);?>
-        <div style="font-size: 20px;horiz-align: center">
-            <h3><?= $issue_name ?></h3>
+        <div style="font-size: 20px;margin-bottom: 4px">
+            <?= $issue_name  ?>
         </div>
         <div>
             <?php if($user_is_follower !== true){ ?>

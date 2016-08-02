@@ -8,7 +8,7 @@ use yii\helpers\HtmlPurifier;
     
     $first = true;
 ?>
-<div class="col-xs-9">
+<div class="col-xs-9" style="padding-left: 0">
 
     <span id="thread-issue-text">
         <?php foreach($thread_issues as $issue){ ?>

@@ -591,7 +591,6 @@ div#facebook-login ul.auth-clients {
 /* THREAD */
 div#thread-issue {
     display: block;
-    padding-left:0;
     color: blue;
     margin-bottom: 0;
     margin-top: 15px;
@@ -601,8 +600,10 @@ div#thread-issue {
 }   
 
 div#thread-issue-wrapper {
-    margin: 15px;
+    padding-left: 0;
+    margin-top: 15px;
     margin-left: 0;
+    overflow: hidden;
 }
 
 span#thread-issue-text {
@@ -623,8 +624,7 @@ div.thread-view {
 
 div.thread-title {
     margin: 0;
-    padding: 15px;
-    text-align: center !important;
+    margin-top:10px;
     font-weight: bold;
     font-size: 16pt;
 }
@@ -763,14 +763,7 @@ div#first-part div.tabs-above li.active {
     background: #0277BD;
 }
 
-div#first-part div.tabs-above div.tab-content div#post-description p {
-    margin-left: 0 !important;
-    padding: 15px;
-}
 
-div#first-part div.col-xs-12:first-child {
-    padding: 0;
-}
 
 div#main-post-desc div#threadList div.item:first-child {
     margin-top: -15px !important;
@@ -1149,7 +1142,7 @@ div#left-sidebar {
 }
 
 .home-main-section-container {
-    padding-right: 0;
+    padding-right: 0 !important; 
 }
 
 div#main-body {
@@ -1262,6 +1255,10 @@ div.thread-comment-input-box-section {
     padding-top: 8px;
 }
 
+div#thread-details {
+    padding-left: 0;
+}
+
 .list-thread{
     background: #fff;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
@@ -1271,10 +1268,6 @@ div.thread-comment-input-box-section {
     position: relative;
 }
 
-div#action-button,
-div#thread-issue-wrapper span#thread-issue-text {
-    padding-left: 15px !important;
-}
 
 /* PROFILE PAGE */
 div#profile-history {
