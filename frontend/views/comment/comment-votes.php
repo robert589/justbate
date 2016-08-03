@@ -28,7 +28,7 @@ else{
         <?php if($vote_up == true) {  ?>
             <?= Html::button($upvote , [
                 'id' => "comment-vote-button-up-" . $comment_id ,
-                'class' => 'btn btn-default comment-vote-button',
+                'class' => 'btn btn-sm btn-default comment-vote-button',
                 'value' => 1,
                 'data-arg' => $comment_id,
                 'disabled' => true])
@@ -36,18 +36,18 @@ else{
         <?php } else { ?>
             <?= Html::button($upvote , [
                 'id' => "comment-vote-button-up-" . $comment_id ,
-                'class' => 'btn btn-default comment-vote-button',
+                'class' => 'btn btn-sm btn-default comment-vote-button',
                 'data-arg' => $comment_id,
                 'value' => 1
             ]) ?>
         <?php } ?>
-        <button type="button" class="btn btn-disabled comment-vote-total"><?= $total_like ?></button>
+        <button type="button" class="btn btn-sm btn-disabled comment-vote-total"><?= $total_like ?></button>
     </span>
     <span class="btn-group comment-vote-down-section">
         <?php if($vote_down) {  ?>
             <?= Html::button($downvote , [
                 'id' => "comment-vote-button-down" . $comment_id ,
-                'class' => 'btn btn-default comment-vote-button',
+                'class' => 'btn btn-default btn-sm comment-vote-button',
                 'value' => -1,
                 'data-arg' => $comment_id,
                 'disabled' => true
@@ -57,9 +57,9 @@ else{
                 'id' => "comment-vote-button-down" . $comment_id ,
                 'value' => -1,
                 'data-arg' => $comment_id,
-                'class' => 'btn btn-default comment-vote-button',
+                'class' => 'btn btn-default btn-sm comment-vote-button',
             ]) ?>
         <?php } ?>
-        <button type="button" class="btn btn-disabled comment-vote-total"><?= $total_dislike ?></button>
+        <button type="button" class="btn btn-disabled btn-sm comment-vote-total"><?= $total_dislike ?></button>
     </span>
 </div>

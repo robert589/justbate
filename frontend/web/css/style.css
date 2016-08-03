@@ -1,3 +1,19 @@
+.navbar-brand-logo {
+    height: 45px;
+    margin-top: -10px;
+    margin-left:15px;
+    width:145px;
+}
+
+.nav-container {
+    margin-left: 90px;
+}
+
+
+.thread-comment-bottom-dropdown-label {
+    padding-top: 4px;
+}
+
 .html {
     font-family: 'Montserrat', sans-serif !important;
 }
@@ -43,6 +59,7 @@ div#main-container {
 .home-main-section-container {
     margin-left: 25px;
 }
+
 div#page-header {
     margin-bottom: 1%;
 }
@@ -1069,7 +1086,7 @@ div#create-thread {
 }
 
 div#create-thread-wrapper {
-    padding: 15px;
+    
     padding-top: 0;
     padding-right: 0;
     padding-left: -15px;
@@ -1143,6 +1160,7 @@ div#left-sidebar {
 
 .home-main-section-container {
     padding-right: 0 !important; 
+    overflow:hidden;
 }
 
 div#main-body {
@@ -1176,9 +1194,9 @@ div#title-part {
 }
 
 div#main-post-desc {
-    text-align: justify;
     line-height: 20px;
     padding-right: 0px !important;
+    padding-left:0;
 }
 
 form[id^='retrieve_comment_form_'] {
@@ -1577,9 +1595,10 @@ button.btn {
         float: left !important;
         width: calc(100% + 45px) !important;
     }
-
-    div.navbar-header button.navbar-toggle {
-        margin-right: 60px;
+    
+    .navbar-brand-logo {
+        height: 45px;
+        margin-top: -10px;
     }
 
     li.item {
@@ -1607,10 +1626,14 @@ button.btn {
     
     /* HOME */
     div.home-comment-tab div.inline {
-        width: 100% !important;
-        margin: 0 !important;
+        margin-right: 4px;
     }
-
+    
+    
+    .thread-vote-radio-button {
+        margin-bottom: 4px;
+    }
+    
     div[id^='button-vote'].btn {
         width: 50%;
         align-items: center;
@@ -1645,6 +1668,16 @@ button.btn {
 
 
 @media screen and (max-width: 768px) {
+
+    .navbar-brand-logo {
+        margin-left:0;
+            
+    }
+    
+    .home-main-section-container {
+        margin-left: 0px;
+        padding-left: 0 !important;
+    }
     body {
         overflow-x: hidden;
         overflow-y: scroll;
@@ -1655,10 +1688,6 @@ button.btn {
     div.email-register {
         margin-top: 15px;
         margin-bottom: 15px;
-    }
-
-    div.navbar-header button {
-        margin-right: 45px;
     }
 
     li#search-box {
@@ -1705,11 +1734,6 @@ button.btn {
         float: left;
     }
 
-    /* CREATE THREAD */
-    div#create-thread-wrapper {
-        margin-left: -15px;
-        width: calc(100% - 15px) !important;
-    }
 
     div#create-thread-dropdown {
         width: calc(100% + 30px);
@@ -1726,9 +1750,6 @@ button.btn {
         padding-right: 0 !important;
     }
 
-    div.col-xs-12.thread-view {
-        margin: 0;
-    }
 
     button#retrieve-input-box-button-1 {
         margin-bottom: 15px;
@@ -1838,9 +1859,6 @@ button.btn {
         display: none !important;
     }
     
-    div.nav-container {
-        margin-right : 10%;
-    }
     /* LOGIN */
     div#login-form {
         padding-left: 0;
@@ -1943,38 +1961,6 @@ button.btn {
 }
 
 
-@media screen and (min-width: 935px) and (max-width: 992px) {
-    
-    div.nav-container {
-        margin-right:10%;
-    }
-    /* Search Menu */
-    ul#menubar-left {
-        display: none;
-    }
-
-    li#search-box {
-        width: 20%;
-    }
-
-    /* Additional search settings */
-    .navbar-collapse.collapse {
-        display: none !important;
-    }
-
-    .navbar-collapse {
-        overflow-x: visible !important;
-    }
-
-    .navbar-collapse.in {
-        overflow-y: auto !important;
-    }
-
-    .collapse.in {
-        display: block !important;
-    }
-}
-
 @media screen and (min-width: 992px) and (max-width: 1200px) {
     body {
         overflow-x: hidden;
@@ -1988,7 +1974,6 @@ button.btn {
 
     div.home-main-section {
         margin-top: 0px;
-        width: 70%;
     }
 
 
@@ -2240,13 +2225,62 @@ button.btn {
         width: 100%;
     }
 }
+@media screen and (max-width: 768px) {
+    div.nav-container {
+        margin-right : 0;
+        margin-left: 0 !important;
+    }
+    
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    div#home-container {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+    div.nav-container {
+        margin-right : 10%;
+        margin-left: 5% !important;
+    }
+    
+}
+
+
+@media screen  and (max-width: 350px) {
+    .thread-link {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: bold;
+    }
+    
+    div#main-post-desc {
+        line-height:14px;
+    }
+    
+    div#thread-issue {
+        margin-top: 0;
+    }
+    
+    div.thread-view {
+        padding-top: 4px;
+    }
+    div.block-for-comment {
+        margin-top:5px;
+        
+    }
+    
+    div.user-comment-reaction {
+        padding-top: 8px;
+    }
+    
+    div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
+        line-height: 16px;
+        margin: 0;
+    }
+    
+}
 
 @media screen and (min-width: 768px) {
-    .nav-container {
-        margin-left:100px;
-    }
-
-
     div#facebook-signup-wrapper,
     div#email-signup-wrapper {
         padding: 0 !important;

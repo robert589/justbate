@@ -31,7 +31,6 @@ $this->title = "Home";
 ?>
 
 <?= Dialog::widget() ?>
-<div class="col-xs-12" style="padding-left: 0;">
 	<div class="col-md-2" id="left-sidebar">
             <?= \common\widgets\BlockSidenav::widget([
                 'items' => $home->getFeedList(),
@@ -100,7 +99,6 @@ $this->title = "Home";
                 <b></a><?= Html::a("About us", ['site/about']) ?></b>
             </div>
 	</div>
-</div>
 
 <?php if(!Yii::$app->user->isGuest && $change_email_form->user_email != null ){ ?>
 	<?= $this->render('home-verify-email', ['change_email_form' => $change_email_form]) ?>

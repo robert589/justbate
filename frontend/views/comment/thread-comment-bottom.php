@@ -34,7 +34,7 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
     <?php if($belongs_to_current_user) { ?>
     <div class="inline" style="margin-left: 15px;">
         <input type="checkbox" id="dropdown-comment-input-<?= $comment_id ?>" />
-        <label for="dropdown-comment-input-<?= $comment_id ?>"><span class="glyphicon glyphicon-chevron-up"></span></label>
+        <label class="thread-comment-bottom-dropdown-label" for="dropdown-comment-input-<?= $comment_id ?>"><span class="glyphicon glyphicon-chevron-up"></span></label>
         <table id="user-table-comment-<?= $comment_id ?>" data-service="<?= $comment_id ?>">
             <tbody>
                 <tr><td><button data-service="<?= $comment_id ?>" class="edit_comment inner btn btn-block btn-default">Edit</button></td></tr>
