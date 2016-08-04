@@ -1,6 +1,5 @@
 <?php
-use yii\helpers\HtmlPurifier;
-use common\components\Constant;
+use common\widgets\SimpleSeeMore;
 use yii\helpers\Html;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $thread_issues array */
@@ -26,7 +25,8 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
         </div>
         <div class="col-xs-12" align="left">
             <div class="col-xs-12">
-                <?= HtmlPurifier::process($thread_description, Constant::DefaultPurifierConfig()) ?>
+                <?= SimpleSeeMore::widget(['text' => $thread_description, 'active' => true, 
+                    'id' => 'home-thread-list-description-' . $thread_id]) ?>
             </div>
         </div>
         <div class="col-xs-12 home-thread-list-vote" align="center" >

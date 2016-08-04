@@ -27,7 +27,9 @@ Pjax::begin([
 ?>
 
 <div id="comment_shown_part_<?= $comment_id ?>">
-    <?= HtmlPurifier::process($comment) ?>
+    <?= \common\widgets\SimpleSeeMore::widget(['text' => $comment, 
+                                'active' => true, 
+                                'id' => 'comment-section-comment'. $comment_id ]) ?>
 </div>
 
 <div id="comment_edit_part_<?= $comment_id ?>" style="display: none" >

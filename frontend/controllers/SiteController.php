@@ -350,16 +350,14 @@ class SiteController extends Controller
 	 * @throws \yii\base\ExitException
 	 */
 	public function actionCreateThread(){
-		$create_thread_form = new CreateThreadForm();
-		$create_thread_form->user_id = Yii::$app->user->getId();
-
-		if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
-                    if($thread_id = $create_thread_form->create()){
-                            return $this->redirect(LinkConstructor::threadLinkConstructor($thread_id, $create_thread_form->title));
-                    }
-		}
-
-		return $this->renderAjax('home-create-thread', ['create_thread_form' => $create_thread_form]);
+            $create_thread_form = new CreateThreadForm();
+            $create_thread_form->user_id = Yii::$app->user->getId();
+            if($create_thread_form->load(Yii::$app->request->post()) && $create_thread_form->validate()){
+                if($thread_id = $create_thread_form->create()){
+                    return $this->redirect(LinkConstructor::threadLinkConstructor($thread_id, $create_thread_form->title));
+                }
+            }
+            return $this->renderAjax('home-create-thread', ['create_thread_form' => $create_thread_form]);
 	}
 
 	/**

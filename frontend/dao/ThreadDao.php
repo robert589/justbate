@@ -234,7 +234,6 @@ class ThreadDao {
             $thread_comment_builder->setCurrentUserVote($result['vote']);
             $thread_comment_builder->setTotalLike($result['total_like']);
             $thread_comment_builder->setTotalDislike($result['total_dislike']);
-
             $thread_comment_list[] =  $thread_comment_builder->build();
         }
 

@@ -7,6 +7,7 @@
     use kartik\widgets\Select2;
     use yii\web\JsExpression;
     use yii\redactor\widgets\Redactor;
+    use common\widgets\SimpleSeeMore;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $submit_vote_form \frontend\models\SubmitThreadVoteForm */
 /** @var $edit_thread_form \frontend\models\EditThreadForm */
@@ -46,7 +47,8 @@ Pjax::begin([
                     <?= Html::encode($title) ?>
                 </div>
                 <div id='post-description' align="left">
-                    <?= HtmlPurifier::process($description, Constant::DefaultPurifierConfig()) ?>
+                    <?= SimpleSeeMore::widget(['id' => 'thread-section-description', 
+                        'active' => 'true', 'text' => $description]) ?>
                 </div>
             </div>
         </div>

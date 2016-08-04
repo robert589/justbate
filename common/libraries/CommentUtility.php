@@ -6,15 +6,15 @@ use common\components\Constant;
 
 class CommentUtility{
 
-    public static function cutText($comment){
+    public static function cutText($comment, $count = 30){
         $length_of_string = strlen($comment);
         $comment = Constant::removeAllHtmlTag($comment);
 
 
-        if($length_of_string <= 30) {
+        if($length_of_string <= $count) {
             return $comment;
         }
-        $comment = substr($comment, 0 , 30);
+        $comment = substr($comment, 0 , $count);
         return $comment . '. . .';
     }
 
