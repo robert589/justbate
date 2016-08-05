@@ -106,7 +106,13 @@ abstract class CommentVo implements Vo{
             return 'Anonymous-' . $this->anonymous;
         }
         else{
-            return UserUtility::getFullName($this->comment_creator_first_name, $this->comment_creator_last_name);
+            $full_name = UserUtility::getFullName($this->comment_creator_first_name, $this->comment_creator_last_name);
+        
+            if(strlen($full_name) >= 25) {
+                return $this->comment_creator_first_name;
+            } else { 
+                return $full_name;
+            }
         }
     }
 

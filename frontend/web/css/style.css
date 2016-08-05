@@ -14,8 +14,9 @@
     padding-top: 4px;
 }
 
-.html {
-    font-family: 'Montserrat', sans-serif !important;
+html {
+    font-family: 'Montserrat', sans-serif ;
+    letter-spacing: 0.75px;
 }
 .help-block{
     margin-bottom: 0 !important;
@@ -33,9 +34,9 @@
 }
 
 .home-right-side-information {
-    margin-top:16px;
+    margin-top:8px;
     margin-left: 0;
-    font-size: 15px;
+    font-size: 8px;
     padding-left: 4px;
 }
 body {
@@ -614,6 +615,7 @@ div#thread-issue {
     font-size: 12px;
     font-family: sans-serif;
     text-transform: uppercase;
+    overflow:hidden;
 }   
 
 div#thread-issue-wrapper {
@@ -630,12 +632,13 @@ span#thread-issue-text {
 
 div.thread-view {
     width: 100%;
+    overflow:hidden;
     padding-left: 0;
     padding-top: 10px;
     padding-bottom: 15px;
     padding-right: 0;
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: 0;
+    margin-right: 0;
     box-sizing: border-box;
 }
 
@@ -786,9 +789,6 @@ div#main-post-desc div#threadList div.item:first-child {
     margin-top: -15px !important;
 }
 
-div.list-view div.item {
-    margin-top: 15px;
-}
 
 ul.pagination {
     position: relative;
@@ -873,6 +873,8 @@ div#action-button-thing button {
 
 div.home-comment-tab {
     padding-top: 5px;
+    width:100%;
+    overflow:hidden;
 }
 
 
@@ -1071,6 +1073,15 @@ div#verify-email-form button#resend-button {
     border: 1px solid #91656B !important;
 }
 
+.home-thread-list-item {
+    margin-bottom: 8px;
+}
+
+.home-thread-list-chosen-comment {
+    width: 100%;
+    padding-right: 8px;
+}
+
 hr#email-separator {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -1083,6 +1094,7 @@ div#create-thread {
     margin-top: 0px;
     width: 100% !important;
     padding:0px;
+    margin-bottom: 8px;
 }
 
 div#create-thread-wrapper {
@@ -1238,10 +1250,11 @@ h3#user-choice {
     font-size:22px;
     line-height:26px;
     font-weight: bold;
+    display:block;
 }
-
 .home-thread-list-vote {
-    padding-top:8px;
+    overflow: hidden;
+    padding-top: 4px;
 }
 .thread-link hr {
     margin-top: 5px;
@@ -1302,7 +1315,6 @@ div#profile-history h3 {
     height: 50px;
     text-align: center;
     background: #ccc;
-    width: calc(100% + 15px);
 }
 
 div#profile-history div#thread_starter_list_view_1 {
@@ -1312,7 +1324,6 @@ div#profile-history div#thread_starter_list_view_1 {
 }
 
 div#profile-history div#thread_starter_list_view_2 {
-    margin-left: 15px !important;
     margin-bottom: 15px;
     padding: 0 !important;
 }
@@ -1385,6 +1396,9 @@ div#thread_starter_list_view_2 div.item article div.row {
 
 div#thread_starter_list_view_2 div.item {
     background: #fff;
+    padding-left: 16px;
+    padding-top:8px;
+    padding-bottom: 4px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
 }
 
@@ -1593,7 +1607,7 @@ button.btn {
     div.navbar-header {
         margin: 0 !important;
         float: left !important;
-        width: calc(100% + 45px) !important;
+        width: calc(100%) !important;
     }
     
     .navbar-brand-logo {
@@ -1603,6 +1617,10 @@ button.btn {
 
     li.item {
         padding-left: 15px;
+    }
+    
+    iframe {
+        width: 100%;
     }
 
     li.item a[href$='home'],
@@ -1723,7 +1741,6 @@ button.btn {
     }
 
     div.list-thread div#thread-issue {
-        padding-left: 15px;
         padding-right: 15px;
     }
 

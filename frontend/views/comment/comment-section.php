@@ -28,7 +28,7 @@ Pjax::begin([
 
 <div id="comment_shown_part_<?= $comment_id ?>">
     <?= \common\widgets\SimpleSeeMore::widget(['text' => $comment, 
-                                'active' => true, 
+                                'active' => false, 
                                 'id' => 'comment-section-comment'. $comment_id ]) ?>
 </div>
 

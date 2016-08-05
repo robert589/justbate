@@ -70,7 +70,7 @@ $this->title = "Home";
                             'id' => 'home-thread-list',
                             'dataProvider' => $thread_list_provider,
                             'summary' => false,
-                            'itemOptions' => ['class' => 'item'],
+                            'itemOptions' => ['class' => 'item home-thread-list-item'],
                             'pager' => [
                                 'class' => ScrollPager::class,
                                 'enabledExtensions' => [

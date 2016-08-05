@@ -14,52 +14,40 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
 ?>
 
 <div data-service="<?= $thread_id ?>" class="list-thread">
-    <div class="col-xs-12" id="thread-issue">
+    <div  id="thread-issue">
             <?= $this->render('../thread/thread-issues', ['thread' => $thread]) ?>
     </div>
-    <div class="col-xs-12 thread-view">
-        <div class="col-xs-12 thread-link" align="left">
-            <div class="col-xs-12">
-                <?= Html::a(Html::encode($thread_title), $link_to_thread)?>
-            </div>
+    <div class="thread-view">
+        <div class=" thread-link" align="left">
+            <?= Html::a(Html::encode($thread_title), $link_to_thread)?>
         </div>
-        <div class="col-xs-12" align="left">
-            <div class="col-xs-12">
-                <?= SimpleSeeMore::widget(['text' => $thread_description, 'active' => true, 
-                    'id' => 'home-thread-list-description-' . $thread_id]) ?>
-            </div>
+        <div class="thread-description" align="left">
+            <?= SimpleSeeMore::widget(['text' => $thread_description, 'active' => true, 
+                'id' => 'home-thread-list-description-' . $thread_id]) ?>
         </div>
-        <div class="col-xs-12 home-thread-list-vote" align="center" >
-            <div class="col-xs-12">
-            
+        <div class="home-thread-list-vote" align="center" >
             <?= $this->render('../thread/thread-vote',
                     ['thread' => $thread,
                      'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
-            </div>
         </div>
-         <div class="user-comment-reaction col-xs-12">
-            <div class="home-comment-tab">
-                    <?= $this->render('home-thread-list-bottom', ['thread' => $thread]) ?>
-            </div>
-            <?php if($has_chosen_comment){
-                $chosen_comment = $thread->getChosenComment();
-                $commentator_user_profile_link = $chosen_comment->getUserProfileLink();
-                $commentator_user_profile_pic_link = $chosen_comment->getCommentCreatorPhotoLink();
-                $commentator_choice = $chosen_comment->getCurrentUserVote();
-                $commentator_full_name = $chosen_comment->getFullName();
-                $comment  = $chosen_comment->getComment();
-            ?>
-            <div class="col-xs-12">
-                <?= $this->render('../comment/thread-comment', ['thread_comment' => $chosen_comment]) ?>
-            </div>
-            <div class="col-xs-12">
-                <?php if($has_another_comment) { ?>
-                    <?= Html::a('View all comments <span class="glyphicon glyphicon-arrow-right"></span>', $link_to_thread, ['target' => '_blank']) ?>
-                <?php } ?>
-            </div>
-            <?php
-                }
-            ?>
-            </div>
+        <div class="home-comment-tab">
+                <?= $this->render('home-thread-list-bottom', ['thread' => $thread]) ?>
+        </div>
+        <div class="home-thread-list-chosen-comment">
+        <?php if($has_chosen_comment){
+            $chosen_comment = $thread->getChosenComment();
+            $commentator_user_profile_link = $chosen_comment->getUserProfileLink();
+            $commentator_user_profile_pic_link = $chosen_comment->getCommentCreatorPhotoLink();
+            $commentator_choice = $chosen_comment->getCurrentUserVote();
+            $commentator_full_name = $chosen_comment->getFullName();
+            $comment  = $chosen_comment->getComment();
+            $comment_id = $chosen_comment->getCommentId();
+        ?>
+            <?= frontend\widgets\BlockThreadComment::widget(['id' => 'home-thread-list-block-' . $comment_id, 'thread_comment' => $chosen_comment]) ?>
+
+        <?php
+            }
+        ?>
+        </div>
     </div>
 </div>

@@ -1,0 +1,49 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5 Aug, 2016, 5:06:45 PM
+    Author     : user
+*/
+
+.block-thread-comment-hide {
+    display: none;
+}
+
+.block-thread-comment-picture {
+    background: white;
+}
+
+.block-thread-comment {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background-color:    #ededed;
+    cursor: pointer;
+}
+
+.block-thread-comment:hover {
+    background-color: #dcdcdc;
+}
+
+.block-thread-comment-name-section {
+    width: 100%;
+    overflow:hidden;
+}
+
+.block-thread-comment-section {
+    display: inline-block;
+    font-size:13px;
+}
+
+.block-thread-comment-cut-comment {
+    display: block; 
+}
+
+.block-thread-comment-name {
+    font-weight: bold;
+}

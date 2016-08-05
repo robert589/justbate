@@ -15,7 +15,7 @@ use yii\helpers\Html;
     <div class="simple-see-more-text-active">
         
         <?= HtmlPurifier::process($cut_text, Constant::DefaultPurifierConfig()) ?>
-        <?= Html::button('See more',['class' => 'simple-see-more-text-link button-like-link inline'
+        <?= Html::button('Read more',['class' => 'simple-see-more-text-link button-like-link inline'
             , 'data-id' => $id ]); ?>
     </div>
     <div class="simple-see-more-text-not-active simple-see-more-text-hide">

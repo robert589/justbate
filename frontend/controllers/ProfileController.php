@@ -1,18 +1,16 @@
 <?php
 namespace frontend\controllers;
 
-use common\models\ThreadComment;
-use frontend\models\EditProfileForm;
-use frontend\models\FollowerForm;
-use frontend\models\UploadProfilePicForm;
-
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
+use common\models\ThreadComment;
+use frontend\models\EditProfileForm;
+use frontend\models\FollowerForm;
+use frontend\models\UploadProfilePicForm;
 use common\models\User;
-use common\models\Comment;
 use common\models\Thread;
 use common\models\FollowerRelation;
 

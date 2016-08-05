@@ -39,20 +39,19 @@ Pjax::begin([
         <div id="thread-issue">
             <?= $this->render('thread-issues', [ 'thread' => $thread]) ?>
         </div>
-        <div class="col-xs-12">
             
-            <div class="thread-view">
+        <div class="thread-view">
 
-                <div class="thread-link">
-                    <?= Html::encode($title) ?>
-                </div>
-                <div id='post-description' align="left">
-                    <?= SimpleSeeMore::widget(['id' => 'thread-section-description', 
-                        'active' => 'true', 'text' => $description]) ?>
-                </div>
+            <div class="thread-link">
+                <?= Html::encode($title) ?>
+            </div>
+            <div id='post-description' align="left">
+                <?= SimpleSeeMore::widget(['id' => 'thread-section-description', 
+                    'active' => 'true', 'text' => $description]) ?>
             </div>
         </div>
     </div>
+
     <div id="edit_title_description_part" style="display: none">
         <?php $form = ActiveForm::begin([
                 'action' => ['thread/edit-thread'],
