@@ -33,6 +33,7 @@ return [
                     '' => 'site/home',
                     'login' => 'site/login',
                     'signup' => 'site/signup',
+                    'new' => 'site/new',
                     'thread/<id:\d+>/comment/<comment_id:\d+>/<title:(.*)>' => 'comment/index',
                     'thread/<id:\d+>/<title:(.*)>' => 'thread/index',
                     'issue/<issue:(.*)>' => 'site/home',

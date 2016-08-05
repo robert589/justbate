@@ -27,7 +27,7 @@ $commentator_vote = $thread_comment->getChoiceText();
                 </div>
             </div>
             <div class="block-thread-comment-cut-comment">
-                <?= $cut_comment ?> . .
+                <?= $cut_comment ?> . . [Read more]
             </div>
         </div>
     </div>

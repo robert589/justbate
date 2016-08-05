@@ -18,19 +18,19 @@ use common\components\Constant;
                 <div id="create-thread-button">
                     <div class="input-group">
                         <?= $form->field($create_thread_form,
-                                        'title',
-                                        ['addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-pencil"></i>']]])
-                                 ->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Topic title"]) ?>
+                                        'title')
+                                 ->textInput(['class' => 'form-control', 'id' => 'create-thread-title', 'placeholder' => "Write any topic to discuss here.."]) ?>
                     </div>
                 </div>
             </div> <!-- div.col-xs-12 -->
         </div>
 
         <div class="col-xs-12" id="create-thread-main-form">
-            <div class="col-xs-12" style="padding: 0;">
+            <div class="col-xs-12" style="padding: 0;margin-top:8px">
                 <?= $form->field($create_thread_form, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
-                [
+                [   
                     'clientOptions' => [
+                        'placeholder' => 'Description here.. ',
                         'buttons' => Constant::defaultButtonRedactorConfig(),
                         'plugins' => Constant::defaultPluginRedactorConfig(),
                         'imageUpload' => \yii\helpers\Url::to(['/redactor/upload/image']),

@@ -5,6 +5,11 @@
     width:145px;
 }
 
+
+iframe {
+    width: 100%;
+}
+
 .nav-container {
     margin-left: 90px;
 }
@@ -635,7 +640,6 @@ div.thread-view {
     overflow:hidden;
     padding-left: 0;
     padding-top: 10px;
-    padding-bottom: 15px;
     padding-right: 0;
     margin-left: 0;
     margin-right: 0;
@@ -873,6 +877,7 @@ div#action-button-thing button {
 
 div.home-comment-tab {
     padding-top: 5px;
+    padding-bottom: 4px;
     width:100%;
     overflow:hidden;
 }
@@ -1094,22 +1099,24 @@ div#create-thread {
     margin-top: 0px;
     width: 100% !important;
     padding:0px;
-    margin-bottom: 8px;
 }
 
 div#create-thread-wrapper {
-    
+    overflow: hidden;
+    margin-bottom: 8px;
     padding-top: 0;
     padding-right: 0;
     padding-left: -15px;
+    border: 1px solid;
+    border-color: #d0d1c5;
 }
 
 div#create-thread-main-form {
-    padding: 15px;
-    margin-bottom: 10px;
     display: none;
-    background: #FFF;
-    border-top: 3px solid gray;
+    background: #fff;
+    padding-top: 4px;
+    padding: 0;
+    
 }
 
 div#create-thread-dropdown {
@@ -1128,7 +1135,7 @@ input[type="text"]#create-thread-title {
     border: 0;
     color: #000;
     height: 100%;
-    padding: 15px;
+    padding: 10px;
     border-radius: 0;
     width: calc(100% + 0.5px);
 }
@@ -1190,11 +1197,6 @@ div#main-content {
     margin-left: -15px;
 }
 
-div#first-part {
-    margin-top: 20px;
-    background: #fff;
-    min-height: 180px;
-}
 
 div#title-part {
     color: white;
@@ -1292,7 +1294,8 @@ div#thread-details {
 
 .list-thread{
     background: #fff;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
+    border: 1px solid;
+    border-color: #d0d1c5;
     padding-left: 10px;
     overflow: hidden;
     height: 100%;
@@ -1619,9 +1622,6 @@ button.btn {
         padding-left: 15px;
     }
     
-    iframe {
-        width: 100%;
-    }
 
     li.item a[href$='home'],
     li.user_item a[href$='home'] {
@@ -1678,10 +1678,6 @@ button.btn {
         margin: 0 !important;
     }
 
-    /* THREAD */
-    div#thread-issue div.col-xs-3 {
-        margin-left: -30px !important;
-    }
 }
 
 
@@ -1744,22 +1740,13 @@ button.btn {
         padding-right: 15px;
     }
 
-    div#thread-issue div[class^='col-'] {
-        margin: 0;
-        margin-top: 15px;
-        padding-left: 15px;
-        float: left;
-    }
 
 
     div#create-thread-dropdown {
         width: calc(100% + 30px);
     }
 
-    div#create-thread-main-form {
-        padding: 15px !important;
-        width: calc(100% + 30px);
-    }
+    
 
     /* THREAD LIST */
     div#threadList div.item {
@@ -1790,13 +1777,6 @@ button.btn {
     div#comment_input_box_section_1 div.row {
         padding-left: 15px;
         padding-right: 15px;
-    }
-
-
-    div#first-part,
-    div#comment-tab-container {
-        margin-left: 15px;
-        margin-right: 15px;
     }
 
 
@@ -2042,7 +2022,7 @@ button.btn {
     }
 
     div#thread-main-body {
-        margin-top: -18px;
+        width: 80%;
     }
 
     span#thread-issue-text {
@@ -2064,15 +2044,9 @@ button.btn {
 
     div#comment-tab {
         width: 100%;
-        margin-left: 15px;
         padding-left: 15px;
-        padding-right: 15px;
     }
 
-    div#first-part {
-        margin-top: 0;
-        margin-left: 15px;
-    }
 
     div#main-container {
         margin-top: 20px;
@@ -2274,9 +2248,6 @@ button.btn {
         line-height:14px;
     }
     
-    div#thread-issue {
-        margin-top: 0;
-    }
     
     div.thread-view {
         padding-top: 4px;

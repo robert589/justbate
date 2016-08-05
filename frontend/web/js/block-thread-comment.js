@@ -4,8 +4,4 @@ $(function(){
         $("#" + id).find('.block-thread-comment').addClass('block-thread-comment-hide');
         $("#" + id).find('.real-thread-comment').removeClass('block-thread-comment-hide');
     });
-    
-    
-   
-    
 });

@@ -31,12 +31,11 @@ and open the template in the editor.
 }
 
 .block-thread-comment-name-section {
-    width: 100%;
     overflow:hidden;
 }
 
 .block-thread-comment-section {
-    display: inline-block;
+    display: inline;
     font-size:13px;
 }
 

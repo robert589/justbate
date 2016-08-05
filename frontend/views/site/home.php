@@ -34,7 +34,7 @@ $this->title = "Home";
 	<div class="col-md-2" id="left-sidebar">
             <?= \common\widgets\BlockSidenav::widget([
                 'items' => $home->getFeedList(),
-                'selected' => $home->getHomeSelected(),
+                'selected' => $feed_selected,
                 'id' => 'home-block-sidenav-feed-list'
             ]) ?>
             <?= common\widgets\SimpleSidenav::widget(['id' => 'home-sidenav-followed-issue', 

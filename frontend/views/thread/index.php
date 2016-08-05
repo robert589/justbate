@@ -23,15 +23,15 @@ $first = 1;
 foreach($comment_providers as $thread_choice_item => $comment_provider){
     $content_comment_item['label'] = Html::encode($thread_choice_item);
     $content_comment_item['content'] =  ListView::widget([
-            'dataProvider' => $comment_provider,
-            'summary' => false,
-            'itemOptions' => ['class' => 'item'],
-            'layout' => "{summary}\n{items}\n{pager}",
-            'itemView' => function ($thread_comment, $key, $index, $widget) {
-                    return $this->render('../comment/thread-comment'	,
-                                        ['thread_comment' => $thread_comment,
-                                         'child_comment_form' => new \frontend\models\ChildCommentForm()]);
-            }
+        'dataProvider' => $comment_provider,
+        'summary' => false,
+        'itemOptions' => ['class' => 'item'],
+        'layout' => "{summary}\n{items}\n{pager}",
+        'itemView' => function ($thread_comment, $key, $index, $widget) {
+            return $this->render('../comment/thread-comment'	,
+                                ['thread_comment' => $thread_comment,
+                                 'child_comment_form' => new \frontend\models\ChildCommentForm()]);
+        }
     ]);
 
     if($first == 1){
@@ -51,13 +51,13 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 <?= Dialog::widget(); ?>
 
 <?php if(Yii::$app->user->isGuest){ ?>
-	<label> Please login before doing any action. Otherwise, it will not work </label>
-	<?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
+    <label> Please login before doing any action. Otherwise, it will not work </label>
+    <?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
 <?php } ?>
 
 <div class="col-xs-12 col-md-6" id="thread-main-body" style="background: white; padding-bottom: 30px;">
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
-            <div id="thread-details" class="col-xs-12">
+            <div id="thread-details">
                     <?= $this->render('thread-section',
                             ['thread' => $thread ,
                              'edit_thread_form' => new \frontend\models\EditThreadForm(),
@@ -67,10 +67,10 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 		<!-- First tab part -->
 		<div class="row" id="first-part">
 			<div class="col-xs-12" style="margin-bottom:12px">
-				<?=	
-                                    $this->render('thread-vote', ['thread' => $thread,
-                                        'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
-				?>
+                            <?=	
+                                $this->render('thread-vote', ['thread' => $thread,
+                                    'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
+                            ?>
 			</div>
 			<div class="col-xs-12">
 				<div class="inline">

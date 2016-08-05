@@ -109,12 +109,17 @@ class SiteVo implements Vo {
     
     public function getFeedList() {
         return [
-            ['label' => 'Feeds', 'url' => \Yii::$app->request->baseUrl . '/']
+            ['label' => 'Feeds', 'url' => \Yii::$app->request->baseUrl . '/'],
+            ['label' => 'Newest Topic', 'url' => \Yii::$app->request->baseUrl . '/new']
         ];
     }   
     
     public function getHomeSelected() {
         return 'Feeds';
+    }
+    
+    public function getNewestTopicSelected() {
+        return 'Newest Topic';
     }
 
 

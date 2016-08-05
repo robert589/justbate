@@ -39,6 +39,15 @@ class SiteService{
         return $this->site_dao->getAllIssues($user_id, $query);
     }
     
+    public function getNewestThread($user_id, SiteVoBuilder $builder) {
+        $builder = $this->site_dao->getNewestThread($user_id, $builder);
+        $builder = $this->site_dao->getTrendingTopicList($builder);
+        $builder = $this->site_dao->getPopularIssueList($builder);
+        $builder = $this->site_dao->getFollowedIssueList($user_id, $builder);
+
+        return $builder->build();
+    }
+    
     public function getIssueWithStatus($user_id, $query) {
         
     }

@@ -158,10 +158,26 @@ class SiteController extends Controller
             $home = $service->getHomeInfo($user_id, $issue, new SiteVoBuilder());
             $create_thread_form = new CreateThreadForm();
             $this->getDefaultChoice($create_thread_form);
+            $selected = $home->getHomeSelected();
             return $this->render('home', ['home' => $home,
+                                            'feed_selected' => $selected,
                                           'change_email_form' => new ResendChangeEmailForm(),
                                           'create_thread_form' => $create_thread_form]);
 	}
+        
+        public function actionNew() {
+            $user_id = Yii::$app->user->getId();
+            $issue = isset($_GET['issue']) ? $_GET['issue'] : null;
+            $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
+            $home = $service->getNewestThread($user_id, new SiteVoBuilder());
+            $create_thread_form = new CreateThreadForm();
+            $this->getDefaultChoice($create_thread_form);
+            return $this->render('home', ['home' => $home,
+                                        'feed_selected' => $home->getNewestTopicSelected(),
+                                          'change_email_form' => new ResendChangeEmailForm(),
+                                          'create_thread_form' => $create_thread_form]);
+	    
+        }
 
 	/**
 	 *
