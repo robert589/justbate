@@ -24,3 +24,4 @@ use \yii\helpers\Html;
 <?= Html::hiddenInput('per-page', $perPage, ['id' => $id . '-per-page'] ) ?>
 <?= Html::hiddenInput('total-count', $totalCount, ['id' => $id . '-total-count']) ?>
 
+    

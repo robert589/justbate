@@ -46,7 +46,7 @@ class InfiniteScroll extends Widget
         $completeView .= '<div class="col-xs-12" id="'. $id .'">';
         foreach($allModels as $model) {
             $completeView .= '<div class="item">';
-            $completeView .= $this->getView()->render($this->targetFile, ['child_comment' => $model]);
+            $completeView .= \frontend\widgets\ChildComment::widget(['child_comment' => $model, 'id' => 'child-comment-' . $id]);
             $completeView .= '</div>';
         }
 

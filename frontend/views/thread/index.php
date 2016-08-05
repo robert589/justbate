@@ -57,13 +57,13 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 <div class="col-xs-12 col-md-6" id="thread-main-body" style="background: white; padding-bottom: 30px;">
 	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
-		<div id="thread-details" class="col-xs-12">
-			<?= $this->render('thread-section',
-				['thread' => $thread ,
-				 'edit_thread_form' => new \frontend\models\EditThreadForm(),
-				 'submit_vote_form' => $submit_vote_form])
-			?>
-		</div>
+            <div id="thread-details" class="col-xs-12">
+                    <?= $this->render('thread-section',
+                            ['thread' => $thread ,
+                             'edit_thread_form' => new \frontend\models\EditThreadForm(),
+                             'submit_vote_form' => $submit_vote_form])
+                    ?>
+            </div>
 		<!-- First tab part -->
 		<div class="row" id="first-part">
 			<div class="col-xs-12" style="margin-bottom:12px">

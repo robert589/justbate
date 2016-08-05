@@ -14,17 +14,6 @@ $current_user_login_id = $comment->getCurrentUserLoginId();
 $upvote = "<span class='glyphicon glyphicon-chevron-up'></span>";
 $downvote = "<span class='glyphicon glyphicon-chevron-down'></span>";
 
-Pjax::begin([
-    'id' => 'comment_likes_' . $comment_id,
-    'timeout' => false,
-    'enablePushState' => false,
-    'options'=>[
-        'class' => 'comment_votes_pjax',
-        'skipOuterContainers' => true,
-        'container'=>'#comment_likes_' . $comment_id,
-    ],
-]);
-
 ?>
 
 <!-- The vote -->
@@ -83,4 +72,3 @@ Pjax::begin([
         <?php } ?>
     </span>
 <?= Html::endForm() ?>
-<?php Pjax::end(); ?>

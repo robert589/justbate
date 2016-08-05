@@ -1,8 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
-use yii\widgets\ListView;
 /** @var $child_comment \frontend\vo\ChildCommentVo **/
 
 
@@ -17,8 +14,7 @@ $comment_created_at = $child_comment->getCreatedAt();
 $comment = Html::encode($child_comment->getComment());
 $anonymous = $child_comment->getAnonymous();
 ?>
-
-<article>
+<div id="<?= $id ?>" class="child-comment-container">
     <div class="col-xs-12" style="margin-bottom:10px">
         <div class="inline">
             <img class="img img-rounded profile-picture-comment" src=<?= $commentator_user_photo_path_link ?>>
@@ -39,4 +35,4 @@ $anonymous = $child_comment->getAnonymous();
             <?= $comment ?>
         </div>
     </div>
-</article>
+</div>

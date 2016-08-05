@@ -3,12 +3,7 @@
 // rendered from _listview_comment
 use yii\widgets\Pjax;
 use yii\helpers\Html;
-use yii\widgets\ListView;
 use yii\bootstrap\ActiveForm;
-use common\models\CommentVote;
-use kartik\dialog\Dialog;
-use WebSocket\Client;
-use kop\y2sp\ScrollPager;
 /** @var $thread_comment \frontend\vo\ThreadCommentVo */
 /** @var $retrieved boolean */
 /** @var $child_comment_form \frontend\models\ChildCommentForm */

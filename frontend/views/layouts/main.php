@@ -183,8 +183,7 @@ AppAsset::register($this);
             $builder->convertToTemplate();
             $child_comment_dummy = $builder->build();
             ?>
-            <?= $this->render('../comment/child-comment',
-            ['child_comment' => $child_comment_dummy]) ?>
+            <?= frontend\widgets\ChildComment::widget(['child_comment' => $child_comment_dummy, 'id' => 'child-comment-template']) ?>
         </div>
     </div>
 
