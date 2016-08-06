@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,6 +21,14 @@ function beginLoginModal() {
 
 }
 
+$(document).on("mouseenter", "div[id^='infinite-scroll-child-comment-list']", function() {
+    $(this).find(".child-comment-action-wrapper").removeClass("child-comment-hide");
+});
+
+$(document).on("mouseleave", "div[id^='infinite-scroll-child-comment-list']", function() {
+    $(this).find(".child-comment-action-wrapper").addClass("child-comment-hide");
+});
+
  $(document).on('click', '.child-comment-input-box-submit-button', function(event){
         if(checkGuest() === true){
             return false;
@@ -30,14 +38,14 @@ function beginLoginModal() {
         if(text_to_submit.trim() === null || text_to_submit.trim() === ''){
             return false;
         }
-        var data ={comment_id: comment_id, 
+        var data ={comment_id: comment_id,
                     first_name: $("#user-login-first-name").val(),
                     last_name: $("#user-login-last-name").val(),
                     total_like: 0, total_dislike: 0,
                     photo_path: $("#user-login-photo-path").val(),
-                    username: $("#user-login-username").val(), 
+                    username: $("#user-login-username").val(),
                     comment: text_to_submit};
-                
+
         var html_data = applyTemplate(data);
         $("#child-comment-input-box-text-area-" + comment_id).val("");
         $("#child-comment-list-new-comment-" + comment_id).prepend(html_data);
@@ -49,11 +57,11 @@ function beginLoginModal() {
             success: function(data) {
             }
         });
-        
-        
+
+
     });
-    
-    
+
+
 
     function applyTemplate(data){
         var copied = $("#child-comment-template").html();
@@ -66,10 +74,10 @@ function beginLoginModal() {
             .replaceAll('~username', data.username)
             .replaceAll('~comment', data.comment);
         return copied;
-   
+
     }
-    
-    
+
+
     $(document).on('click', '.retrieve-child-comment-link', function(event){
         var comment_id = $(this).data('service');
         if($("#comment_part_" + comment_id).length === 1){
@@ -91,5 +99,3 @@ function beginLoginModal() {
                 skipOuterContainers:true});
         }
     });
-
-   
