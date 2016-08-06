@@ -1,10 +1,8 @@
 <?php
 namespace frontend\dao;
 
-use common\models\Notification;
 use frontend\vo\ListNotificationVoBuilder;
 use frontend\vo\NotificationVo;
-use frontend\vo\NotificationVoBuilder;
 
 class ListNotificationDao{
     const NUM_OF_NEW_NOTIFICATION = "SELECT count(*)
