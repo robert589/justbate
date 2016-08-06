@@ -415,7 +415,7 @@ span.register-data {
     width: 100%;
 }
 
-span.register-data span.input-group-addon, 
+span.register-data span.input-group-addon,
 span.login-data span.input-group-addon,
 span.register-data input,
 span.login-data input {
@@ -423,7 +423,7 @@ span.login-data input {
     border-radius: 0;
     text-align: center;
     border: 1px solid #ddd;
-    
+
 }
 
 button#button-login {
@@ -621,7 +621,7 @@ div#thread-issue {
     font-family: sans-serif;
     text-transform: uppercase;
     overflow:hidden;
-}   
+}
 
 div#thread-issue-wrapper {
     padding-left: 0;
@@ -920,7 +920,7 @@ input[id^="dropdown-comment-input-"]:checked ~ table[id^='user-table-comment-'] 
     position: absolute;
     z-index: 10;
     bottom: 100%;
-    
+
 }
 
 div#commentator-action div.commentator-comment {
@@ -1119,7 +1119,7 @@ div#create-thread-main-form {
     background: #fff;
     padding-top: 4px;
     padding: 0;
-    
+
 }
 
 div#create-thread-dropdown {
@@ -1181,7 +1181,7 @@ div#left-sidebar {
 }
 
 .home-main-section-container {
-    padding-right: 0 !important; 
+    padding-right: 0 !important;
     overflow:hidden;
 }
 
@@ -1247,7 +1247,7 @@ div.input-multiselect {
 
 h3#user-choice {
     font-weight: bold;
-    
+
     text-transform: uppercase;
 }
 
@@ -1623,7 +1623,7 @@ button.btn {
         float: left !important;
         width: calc(100%) !important;
     }
-    
+
     .navbar-brand-logo {
         height: 45px;
         margin-top: -10px;
@@ -1632,7 +1632,7 @@ button.btn {
     li.item {
         padding-left: 15px;
     }
-    
+
 
     li.item a[href$='home'],
     li.user_item a[href$='home'] {
@@ -1652,17 +1652,17 @@ button.btn {
         margin-bottom: 15px;
     }
 
-    
+
     /* HOME */
     div.home-comment-tab div.inline {
         margin-right: 4px;
     }
-    
-    
+
+
     .thread-vote-radio-button {
         margin-bottom: 4px;
     }
-    
+
     div[id^='button-vote'].btn {
         width: 50%;
         align-items: center;
@@ -1696,9 +1696,9 @@ button.btn {
 
     .navbar-brand-logo {
         margin-left:0;
-            
+
     }
-    
+
     .home-main-section-container {
         margin-left: 0px;
         padding-left: 0 !important;
@@ -1732,14 +1732,14 @@ button.btn {
     div.justbate-image-logo img {
         width: 75%;
     }
- 
+
 
 
     /* FORGOT PASSWORD */
-    div#forgot-password-wrapper div.col-xs-3 button { 
+    div#forgot-password-wrapper div.col-xs-3 button {
         width: calc(100% + 30px) !important;
     }
-    
+
     /* HOME */
     div#home-container.container {
         width: 100%;
@@ -1757,7 +1757,7 @@ button.btn {
         width: calc(100% + 30px);
     }
 
-    
+
 
     /* THREAD LIST */
     div#threadList div.item {
@@ -1835,7 +1835,7 @@ button.btn {
 
 @media screen and (min-width: 887px) and (max-width: 899px) {
     .navbar-header {
-        width: 25% !important; 
+        width: 25% !important;
     }
 
     ul#menubar-left {
@@ -1866,7 +1866,7 @@ button.btn {
     div#left-sidebar {
         display: none !important;
     }
-    
+
     /* LOGIN */
     div#login-form {
         padding-left: 0;
@@ -1931,7 +1931,7 @@ button.btn {
         width: 100%;
     }
 
-    div.login-register-form, 
+    div.login-register-form,
     div#login-form {
         border: 0;
     }
@@ -1945,11 +1945,11 @@ button.btn {
         margin-left: 0;
     }
 
-    div#login-form { 
+    div#login-form {
         padding: 0;
     }
 
-    div.login-register-form { 
+    div.login-register-form {
         padding-right: 0 !important;
     }
 
@@ -1975,7 +1975,7 @@ button.btn {
         overflow-y: scroll;
         font-size: 8pt;
     }
-    
+
     .user_item {
         margin-left:4px;
     }
@@ -1988,8 +1988,8 @@ button.btn {
     div.home-right-side {
         display: none;
     }
-    
-    
+
+
     div#home-container {
         padding-left: 0;
         padding-right: 0;
@@ -2232,19 +2232,19 @@ button.btn {
         margin-right : 0;
         margin-left: 0 !important;
     }
-    
+
 }
 @media screen and (min-width: 768px) and (max-width: 992px) {
     div#home-container {
         margin-left: 5%;
         margin-right: 5%;
     }
-    
+
     div.nav-container {
         margin-right : 10%;
         margin-left: 5% !important;
     }
-    
+
 }
 
 
@@ -2254,29 +2254,29 @@ button.btn {
         line-height: 18px;
         font-weight: bold;
     }
-    
+
     div#main-post-desc {
         line-height:14px;
     }
-    
-    
+
+
     div.thread-view {
         padding-top: 4px;
     }
     div.block-for-comment {
         margin-top:5px;
-        
+
     }
-    
+
     div.user-comment-reaction {
         padding-top: 8px;
     }
-    
+
     div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
         line-height: 16px;
         margin: 0;
     }
-    
+
 }
 
 @media screen and (min-width: 768px) {
