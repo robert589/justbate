@@ -15,7 +15,7 @@ $comment = Html::encode($child_comment->getComment());
 $anonymous = $child_comment->getAnonymous();
 ?>
 <div id="<?= $id ?>" class="child-comment-container">
-    <div class="col-xs-12" style="margin-bottom:10px">
+    <div class="col-xs-12 child-comment-subcontainer" style="margin-bottom:10px">
         <div class="inline">
             <img class="img img-rounded profile-picture-comment" src=<?= $commentator_user_photo_path_link ?>>
         </div>
@@ -35,4 +35,13 @@ $anonymous = $child_comment->getAnonymous();
             <?= $comment ?>
         </div>
     </div>
+    <?php $belongs_to_current_user = 1; ?>
+    <?php if ($belongs_to_current_user) { ?>
+        <div class="col-xs-12 child-comment-hide child-comment-action-wrapper" id="<?= $comment_id ?>">
+            <textarea cols="1"></textarea>
+            <button type="submit" class="btn reply-button btn-primary child-comment-input-box-submit-button">Reply</button><br />
+            <span class="child-comment-action edit-child-comment">Edit</span>
+            <span class="child-comment-action delete-child-comment">Delete</span>
+        </div>
+    <?php } ?>
 </div>

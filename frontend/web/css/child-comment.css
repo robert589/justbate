@@ -22,6 +22,10 @@ div.child-comment-action-wrapper span:hover {
 	text-decoration: underline;
 }
 
+button.reply-button {
+	margin-bottom: 15px;
+}
+
 span.child-comment-action {
     padding: 7px;
 }

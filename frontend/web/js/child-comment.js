@@ -21,11 +21,11 @@ function beginLoginModal() {
 
 }
 
-$(document).on("mouseenter", "div[id^='infinite-scroll-child-comment-list']", function() {
+$(document).on("mouseenter", ".child-comment-container", function() {
     $(this).find(".child-comment-action-wrapper").removeClass("child-comment-hide");
 });
 
-$(document).on("mouseleave", "div[id^='infinite-scroll-child-comment-list']", function() {
+$(document).on("mouseleave", ".child-comment-container", function() {
     $(this).find(".child-comment-action-wrapper").addClass("child-comment-hide");
 });
 
