@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 9 Aug, 2016, 7:57:09 PM
+    Author     : user
+*/
+
+.button-dropdown-label {
+      padding-top: 4px;
+    margin-right: 4px;
+    font-size: 1.6em;
+}
+.button-dropdown-popover {
+    z-index: 10;
+    position: absolute;
+    display: none;
+    background: white;
+    right: 4px; 
+    bottom: 100%;
+}
+
+.button-dropdown-item {
+    width: 95px;
+    height: 30px;
+    padding: 0;
+    display: block;
+    border: 1px solid;
+    border-color: lightgray;
+    background: transparent;
+}
+
+.button-dropdown-container {
+    bottom: 100%;
+    position: relative;
+}

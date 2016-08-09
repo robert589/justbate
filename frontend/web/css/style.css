@@ -16,9 +16,6 @@ iframe {
 
 
 
-.thread-comment-bottom-button {
-    overflow:hidden;
-}
 
 .thread-comment-bottom-button-dropdown {
     padding-top: 3px;
@@ -957,6 +954,10 @@ div.comment-tab div.tabs-above div.tab-content div.row {
 .thread-comment-subcontainer {
     width: 100%;
     display: flex;
+}
+
+.thread-comment-container {
+    padding-bottom: 4px;
 }
 div.list-view {
     padding: 0 !important;
@@ -2291,8 +2292,3 @@ button.btn {
     border-color: lightgray;
 }
 
-.thread-comment-bottom-dropdown-label {
-    padding-top: 4px;
-    margin-right: 4px;
-    font-size: 1.6em;
-}
