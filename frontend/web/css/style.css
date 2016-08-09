@@ -14,12 +14,24 @@ iframe {
     margin-left: 90px;
 }
 
+.real-thread-comment {
+        padding-top: 8px;
+    border-top: 1px solid;
+    border-color: lightgray;
+    margin-bottom: 8px;
+}
 
-
+.thread-comment-bottom-button {
+    display:flex;
+}
 
 .thread-comment-bottom-button-dropdown {
     padding-top: 3px;
     
+}
+
+.comment-votes {
+    width: 100%;
 }
 html {
     font-family: 'Montserrat', sans-serif ;
@@ -1157,6 +1169,7 @@ span#anonymous-checkbox {
 
 div#left-sidebar {
     padding-left: 0px;
+    padding-right: 30px;
     line-height: 18px;
 }
 

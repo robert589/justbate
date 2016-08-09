@@ -95,7 +95,7 @@ class ThreadController extends Controller
 	 * @throws \yii\base\ExitException
 	 */
 	public function actionRetrieveCommentInput(){
-            if(!(isset($_POST['thread_id']) && Yii::$app->request->isPjax)) {
+            if(!(isset($_POST['thread_id']))) {
                 Yii::$app->end('Something went wrong, we will fix it as soon as possible');
             }
             $service = $this->serviceFactory->getService(ServiceFactory::THREAD_SERVICE);
@@ -106,7 +106,7 @@ class ThreadController extends Controller
             if(!is_null($current_user_comment)) {
                 $comment_model->comment = $current_user_comment;
             }
-            return $this->renderAjax('../thread/thread-comment-input-box',
+            return $this->renderAjax('../../widgets/views/thread-comment-input-box',
                             ['thread' => $thread,
                              'comment_input_retrieved' => true,
                              'comment_model' => new CommentForm()]);

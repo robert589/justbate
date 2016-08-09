@@ -21,7 +21,7 @@ use yii\helpers\Html;
         
         <?php foreach($items as $item) {  ?>
             <div class="<?= $item_class ?>">
-                <?= Html::a($item['label'], $item['url'], ['class' => 'simple-sidenav-item-link']); ?>
+                <?= Html::a('&bull;' . '  ' .$item['label'], $item['url'], ['class' => 'simple-sidenav-item-link']); ?>
             </div>
                 
         <?php } ?>

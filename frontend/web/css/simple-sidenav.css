@@ -4,20 +4,14 @@
     
 }
 .simple-sidenav-title {
-    font-size: 18px;
-    min-height: 24px;
-    padding-top: 4px;
-    margin-right: 4px;
+    font-size: 14px;
     padding-bottom: 2px;
     border-bottom: 1px solid;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     color: #4c4c4c;
 }
 
 .simple-sidenav-item-class {
-    min-height: 24px;
-    margin-bottom: 4px;
-    font-size: 12px;
     display: block;
 }
 
@@ -25,5 +19,5 @@
     width: 100%;
     color: #4c4c4c;
     word-wrap: break-word;
-    font-size: 14px;
+    font-size: 11px;
 }

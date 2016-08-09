@@ -6,6 +6,7 @@
 /** @var $item_class string **/
 $has_comment = $thread->getCurrentUserComment();
 $current_user_has_vote = $thread->getCurrentUserVote();
+$thread_id = $thread->getThreadId();
 use yii\helpers\Html;
 use common\widgets\LoadingGif;
 
@@ -22,10 +23,10 @@ $class_for_vote_area .= (!$current_user_has_vote) ? '' : 'thread-vote-comment-hi
         <?php foreach($items as $value => $text) { ?>
             <?php if($value === $selected) { ?>
             <label class="thread-vote-comment-radio-button btn active disabled"
-                    data-id="<?= $id ?>" data-label="<?= $value ?>">
+                    data-id="<?= $id ?>" data-label="<?= $value ?>" data-thread_id = "<?= $thread_id ?>">
             <?php } else { ?>
             <label class="thread-vote-comment-radio-button btn btn-group" 
-                   data-id="<?= $id ?>" data-label="<?= $value ?>" >
+                   data-id="<?= $id ?>" data-label="<?= $value ?>" data-thread_id = "<?= $thread_id ?>" >
             <?php } ?>
                 <div class="simple-button-group-label-<?= str_replace(" ", "-" ,$value) ?>"> 
                     <?= $text ?> 
@@ -37,18 +38,17 @@ $class_for_vote_area .= (!$current_user_has_vote) ? '' : 'thread-vote-comment-hi
         <?= Html::button('Comment',
                         ['class' => 'btn thread-vote-comment-comment',
                          'data-id' => $id,
-                         'disabled' => ($current_user_has_vote) ? false: true,
+                            'data-thread_id' => $thread_id
                         ]) ?>
         
         <?= Html::button('Change Vote',
                         ['class' => 'button-like-link thread-vote-comment-change-vote',
                          'data-id' => $id,
-                         'disabled' => ($current_user_has_vote) ? false: true,
                         ]) ?>
           
     </div>
     <div class="thread-vote-comment-input-box-loading thread-vote-comment-hide">
-        <?=     LoadingGif::widget() ?>
+        <?=  LoadingGif::widget() ?>
     </div>
     <div class="thread-vote-comment-input-box">
         

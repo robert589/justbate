@@ -65,14 +65,11 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
              'submit_vote_form' => $submit_vote_form]); ?>
     <div class="thread-section-bottom">
         <?=    ThreadVoteComment::widget(['id' => 'thread-vote-radio-button-' . $thread_id,
-                                    'thread_id' => $thread_id,
                                     'thread' => $thread,
-                                    'selected' => $current_user_choice,
-                                    'items' => $propered_choice_text]) ?>
-    
+                                        ]) ?>
     <?php // CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
             //        'thread_id' => $thread_id ]) ?>
-    <?php if($thread_belongs_to_current_user) { ?>
+    <?php if(false && $thread_belongs_to_current_user) { ?>
         <div class="inline">
             <?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn btn-sm inline', 'style' => 'background: #d9534f;']) ?>
             <?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn btn-sm inline','data-guest' => $guest]) ?>
