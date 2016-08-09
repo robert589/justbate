@@ -9,10 +9,10 @@
 <div id="<?= $id ?>" class="<?= $class ?>" data-toggle="buttons">
     <?php foreach($items as $value => $text) { ?>
         <?php if($value === $selected) { ?>
-            <label class="btn btn-sm btn-warning btn-group <?= $item_class ?> active disabled"
+            <label class="simple-radio-button-button btn <?= $item_class ?> active disabled"
                    data-arg="<?= $arg ?>" data-label="<?= $value ?>">
         <?php } else { ?>
-            <label class="btn btn-sm simple-radio-btn <?= $item_class ?> btn-group" data-arg="<?= $arg ?>"
+            <label class="simple-radio-button-button btn <?= $item_class ?> btn-group" data-arg="<?= $arg ?>"
                    data-label="<?= $value ?>" >
         <?php } ?>
             <input type="radio" value="<?= $value ?>" >

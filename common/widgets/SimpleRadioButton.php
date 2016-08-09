@@ -31,6 +31,7 @@ class SimpleRadioButton extends Widget
     
     public function registerAssets() {
         $view = $this->getView();
+        SimpleRadioButtonAsset::register($view);
     }
 
     public function run()

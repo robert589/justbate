@@ -1,0 +1,21 @@
+.simple-radio-button-button{
+	padding: 1px 10px;
+	background-color: #ffffff;
+	border-radius: 12px; 
+	color : #ff6600;
+	border-color : #ff6600;
+}
+
+.simple-radio-button-button:hover{
+	padding: 1px 10px;
+	background-color: #ff6600;
+	border-radius: 12px; 
+	color : #ffffff;
+}
+
+.simple-radio-button-button.disabled{
+	padding: 1px 10px;
+	background-color: #ff6600;
+	border-radius: 12px; 
+	color : #ffffff;
+}
