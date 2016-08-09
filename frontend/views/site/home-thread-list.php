@@ -1,6 +1,7 @@
 <?php
 use common\widgets\SimpleSeeMore;
 use yii\helpers\Html;
+use frontend\widgets\ThreadVoteComment;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $thread_issues array */
 $link_to_thread = $thread->getThreadLink();
@@ -25,29 +26,15 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
             <?= SimpleSeeMore::widget(['text' => $thread_description, 'active' => true, 
                 'id' => 'home-thread-list-description-' . $thread_id]) ?>
         </div>
-        <div class="home-thread-list-vote" align="center" >
-            <?= $this->render('../thread/thread-vote',
-                    ['thread' => $thread,
-                     'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()])?>
-        </div>
-        <div class="home-comment-tab">
-                <?= $this->render('home-thread-list-bottom', ['thread' => $thread]) ?>
-        </div>
+        <?=  ThreadVoteComment::widget(['id' => 'home-thread-list-vote-' . $thread_id, 'thread' => $thread]) ?>        
         <div class="home-thread-list-chosen-comment">
         <?php if($has_chosen_comment){
             $chosen_comment = $thread->getChosenComment();
-            $commentator_user_profile_link = $chosen_comment->getUserProfileLink();
-            $commentator_user_profile_pic_link = $chosen_comment->getCommentCreatorPhotoLink();
-            $commentator_choice = $chosen_comment->getCurrentUserVote();
-            $commentator_full_name = $chosen_comment->getFullName();
-            $comment  = $chosen_comment->getComment();
             $comment_id = $chosen_comment->getCommentId();
         ?>
             <?= frontend\widgets\BlockThreadComment::widget(['id' => 'home-thread-list-block-' . $comment_id, 'thread_comment' => $chosen_comment]) ?>
 
-        <?php
-            }
-        ?>
+        <?php } ?>
         </div>
     </div>
 </div>

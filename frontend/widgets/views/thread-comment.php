@@ -1,14 +1,4 @@
 <?php
-use kartik\rating\StarRating;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
-use yii\widgets\ListView;
-use yii\bootstrap\Modal;
-use frontend\models\EditCommentForm;
-use common\models\Comment;
-use yii\widgets\ActiveForm;
-use common\components\DateTimeFormatter;
 /** @var $thread_comment \common\entity\ThreadCommentEntity */
 //used variable
 $comment_id = $thread_comment->getCommentId();

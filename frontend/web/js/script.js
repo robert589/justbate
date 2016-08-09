@@ -12,10 +12,8 @@ function checkNewNotification() {
         }
     });
 }
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
+
+
 
 
 $(document).ready(function(){
@@ -115,59 +113,6 @@ $(document).ready(function(){
         
     });
     
-    $(document).on("click",".thread-vote-radio-button",function(element) {
-        if(checkGuest() === true){
-            return false;
-        };
-        var thread_id = $(this).data('arg');
-        var thread_vote_section = $("#thread-vote-" + thread_id);
-        
-        //update new choice
-        var new_choice_value = $(this).data('label');
-        var old_choice_value = thread_vote_section.find("#thread-vote-old-value-" + thread_id).val();
-        if(old_choice_value === new_choice_value) {
-            return false;
-        }
-        var new_choice_value_section =thread_vote_section.find('.simple-button-group-label-' + new_choice_value.replaceAll(' ' , '-'));
-        var new_choice_text = new_choice_value_section.text();                
-        var new_choice_total_comments = new_choice_text.substring(new_choice_text.lastIndexOf("(")+1,
-          new_choice_text.lastIndexOf(")"));
-        
-        var new_new_choice_text = new_choice_value + " (" + (parseInt(new_choice_total_comments) + 1) + ")";
-        new_choice_value_section.text(new_new_choice_text);
-        new_choice_value_section.parent().addClass(" active disabled");
-        
-        // update old choice text
-        if(old_choice_value !== null) {
-            var old_choice_label_section = thread_vote_section.find('.simple-button-group-label-' 
-                                                            + old_choice_value.replaceAll(' ' , '-'));
-            var old_choice_label_text = old_choice_label_section.text();
-            var old_choice_total_comments = old_choice_label_text.substring(old_choice_label_text.lastIndexOf("(")+1,
-             old_choice_label_text.lastIndexOf(")"));
-            var new_old_choice_text = old_choice_value + " (" + (parseInt(old_choice_total_comments) - 1) + ")";
-            old_choice_label_section.text(new_old_choice_text);
-            old_choice_label_section.parent().removeClass("disabled");
-            
-        }  
-        $.ajax({
-            url: $("#base-url").val() + '/thread/submit-vote',
-            type: 'post',
-            data: {thread_id: thread_id, vote: new_choice_value},
-            success: function(data) {
-                if(data) {
-                   if($("#comment_input_box_section_" + thread_id).length === 0) {
-                    $("#retrieve-input-box-button-" + thread_id).prop('disabled', false);
-                    $("#retrieve-input-box-button-" + thread_id).click();
-                }
-            } else {
-                
-            }
-        }
-    });
-        thread_vote_section.find("#thread-vote-old-value-" + thread_id).val(new_choice_value);
-        
-    });
-
     $(document).on('submit', '.form_user_thread_vote', function(event){
         var data_pjax = $(this).data('pjax');
 
@@ -362,18 +307,6 @@ $(document).ready(function(){
     });
 
 
-    $(document).on('click', '.give-comment', function(event){
-        var thread_id = $(this).data('service');
-        if($("#redactor_box_" + thread_id ).length == 1){
-            event.preventDefault();
-            if($("#comment_input_box_section_" + thread_id ).is(":visible")){
-                $("#comment_input_box_section_" + thread_id).css("display","none");
-            }
-            else{
-                $("#comment_input_box_section_" + thread_id).css("display","inline");
-            }
-        }
-    });
 
     $(document).on('pjax:complete', '.pjax_user_vote', function(){
         var thread_id = $(this).data('service');
@@ -530,6 +463,8 @@ $(document).ready(function(){
         $("#edit_title_description_part").hide();
     });
 
+    
+
     function beginProfilePicModal(){
         $("#uploadProfilePicModal").modal("show")
         .find('#uploadProfilePicModal')
@@ -569,3 +504,4 @@ $(document).ready(function(){
     $.pjax.defaults.scrollTo = false;
     $.pjax.defaults.skipOuterContainers = true;
 });
+

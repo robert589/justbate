@@ -8,10 +8,7 @@ class ThreadCommentVoBuilder extends CommentVoBuilder {
 
     private $parent_thread_title;
 
-    /**
-     * @type array
-     * @var
-     */
+    
     private $choice_text;
 
     private $child_comment_list;

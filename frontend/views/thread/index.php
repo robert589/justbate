@@ -4,20 +4,28 @@ use yii\helpers\Html;
 use kartik\tabs\TabsX;
 use kartik\dialog\Dialog;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\HtmlPurifier;
+use frontend\widgets\CommentInputAnonymous;
+use frontend\widgets\ThreadVoteComment;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $comment_model \frontend\models\CommentForm */
 /** @var $submit_vote_form \frontend\models\SubmitThreadVoteForm */
 
 //variable used in this page
 $this->title =  $thread->getTitle();
-
+$thread_choices = $thread->getMappedChoices();
 $comment_providers = $thread->getThreadCommentList();
 $content_comment = array();
+$current_user_choice = $thread->getCurrentUserVote();
 $choices_in_thread = $thread->getChoices();
 $thread_id = $thread->getThreadId();
 $thread_belongs_to_current_user = $thread->belongToCurrentUser();
 $guest = $thread->isGuest();
+$propered_choice_text = array();
+foreach($thread_choices as $item){
+    $item_values = array_values($item);
+    $propered_choice_text[$item_values[0]]  = HTMLPurifier::process($item_values[0] . " (" . $item['total_voters'] . ")");
+}
 $current_user_anonymous = $thread->getCurrentUserAnonymous();
 $first = 1;
 foreach($comment_providers as $thread_choice_item => $comment_provider){
@@ -50,63 +58,38 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 <?= Dialog::widget(); ?>
 
-<?php if(Yii::$app->user->isGuest){ ?>
-    <label> Please login before doing any action. Otherwise, it will not work </label>
-    <?= Html::button('Login', ['class' => 'btn btn-default', 'id' => 'login-modal-button']) ?>
-<?php } ?>
-
 <div class="col-xs-12 col-md-6" id="thread-main-body" style="background: white; padding-bottom: 30px;">
-	<div class="col-xs-12" style="padding: 0;" id="left-part-of-thread">
-            <div id="thread-details">
-                    <?= $this->render('thread-section',
-                            ['thread' => $thread ,
-                             'edit_thread_form' => new \frontend\models\EditThreadForm(),
-                             'submit_vote_form' => $submit_vote_form])
-                    ?>
-            </div>
-		<!-- First tab part -->
-		<div class="row" id="first-part">
-			<div class="col-xs-12" style="margin-bottom:12px">
-                            <?=	
-                                $this->render('thread-vote', ['thread' => $thread,
-                                    'submit_thread_vote_form' => new \frontend\models\SubmitThreadVoteForm()]);
-                            ?>
-			</div>
-			<div class="col-xs-12">
-				<div class="inline">
-					<?= $this->render('retrieve-comment-button', ['thread' => $thread]) ?>
-				</div>
-				<div class="inline" style="margin-left: 5px">
-					<?= \frontend\widgets\CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
-						'thread_id' => $thread_id ]) ?>
-				</div>
-				<?php if($thread_belongs_to_current_user) { ?>
-					<div class="inline">
-						<?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn btn-sm inline', 'style' => 'background: #d9534f;']) ?>
-						<?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn btn-sm inline','data-guest' => $guest]) ?>
-					</div>
-				<?php } ?>
-			</div>
-		</div>
-	</div>
-	<div  id="comment_section" class="section col-xs-12">
-		<?= $this->render('thread-comment-input-box', ['comment_model' => $comment_model,
-                                                            'thread' => $thread]) ?>
-	</div>
-	<div class="col-xs-12 section">
-		<div id="comment-tab">
-			<?= // Ajax Tabs Above
-			TabsX::widget([
-				'id' => 'comment-tab',
-				'items'=>$content_comment,
-				'position'=>TabsX::POS_ABOVE,
-				'encodeLabels'=>false,
-				'enableStickyTabs' => true
-			])
-			?>
-		</div>
-	</div>
-</div>
+    <?= $this->render('thread-section',
+            ['thread' => $thread ,
+             'edit_thread_form' => new \frontend\models\EditThreadForm(),
+             'submit_vote_form' => $submit_vote_form]); ?>
+    <div class="thread-section-bottom">
+        <?=    ThreadVoteComment::widget(['id' => 'thread-vote-radio-button-' . $thread_id,
+                                    'thread_id' => $thread_id,
+                                    'thread' => $thread,
+                                    'selected' => $current_user_choice,
+                                    'items' => $propered_choice_text]) ?>
+    
+    <?php // CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
+            //        'thread_id' => $thread_id ]) ?>
+    <?php if($thread_belongs_to_current_user) { ?>
+        <div class="inline">
+            <?= Html::button('Delete', ['id' => 'delete-thread', 'class' => 'btn btn-sm inline', 'style' => 'background: #d9534f;']) ?>
+            <?= Html::button('Edit', ['id' => 'edit-thread', 'class' => 'btn btn-sm inline','data-guest' => $guest]) ?>
+        </div>
+    <?php } ?>
+    </div>
+    <div id="comment-tab">
+            <?= // Ajax Tabs Above
+            TabsX::widget([
+                    'id' => 'comment-tab',
+                    'items'=>$content_comment,
+                    'position'=>TabsX::POS_ABOVE,
+                    'encodeLabels'=>false,
+                    'enableStickyTabs' => true
+            ])
+            ?>
+    </div>
 
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
     <?= Html::hiddenInput('thread_id', $thread_id) ?>

@@ -683,11 +683,6 @@ div.ias-trigger a {
     text-decoration: none;
 }
 
-div[id^='comment_part'] {
-    width: calc(100% - 15px);
-    padding-bottom: 15px;
-}
-
 div#threadList div.ias-trigger,
 div#threadList div.ias-noneleft {
     margin: 0;

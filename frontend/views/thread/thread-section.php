@@ -63,7 +63,6 @@ Pjax::begin([
             <div class="row">
                 <!-- Topic Name -->
                 <?= $form->field($edit_thread_form, 'issues')->widget(Select2::classname(), [
-
                     'maintainOrder' => true,
                     'options' => ['placeholder' => 'Select Keywords ...', 'multiple' => true],
                     'pluginOptions' => [
@@ -79,11 +78,9 @@ Pjax::begin([
                     ]
                 ])->label(false) ?>
             </div>
-
             <div class="row">
                 <?= $form->field($edit_thread_form, 'title')->textInput(['placeholder' => 'Title..', 'class' => 'form-control']) ?>
             </div>
-
             <div class="row">
                 <?= $form->field($edit_thread_form, 'description')->widget(Redactor::className(), [
                     'clientOptions' => [

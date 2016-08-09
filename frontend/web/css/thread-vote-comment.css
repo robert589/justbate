@@ -1,0 +1,44 @@
+.thread-vote-comment-radio-button{
+	padding: 1px 10px;
+	background-color: #ffffff;
+	border-radius: 12px; 
+	color : #ff6600;
+	border-color : #ff6600;
+}
+
+.thread-vote-comment-radio-button:hover{
+	padding: 1px 10px;
+	background-color: #ff6600;
+	border-radius: 12px; 
+	color : #ffffff;
+}
+
+.thread-vote-comment-radio-button.disabled{
+	padding: 1px 10px;
+	background-color: #ff6600;
+	border-radius: 12px; 
+	color : #ffffff;
+}
+
+.thread-vote-comment-hide {
+    display: none;
+}
+
+.thread-vote-comment-container {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+
+.thread-vote-comment-comment{
+    background: white;
+    font-size: 14px;
+    border: 1px solid;
+    padding: 1px 10px;
+}
+.thread-vote-comment-change-vote {
+    font-size: 10px;
+}
+.thread-vote-comment-comment:hover{
+    background: lightgray;
+}
