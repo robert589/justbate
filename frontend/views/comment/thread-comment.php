@@ -13,13 +13,13 @@ $comment_created_at = $thread_comment->getCreatedAt();
 $comment_thread_id = $thread_comment->getParentThreadId();
 ?>
 
-<div class="block-for-comment">
-    <div class="col-xs-12">
-        <div class="inline image-commentator">
+<div class="thread-comment-container">
+    <div class="thread-comment-subcontainer">
+        <div class="image-commentator">
             <img class="img img-circle profile-picture-comment" style="width: 40px;height:40px;" src="<?= $commentator_user_photo_path_link ?>">
         </div>
-        <div class="inline non-image-commentator">
-            <div class="col-xs-12 commentator-name">
+        <div class="non-image-commentator">
+            <div class="commentator-name">
                 <?php if($thread_comment->getAnonymous()) { ?>
                     <label><?= $comment_creator_full_name ?></label> chose <?= $thread_comment->getChoiceText() ?>
                 <?php } else { ?>
@@ -29,14 +29,8 @@ $comment_thread_id = $thread_comment->getParentThreadId();
                 <?php } ?>
                 <br> <?= $comment_created_at ?>
             </div>
-
         </div>
     </div>
-    <div class="col-xs-12 commentator-moderate">
-        <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
-    </div>
-    <div class="col-xs-12">
-        <hr>
-    </div>
+    <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
     
 </div>

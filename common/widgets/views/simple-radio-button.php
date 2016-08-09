@@ -12,7 +12,7 @@
             <label class="btn btn-sm btn-warning btn-group <?= $item_class ?> active disabled"
                    data-arg="<?= $arg ?>" data-label="<?= $value ?>">
         <?php } else { ?>
-            <label class="btn btn-sm btn-warning <?= $item_class ?> btn-group" data-arg="<?= $arg ?>"
+            <label class="btn btn-sm simple-radio-btn <?= $item_class ?> btn-group" data-arg="<?= $arg ?>"
                    data-label="<?= $value ?>" >
         <?php } ?>
             <input type="radio" value="<?= $value ?>" >

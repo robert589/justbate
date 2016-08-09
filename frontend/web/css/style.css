@@ -15,10 +15,15 @@ iframe {
 }
 
 
-.thread-comment-bottom-dropdown-label {
-    padding-top: 4px;
+
+.thread-comment-bottom-button {
+    overflow:hidden;
 }
 
+.thread-comment-bottom-button-dropdown {
+    padding-top: 3px;
+    
+}
 html {
     font-family: 'Montserrat', sans-serif ;
     letter-spacing: 0.75px;
@@ -933,10 +938,6 @@ div#commentator-action div.commentator-moderate {
 }
 
 
-div.block-for-comment div.col-xs-12 {
-    padding-left: 0;
-    padding-right: 1px;
-}
 
 div.button-vote-up,
 div.button-vote-down {
@@ -953,6 +954,10 @@ div.comment-tab div.tabs-above div.tab-content div.row {
     margin: 0 !important;
 }
 
+.thread-comment-subcontainer {
+    width: 100%;
+    display: flex;
+}
 div.list-view {
     padding: 0 !important;
     margin: 0 !important;
@@ -976,14 +981,7 @@ div.image-commentator {
     margin-right: 3px;
 }
 
-div.comment-votes {
-    padding: 0;
-}
 
-div.block-for-comment {
-    margin-top: 20px;
-    z-index: -1000;
-}
 
 div.comment-created {
     padding-left: 18px;
@@ -995,15 +993,13 @@ div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
 }
 
 div.commentator-comment {
-    padding-left: 3px;
+    margin-top: 10px;
+    overflow: hidden;
 }
 div.child-comment-list-container {
     background-color: #dff0d8;
 }
 
-div[id^="comment_shown_part"] p {
-    margin-left: 0 !important;
-}
 
 div.commentator-moderate {
     margin-top: 15px;
@@ -1569,10 +1565,6 @@ select {
     border: 0 !important;
 }
 
-textarea {
-    width: 100% !important;
-    height: 50px !important;
-}
 
 hr.separator {
     margin-top: 5px;
@@ -1605,12 +1597,16 @@ button.btn {
 
 .button-like-link{
     border: none;
-    background: rgba(170,196,222,.25);
-    color: #001E70;
+    background: transparent;
+    color: gray;
     padding: 0!important;
     font: inherit;
     font-weight: bold;
     cursor: pointer;
+}
+
+.button-like-link:hover {
+    text-decoration:   underline; 
 }
 
 @media screen and (max-width: 400px) {
@@ -2263,10 +2259,6 @@ button.btn {
     div.thread-view {
         padding-top: 4px;
     }
-    div.block-for-comment {
-        margin-top:5px;
-
-    }
 
     div.user-comment-reaction {
         padding-top: 8px;
@@ -2290,4 +2282,17 @@ button.btn {
         padding-left: 15px;
     }
 
+}
+
+.thread-comment {
+    margin-top: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+    border-color: lightgray;
+}
+
+.thread-comment-bottom-dropdown-label {
+    padding-top: 4px;
+    margin-right: 4px;
+    font-size: 1.6em;
 }

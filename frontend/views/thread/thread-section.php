@@ -71,7 +71,7 @@ Pjax::begin([
                         'ajax' => [
                             'url' => \yii\helpers\Url::to(['site/search-issue']),
                             'dataType' => 'json',
-                            'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                            'data' => new JsExpression('function(params) { return {query:params.term}; }')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                         'templateResult' => new JsExpression('function(topic_name) { return topic_name.text; }'),

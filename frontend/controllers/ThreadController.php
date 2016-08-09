@@ -261,7 +261,7 @@ class ThreadController extends Controller
                         $edit_thread_form->title, $edit_thread_form->description, new ThreadVoBuilder());
 
                 $submit_vote_form = new SubmitThreadVoteForm();
-                return $this->renderAjax('thread-section    ',
+                return $this->renderAjax('thread-section',
                         ['thread' => $thread,
                          'edit_thread_form' => $edit_thread_form,
                          'submit_vote_form' => $submit_vote_form]);

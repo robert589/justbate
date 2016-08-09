@@ -25,7 +25,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
     $content_comment_item['content'] =  ListView::widget([
         'dataProvider' => $comment_provider,
         'summary' => false,
-        'itemOptions' => ['class' => 'item'],
+        'itemOptions' => ['class' => 'thread-comment'],
         'layout' => "{summary}\n{items}\n{pager}",
         'itemView' => function ($thread_comment, $key, $index, $widget) {
             return $this->render('../comment/thread-comment'	,

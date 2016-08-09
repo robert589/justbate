@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8 Aug, 2016, 5:36:31 PM
+    Author     : user
+*/
+
+.child-comment-list-container {
+    position: relative;
+    clear: both;
+    padding-top: 4px;
+    padding-bottom :2px;
+    padding-left: 2px;
+    margin-top: 8px;
+    background: lightblue;
+}
+
+
+

@@ -19,8 +19,6 @@ else{
     $upvote = "<span class='glyphicon glyphicon-chevron-up'></span>";
     $downvote = "<span class='glyphicon glyphicon-chevron-down'></span>";
 }
-
-
 ?>
 <div id="comment-vote-section-<?= $comment_id ?>">
     <?= Html::hiddenInput('comment-vote-old-value', $vote, ['class' => 'comment-vote-old-value']) ?>

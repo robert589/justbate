@@ -22,11 +22,21 @@ div.child-comment-action-wrapper span:hover {
 	text-decoration: underline;
 }
 
-button.reply-button {
-	margin-bottom: 15px;
-}
-
 span.child-comment-action {
     padding: 7px;
 }
 
+.child-comment-container {
+    overflow:hidden;
+    display: flex;
+    padding-top: 8px;
+    padding-bottom: 4px;
+}
+
+
+.child-comment-profile-picture {
+    width:40px;
+    background: white;
+    height: 40px;
+    border-radius: 50%;
+}

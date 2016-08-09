@@ -177,14 +177,14 @@ AppAsset::register($this);
     
     <?php } ?>
     <div style="display: none" id="child-comment-template">
-        <div class="item" >
-            <?php $builder = new ChildCommentVoBuilder();
+        <?php $builder = new ChildCommentVoBuilder();
             $builder->setCommentCreatorId(Yii::$app->user->getId());
             $builder->convertToTemplate();
             $child_comment_dummy = $builder->build();
-            ?>
-            <?= frontend\widgets\ChildComment::widget(['child_comment' => $child_comment_dummy, 'id' => 'child-comment-template']) ?>
-        </div>
+        ?>
+        <?= frontend\widgets\ChildComment::widget([
+            'child_comment' => $child_comment_dummy]) ?>
+        
     </div>
 
 <?php

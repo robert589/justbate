@@ -1,9 +1,7 @@
 <?php
 namespace frontend\widgets;
 
-use frontend\widgets\CommentInputAnonymousAsset;
 use yii\base\Widget;
-use yii\helpers\Html;
 
 class ChildComment extends Widget
 {
@@ -11,6 +9,8 @@ class ChildComment extends Widget
     public $child_comment;
 
     public $id;
+    
+    public $class = '';
 
     public function init()
     {
@@ -28,6 +28,6 @@ class ChildComment extends Widget
     public function run()
     {
         return $this->render('child-comment',
-            ['child_comment' => $this->child_comment, 'id' => $this->id]);
+            ['child_comment' => $this->child_comment, 'id' => $this->id, 'class' => $this->class]);
     }
 }

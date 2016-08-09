@@ -248,7 +248,7 @@ abstract class CommentVo implements Vo{
             $belongs = 0;
         }
         else {
-            if(\Yii::$app->user->getId()== $this->comment_creator_id){
+            if(\Yii::$app->user->getId() == $this->comment_creator_id){
                 $belongs = 1;
             } else {
                 $belongs = 0;

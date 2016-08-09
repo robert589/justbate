@@ -27,12 +27,12 @@ foreach($thread_choices as $item){
             </u>
         </span>
             
-            <?= SimpleRadioButton::widget(['items' => $propered_choice_text, 
-                'selected' => $submit_thread_vote_form->choice_text,
-                'id' => 'thread-vote-radio-button-' . $thread_id,
-                'item_class' => 'thread-vote-radio-button',
-                'widget_class' => 'inline',
-                'arg' => $thread_id]) ?>
+        <?= SimpleRadioButton::widget(['items' => $propered_choice_text, 
+            'selected' => $submit_thread_vote_form->choice_text,
+            'id' => 'thread-vote-radio-button-' . $thread_id,
+            'item_class' => 'thread-vote-radio-button',
+            'widget_class' => 'inline',
+            'arg' => $thread_id]) ?>
 
     </div>
 </div>

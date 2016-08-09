@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace common\widgets;
+namespace frontend\widgets;
 
 use yii\web\AssetBundle;
 
@@ -13,17 +13,17 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class InfiniteScrollAsset extends AssetBundle
+class ChildCommentVotesAsset extends AssetBundle
 {
 
     public $basePath = '@webroot';
     public $baseUrl = '@web' ;
 
     public $css = [
-        'frontend/web/css/infinite-scroll.css',
+        'frontend/web/css/child-comment-votes.css',
     ];
     public $js = [
-        'frontend/web/js/infinite-scroll.js'
+        'frontend/web/js/child-comment-votes.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

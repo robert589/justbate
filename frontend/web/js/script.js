@@ -17,114 +17,8 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-var Application  = function(template){
-
-    this.template = template;
-    this.userSubscriptions = [];
-    this.userLastChildCommentMessage = [];
-    this.setTimeZoneToCookie();
-};
-
-Application.prototype.setTimeZoneToCookie = function(){
-    if (navigator.cookieEnabled) {
-        document.cookie = "tzo=" + (- new Date().getTimezoneOffset());
-    }
-};
-
-Application.prototype.getSocketConnection = function(comment_id){
-    for(var i = 0; i < this.userSubscriptions.length; i++){
-        if(this.userSubscriptions[i].getCommentId() === comment_id ){
-            return this.userSubscriptions[i];
-        }
-    }
-    return null;
-};
-
-Application.prototype.checkExist = function(comment_id){
-    if(this.getSocketConnection(comment_id) !== null){
-        return true;
-    }
-};
-
-Application.prototype.subscribeChildCommentConn = function(comment_id){
-
-    if(!this.checkExist(comment_id)){
-        var newConn = new ChildCommentWebSocket(comment_id, this.template);
-        this.userSubscriptions.push(newConn);
-    }
-};
-
-Application.prototype.unsubscribe = function(){
-    //TODO
-};
-
-/**
- *
- * @param comment_id
- * @param self
- * @constructor
- */
- var ChildCommentWebSocket = function(comment_id, template){
-    this.comment_id = comment_id;
-    var child_comment_template = template;
-    this.conn = new WebSocket('ws://52.6.157.157:8080?' + comment_id);
-    this.conn.onopen = function(msg) {
-        console.log('Connection successfully opened (readyState ' + this.readyState+')');
-    };
-    this.conn.onclose = function(msg) {
-        if(this.readyState == 2) {
-            console.log(
-                'Closing... The connection is going throught'
-                + 'the closing handshake (readyState ' + this.readyState + ')'
-                );
-        }
-        else if(this.readyState == 3) {
-            console.log(
-                'Connection closed... The connection has been closed'
-                + 'or could not be opened (readyState ' + this.readyState + ')'
-                );
-            console.log(msg);
-        }
-        else {
-            console.log('Connection closed... (unhandled readyState ' + this.readyState + ')');
-        }
-    };
-    this.conn.onmessage = function(e){
-        applyTemplate(JSON.parse(e.data));
-
-    };
-    this.conn.onerror = function(event) {
-        console.log("error");
-    };
-};
-
-
-ChildCommentWebSocket.prototype.applyTemplate = function(){
-
-};
-
-ChildCommentWebSocket.prototype.subscribe = function(){
-    this.conn.send(JSON.stringify({command: "subscribe", channel: this.comment_id}));
-};
-
-ChildCommentWebSocket.prototype.sendMessage = function(comment_id, user_id){
-    console.log("Sending data");
-    this.conn.send(JSON.stringify({command: "message",
-     comment_id: comment_id,
-     user_id: user_id}));
-};
-
-ChildCommentWebSocket.prototype.getCommentId = function(){
-    return this.comment_id;
-};
-
 
 $(document).ready(function(){
-    var $this = $(this);
-    var child_comment_template = $this.find("#child-comment-template").html();
-    var app = new Application(child_comment_template);
-
-
     //facebook
     (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -134,8 +28,6 @@ $(document).ready(function(){
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    $('#loading-bar').height($(document).height());
-    
     /** LOGIN PAGE **/
     $(document).on("click", ".login-register-with-email", function(event) {
         var service = $(this).data('service');
@@ -204,7 +96,6 @@ $(document).ready(function(){
             }
         }
         
-        
         $.ajax({
             url: $("#base-url").val() + '/comment/comment-vote',
             type: 'post',
@@ -217,6 +108,7 @@ $(document).ready(function(){
                 }
             }
         });
+
         comment_vote_section.find(".comment-vote-old-value").val(is_up); 
         
         
@@ -447,28 +339,9 @@ $(document).ready(function(){
     });
 
 
-    $(document).on('pjax:send', '.child_comment_pjax', function(event){
-        console.log("sending");
-        event.preventDefault();
-        var comment_id = $(this).data('service');
-
-        $('#child_comment_loading_gif_' + comment_id).css("display", "inline");
-
-        return false;
-
-    });
 
 
-    $(document).on('pjax:complete', '.child_comment_pjax', function(event){
-        event.preventDefault();
-        var comment_id = $(this).data('service');
-        $('#child_comment_loading_gif_' + comment_id).css("display","none");
 
-        return false;
-
-
-    });
-    
     
     $(document).on('pjax:send', '.comment-section-edit-pjax', function(event){
         event.preventDefault();
