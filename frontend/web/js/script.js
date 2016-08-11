@@ -340,6 +340,11 @@ $(document).ready(function(){
             type: 'post',
             data : {id: notification_id},
             success: function(data) {
+                if(data !== false) {
+                    
+                } else {
+                    
+                }
             }
         });
 

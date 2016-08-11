@@ -9,7 +9,7 @@ $(document).on('click', '.button-dropdown-label', function(event) {
    var widget = $("#" + id);
    
    var popover = widget.find('.button-dropdown-popover');
-   popover.show(100);
+   popover.toggle(100);
 });
 
 $(document).on('blur', '.button-dropdown-label', function(event) {

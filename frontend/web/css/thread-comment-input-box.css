@@ -1,0 +1,60 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10 Aug, 2016, 8:10:42 PM
+    Author     : user
+*/
+
+.thread-comment-input-box {
+    padding: 8px;
+    background: #efefef;
+}
+
+.thread-comment-input-box-comment-container {
+    margin-top: 8px;
+}
+
+.thread-comment-input-box-user-info-image {
+    width: 40px;
+    height:40px;
+    background:white;
+    border-radius: 50%;
+}
+
+.thread-comment-input-box-button {
+    background: white;
+    padding: 2px 10px;
+    border: 2px solid;
+    border-color: #00AFF1;
+    color: #00aff0;
+}
+
+.thread-comment-input-box-hide {
+    display: none;
+}
+.redactor-box {
+    margin-bottom: 12px;
+}
+
+.thread-comment-input-box-button:hover {
+    background: #00aff0;
+    color: white;
+}
+
+.thread-comment-input-box-button[disabled] {
+    border-color: lightgray;
+    color: lightgray;
+}
+
+.thread-comment-input-box-button[disabled]:hover {
+    background: white;
+    color: lightgray;
+    
+}
+
+.thread-comment-input-box-white-bg {
+    background: white;
+}

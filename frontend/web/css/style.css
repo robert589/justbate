@@ -15,9 +15,7 @@ iframe {
 }
 
 .real-thread-comment {
-        padding-top: 8px;
-    border-top: 1px solid;
-    border-color: lightgray;
+    padding-top: 8px;
     margin-bottom: 8px;
 }
 
@@ -1086,10 +1084,6 @@ div#verify-email-form button#resend-button {
     margin-bottom: 8px;
 }
 
-.home-thread-list-chosen-comment {
-    width: 100%;
-    padding-right: 8px;
-}
 
 hr#email-separator {
     margin-top: 5px;
@@ -1296,6 +1290,10 @@ div.thread-comment-input-box-section {
     padding-top: 8px;
 }
 
+.redactor-box {
+    margin-bottom: 0;
+}
+
 div#thread-details {
     padding-left: 0;
 }
@@ -1316,6 +1314,7 @@ div#thread-details {
     overflow: hidden;
     height: 100%;
     position: relative;
+    padding-right: 8px;
 }
 
 
