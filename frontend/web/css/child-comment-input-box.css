@@ -22,6 +22,10 @@ and open the template in the editor.
     margin-left: 4px;
 }
 
+.child-comment-input-box-loading-comment-list {
+    opacity: 0.5;
+    pointer-events:  none;
+}
 .child-comment-input-box-container {
     margin-bottom: 4px;
 }

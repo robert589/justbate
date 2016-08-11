@@ -18,5 +18,5 @@ $(document).on('blur', '.button-dropdown-label', function(event) {
    
    var popover = widget.find('.button-dropdown-popover');
    popover.hide(100); 
-}) ;
+});
 

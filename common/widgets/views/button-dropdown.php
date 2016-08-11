@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <div class="button-dropdown-popover">
         <?php foreach($items as $item) { ?>
             <?= Html::button($item['label'], ['data-service' => $item['data'], 
-                'class' => 'button-dropdown-item ' . $item['class']]) ?>
+                'class' => $item['class'] . ' button-dropdown-item  ']) ?>
         <?php } ?> 
     </div>
     <?= Html::button('<span class="glyphicon glyphicon-option-horizontal"></span>', 

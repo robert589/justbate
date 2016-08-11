@@ -380,17 +380,17 @@ $(document).ready(function(){
     });
 
 
-    $(document).on('click', '.edit_comment',function(e){
-        e.preventDefault();
-        //initialize redactor
+    $(document).on('mousedown', '.edit_comment',function(e){
 
         var comment_id = $(this).data('service');
-        $("#comment-section-edit-redactor-" + comment_id).redactor({
-            plugins: ['video', 'fullscreen'],
-            buttons: ['undo', 'redo', 'format', 'bold', 'italic', 'image', 'lists'],
-            imageUpload: '/frontend/web/photos'
-
-        });
+        var $text_area = $("#comment-section-edit-redactor-" + comment_id);
+        if($text_area.parent().find('.redactor-editor').length === 0) {
+            $("#comment-section-edit-redactor-" + comment_id).redactor({
+                plugins: ['video', 'fullscreen'],
+                buttons: ['undo', 'redo', 'format', 'bold', 'italic', 'image', 'lists'],
+                imageUpload: '/frontend/web/photos'
+            });   
+        }
         $("#comment_shown_part_" + comment_id).hide();
         $("#comment_edit_part_" + comment_id).show();
     });

@@ -8,6 +8,8 @@ class ChildCommentInputBox extends Widget
 
     public $id;
     
+    public $parent_id;
+    
     public $child_comment_form;
 
     public function init()
@@ -27,6 +29,7 @@ class ChildCommentInputBox extends Widget
     {
         return $this->render('child-comment-input-box',
             ['id' => $this->id, 
+            'parent_id' => $this->parent_id,
             'child_comment_form' => $this->child_comment_form]);
     }
 }

@@ -4,8 +4,6 @@ namespace frontend\vo;
 
 use frontend\vo\ChildCommentVoBuilder;
 use frontend\vo\CommentVo;
-use frontend\vo\ThreadCommentVoBuilder;
-use yii\data\ArrayDataProvider;
 
 class ChildCommentVo extends CommentVo{
 

@@ -23,7 +23,6 @@ else{
     $profile_link = Yii::$app->request->baseUrl . '/user/' . User::getUsername(Yii::$app->getUser()->id);
 }
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/style.css');
-$this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/dropdown.css');
 $this->registerCssFile(Yii::$app->request->baseUrl . '/frontend/web/css/bootstrap-social.css');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery.js');
 $this->registerJsFile(Yii::$app->request->baseUrl . '/frontend/web/js/jquery-ias.min.js');
@@ -181,8 +180,10 @@ AppAsset::register($this);
             $builder->setCommentCreatorId(Yii::$app->user->getId());
             $builder->convertToTemplate();
             $child_comment_dummy = $builder->build();
+            
         ?>
         <?= frontend\widgets\ChildComment::widget([
+            'id' => 'child-comment-template-' . $child_comment_dummy->getCommentId(),
             'child_comment' => $child_comment_dummy]) ?>
         
     </div>

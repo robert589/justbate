@@ -12,7 +12,10 @@ use yii\helpers\Html;
             'placeholder' => 'add comment here..' ]) ?>
         <?= Html::button('Submit',
             ['class' => 'btn btn-sm btn-primary child-comment-input-box-submit-button',
-             'data-id' => $id]) ?>
+             'data-id' => $id, 'data-parent_id' => $parent_id]) ?>
+    </div>
+    <div class="child-comment-input-box-loading-comment-list">
+        
     </div>
     <div class="child-comment-input-box-new-comment-list">
         

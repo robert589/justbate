@@ -28,7 +28,7 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
 
     <?php if($belongs_to_current_user) { ?>
     <div class="thread-comment-bottom-button-dropdown" align="right">
-        <?=        ButtonDropdown::widget([
+        <?= ButtonDropdown::widget([
             'id' => 'button-dropdown-' . $comment_id,
             'label' => '<span class="glyphicon glyphicon-option-horizontal"></span>',
             'items' => [
@@ -54,4 +54,5 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
 </div>
 
 <?= ChildCommentList::widget(['id' => 'child-comment-list-container-' . $comment_id, 
-                                    'child_comment_form' => new ChildCommentForm()]); ?>
+                            'comment_id' => $comment_id,
+                            'child_comment_form' => new ChildCommentForm()]); ?>

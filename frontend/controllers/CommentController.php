@@ -52,24 +52,28 @@ class CommentController extends Controller{
      * return: render
      */
     public function actionSubmitChildComment() {
-        if(isset($_POST['text']) && isset($_POST['comment_id'])) {
+        if(!Yii::$app->user->isGuest && isset($_POST['text']) && isset($_POST['parent_id'])) {
             $child_comment_form = new ChildCommentForm();
             $child_comment_form->user_id = Yii::$app->user->getId();
-            $child_comment_form->parent_id = $_POST['comment_id'];
+            $child_comment_form->parent_id = $_POST['parent_id'];
             $child_comment_form->child_comment = $_POST['text'];
             if(!$child_comment_form->validate()){
                 return false;
             }
-            $comment_id = $child_comment_form->parent_id;
-            $thread_id = ThreadComment::findOne(['comment_id' =>$comment_id])->thread_id;
-            if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $comment_id)){
+            $parent_id = $child_comment_form->parent_id;
+            $thread_id = ThreadComment::findOne(['comment_id' =>$parent_id])->thread_id;
+            if(!$this->updateChildCommentNotification($child_comment_form->user_id, $thread_id, $parent_id)){
                 return false;
             }
             if(!($new_comment_id = $child_comment_form->store())){
                 return false;
             }
-            $this->updateCommentView($_POST['comment_id']);
-            return true;
+            $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
+            $vo  = $service->getChildCommentInfo(Yii::$app->user->getId(), $new_comment_id);
+       
+            $this->updateCommentView($_POST['parent_id']);
+            return \frontend\widgets\ChildComment::widget(['child_comment' => $vo, 
+                'id' => 'child-comment-new-list-'. $new_comment_id]);
         }
         else{
            return false;

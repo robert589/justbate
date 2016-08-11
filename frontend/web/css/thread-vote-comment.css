@@ -1,7 +1,7 @@
 .thread-vote-comment-radio-button{
 	padding: 1px 10px;
 	background-color: #ffffff;
-	border-radius: 0; 
+	border-radius: 3px; 
 	color : #ff6600;
         border: 2px solid;
 	border-color : #ff6600;
@@ -10,14 +10,12 @@
 .thread-vote-comment-radio-button:hover{
 	padding: 1px 10px;
 	background-color: #ff6600;
-	border-radius: 0; 
 	color : #ffffff;
 }
 
 .thread-vote-comment-radio-button.disabled{
 	padding: 1px 10px;
 	background-color: #ff6600;
-	border-radius: 12px; 
 	color : #ffffff;
 }
 
@@ -39,6 +37,7 @@
     font-size: 14px;
     border: 2px solid;
     border-color: #00aff0;
+    border-radius: 3px;
     color: #00aff0;
     padding: 1px 10px;
 }
