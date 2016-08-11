@@ -15,8 +15,8 @@ iframe {
 }
 
 .real-thread-comment {
-    padding-top: 8px;
-    margin-bottom: 8px;
+    padding: 8px;
+    padding-bottom: 0;
 }
 
 .thread-comment-bottom-button {
@@ -28,8 +28,14 @@ iframe {
     
 }
 
-.comment-votes {
+.thread-comment-votes {
     width: 100%;
+    display:flex;
+}
+
+.thread-comment-created-time {
+    padding-top: 4px;
+    padding-left: 2px;
 }
 html {
     font-family: 'Montserrat', sans-serif ;
@@ -650,9 +656,9 @@ span#thread-issue-text {
 div.thread-view {
     width: 100%;
     overflow:hidden;
-    padding-left: 0;
-    padding-top: 10px;
-    padding-right: 0;
+    padding: 8px;
+    padding-bottom: 0;
+
     margin-left: 0;
     margin-right: 0;
     box-sizing: border-box;
@@ -971,8 +977,8 @@ div.list-view {
 
 
 img.profile-picture-comment {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 
 div.commentator-name a {
@@ -981,6 +987,8 @@ div.commentator-name a {
 div.commentator-name {
     margin-top:1px;
     line-height: 18px;
+    padding-top:4px;
+    padding-left: 4px;
 }
 
 div.image-commentator {
@@ -999,13 +1007,9 @@ div.commentator-comment div[id^="edit_comment"] div[id^="comment_shown_part"] {
 }
 
 div.commentator-comment {
-    margin-top: 10px;
+    margin-top: 5px;
     overflow: hidden;
 }
-div.child-comment-list-container {
-    background-color: #dff0d8;
-}
-
 
 div.commentator-moderate {
     margin-top: 15px;
@@ -1275,6 +1279,13 @@ h3#user-choice {
     padding-right: 0px !important;
 }
 
+.home-thread-list-chosen-comment {
+    background: #f6f6f6;
+    padding:8px;
+    border-top: 1px solid;
+    border-color: #dedede;
+}
+
 div.thread-title-list {
     padding-left: 0;
 }
@@ -1310,11 +1321,9 @@ div#thread-details {
     border: 1px solid;
     border-color: #d0d1c5;
     border-radius: 3px;
-    padding-left: 10px;
     overflow: hidden;
     height: 100%;
     position: relative;
-    padding-right: 8px;
 }
 
 

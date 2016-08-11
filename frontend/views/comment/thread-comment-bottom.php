@@ -11,6 +11,7 @@ $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
 $comment_id = $thread_comment->getCommentId();
 $thread_id = $thread_comment->getParentThreadId();
 $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
+$comment_created_at = $thread_comment->getCreatedAt();
 
 ?>
 
@@ -21,9 +22,12 @@ $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
     
 </div>
 <div class="thread-comment-bottom-button">
-    <div class="comment-votes inline" > 
+    <div class="thread-comment-votes" > 
         <?= $this->render('comment-votes', [ 'comment' => $thread_comment ,
         'is_thread_comment' => $is_thread_comment])?>
+        <span class="thread-comment-created-time">
+            <?= $comment_created_at ?>
+        </span>
     </div>
 
     <?php if($belongs_to_current_user) { ?>

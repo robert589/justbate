@@ -395,7 +395,7 @@ $(document).ready(function(){
         $("#comment_edit_part_" + comment_id).show();
     });
 
-    $(document).on('click', '.delete-comment',function(e){
+    $(document).on('mousedown', '.delete_comment',function(e){
         e.preventDefault();
         var comment_id = $(this).data('service');
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {

@@ -4,7 +4,7 @@
 #search-issue-searched-list label,
 .search-issue-followed-by-user label,
 label.search-issue {
-	float: left;
+    float: left;
     padding: 3px;
     margin-left: 3px;
     margin-top: 3px;
@@ -12,7 +12,7 @@ label.search-issue {
     background: #F5F5F5;
     width: 24.5% !important;
     color: #000;
-	font-weight: normal;
+    font-weight: normal;
     text-align: center;
     border-radius: 5px;
     border: 1px solid #ddd;

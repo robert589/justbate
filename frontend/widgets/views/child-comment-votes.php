@@ -13,15 +13,22 @@ $current_user_login_id = $child_comment->getCurrentUserLoginId();
 
 ?>
 <div id="<?= $id ?>" class="child-comment-votes-container">
-    <?= Html::submitButton('Upvote',[
+    <span class="child-comment-votes-total-like">
+        <?= $total_like ?>
+    </span>
+    <?= Html::submitButton('<span class="glyphicon glyphicon-arrow-up"></span>',[
         'class' => 'button-like-link submit-comment-vote-button',
         'value' => 1,
-        'disabled' => $vote_up]); ?>
-    <?= $total_like ?>
+        'style' => 'margin-right: 10px;',
 
-    <?= Html::submitButton('Downvote', [
+        'disabled' => $vote_up]); ?>
+    
+    <span class="child-comment-votes-total-dislike">
+        <?= $total_dislike ?>
+    </span>
+    <?= Html::submitButton('<span class="glyphicon glyphicon-arrow-down"></span>', [
         'class' => 'button-like-link submit-comment-vote-button',
         'value' => -1,
         'disabled' => $vote_down]); ?>
-    <?= $total_dislike ?>
+    
 </div>

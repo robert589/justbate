@@ -35,17 +35,16 @@ $class_for_vote_area .= (!$current_user_has_vote) ? '' : 'thread-vote-comment-hi
         <?php } ?>
     </div>
     <div class="<?= $class_for_comment_area ?>" >
-        <?= Html::button('Comment',
-                        ['class' => 'btn thread-vote-comment-comment',
+        <?= Html::button('<span class="glyphicon glyphicon-comment"></span> Comment',
+                        ['class' => 'thread-vote-comment-comment button-like-link',
                          'data-id' => $id,
                             'data-thread_id' => $thread_id
                         ]) ?>
         
-        <?= Html::button('Change Vote',
+        <?= Html::button('<span class="glyphicon glyphicon-refresh"></span> Change Vote',
                         ['class' => 'button-like-link thread-vote-comment-change-vote',
                          'data-id' => $id,
                         ]) ?>
-          
     </div>
     <div class="thread-vote-comment-input-box-loading thread-vote-comment-hide">
         <?=  LoadingGif::widget() ?>
