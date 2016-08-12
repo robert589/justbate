@@ -5,7 +5,7 @@ use yii\base\Widget;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 
-class ChildCommentVotes extends Widget
+class CommentVotes extends Widget
 {
 
     /**
@@ -14,7 +14,7 @@ class ChildCommentVotes extends Widget
     
     public $id;
     
-    public $child_comment;
+    public $comment;
     
     public function init()
     {
@@ -24,14 +24,14 @@ class ChildCommentVotes extends Widget
 
     public function registerAssets(){
         $view = $this->getView();
-        ChildCommentVotesAsset::register($view);
+        CommentVotesAsset::register($view);
 
     }
 
     public function run()
     {
-        return $this->render('child-comment-votes', 
+        return $this->render('comment-votes', 
                 ['id' => $this->id, 
-                'child_comment' => $this->child_comment]);
+                'comment' => $this->comment]);
     }
 }

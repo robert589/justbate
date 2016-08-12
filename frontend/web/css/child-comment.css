@@ -34,7 +34,7 @@ span.child-comment-action {
 
 .child-comment-name {
     margin-left: 4px;
-    
+    margin-right: 8px;
 }
 
 
@@ -46,6 +46,6 @@ span.child-comment-action {
 }
 
 .child-comment-subcontainer {
-    margin-left: 4px;
     display: flex;
+    font-size: 12px;
 }

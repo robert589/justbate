@@ -13,17 +13,17 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ChildCommentVotesAsset extends AssetBundle
+class CommentVotesAsset extends AssetBundle
 {
 
     public $basePath = '@webroot';
     public $baseUrl = '@web' ;
 
     public $css = [
-        'frontend/web/css/child-comment-votes.css',
+        'frontend/web/css/comment-votes.css',
     ];
     public $js = [
-        'frontend/web/js/child-comment-votes.js'
+        'frontend/web/js/comment-votes.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

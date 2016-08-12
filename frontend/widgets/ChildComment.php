@@ -28,6 +28,7 @@ class ChildComment extends Widget
     public function run()
     {
         return $this->render('child-comment',
-            ['child_comment' => $this->child_comment, 'id' => $this->id, 'class' => $this->class]);
+            ['child_comment' => $this->child_comment, 
+                'id' => $this->id, 'class' => $this->class]);
     }
 }

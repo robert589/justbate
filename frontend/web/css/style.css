@@ -21,6 +21,7 @@ iframe {
 
 .thread-comment-bottom-button {
     display:flex;
+    font-size: 12px;
 }
 
 .thread-comment-bottom-button-dropdown {
@@ -34,8 +35,7 @@ iframe {
 }
 
 .thread-comment-created-time {
-    padding-top: 4px;
-    padding-left: 2px;
+    padding-left: 8px;
 }
 html {
     font-family: 'Montserrat', sans-serif ;

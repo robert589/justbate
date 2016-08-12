@@ -8,11 +8,11 @@ and open the template in the editor.
     Author     : user
 */
 
-.child-comment-votes-container {
-    font-size: 12px;
+.comment-votes-container {
     color: gray;
     font-weight: bold;
-    margin-left: 12px
 }
 
-
+.comment-votes-button, .disabled{
+    opacity: 0.5;
+}

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use frontend\widgets\ChildCommentList;
 use frontend\models\ChildCommentForm;
 use common\widgets\ButtonDropdown;
-
+use frontend\widgets\CommentVotes;
 $child_comment_request_url = $thread_comment->getChildCommentRequestURL();
 $comment_id = $thread_comment->getCommentId();
 $thread_id = $thread_comment->getParentThreadId();
@@ -23,8 +23,7 @@ $comment_created_at = $thread_comment->getCreatedAt();
 </div>
 <div class="thread-comment-bottom-button">
     <div class="thread-comment-votes" > 
-        <?= $this->render('comment-votes', [ 'comment' => $thread_comment ,
-        'is_thread_comment' => $is_thread_comment])?>
+        <?=  CommentVotes::widget(['id' => 'comment-votes-' . $comment_id, 'comment' => $thread_comment]) ?>
         <span class="thread-comment-created-time">
             <?= $comment_created_at ?>
         </span>

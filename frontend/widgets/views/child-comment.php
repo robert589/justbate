@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use frontend\widgets\ChildCommentVotes;
+use frontend\widgets\CommentVotes;
 /** @var $child_comment \frontend\vo\ChildCommentVo **/
 
 
@@ -27,7 +27,7 @@ $anonymous = $child_comment->getAnonymous();
             
         </div>            
         <span>
-            <?= ChildCommentVotes::widget(['child_comment' => $child_comment, 
+            <?= CommentVotes::widget(['comment' => $child_comment, 
                 'id' => 'child-comment-votes-' . $comment_id]); ?>
         </span>
     </div>
