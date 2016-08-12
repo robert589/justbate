@@ -1,18 +1,23 @@
 <?php
 use yii\helpers\Html;
+use common\widgets\AutoHeightTextArea;
+use common\libraries\UserUtility;
 /** @var $comment_id integer */
 /** @var $child_comment_form \frontend\models\ChildCommentForm */
 ?>
 
 <div id="<?= $id ?>" class="child-comment-input-box-container">
     <div class="child-comment-input-box-form-area">
-        <?= Html::textarea('child-comment-input-box-text-area', null,[
-            'class' => 'child-comment-input-box-text-area form-control',
-            'rows' => 1,
-            'placeholder' => 'add comment here..' ]) ?>
-        <?= Html::button('Submit',
-            ['class' => 'btn btn-sm btn-primary child-comment-input-box-submit-button',
-             'data-id' => $id, 'data-parent_id' => $parent_id]) ?>
+        <?= Html::img(UserUtility::buildPhotoPath(Yii::$app->user->identity->photo_path), 
+                ['class' => 'child-comment-input-box-img']) ?>
+        <?= AutoHeightTextArea::widget(
+            ['widget_class' => 'child-comment-input-box-text-area', 
+            'placeholder' => 'Write comment here..',
+            'options' =>[
+                'data-id' => $id, 'data-parent_id' => $parent_id
+                ]
+            ]) ?>
+        
     </div>
     <div class="child-comment-input-box-loading-comment-list">
         

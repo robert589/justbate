@@ -35,12 +35,11 @@ $(function() {
             .replaceAll('~comment', data.comment);
         return copied;
     }
-
-
-    $(document).on('click', '.child-comment-input-box-submit-button', function(event) {
-        var id = $(this).data('id');
+    
+    function submitComment(element ){
+        var id = element.data('id');
         var widget = $("#" + id);
-        var parent_id = $(this).data('parent_id');
+        var parent_id = element.data('parent_id');
         var text_area = widget.find('.child-comment-input-box-text-area');
         var $loading_comment_area = widget.find('.child-comment-input-box-loading-comment-list');
         var $new_comment_area = widget.find('.child-comment-input-box-new-comment-list');
@@ -59,6 +58,7 @@ $(function() {
 
         var html_data = applyTemplate(data);
         text_area.val("");
+        text_area.trigger("input");
         $loading_comment_area.prepend(html_data);
 
         $.ajax({
@@ -71,5 +71,23 @@ $(function() {
             }
         });
 
+    }
+    var map = {13: false};
+
+    $(document).on('keypress', '.child-comment-input-box-text-area', function(event) {
+         if(event.keyCode in map) {
+            map[event.keyCode ] = true;
+            if(map[13] && !event.shiftKey && $(this).val().trim() !== '' ) {
+               submitComment($(this));
+               event.preventDefault();
+            }
+        }
+    }); 
+    
+    
+    $(document).on('keyup', '.child-comment-input-box-text-area', function(event) {
+        if(event.keyCode in map) {
+            map[event.keyCode ] = false;
+        }
     }); 
 });

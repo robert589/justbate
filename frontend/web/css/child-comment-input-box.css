@@ -26,3 +26,9 @@ and open the template in the editor.
     opacity: 0.5;
     pointer-events:  none;
 }
+
+.child-comment-input-box-img {
+    width: 20px;
+    height: 20px;
+    margin-right:  4px;
+}
