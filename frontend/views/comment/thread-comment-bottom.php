@@ -58,4 +58,5 @@ $comment_created_at = $thread_comment->getCreatedAt();
 
 <?= ChildCommentList::widget(['id' => 'child-comment-list-container-' . $comment_id, 
                             'comment_id' => $comment_id,
+                            'chosen_child_comment' => $thread_comment->getChosenComment(),
                             'child_comment_form' => new ChildCommentForm()]); ?>

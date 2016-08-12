@@ -16,7 +16,7 @@ class ChildCommentList extends Widget
     
     public $comment_id;
     
-    public $child_comments;
+    public $chosen_child_comment;
     
     public $child_comment_form;
     
@@ -40,7 +40,7 @@ class ChildCommentList extends Widget
     {
         return $this->render('child-comment-list', 
                 ['id' => $this->id, 
-                'child_comments' => $this->child_comments,
+                'chosen_child_comment' => $this->chosen_child_comment,
                 'comment_id' => $this->comment_id,
                 'child_comment_form' => $this->child_comment_form]);
     }

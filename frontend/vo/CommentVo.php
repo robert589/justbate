@@ -83,6 +83,8 @@ abstract class CommentVo implements Vo{
 
 
     private $anonymous;
+    
+    private $chosen_comment;
 
     /**
      * @return mixed
@@ -114,6 +116,11 @@ abstract class CommentVo implements Vo{
                 return $full_name;
             }
         }
+    }
+    
+    public function getChosenComment() {
+        
+        return $this->chosen_comment;
     }
 
     /**
@@ -229,6 +236,7 @@ abstract class CommentVo implements Vo{
         $this->current_user_vote = $builder->getCurrentUserVote();
         $this->current_user_login_id = $builder->getCurrentUserLoginId();
         $this->choices = $builder->getChoices();
+        $this->chosen_comment = $builder->getChosenComment();
         $this->created_at = $builder->getCreatedAt();
         $this->updated_at = $builder->getUpdatedAt();
         $this->comment_creator_first_name = $builder->getCommentCreatorFirstName();

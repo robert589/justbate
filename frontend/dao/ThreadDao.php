@@ -7,6 +7,7 @@ use common\models\ThreadVote;
 use frontend\vo\ThreadCommentVoBuilder;
 use frontend\vo\ThreadVoBuilder;
 use yii\data\ArrayDataProvider;
+use frontend\vo\ChildCommentVoBuilder;
 
 class ThreadDao {
         const GET_CURRENT_USER_COMMENT = "SELECT comment.comment
@@ -51,7 +52,31 @@ class ThreadDao {
             limit 1
 
         ";
+        
+        const GET_ONE_CHILD_COMMENT = "
+            SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous,
+                CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
+                count(case when total_vote.vote = 1 then 1 else null end) as total_like,
+                count(case when total_vote.vote = -1 then 1 else null end) as total_dislike  
+            from (
+                    SELECT comment.*, child_comment.parent_id as parent_id, thread_comment.thread_id as thread_id,
+                       user.username, user.first_name, user.last_name, user.photo_path, user.id
+                    from comment, child_comment, user, thread_comment
+                    where child_comment.parent_id = :comment_id and 
+                              child_comment.comment_id = comment.comment_id 
+                              and comment.user_id = user.id and
+                     thread_comment.comment_id = child_comment.parent_id
+                order by comment.created_at desc limit 1 ) comment_info
 
+            left join thread_anonymous
+            on thread_anonymous.thread_id = comment_info.thread_id and comment_info.user_id =  thread_anonymous.user_id
+            left join comment_vote user_vote
+            on comment_info.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
+            left join comment_vote total_vote
+            on total_vote.comment_id  = comment_info.comment_id
+            group by comment_info.comment_id
+        ";
+                
         const COMMENT_BY_CHOICE_TEXT = "
             SELECT comments.*,
                     (case comment_vote.user_id when :user_id then vote else null end) as vote,
@@ -278,15 +303,36 @@ class ThreadDao {
             ->bindValues([':thread_id' => $thread_id])
             ->bindValue(':user_id', $current_user_id)
             ->queryOne();
+        
         if($result['comment_id'] === null){
             $builder->setChosenComment(null);
             return $builder;
         }
 
-
-
+        $result_of_chosen_comment = \Yii::$app->db
+                ->createCommand(self::GET_ONE_CHILD_COMMENT)
+                ->bindValue(':comment_id', $result['comment_id'])
+                ->bindValue(':user_id', $current_user_id)
+                ->queryOne();
+                
+        $child_comment_builder = new ChildCommentVoBuilder();
+        $child_comment_builder->setCommentId($result_of_chosen_comment['comment_id']);
+        $child_comment_builder->setCommentCreatorId($result_of_chosen_comment['user_id']);
+        $child_comment_builder->setCommentCreatorUsername($result_of_chosen_comment['username']);
+        $child_comment_builder->setCommentCreatorFirstName($result_of_chosen_comment['first_name']);
+        $child_comment_builder->setCommentCreatorLastName($result_of_chosen_comment['last_name']);
+        $child_comment_builder->setCommentStatus($result_of_chosen_comment['comment_status']);
+        $child_comment_builder->setCreatedAt($result_of_chosen_comment['created_at']);
+        $child_comment_builder->setUpdatedAt($result_of_chosen_comment['updated_at']);
+        $child_comment_builder->setComment($result_of_chosen_comment['comment']);
+        $child_comment_builder->setParentId($result_of_chosen_comment['parent_id']);
+        $child_comment_builder->setCommentCreatorPhotoPath($result_of_chosen_comment['photo_path']);
+        $child_comment_builder->setTotalLike($result_of_chosen_comment['total_like']);
+        $child_comment_builder->setTotalDislike($result_of_chosen_comment['total_dislike']);
+        $child_comment_builder->setCurrentUserVote($result_of_chosen_comment['current_user_vote']);
+        $child_comment_builder->setAnonymous($result_of_chosen_comment['anonymous']);
+        
         $comment_builder = new ThreadCommentVoBuilder();
-
         $comment_builder->setAnonymous($result['comment_anonymous']);
         $comment_builder->setCommentCreatorId($result['user_id']);
         $comment_builder->setCreatedAt($result['created_at']);
@@ -303,7 +349,8 @@ class ThreadDao {
         $comment_builder->setTotalDislike($result['total_dislike']);
         $comment_builder->setCommentId($result['comment_id']);
         $comment_builder->setChoiceText($result['choice_text']);
-
+        $comment_builder->setChosenComment($child_comment_builder->build());
+        
         $builder->setChosenComment($comment_builder->build());
         return $builder;
     }

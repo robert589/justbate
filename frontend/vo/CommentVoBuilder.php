@@ -16,7 +16,8 @@ abstract class CommentVoBuilder implements Builder{
      * @var string
      */
     private $comment_creator_first_name;
-
+    
+    private $chosen_comment;
 
     /**
      * @var string
@@ -109,6 +110,10 @@ abstract class CommentVoBuilder implements Builder{
     public function setCommentCreatorId($comment_creator_id)
     {
         $this->comment_creator_id = $comment_creator_id;
+    }
+    
+    public function setChosenComment($chosen_comment) {
+        $this->chosen_comment = $chosen_comment;
     }
 
     /**
@@ -301,6 +306,10 @@ abstract class CommentVoBuilder implements Builder{
     public function setCommentStatus($comment_status)
     {
         $this->comment_status = $comment_status;
+    }
+    
+    public function getChosenComment() {
+        return $this->chosen_comment;
     }
 
     /**
