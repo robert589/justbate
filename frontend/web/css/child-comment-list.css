@@ -16,7 +16,11 @@ and open the template in the editor.
     border-left: 2px solid;
     border-color: lightgray;
     padding-bottom :2px;
-    padding-left: 12px;
+    padding-left: 4px;
+}
+
+.child-comment-list-hide {
+    display: none;
 }
 
 .child-comment-list-button-load {

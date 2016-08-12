@@ -31,7 +31,7 @@ $anonymous = $child_comment->getAnonymous();
                 'id' => 'child-comment-votes-' . $comment_id]); ?>
         </span>
     </div>
-    <div class="commentator-comment">
+    <div class="child-comment-comment">
         <?= $comment ?>
     </div>
 

@@ -106,25 +106,42 @@ class CommentController extends Controller{
 
     }
 
+    
+    
+
     /**
      * @ajax
      * @return string
      * @throws \yii\base\ExitException
      */
     public function actionGetNewChildComment() {
-        if(!(isset($_GET['comment_id']))) {
-            Yii::$app->end('comment_id not poster');
+        if( !(isset($_POST['last_time']) && 
+                isset($_POST['comment_id']) 
+                && isset($_POST['limit']))) {
+            return 0;
         }
-        $comment_id = $_GET['comment_id'];
+        $last_time = $_POST['last_time'];
+        $limit = $_POST['limit'];
+        $current_user_id = !Yii::$app->user->isGuest ? Yii::$app->user->getId() : 0;
+        $comment_id = $_POST['comment_id'];
         $service = $this->serviceFactory->getService(ServiceFactory::COMMENT_SERVICE);
-        $thread_comment_vo  = $service->getNewChildCommentList(Yii::$app->user->getId(), $comment_id, $_GET['page'], $_GET['per-page']);
-        $child_comment_vos = $thread_comment_vo->getChildCommentList();
-        $view ="";
+        $child_comment_vos = $service->getNewChildCommentList($comment_id, $current_user_id, $last_time, $limit);
         
-        foreach($child_comment_vos->getModels() as $child_comment) {
-            $view .= $this->renderPartial('child-comment', ['child_comment' => $child_comment]);
+        $view = '';
+        foreach($child_comment_vos as $vo) {
+            $view .= \frontend\widgets\ChildComment::widget(['id' => 'child-comment-' . $vo->getCommentId(),
+                'child_comment' => $vo]);
         }
-        return $view;
+        if(count($child_comment_vos) !== 0) {
+            $new_last_time = array_pop($child_comment_vos)->getCreatedAtUnixTimestamp();
+            
+        } else {
+            $new_last_time = 0;
+        }
+        $data = array();
+        $data['view'] = $view;
+        $data['last_time']  = $new_last_time;
+        return json_encode($data);
     }
 
 
@@ -163,39 +180,6 @@ class CommentController extends Controller{
             return false;
         }
         return true;
-    }
-
-    public function actionChildCommentVote() {
-        //Yii::$app->end(var_dump($_POST));
-        if(!(isset($_POST['comment_id']) && isset($_POST['vote']) && isset($_POST['is_thread_comment']))) {
-            Yii::$app->end('Fail to like: Contact Admin');
-        }
-
-        $trigger_login_form = false;
-        $comment_vote_form = new CommentVoteForm();
-        $comment_vote_form->user_id = Yii::$app->user->getId();
-        $comment_vote_form->vote = $_POST['vote'];
-        $comment_vote_form->comment_id =  $_POST['comment_id'];
-
-        if (!$comment_vote_form->validate()) {
-            Yii::$app->end('Failed to validate votes');
-        }
-
-        if ($comment_vote_form->store() !== true) {
-            Yii::$app->end('Failed to store votes');
-        }
-        //use thread comment entity, although it is child comment entity
-        //bad practice, use it for a while
-
-        $comment_entity = new ThreadCommentEntity($comment_vote_form->comment_id, $comment_vote_form->user_id);
-        $creator = (new CreatorFactory())->getCreator(CreatorFactory::THREAD_COMMENT_CREATOR, $comment_entity);
-        $comment_entity =$creator->get([CommentCreator::NEED_COMMENT_VOTE]);
-        
-        $this->updateCommentView($comment_vote_form->comment_id);
-        return $this->renderAjax('child-comment-votes',
-            ['comment' => $comment_entity,
-                'trigger_login_form' => $trigger_login_form,
-                'is_thread_comment' => $_POST['is_thread_comment']]);
     }
 
     private function updateCommentView($comment_id) {

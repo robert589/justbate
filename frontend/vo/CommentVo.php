@@ -165,7 +165,12 @@ abstract class CommentVo implements Vo{
      */
     public function getCreatedAt()
     {
-        return DateTimeFormatter::getTimeByTimestampAndTimezoneOffset($this->created_at);
+        return '&bull;' . '&nbsp <b>' .
+                DateTimeFormatter::getTimeText($this->created_at) . '</b>';
+    }
+    
+    public function getCreatedAtUnixTimestamp() {
+        return $this->created_at;
     }
 
     /**

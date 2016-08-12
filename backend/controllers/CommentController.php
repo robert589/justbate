@@ -1,23 +1,16 @@
 <?php
 namespace backend\controllers;
 
-use backend\models\BanThreadForm;
 use backend\models\BanCommentForm;
 use backend\models\EditChoiceThreadCommentForm;
 use backend\models\EditCommentForm;
 use common\models\ChildComment;
 use common\models\Choice;
-use backend\models\EditChoiceForm;
-use backend\models\EditThreadForm;
 use common\models\ThreadComment;
 use Yii;
-use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use common\models\LoginForm;
-use yii\filters\VerbFilter;
-use common\models\Thread;
 /**
  * Thread controller
  */
@@ -158,6 +151,5 @@ class CommentController extends Controller
             return $this->redirect(Yii::$app->request->baseUrl . '/site/error');
         }
     }
-
-
+    
 }

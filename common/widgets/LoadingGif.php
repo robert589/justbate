@@ -27,7 +27,7 @@ class LoadingGif extends Widget
         
         return 
         Html::img(\Yii::$app->request->baseUrl . '/frontend/web/img/loading.gif',
-                ['style' => 'max-height:50px' ]);
+                ['style' => 'max-height:50px; height: 30px' ]);
    
     }
 }

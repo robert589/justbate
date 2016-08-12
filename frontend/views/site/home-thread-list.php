@@ -28,15 +28,16 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
         <?=  ThreadVoteComment::widget(['id' => 'home-thread-list-vote-' . $thread_id, 'thread' => $thread]) ?>        
         
     </div>
-    <div class="home-thread-list-chosen-comment">
-        <?php if($has_chosen_comment){
+    <?php if($has_chosen_comment){
             $chosen_comment = $thread->getChosenComment();
             $comment_id = $chosen_comment->getCommentId();
         ?>
+    <div class="home-thread-list-chosen-comment">
+
             <?= $this->render('../comment/thread-comment',[ 
                 'thread_comment' => $chosen_comment]) ?>
 
-        <?php } ?>
     </div>
+    <?php } ?>
     
 </div>

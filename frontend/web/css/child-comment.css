@@ -29,7 +29,6 @@ span.child-comment-action {
 .child-comment-container {
     overflow:hidden;
     padding-top: 8px;
-    padding-bottom: 4px;
 }
 
 .child-comment-name {
@@ -48,4 +47,8 @@ span.child-comment-action {
 .child-comment-subcontainer {
     display: flex;
     font-size: 12px;
+}
+
+.child-comment-comment {
+    font-size: 11px;
 }

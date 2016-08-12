@@ -57,10 +57,10 @@ class CommentService{
      * @param $perPage
      * @param $pageSize
      */
-    public function getNewChildCommentList($user_id, $comment_id, $page, $pageSize) {
-        $builder = new ThreadCommentVoBuilder();
-        $builder->setCommentId($comment_id);
-        return $this->comment_dao->buildNextChildCommentList($comment_id, $user_id, $page, $pageSize, $builder)->build();
+    public function getNewChildCommentList($comment_id, $user_id, $last_time, $limit) {
+        $child_comment_vos = $this->comment_dao->
+                buildNextChildCommentList($comment_id, $user_id, $last_time, $limit);
+        return $child_comment_vos;
     }
 
 }

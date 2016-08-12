@@ -13,6 +13,7 @@ and open the template in the editor.
     font-weight: bold;
 }
 
-.comment-votes-button, .disabled{
+.comment-votes-button[disabled]{
     opacity: 0.5;
+    cursor: not-allowed;
 }

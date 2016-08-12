@@ -7,6 +7,8 @@
 use \yii\helpers\Html;
 use frontend\widgets\ChildCommentInputBox;
 use frontend\widgets\ChildComment;
+use common\widgets\LoadingGif;
+$has_comment = ($chosen_child_comment->getCommentId() !== null);
 ?>
     
 <div class="child-comment-list-container" id="<?= $id ?>">
@@ -15,18 +17,25 @@ use frontend\widgets\ChildComment;
     
     <div class="child-comment-list-area">
         <div class="child-comment-list-area-comment-area">
-            <?php if($chosen_child_comment !== null) { ?>
-            
-            <?= ChildComment::widget(['child_comment' => $chosen_child_comment, 
-                'id' => 'child-comment-' . $chosen_child_comment->getCommentId()]) ?>
-            
+            <?php if($has_comment) { ?>
+                <?= ChildComment::widget(['child_comment' => $chosen_child_comment, 
+                    'id' => 'child-comment-' . $chosen_child_comment->getCommentId()]) ?>
             <?php } ?>
         </div>
-        <div class="child-comment-list-button">
-            <?= Html::button('Load comments (3+)', ['class' => 'child-comment-list-button-load button-like-link']) ?>
+        <div class="child-comment-list-loading child-comment-list-hide">
+            <?= LoadingGif::widget() ?>
         </div>
+        <div class="child-comment-list-button">
+            <?= Html::button('Load comments (3+)', 
+                    ['class' => 'child-comment-list-button-load button-like-link',
+                        'data-id' => $id, 'data-comment_id' => $comment_id]) ?>
+        </div>
+        
     </div>
-    
+    <?= Html::hiddenInput('child-comment-list-last-time',
+            $has_comment ? $chosen_child_comment->getCreatedAtUnixTimestamp() : null, 
+            ['class' => 'child-comment-list-last-time'])
+                    ?>
 </div>
 
     

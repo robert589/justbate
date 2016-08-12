@@ -4,10 +4,8 @@ namespace frontend\vo;
 
 use common\components\DateTimeFormatter;
 use common\libraries\CommentUtility;
-use common\models\Notification;
 use common\models\NotificationType;
 use Yii;
-use yii\data\ArrayDataProvider;
 
 class NotificationVo implements Vo{
 

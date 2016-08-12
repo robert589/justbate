@@ -48,7 +48,7 @@ class CommentDao{
                         on child_comment.comment_id = comment.comment_id
                         inner join user
                         on user.id = comment.user_id
-                        where parent_id = :parent_id) comment_list
+                        where parent_id = :parent_id and comment.created_at < :last_time) comment_list
                 inner join thread_comment
                 on thread_comment.comment_id = comment_list.parent_id
                 left join thread_anonymous
@@ -57,6 +57,7 @@ class CommentDao{
                 on comment_vote.comment_id = comment_list.comment_id
                 group by (comment_list.comment_id)
                 order by comment_list.created_at desc
+                limit :limit
 
     ";
     const THREAD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous
@@ -154,41 +155,7 @@ class CommentDao{
 
     }
 
-    public function buildChildCommentList($comment_id, $current_user_id, ThreadCommentVoBuilder $builder){
-        $results =  \Yii::$app->db
-            ->createCommand(self::THREAD_COMMENT_CHILD_COMMENT)
-            ->bindValues([':parent_id' => $comment_id])
-            ->bindValues([':user_id' => $current_user_id])
-            ->queryAll();
-
-        $child_comment_list = array();
-
-        foreach($results as $result){
-            $child_comment_builder = new ChildCommentVoBuilder();
-            $child_comment_builder->setCommentId($result['comment_id']);
-            $child_comment_builder->setParentId($result['parent_id']);
-            $child_comment_builder->setCommentCreatorId($result['user_id']);
-            $child_comment_builder->setCreatedAt($result['created_at']);
-            $child_comment_builder->setComment($result['comment']);
-            $child_comment_builder->setUpdatedAt($result['updated_at']);
-            $child_comment_builder->setCommentStatus($result['comment_status']);
-            $child_comment_builder->setCommentCreatorFirstName($result['first_name']);
-            $child_comment_builder->setCommentCreatorLastName($result['last_name']);
-            $child_comment_builder->setCommentCreatorUsername($result['username']);
-            $child_comment_builder->setCommentCreatorPhotoPath($result['photo_path']);
-            $child_comment_builder->setAnonymous($result['anonymous']);
-            $child_comment_builder->setTotalLike($result['total_like']);
-            $child_comment_builder->setTotalDislike($result['total_dislike']);
-            $child_comment_builder->setCurrentUserVote($result['current_user_vote']);
-            $child_comment_list[] = $child_comment_builder->build();
-        }
-
-        $builder->setChildCommentList($child_comment_list);
-        return $builder;
-
-
-    }
-
+  
     /**
      * @param $comment_id
      * @param $current_user_id
@@ -197,11 +164,13 @@ class CommentDao{
      * @return ThreadCommentVoBuilder
      * Ajax request
      */
-    public function buildNextChildCommentList($comment_id, $current_user_id, $page, $pageSize, ThreadCommentVoBuilder $builder) {
+    public function buildNextChildCommentList($comment_id, $user_id, $last_time, $limit) {
         $results =  \Yii::$app->db
-            ->createCommand(self::THREAD_COMMENT_CHILD_COMMENT . " LIMIT $pageSize OFFSET " . ($pageSize * ($page - 1)))
+            ->createCommand(self::THREAD_COMMENT_CHILD_COMMENT)
             ->bindValues([':parent_id' => $comment_id])
-            ->bindValues([':user_id' => $current_user_id])
+            ->bindValues([':user_id' => $user_id])
+            ->bindValue(':last_time', (int) $last_time)
+            ->bindValue(':limit', (int) $limit)
             ->queryAll();
         $child_comment_list = array();
         foreach( $results as $result) {
@@ -223,10 +192,7 @@ class CommentDao{
             $child_comment_builder->setCurrentUserVote($result['current_user_vote']);
             $child_comment_list[] = $child_comment_builder->build();
         }
-
-        $builder->setChildCommentList($child_comment_list);
-
-        return $builder;
+        return $child_comment_list;
 
     }
     
