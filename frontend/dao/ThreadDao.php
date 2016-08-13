@@ -248,6 +248,7 @@ class ThreadDao {
             $thread_comment_builder->setChosenComment($child_comment_builder->build());
             $thread_comment_builder->setTotalLike($result['total_like']);
             $thread_comment_builder->setTotalDislike($result['total_dislike']);
+            $thread_comment_builder->setTotalComment($this->comment_dao->getTotalComment($result['comment_id']));
             $thread_comment_list[] =  $thread_comment_builder->build();
         }
 
@@ -316,7 +317,7 @@ class ThreadDao {
         $comment_builder->setCommentId($result['comment_id']);
         $comment_builder->setChoiceText($result['choice_text']);
         $comment_builder->setChosenComment($child_comment_builder->build());
-        
+        $comment_builder->setTotalComment($this->comment_dao->getTotalComment($result['comment_id']));
         $builder->setChosenComment($comment_builder->build());
         return $builder;
     }

@@ -27,6 +27,6 @@ $comment_thread_id = $thread_comment->getParentThreadId();
         </div>
 
     </div>
-    <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
+    <?= $this->render('thread-comment-bottom', ['thread_comment' => $thread_comment]) ?>
     
 </div>

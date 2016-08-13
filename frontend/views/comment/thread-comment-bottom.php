@@ -12,6 +12,7 @@ $comment_id = $thread_comment->getCommentId();
 $thread_id = $thread_comment->getParentThreadId();
 $belongs_to_current_user = $thread_comment->isBelongToCurrentUser();
 $comment_created_at = $thread_comment->getCreatedAt();
+$total_remaining_comment = $thread_comment->getTotalRemainingComment();
 
 ?>
 
@@ -58,5 +59,6 @@ $comment_created_at = $thread_comment->getCreatedAt();
 
 <?= ChildCommentList::widget(['id' => 'child-comment-list-container-' . $comment_id, 
                             'comment_id' => $comment_id,
+                            'total_remaining_comment' => $total_remaining_comment,
                             'chosen_child_comment' => $thread_comment->getChosenComment(),
                             'child_comment_form' => new ChildCommentForm()]); ?>

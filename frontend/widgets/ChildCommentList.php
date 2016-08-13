@@ -20,7 +20,7 @@ class ChildCommentList extends Widget
     
     public $child_comment_form;
     
-
+    public $total_remaining_comment;
 
     public $navigationText = 'Load more..';
 
@@ -42,6 +42,7 @@ class ChildCommentList extends Widget
                 ['id' => $this->id, 
                 'chosen_child_comment' => $this->chosen_child_comment,
                 'comment_id' => $this->comment_id,
+                'total_remaining_comment' => $this->total_remaining_comment,
                 'child_comment_form' => $this->child_comment_form]);
     }
 }

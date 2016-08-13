@@ -13,6 +13,16 @@ class ThreadCommentVoBuilder extends CommentVoBuilder {
 
     private $child_comment_list;
 
+    private $total_comment;
+    
+    
+    public function getTotalComment() {
+        return $this->total_comment;
+    }
+    
+    public function setTotalComment($total_comment) {
+        $this->total_comment = $total_comment;
+    }
     /**
      * @return mixed
      */

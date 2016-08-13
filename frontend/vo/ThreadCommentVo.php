@@ -16,6 +16,8 @@ class ThreadCommentVo extends CommentVo{
     private $choice_text;
 
     private $child_comment_list;
+    
+    private $total_comment;
 
 
     static function createBuilder(){
@@ -28,8 +30,12 @@ class ThreadCommentVo extends CommentVo{
         $this->child_comment_list = $builder->getChildCommentList();
         $this->parent_thread_id = $builder->getParentThreadId();
         $this->parent_thread_title = $builder->getParentThreadTitle();
+        $this->total_comment = $builder->getTotalComment();
     }
-
+    
+    public function getTotalComment() {
+        return $this->total_comment;
+    }
 
 
     public function getChildCommentRequestURL(){
@@ -81,6 +87,16 @@ class ThreadCommentVo extends CommentVo{
     public function isRetrieved(){
         return ($this->child_comment_list !== null);
     }
-
+    
+    public function getTotalRemainingComment() {
+        if($this->hasComment()) {
+            return $this->total_comment - 1;
+        }
+        return $this->total_comment;
+    }
+    
+    public function hasComment() {
+        return $this->getChosenComment()->getCommentId() !== null;
+    }
 
 }

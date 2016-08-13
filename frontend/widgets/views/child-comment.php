@@ -30,6 +30,9 @@ $anonymous = $child_comment->getAnonymous();
             <?= CommentVotes::widget(['comment' => $child_comment, 
                 'id' => 'child-comment-votes-' . $comment_id]); ?>
         </span>
+        <span style="margin-left: 8px">
+            <?= $comment_created_at ?>
+        </span>
     </div>
     <div class="child-comment-comment">
         <?= $comment ?>

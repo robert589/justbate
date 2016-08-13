@@ -103,7 +103,19 @@ class CommentDao{
     const CHILD_COMMENT_EXIST_SQL = "SELECT count(*) from thread_comment, child_comment, thread
                                     where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.parent_id
                                     and comment.comment_id = :comment_id LIMIT 1";
+    
+    const GET_TOTAL_COMMENT = "SELECT count(*) as total_comment from child_comment where child_comment.parent_id = :comment_id";
 
+    
+    function getTotalComment($comment_id) {
+        return (int) \Yii::$app->db
+                ->createCommand(self::GET_TOTAL_COMMENT)
+                ->bindValues([':comment_id' => $comment_id])
+
+                ->queryScalar();
+        
+    }
+    
     function buildChildComment($user_id, $comment_id, ChildCommentVoBuilder $builder){
         if($this->checkChildCommentExist($comment_id)){
             $result =  \Yii::$app->db
@@ -177,6 +189,7 @@ class CommentDao{
         $builder->setTotalDislike($result['total_dislike']);
         $builder->setCommentId($result['comment_id']);
         $builder->setChoiceText($result['choice_text']);
+        $builder->setTotalComment($this->getTotalComment($result['comment_id'], $builder));
         $builder->setChosenComment($this->getOneChildComment($comment_id, $user_id)->build());
         return $builder;
 
