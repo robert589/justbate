@@ -37,6 +37,9 @@ $(function() {
     }
     
     function submitComment(element ){
+        if(checkGuest()) {
+            return false;
+        }
         var id = element.data('id');
         var widget = $("#" + id);
         var parent_id = element.data('parent_id');

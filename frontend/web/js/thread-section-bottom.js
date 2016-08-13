@@ -1,4 +1,12 @@
 $(function(){
+    
+    
+    function beginLoginModal(){
+        $("#loginModal").modal("show")
+        .find('#loginModal')
+        .load($(this).attr("value"));
+    }
+    
     function checkGuest() {
         var login_id = $("#user-login-id").val();
         if(login_id === ''  || login_id === null || login_id === undefined ) {
@@ -23,6 +31,9 @@ $(function(){
     $(document).ready(function() {
        
         $(document).on("click", ".thread-section-bottom-radio-button", function(element) {
+            if(checkGuest()) {
+                return false;
+            }
             var id = $(this).data('id');
             var widget = $("#" + id);
             var vote_area = widget.find('.thread-section-bottom-vote-area');

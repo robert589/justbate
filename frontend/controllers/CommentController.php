@@ -149,14 +149,17 @@ class CommentController extends Controller{
      * @return \yii\web\Response
      */
     public function actionDeleteComment(){
-        if(isset($_POST['comment_id'])){
+        if(isset($_POST['comment_id']) && !Yii::$app->user->isGuest){
             $delete_comment_form = new DeleteCommentForm();
             $delete_comment_form->comment_id = $_POST['comment_id'];
+            $delete_comment_form->user_id = Yii::$app->user->getId();
             if($delete_comment_form->delete()){
-                $thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
-                return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
+                return true;
+                
             }
         }
+        
+        return false;
     }
 
     /**
@@ -189,5 +192,6 @@ class CommentController extends Controller{
         $comment_view_form->store();
         
     }
+    
 }
 

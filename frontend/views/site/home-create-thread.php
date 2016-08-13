@@ -9,7 +9,7 @@ use common\components\Constant;
 
 <?php Pjax::begin() ?>
     <?php $form = ActiveForm::begin(['action' => ['site/create-thread'] ,
-        'method' => 'post', 'id' => 'form-action',
+        'method' => 'post', 'id' => 'create-thread-form',
          'enableClientValidation' => true, 'validateOnBlur' => false, 'validateOnSubmit' => true]) ?>
 
     <div id="create-thread-wrapper">
@@ -76,7 +76,7 @@ use common\components\Constant;
 
                 <!-- Create Button -->
                 <div id="submit-thread" class="col-xs-6">
-                    <button align="right" style="float:right" type="submit" id="create-button" class="btn btn-primary">
+                    <button align="right" style="float:right" id="create-button" class="btn btn-primary">
                         <span id="create-button-label">Create</span>
                     </button>
                 </div>

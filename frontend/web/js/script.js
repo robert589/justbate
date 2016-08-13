@@ -165,7 +165,13 @@ $(document).ready(function(){
         .load($(this).attr("value"));
         
     }
-
+    $("#create-button").click(function(event) {
+        if(checkGuest()) {
+            return false;
+        }
+        $("#create-thread-form").submit();
+    });
+    
     $("div#create-thread-dropdown").click(function(event) {
         $("div#create-thread-main-form").slideToggle("fast");
         event.stopPropagation();
@@ -311,7 +317,7 @@ $(document).ready(function(){
                             
                         }
                     }
-                })
+                });
                 return false;
             }
         });
@@ -334,11 +340,22 @@ $(document).ready(function(){
     });
 
     $(document).on('mousedown', '.delete_comment',function(e){
-        e.preventDefault();
         var comment_id = $(this).data('service');
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
             if (result) {
-                $("#delete_comment_form_" + comment_id).submit();
+                $.ajax({
+                    url: $("#base-url").val() + "/comment/delete-comment",
+                    type: 'post',
+                    data: {'comment_id': comment_id},
+                    success: function(data) {
+                        if(data === '1') {
+                            window.location.href  = $("#base-url").val() + "/";
+
+                        } else {
+                            
+                        }
+                    }
+                });
                 return false;
             }
         });

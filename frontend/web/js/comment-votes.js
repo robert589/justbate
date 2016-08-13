@@ -6,7 +6,27 @@
 
 
 $(function() {
+    
+    function checkGuest() {
+        var login_id = $("#user-login-id").val();
+        if(login_id === ''  || login_id === null || login_id === undefined ) {
+            beginLoginModal();
+            return true;
+        }
+
+        return false;
+    }
+    
+    function beginLoginModal(){
+        $("#loginModal").modal("show")
+        .find('#loginModal')
+        .load($(this).attr("value"));
+    }
+    
     $(document).on('click', '.comment-votes-button' , function(event) {
+        if(checkGuest()) {
+            return false;
+        }
         var id = $(this).data('id');
         var comment_id = $(this).data('comment_id');
         var $widget = $("#" + id);

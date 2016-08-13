@@ -164,23 +164,7 @@ class ThreadController extends Controller
         return true;
     }
 
-    /**
-     * @return \yii\web\Response
-     */
-    public function actionDeleteComment(){
-            if(isset($_POST['comment_id'])){
-                    $delete_comment_form = new DeleteCommentForm();
-
-                    $delete_comment_form->comment_id = $_POST['comment_id'];
-
-                    if($delete_comment_form->delete()){
-
-                    $thread = Thread::findOne(['thread_id' => $_POST['thread_id']]);
-
-                            return $this->redirect(Yii::$app->request->baseUrl . '/thread/' . $_POST['thread_id'] . '/' . str_replace(' ', '-', strtolower($thread->title)));
-                    }
-            }
-    }
+  
 
     /**
      * @return \yii\web\Response
