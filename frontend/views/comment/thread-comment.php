@@ -18,11 +18,11 @@ $comment_thread_id = $thread_comment->getParentThreadId();
              src="<?= $commentator_user_photo_path_link ?>">
         <div class="commentator-name">
             <?php if($thread_comment->getAnonymous()) { ?>
-                <label><?= $comment_creator_full_name ?></label> chose <?= $thread_comment->getChoiceText() ?>
+                <label><?= $comment_creator_full_name ?></label> voted <?= $thread_comment->getChoiceText() ?>
             <?php } else { ?>
                 <?= Html::a($comment_creator_full_name ,
                         $commentator_user_profile_link,
-                        ['data-pjax' => 0])?>  chose <?= $thread_comment->getChoiceText() ?>
+                        ['data-pjax' => 0])?>  voted <?= $thread_comment->getChoiceText() ?>
             <?php } ?>
         </div>
 

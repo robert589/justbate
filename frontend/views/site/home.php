@@ -101,5 +101,5 @@ $this->title = "Home";
 	</div>
 
 <?php if(!Yii::$app->user->isGuest && $change_email_form->user_email != null ){ ?>
-	<?= $this->render('home-verify-email', ['change_email_form' => $change_email_form]) ?>
+    <?= $this->render('home-verify-email', ['change_email_form' => $change_email_form]) ?>
 <?php } ?>

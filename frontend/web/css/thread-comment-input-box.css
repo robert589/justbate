@@ -12,6 +12,9 @@ and open the template in the editor.
     background: #efefef;
 }
 
+.thread-comment-input-box-form {
+   padding: 8px;
+}
 .thread-comment-input-box-comment-container {
     margin-top: 8px;
 }

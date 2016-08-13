@@ -289,9 +289,10 @@ $(document).ready(function(){
         event.preventDefault();
     });
 
-    $("#edit-thread").click(function(){
-        $("#shown_title_description_part").css("display","none");
-        $("#edit_title_description_part").css("display","inline");
+    $(document).on('mousedown', ".edit-thread", function(event){
+        var thread_id = $(this).data('service');
+        $("#thread-section-view-" + thread_id).css("display","none");
+        $("#thread-section-edit-" +  thread_id).css("display","block");
     });
 
     $(".delete-thread").on("click", function() {
@@ -338,41 +339,8 @@ $(document).ready(function(){
         $("#comment_edit_part_" + comment_id).hide();
     });
 
-    $(document).on('click', '#display_hide_comment_input_box', function(){
-        if(!$("#comment_section").is(':visible')){
-            $("#comment_section").show();
-        }
-        else{
-            $("#comment_section").hide();
-        }
-    });
-
-    $(document).on('click', '.home_show_hide', function(){
-        var thread_id  = $(this).data('service');
-        var $this_button = $("#home_show_hide_" + thread_id);
-        if($this_button.text() == 'Hide'){
-            $("#home_comment_section_" + thread_id).hide();
-            $this_button.text('Comment (' + $("#hi_total_comments_" + thread_id).val() + ")");
-        }
-        else{
-            $this_button.text('Hide');
-            $("#home_comment_section_" + thread_id).show();
-        }
-    });
 
 
-    $(".hide_comment").click(function(){
-        var comment_id = $(this).data('service');
-        if($("#hide_button_" + comment_id).text() == "Hide"){
-            $("#comment_part_" + comment_id).hide();
-            $("#hide_button_" + comment_id).text("Show");
-        }
-        else{
-            $("div._list_thread_form_"+comment_id+" form.comment-form div.col-xs-12").slideToggle();
-            $("#comment_part_" + comment_id).show();
-            $("#hide_button_" +comment_id).text("Hide");
-        }
-    });
 
     $(document).on('submit', '.comment-form', function(event){
         event.preventDefault();
@@ -387,9 +355,10 @@ $(document).ready(function(){
         return false;
     });
 
-    $("#cancel_edit_thread_button").click(function(){
-        $("#shown_title_description_part").show();
-        $("#edit_title_description_part").hide();
+    $(".thread-section-cancel-button").click(function(){
+        var thread_id = $(this).data('id');
+        $("#thread-section-view-" + thread_id).css('display', 'block');
+        $("#thread-section-edit-" + thread_id).css('display', 'none');
     });
 
     

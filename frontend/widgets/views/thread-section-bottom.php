@@ -42,14 +42,15 @@ $class_for_vote_area .= (!$current_user_has_vote) ? '' : 'thread-section-bottom-
             <?= Html::button('<span class="glyphicon glyphicon-comment"></span> Comment',
                             ['class' => 'thread-section-bottom-comment button-like-link',
                              'data-id' => $id,
-                                'data-thread_id' => $thread_id
+                            'data-thread_id' => $thread_id
                             ]) ?>
 
             <?= Html::button('<span class="glyphicon glyphicon-refresh"></span> Change Vote',
                             ['class' => 'button-like-link thread-section-bottom-change-vote',
                              'data-id' => $id,
                             ]) ?>
-            <?= CommentInputAnonymous::widget(['anonymous' => $current_user_anonymous,
+            <?= CommentInputAnonymous::widget([ 'id' => 'thread-section-bottom-anonymous-' . $thread_id,
+                            'anonymous' => $current_user_anonymous,
                             'thread_id' => $thread_id ]) ?>
 
         </div>
@@ -58,7 +59,9 @@ $class_for_vote_area .= (!$current_user_has_vote) ? '' : 'thread-section-bottom-
                 <iframe 
                     src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button&size=small&mobile_iframe=true&appId=188756388177786&width=58&height=20" 
                         width="20" height="20" 
-                        style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                        style="border:none;overflow:hidden" scrolling="no" 
+                    frameborder="0" allowTransparency="true">
+                </iframe>
             </div>
             <?php if($thread_belongs_to_current_user) { ?>
                 <?= ButtonDropdown::widget([

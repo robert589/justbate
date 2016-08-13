@@ -23,7 +23,7 @@ $comment_created_at = $thread_comment->getCreatedAt();
 </div>
 <div class="thread-comment-bottom-button">
     <div class="thread-comment-votes" > 
-        <?=  CommentVotes::widget(['id' => 'comment-votes-' . $comment_id, 'comment' => $thread_comment]) ?>
+            <?= CommentVotes::widget(['id' => 'comment-votes-' . $comment_id, 'comment' => $thread_comment]) ?>
         <span class="thread-comment-created-time">
             <?= $comment_created_at ?>
         </span>

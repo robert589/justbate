@@ -12,17 +12,21 @@ if($anonymous ) {
 }
 ?>
 
-<?= Html::hiddenInput('comment-input-anonymous-hi', $anonymous, ['id' => 'comment-input-anonymous-hidden-value-' . $thread_id]) ?>
-
 <div id="<?= $id ?>">
+
+    <?= Html::hiddenInput('comment-input-anonymous-hi', $anonymous, ['id' => 'comment-input-anonymous-hidden-value-' . $thread_id]) ?>
+
     <div class="<?= $anonymous_section_class ?>">
-        <?= Html::button('Known', ['class' => 'button-like-link comment-input-anonymous-cancel-btn',
-                        'data-id' => $id] ) ?>
+        <?= Html::button('<span class="comment-input-anonymous-square glyphicon glyphicon-ok"></span> Anonymous', ['class' => 'button-like-link comment-input-anonymous-cancel-btn',
+                        'data-id' => $id, 'data-thread_id' => $thread_id] ) ?>
+    </div>
+    <div class="comment-input-anonymous-loading-section comment-input-anonymous-hide">
+        Loading...
     </div>
     <div class="<?= $non_anonymous_section_class ?>">
-        <?= Html::button('Anonymous',
+        <?= Html::button('<span class="fa fa-square comment-input-anonymous-square-empty"></span> Anonymous',
                         ['class' => 'button-like-link comment-input-anonymous-btn',
-                        'data-id' => $id]) ?>
+                        'data-id' => $id, 'data-thread_id' => $thread_id]) ?>
     </div>
 </div>
 

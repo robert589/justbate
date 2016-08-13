@@ -11,11 +11,11 @@ use yii\helpers\Html;
     <div class="button-dropdown-popover">
         <?php foreach($items as $item) { ?>
             <?= Html::button($item['label'], ['data-service' => $item['data'], 
-                'class' => $item['class'] . ' button-dropdown-item  ']) ?>
+                'class' => $item['class'] . ' button-dropdown-item  ', 'data-pjax'=> 0]) ?>
         <?php } ?> 
     </div>
     <?= Html::button('<span class="glyphicon glyphicon-option-horizontal"></span>', 
-                ['class' => 'button-like-link button-dropdown-label', 'data-id' => $id]) ?>
+                ['class' => 'button-like-link button-dropdown-label', 'data-id' => $id, 'data-pjax' => 0]) ?>
     
 </div>
 

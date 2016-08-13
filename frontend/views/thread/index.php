@@ -56,12 +56,12 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
 
 <?= Dialog::widget(); ?>
 
-<div class="col-xs-12 col-md-6" id="thread-main-body" style="background: white; padding-bottom: 30px;">
+<div class="col-xs-12 col-md-6 thread-main-body">
     <?= $this->render('thread-section',
             ['thread' => $thread ,
              'edit_thread_form' => new \frontend\models\EditThreadForm(),
              'submit_vote_form' => $submit_vote_form]); ?>
-    <?= \frontend\widgets\ThreadSectionBottom::widget(['thread' => $thread, 'id' => 'thread-section-bottom-' . $thread_id]) ?>
+    <?= ThreadSectionBottom::widget(['thread' => $thread, 'id' => 'thread-section-bottom-' . $thread_id]) ?>
     
     <div id="comment-tab">
             <?= // Ajax Tabs Above

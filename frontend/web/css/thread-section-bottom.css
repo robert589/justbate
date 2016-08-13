@@ -21,12 +21,9 @@
 
 .thread-section-bottom-left-part {
     display: flex;
+    font-size: 11px;
     width: 100%;
 }
-.thread-section-bottom-hide {
-    display: none;
-}
-
 
 .thread-section-bottom-change-vote {
     margin-left: 12px;
@@ -35,9 +32,12 @@
 
 .thread-section-bottom-input-box {
     overflow: hidden;
-    margin-top: 8px;
 }
 
 .thread-section-bottom-button-container {
     display: flex;
+}
+
+.thread-section-bottom-hide {
+    display: none;
 }

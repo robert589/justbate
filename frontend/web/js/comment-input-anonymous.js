@@ -21,21 +21,26 @@ $(document).ready(function(){
         if(checkGuest()) {
             return false;
         }
-        var thread_id = $(this).data('service');
+        var id = $(this).data('id');
+        var thread_id = $(this).data('thread_id');
+        var $widget = $("#" + id);
+        var $anonymous_section = $widget.find('.comment-input-anonymous-section-anonymous');
+        var $anonymous_non_section = $widget.find('.comment-input-anonymous-section-non-anonymous');
+        var $loading_section = $widget.find('.comment-input-anonymous-loading-section');
+        $loading_section.removeClass('comment-input-anonymous-hide');
+        $anonymous_non_section.addClass('comment-input-anonymous-hide');
         var base_url = $("#base-url").val();
-        var user_id = $("#user-login-id").val();
-        $("#comment-input-anonymous-btn-" + thread_id).text("Loading..").prop("disabled", true);
 
         $.ajax({
             type:'post',
             url: base_url + "/thread/request-anonymous",
-            data: {thread_id: thread_id, user_id: user_id},
+            data: {thread_id: thread_id},
             success: function(data){
                 if(data === '1'){
-                    $("#comment-input-anonymous-section-anonymous-" + thread_id).show();
-                    $("#comment-input-anonymous-section-non-anonymous-" + thread_id).hide();
+                    $anonymous_section.removeClass('comment-input-anonymous-hide');
+                    $anonymous_non_section.addClass('comment-input-anonymous-hide');
                 }
-                $("#comment-input-anonymous-btn-" + thread_id).text("Go Anonymous").prop("disabled", false);
+                $loading_section.addClass('comment-input-anonymous-hide');
 
             }
         })
@@ -46,25 +51,27 @@ $(document).ready(function(){
             return false;
         }
         var id = $(this).data('id');
+        var thread_id = $(this).data('thread_id');
         var $widget = $("#" + id);
-        var base_url = $("#base-url").val();
-        $("#comment-input-anonymous-cancel-btn-" + thread_id).text("Loading..").prop("disabled", true);
+        var $anonymous_section = $widget.find('.comment-input-anonymous-section-anonymous');
+        var $anonymous_non_section = $widget.find('.comment-input-anonymous-section-non-anonymous');
+        var $loading_section = $widget.find('.comment-input-anonymous-loading-section');
+        $loading_section.removeClass('comment-input-anonymous-hide');
+        $anonymous_section.addClass('comment-input-anonymous-hide');
 
+        var base_url = $("#base-url").val();
+        
         $.ajax({
             type:'post',
             url: base_url + "/thread/cancel-anonymous",
             data: {thread_id: thread_id},
             success: function(data){
                 if(data === '1'){
-                    $("#comment-input-anonymous-section-anonymous-" + thread_id).hide();
-                    $("#comment-input-anonymous-section-non-anonymous-" + thread_id).show();
+                    $anonymous_section.addClass('comment-input-anonymous-hide');
+                    $anonymous_non_section.removeClass('comment-input-anonymous-hide');
                 }
-                $("#comment-input-anonymous-cancel-btn-" + thread_id).text("Cancel Anonymous").prop("disabled", false);
-
+                $loading_section.addClass('comment-input-anonymous-hide');
             }
-        })
-
-
+        });
     });
-
 });

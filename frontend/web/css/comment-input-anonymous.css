@@ -9,10 +9,37 @@ and open the template in the editor.
 */
 .comment-input-anonymous-cancel-btn {
     margin-left: 12px;
+    height: 100%;
+}
+
+.comment-input-anonymous-section-anonymous {
+    padding-top: 3px;
+}
+
+.comment-input-anonymous-square {
+    border: 1px solid;
+    border-color: lightgray;
+}
+
+.comment-input-anonymous-square-empty {
+    color: white;
+    border: 1px solid lightgray;
+    font-size: 8px;
+}
+
+.comment-input-anonymous-loading-section {
+    margin-left: 12px;
+    padding-top:3px;
+    
+}
+
+.comment-input-anonymous-section-non-anonymous {
+    padding-top: 3px;
 }
 
 .comment-input-anonymous-btn {
     margin-left: 12px;
+    height: 100%;
 }
 
 .comment-input-anonymous-hide {

@@ -21,21 +21,12 @@ $description = $thread->getDescription();
 $title = $thread->getTitle();
 $thread_id = $thread->getThreadId();
 $thread_issues  = $thread->getThreadIssues();
-
+$thread_link = $thread->getThreadLink();
 $edit_thread_form->issues = $thread_issues;
 $edit_thread_form->title = $title;
 $edit_thread_form->description = HtmlPurifier::process($description, Constant::DefaultPurifierConfig());
-
-Pjax::begin([
-    'id' => 'edit_thread_pjax',
-    'timeout' => false,
-    'enablePushState' => false,
-    'clientOptions'=>[
-        'container' => '#edit_thread',
-    ]
-    ]
-);?>
-    <div id="shown_title_description_part">
+?>
+    <div id="thread-section-view-<?= $thread_id ?>">
         <div id="thread-issue">
             <?= $this->render('thread-issues', [ 'thread' => $thread]) ?>
         </div>
@@ -43,7 +34,11 @@ Pjax::begin([
         <div class="thread-view">
 
             <div class="thread-link">
-                <?= Html::encode($title) ?>
+                <?php if(isset($site)) { ?> 
+                    <?= Html::a($title, $thread_link) ?>
+                <?php } else { ?>
+                    <?= Html::encode($title) ?>
+                <?php } ?>
             </div>
             <div id='post-description' align="left">
                 <?= SimpleSeeMore::widget(['id' => 'thread-section-description', 
@@ -52,19 +47,20 @@ Pjax::begin([
         </div>
     </div>
 
-    <div id="edit_title_description_part" style="display: none">
-        <?php $form = ActiveForm::begin([
+    <div id="thread-section-edit-<?= $thread_id ?>" class="thread-section-edit" style="display:none" >
+        <?php $form = ActiveForm::begin([ 
                 'action' => ['thread/edit-thread'],
                 'method' => 'post',
                 'options' => ['data-pjax' => '#edit_thread']
             ])
         ?>
             <?= $form->field($edit_thread_form, 'thread_id')->hiddenInput(['value' => $thread_id]) ?>
-            <div class="row">
+            <div class="thread-section-edit-issues">
                 <!-- Topic Name -->
                 <?= $form->field($edit_thread_form, 'issues')->widget(Select2::classname(), [
                     'maintainOrder' => true,
-                    'options' => ['placeholder' => 'Select Keywords ...', 'multiple' => true],
+                    'options' => ['placeholder' => 'Select Keywords ...', 'multiple' => true,
+                        'id' => 'thread-section-edit-issues-widget-' . $thread_id],
                     'pluginOptions' => [
                         'tags' => true,
                         'ajax' => [
@@ -78,11 +74,14 @@ Pjax::begin([
                     ]
                 ])->label(false) ?>
             </div>
-            <div class="row">
+            <div class="thread-section-edit-title">
                 <?= $form->field($edit_thread_form, 'title')->textInput(['placeholder' => 'Title..', 'class' => 'form-control']) ?>
             </div>
-            <div class="row">
+            <div class="thread-section-edit-description">
                 <?= $form->field($edit_thread_form, 'description')->widget(Redactor::className(), [
+                    'options' => [
+                        'id' => 'thread-section-edit-description-' . $thread_id
+                    ],
                     'clientOptions' => [
                         'plugins' => Constant::defaultPluginRedactorConfig(),
                         'buttons' => Constant::defaultButtonRedactorConfig(),
@@ -91,12 +90,11 @@ Pjax::begin([
                 ]) ?>
             </div>
 
-            <div class="row" align="right">
-                <?= Html::button('Cancel', ['class' => 'btn btn-danger', 'id' => 'cancel_edit_thread_button']) ?>
-                <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+            <div class="thread-section-edit-button" align="right">
+                <?= Html::button('Cancel', ['class' => 'btn btn-sm btn-danger thread-section-cancel-button',
+                    'data-id' => $thread_id]) ?>
+                <?= Html::submitButton('Update', ['class' => 'btn btn-sm  btn-primary']) ?>
             </div>
 
         <?php  ActiveForm::end(); ?>
     </div>
-<?php Pjax::end(); ?>
-
