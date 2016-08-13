@@ -9,7 +9,7 @@ use yii\helpers\HtmlPurifier;
  * and open the template in the editor.
  */
 
-class ThreadVoteComment extends Widget
+class ThreadSectionBottom extends Widget
 {
     public $thread;
     
@@ -24,7 +24,7 @@ class ThreadVoteComment extends Widget
     
     public function registerAssets() {
         $view = $this->getView();
-        ThreadVoteCommentAsset::register($view);
+        ThreadSectionBottomAsset::register($view);
     }
 
     public function run()
@@ -36,7 +36,7 @@ class ThreadVoteComment extends Widget
             $item_values = array_values($item);
             $propered_choice_text[$item_values[0]]  = HTMLPurifier::process($item_values[0] . " (" . $item['total_voters'] . ")");
         }
-        return $this->render('thread-vote-comment', 
+        return $this->render('thread-section-bottom', 
                 ['items' => $propered_choice_text, 
                  'id' => $this->id,
                 'thread' => $this->thread,

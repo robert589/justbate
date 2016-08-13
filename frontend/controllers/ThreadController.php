@@ -265,32 +265,36 @@ class ThreadController extends Controller
     }
 
     public function actionRequestAnonymous(){
-            if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
-                $thread_id = $_POST['thread_id'];
-                $user_id = $_POST['user_id'];
+        if(isset($_POST['thread_id']) && !Yii::$app->user->isGuest){
+            $thread_id = $_POST['thread_id'];
+            $user_id = Yii::$app->user->getId();
 
-                //bad practice, please remove during refactoring
-                $thread_anon_form = new ThreadAnonymousForm();
-                $thread_anon_form->thread_id = $thread_id;
-                $thread_anon_form->user_id = $user_id;
+            //bad practice, please remove during refactoring
+            $thread_anon_form = new ThreadAnonymousForm();
+            $thread_anon_form->thread_id = $thread_id;
+            $thread_anon_form->user_id = $user_id;
 
-                $this->updateThreadView($thread_id);
+            $this->updateThreadView($thread_id);
 
-                return $thread_anon_form->requestAnon();
-            }
+            return $thread_anon_form->requestAnon();
+        } else {
+            return false;
+        }
     }
 
 
     public function actionCancelAnonymous(){
-        if(isset($_POST['thread_id']) && isset($_POST['user_id'])){
+        if(isset($_POST['thread_id']) && !Yii::$app->user->isGuest){
             $thread_id = $_POST['thread_id'];
-            $user_id = $_POST['user_id'];
+            $user_id = Yii::$app->user->getId();
 
             //bad practice, please remove during refactoring
             $thread_anon_form = new ThreadAnonymousForm();
             $thread_anon_form->thread_id = $thread_id;
             $thread_anon_form->user_id = $user_id;
             return $thread_anon_form->cancelAnon();
+        } else {
+            return false;
         }
     }
 

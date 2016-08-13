@@ -32,7 +32,7 @@ $comment_created_at = $thread_comment->getCreatedAt();
     <?php if($belongs_to_current_user) { ?>
     <div class="thread-comment-bottom-button-dropdown" align="right">
         <?= ButtonDropdown::widget([
-            'id' => 'button-dropdown-' . $comment_id,
+            'id' => 'comment-button-dropdown-' . $comment_id,
             'label' => '<span class="glyphicon glyphicon-option-horizontal"></span>',
             'items' => [
                 [

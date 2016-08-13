@@ -17,15 +17,7 @@ function checkNewNotification() {
 
 
 $(document).ready(function(){
-    //facebook
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
+    
     /** LOGIN PAGE **/
     $(document).on("click", ".login-register-with-email", function(event) {
         var service = $(this).data('service');
@@ -59,71 +51,7 @@ $(document).ready(function(){
         $("#login-register-choice"  +service).css("display", "block");
     });
     
-    /** **/
     
-    $(document).on("click", ".comment-vote-button", function(element) {
-        if(checkGuest() === true){
-            return false;
-        };
-        var is_up = parseInt($(this).val());
-        var comment_id = $(this).data('arg');
-        var comment_vote_section = $("#comment-vote-section-" + comment_id);
-        var comment_vote_old_value = parseInt(comment_vote_section.find(".comment-vote-old-value").val());
-        if(comment_vote_old_value === is_up) {
-            return false;
-        } 
-        var comment_vote_up_section = comment_vote_section.find('.comment-vote-up-section');
-        var comment_vote_down_section = comment_vote_section.find('.comment-vote-down-section');
-        var comment_vote_total_like = parseInt(comment_vote_up_section.find('.comment-vote-total').text());
-        var comment_vote_total_dislike = parseInt(comment_vote_down_section.find('.comment-vote-total').text());
-        
-        if(is_up === 1) {
-            comment_vote_up_section.find('.comment-vote-button').prop('disabled', true);                        
-            comment_vote_down_section.find('.comment-vote-button').prop('disabled', false);
-            comment_vote_up_section.find('.comment-vote-total').text(comment_vote_total_like + 1);
-            if(comment_vote_old_value !== null && !isNaN(comment_vote_old_value)) {
-                comment_vote_down_section.find('.comment-vote-total').text(comment_vote_total_dislike - 1);
-            }
-        } else {
-            comment_vote_down_section.find('.comment-vote-button').prop('disabled', true);                        
-            comment_vote_up_section.find('.comment-vote-button').prop('disabled', false);
-            
-            comment_vote_down_section.find('.comment-vote-total').text(comment_vote_total_dislike + 1);
-            if(comment_vote_old_value !== null && !isNaN(comment_vote_old_value) ) {
-                comment_vote_up_section.find('.comment-vote-total').text(comment_vote_total_like - 1);
-            }
-        }
-        
-        $.ajax({
-            url: $("#base-url").val() + '/comment/comment-vote',
-            type: 'post',
-            data: {comment_id: comment_id, vote: is_up},
-            success: function(data) {
-                if(data) {
-                    
-                } else {
-                    
-                }
-            }
-        });
-
-        comment_vote_section.find(".comment-vote-old-value").val(is_up); 
-        
-        
-        
-    });
-    
-    $(document).on('submit', '.form_user_thread_vote', function(event){
-        var data_pjax = $(this).data('pjax');
-
-        $.pjax.submit(event, data_pjax ,
-           {'push' : false,
-           'replace' : false,
-           'timeout' : false,
-           'skipOuterContainers':true,
-           'scrollTo':false});
-    });
-
     checkNewNotification();
 
     $(document).on("click", "table[id^='user-table-comment'] tbody tr td button", function() {
@@ -149,11 +77,7 @@ $(document).ready(function(){
         $("span#icon-dropdown").toggleClass("glyphicon-chevron-up");
     });
 
-    $(document).on('click', '#home-add-issue-button', function(){
-        $("#home-add-issue-button-div").hide();
-        $("#home-add-issue-form-div").show();
-    });
-
+    
     $("#home-sidenav-followed-issue-edit").click(function(event){
         event.preventDefault();
      $("#home-search-issue-modal").modal("show")
@@ -370,7 +294,7 @@ $(document).ready(function(){
         $("#edit_title_description_part").css("display","inline");
     });
 
-    $("#delete-thread").on("click", function() {
+    $(".delete-thread").on("click", function() {
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
             if (result) {
                 $("#delete_thread_form").submit();

@@ -1,4 +1,4 @@
-.thread-vote-comment-radio-button{
+.thread-section-bottom-radio-button{
 	padding: 1px 10px;
 	background-color: #ffffff;
 	border-radius: 3px; 
@@ -7,36 +7,37 @@
 	border-color : #ff6600;
 }
 
-.thread-vote-comment-radio-button:hover{
+.thread-section-bottom-radio-button:hover{
 	padding: 1px 10px;
 	background-color: #ff6600;
 	color : #ffffff;
 }
 
-.thread-vote-comment-radio-button.disabled{
+.thread-section-bottom-radio-button.disabled{
 	padding: 1px 10px;
 	background-color: #ff6600;
 	color : #ffffff;
 }
 
-.thread-vote-comment-hide {
+.thread-section-bottom-left-part {
+    display: flex;
+    width: 100%;
+}
+.thread-section-bottom-hide {
     display: none;
 }
 
-.thread-vote-comment-container {
-    margin-top: 8px;
-}
 
-.thread-vote-comment-change-vote {
+.thread-section-bottom-change-vote {
     margin-left: 12px;
-    font-size: 12px;
 }
 
-.thread-vote-comment-comment {
-    font-size: 12px;
-}
 
-.thread-vote-comment-input-box {
+.thread-section-bottom-input-box {
     overflow: hidden;
     margin-top: 8px;
+}
+
+.thread-section-bottom-button-container {
+    display: flex;
 }

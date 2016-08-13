@@ -10,7 +10,7 @@ $(function(){
     }
     
     function isCommentInputBoxRetrieved(widget) {
-        var input_box_area = widget.find('.thread-vote-comment-input-box');
+        var input_box_area = widget.find('.thread-section-bottom-input-box');
         var input_box_area_content = input_box_area.html().trim();
         return !(input_box_area_content === null || input_box_area_content === '')  ;
     }
@@ -22,13 +22,13 @@ $(function(){
     
     $(document).ready(function() {
        
-        $(document).on("click", ".thread-vote-comment-radio-button", function(element) {
+        $(document).on("click", ".thread-section-bottom-radio-button", function(element) {
             var id = $(this).data('id');
             var widget = $("#" + id);
-            var vote_area = widget.find('.thread-vote-comment-vote-area');
-            var selected_value_hidden_input = vote_area.find('.thread-comment-vote-area-selected-value');
+            var vote_area = widget.find('.thread-section-bottom-vote-area');
+            var selected_value_hidden_input = vote_area.find('.thread-section-bottom-area-selected-value');
             var old_choice_value = selected_value_hidden_input.val();
-            var vote_item = vote_area.find('.thread-vote-comment-radio-button');
+            var vote_item = vote_area.find('.thread-section-bottom-radio-button');
             var new_choice_value = $(this).data('label');
             if(old_choice_value === new_choice_value) {
                 return false;
@@ -61,10 +61,10 @@ $(function(){
                 data: {thread_id: $(this).data('thread_id'), vote: new_choice_value},
                 success: function(data) {
                     if(data) {
-                        var comment_area = widget.find('.thread-vote-comment-button-container');
-                        comment_area.find('.thread-vote-comment-comment').click();
-                        widget.find('.thread-vote-comment-vote-area').addClass('thread-vote-comment-hide');
-                        widget.find('.thread-vote-comment-button-container').removeClass('thread-vote-comment-hide');
+                        var comment_area = widget.find('.thread-section-bottom-button-container');
+                        comment_area.find('.thread-section-bottom-comment').click();
+                        widget.find('.thread-section-bottom-vote-area').addClass('thread-section-bottom-hide');
+                        widget.find('.thread-section-bottom-button-container').removeClass('thread-section-bottom-hide');
                     } else {
                     }
                 }
@@ -73,19 +73,19 @@ $(function(){
 
         });
         
-        $(document).on('click', '.thread-vote-comment-comment', function(event) {
+        $(document).on('click', '.thread-section-bottom-comment', function(event) {
             var id = $(this).data('id');
             var widget = $("#" + id);
-            var loading_gif = widget.find('.thread-vote-comment-input-box-loading');
-            var input_box_area =  widget.find('.thread-vote-comment-input-box');
+            var loading_gif = widget.find('.thread-section-bottom-input-box-loading');
+            var input_box_area =  widget.find('.thread-section-bottom-input-box');
             if( !isCommentInputBoxRetrieved(widget) ) {
-                loading_gif.removeClass('thread-vote-comment-hide');
+                loading_gif.removeClass('thread-section-bottom-hide');
                 $.ajax({
                     url: $("#base-url").val() + '/thread/retrieve-comment-input',
                     type: 'post',
                     data: {thread_id: $(this).data('thread_id')},
                     success: function(data) {
-                        loading_gif.addClass('thread-vote-comment-hide');
+                        loading_gif.addClass('thread-section-bottom-hide');
                         input_box_area.html(data);
                         
                     }
@@ -100,11 +100,11 @@ $(function(){
             }
         });
         
-        $(document).on('click', '.thread-vote-comment-change-vote', function(event) {
+        $(document).on('click', '.thread-section-bottom-change-vote', function(event) {
             var id = $(this).data('id');
             var widget = $("#" + id);
-            widget.find('.thread-vote-comment-vote-area').removeClass('thread-vote-comment-hide');
-            widget.find('.thread-vote-comment-button-container').addClass('thread-vote-comment-hide');
+            widget.find('.thread-section-bottom-vote-area').removeClass('thread-section-bottom-hide');
+            widget.find('.thread-section-bottom-button-container').addClass('thread-section-bottom-hide');
         });
  
     });

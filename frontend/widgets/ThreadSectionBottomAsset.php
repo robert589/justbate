@@ -9,19 +9,19 @@ namespace frontend\widgets;
 
 use yii\web\AssetBundle;
 
-class ThreadVoteCommentAsset extends AssetBundle
+class ThreadSectionBottomAsset extends AssetBundle
 {
 
     public $basePath = '@webroot';
     public $baseUrl = '@web' ;
 
     public $js = [
-        'frontend/web/js/thread-vote-comment.js'
+        'frontend/web/js/thread-section-bottom.js'
     ];
 
 
     public $css = [
-        'frontend/web/css/thread-vote-comment.css'
+        'frontend/web/css/thread-section-bottom.css'
     ];
     public $depends = [
         'yii\web\YiiAsset',

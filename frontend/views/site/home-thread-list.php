@@ -2,6 +2,7 @@
 use common\widgets\SimpleSeeMore;
 use yii\helpers\Html;
 use frontend\widgets\ThreadVoteComment;
+use frontend\widgets\ThreadSectionBottom;
 /** @var $thread \frontend\vo\ThreadVo */
 /** @var $thread_issues array */
 $link_to_thread = $thread->getThreadLink();
@@ -25,7 +26,8 @@ $has_another_comment = (($thread->getTotalComments() - 1) > 0);
             <?= SimpleSeeMore::widget(['text' => $thread_description, 'active' => true, 
                 'id' => 'home-thread-list-description-' . $thread_id]) ?>
         </div>
-        <?=  ThreadVoteComment::widget(['id' => 'home-thread-list-vote-' . $thread_id, 'thread' => $thread]) ?>        
+        <?= ThreadSectionBottom::widget(['id' => 'thread-section-bottom-' . $thread_id,
+                            'thread' => $thread]) ?>        
         
     </div>
     <?php if($has_chosen_comment){

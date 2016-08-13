@@ -31,4 +31,4 @@ $comment_thread_id = $thread_comment->getThreadId();
     <div class="commentator-moderate">
         <?= $this->render('comment-bottom', ['thread_comment' => $thread_comment, 'is_thread_comment' => true]) ?>
     </div>
-</article>
+</div>

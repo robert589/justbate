@@ -8,6 +8,8 @@ use yii\helpers\Html;
 class CommentInputAnonymous extends Widget
 {
     /** @var  $array  array  */
+    public $id;
+    
     public $anonymous;
 
     public $thread_id;
@@ -28,6 +30,6 @@ class CommentInputAnonymous extends Widget
     public function run()
     {
         return $this->render('comment-input-anonymous',
-            ['anonymous' => $this->anonymous, 'thread_id' => $this->thread_id]);
+            ['anonymous' => $this->anonymous, 'thread_id' => $this->thread_id, 'id' => $this->id]);
     }
 }

@@ -1,4 +1,22 @@
+.thread-section-bottom {
+    display: flex;
+    font-size: 12px;
+    margin-top: 8px;
+}
 
+.thread-section-bottom-non-dropdown {
+    display: flex;
+    width: 100%;
+}
+
+.thread-section-bottom-right-part {
+    display: flex;
+}
+
+.fb-share-button {
+    margin-right: 4px;
+    max-width: 22px;
+}
 .navbar-brand-logo {
     height: 45px;
     margin-top: -10px;
