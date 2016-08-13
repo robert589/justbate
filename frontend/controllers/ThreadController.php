@@ -186,15 +186,18 @@ class ThreadController extends Controller
      * @return \yii\web\Response
      */
     public function actionDeleteThread(){
-            if(isset($_POST['thread_id'])){
-                    $delete_thread_form = new DeleteThreadForm();
 
-                    $delete_thread_form->thread_id = $_POST['thread_id'];
+        if(isset($_POST['thread_id']) && !Yii::$app->user->isGuest){
+            $delete_thread_form = new DeleteThreadForm();
 
-                    if($delete_thread_form->delete()){
-                            return $this->redirect(Yii::$app->request->baseUrl . '/site/home');
-                    }
+            $delete_thread_form->thread_id = $_POST['thread_id'];
+            $delete_thread_form->user_id = Yii::$app->user->getId();
+            if($delete_thread_form->delete()){
+                return 1;
             }
+        }
+
+        return 0;
     }
 
     /**

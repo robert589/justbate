@@ -29,7 +29,9 @@
     margin-left: 12px;
 }
 
-
+.thread-section-bottom-vote-area {
+    margin-bottom: 4px;
+}
 .thread-section-bottom-input-box {
     overflow: hidden;
 }

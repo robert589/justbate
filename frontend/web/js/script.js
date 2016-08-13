@@ -295,10 +295,23 @@ $(document).ready(function(){
         $("#thread-section-edit-" +  thread_id).css("display","block");
     });
 
-    $(".delete-thread").on("click", function() {
+    $(document).on("mousedown",".delete-thread" , function(event) {
+        var thread_id = $(this).data('service');
         krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
-            if (result) {
-                $("#delete_thread_form").submit();
+            if (result) {   
+                $.ajax({
+                    url: $("#base-url").val() + "/thread/delete-thread",
+                    type: 'post',
+                    data: {'thread_id': thread_id},
+                    success: function(data) {
+                        if(data === '1') {
+                            window.location.href  = $("#base-url").val() + "/";
+
+                        } else {
+                            
+                        }
+                    }
+                })
                 return false;
             }
         });
