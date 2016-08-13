@@ -19,9 +19,8 @@ Pjax::begin([
             <li id='notif-expansion' class='item dropdown' >
         <?php } ?>
             <a href="#" class="dropdown-toggle" style="display: block" id="trigger_notification" data-toggle="dropdown">
-                Notification
+                <span class="glyphicon glyphicon-bell"></span>
                 <span id="notification-count"></span>
-                <span style="padding-right: 15px;" id="left-icon" class="glyphicon glyphicon-chevron-down"></span>
             </a>
             <ul class="dropdown-menu container-fluid" 
                 style="background: #fff !important;

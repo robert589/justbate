@@ -322,7 +322,10 @@ $(document).ready(function(){
             }
         });
     });
-
+    
+    $(document).on('click', '.update-comment-btn', function(e) {
+        
+    });
 
     $(document).on('mousedown', '.edit_comment',function(e){
 

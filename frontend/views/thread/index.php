@@ -74,7 +74,7 @@ foreach($comment_providers as $thread_choice_item => $comment_provider){
             ])
             ?>
     </div>
-
+</div>
 <?php $form = ActiveForm::begin(['action' => ['delete-thread'], 'method' => 'post', 'id' => 'delete_thread_form']) ?>
     <?= Html::hiddenInput('thread_id', $thread_id) ?>
 <?php ActiveForm::end() ?>

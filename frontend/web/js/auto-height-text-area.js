@@ -7,17 +7,12 @@
 $(document).ready(function() {
 
     function resizeTextarea(e) {
-        $(e).css({'height':'auto','overflow-y':'hidden'});
-        if($(e).height() !== e.scrollHeight) {
-            $(e).height(e.scrollHeight);
-            
-        } 
+        $(e).css({'height':'auto','overflow-y':'hidden'}).height(e.scrollHeight);
      
     }
 
     $('.auto-height-text-area').each(function () {
         
-      resizeTextarea(this);
     }).on('input', function () {
       resizeTextarea(this);
     });

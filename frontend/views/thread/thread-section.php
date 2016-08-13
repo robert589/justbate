@@ -40,8 +40,8 @@ $edit_thread_form->description = HtmlPurifier::process($description, Constant::D
                     <?= Html::encode($title) ?>
                 <?php } ?>
             </div>
-            <div id='post-description' align="left">
-                <?= SimpleSeeMore::widget(['id' => 'thread-section-description', 
+            <div class='thread-description' align="left">
+                <?= SimpleSeeMore::widget(['id' => 'thread-section-description-' . $thread_id, 
                     'active' => 'true', 'text' => $description]) ?>
             </div>
         </div>

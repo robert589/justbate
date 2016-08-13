@@ -42,7 +42,7 @@ use common\components\Constant;
                 <?= $form->field($create_thread_form, 'choices')->widget(Select2::className(), [
                     'initValueText' => $create_thread_form->choices,
                     'maintainOrder' => true,
-                    'options' => ['placeholder' => 'Add Choices ...', 'multiple' => true],
+                    'options' => ['placeholder' => 'Add Choices ... (e.g. "Agree", "Disagree")', 'multiple' => true],
                     'pluginOptions' => [
                         'tags' => true,
                         'minimumInputLength' => 1,

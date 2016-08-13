@@ -1,8 +1,16 @@
+.select2-search {
+    width: 100%;
+}
+
 .thread-section-bottom {
     display: flex;
     font-size: 12px;
     margin-top: 8px;
 }
+
+.thread-description {
+    margin-top: 8px;
+}   
 
 .thread-section-bottom-non-dropdown {
     display: flex;
@@ -356,13 +364,8 @@ li#notification-bar div#notifbar:hover {
     color: #fff !important;
 }
 
-li#notif-expansion {
-    background: none !important;
-    padding: 16px;
-    padding-left: 15px;
-    padding-right: 0;
-    margin-left: 15px;
-    margin-top: -15px;
+#menubar-right {
+    display: flex;
 }
 
 li#notif-expansion:hover {
@@ -1292,6 +1295,7 @@ h3#user-choice {
 }
 
 .thread-link{
+    margin-top: 8px;
     font-size:22px;
     line-height:26px;
     font-weight: bold;
@@ -1300,15 +1304,6 @@ h3#user-choice {
 .home-thread-list-vote {
     overflow: hidden;
     padding-top: 4px;
-}
-.thread-link hr {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.thread-link div.col-xs-12 hr {
-    margin-top: 15px !important;
-    margin-bottom: 15px !important;
 }
 
 .home-thread-list{
@@ -1323,9 +1318,6 @@ h3#user-choice {
     border-color: #bcbcbc;
 }
 
-div.thread-title-list {
-    padding-left: 0;
-}
 
 div.thread-comment-input-box-section {
     background: #ededed;
@@ -1493,9 +1485,6 @@ button#upload-image {
     margin-left: 15px
 }
 
-img#profile-picture-home {
-    padding-right: 15px;
-}
 
 /* VOTE FUNCTION */
 div.vote-on-thread {
@@ -1964,19 +1953,7 @@ button.btn {
         display: block !important;
     }
 
-    /* LOGIN */
-    div.login-container {
-        top: 50%;
-        left: 50%;
-        padding: 15px;
-        padding-top: 30px;
-        position: fixed;
-        background: #fff;
-        overflow-y: auto;
-        max-height: calc(100vh - 60px);
-        transform: translate(-50%, -50%);
-    }
-
+    
     div#login-form form div {
         width: 100%;
     }

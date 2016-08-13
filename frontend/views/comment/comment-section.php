@@ -14,16 +14,6 @@ use yii\helpers\HtmlPurifier;
 $comment_id = $thread_comment->getCommentId();
 $comment = $thread_comment->getComment();
 
-Pjax::begin([
-    'id' => 'edit_comment_pjax_' . $comment_id,
-    'timeout' => false,
-    'enablePushState' => false,
-    'options'=>[
-        'class' => 'comment-section-edit-pjax',
-        'skipOuterContainers' => true,
-        'container' => '#edit_comment_pjax_' . $comment_id,
-    ]
-]);
 ?>
 
 <div id="comment_shown_part_<?= $comment_id ?>">
@@ -49,11 +39,9 @@ Pjax::begin([
         <?= $form->field($edit_comment_form, 'parent_id')->hiddenInput(['value' => $comment_id ])->label(false) ?>
 
         <div align="right" class="row">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-sm btn-primary']) ?>
+            <?= Html::button('Update', ['class' => 'btn update-comment-btn btn-sm btn-primary', 'data-service' => $comment_id]) ?>
             <?= Html::button('Cancel', ['class' => 'btn btn-sm btn-danger cancel_edit_comment', 'data-service' => $comment_id]) ?>
         </div>
     <?php ActiveForm::end(); ?>
 
 </div>
-
-<?php Pjax::end(); ?>

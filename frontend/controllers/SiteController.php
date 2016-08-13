@@ -157,7 +157,6 @@ class SiteController extends Controller
             $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
             $home = $service->getHomeInfo($user_id, $issue, new SiteVoBuilder());
             $create_thread_form = new CreateThreadForm();
-            $this->getDefaultChoice($create_thread_form);
             $selected = $home->getHomeSelected();
             return $this->render('home', ['home' => $home,
                                             'feed_selected' => $selected,
@@ -171,7 +170,6 @@ class SiteController extends Controller
             $service = $this->serviceFactory->getService(ServiceFactory::SITE_SERVICE);
             $home = $service->getNewestThread($user_id, new SiteVoBuilder());
             $create_thread_form = new CreateThreadForm();
-            $this->getDefaultChoice($create_thread_form);
             return $this->render('home', ['home' => $home,
                                         'feed_selected' => $home->getNewestTopicSelected(),
                                           'change_email_form' => new ResendChangeEmailForm(),
@@ -592,8 +590,5 @@ class SiteController extends Controller
 	}
 
 
-	private function getDefaultChoice(&$create_thread_form){
-		$create_thread_form->choices = ['Agree','Disagree'];
-	}
-
+	
 }

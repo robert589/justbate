@@ -14,14 +14,6 @@ use yii\helpers\HtmlPurifier;
 $comment_id = $thread_comment->getCommentId();
 $comment = $thread_comment->getComment();
 
-Pjax::begin([
-    'id' => 'edit_comment_pjax_' . $comment_id,
-    'timeout' => false,
-    'enablePushState' => false,
-    'clientOptions'=>[
-        'container' => '#edit_comment_data_pjax_' . $comment_id,
-    ]
-]);
 ?>
 
 <div id="comment_shown_part_<?= $comment_id ?>">
@@ -51,5 +43,3 @@ Pjax::begin([
     <?php ActiveForm::end(); ?>
 
 </div>
-
-<?php Pjax::end(); ?>
