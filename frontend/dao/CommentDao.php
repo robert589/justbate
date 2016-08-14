@@ -84,7 +84,7 @@ class CommentDao{
                 limit :limit
 
     ";
-    const THREAD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous, thread_vote.choice_text
+    const THREAD_COMMENT_INFO = "SELECT comment_info.*, thread_anonymous.anonymous_id as anonymous, thread_vote.choice_text, count(child_comment.comment_id) as total_comment
                                 from
                                     (SELECT comment.*, thread.title, thread.thread_id, user.id, user.username,  user.first_name, user.last_name,
                                        user.photo_path,
@@ -98,7 +98,9 @@ class CommentDao{
                                 left join thread_vote
                                 on thread_vote.thread_id = comment_info.thread_id and comment_info.user_id = thread_vote.user_id
                                 left join thread_anonymous
-                                 on thread_anonymous.thread_id = comment_info.thread_id and thread_anonymous.user_id = comment_info.user_id";
+                                 on thread_anonymous.thread_id = comment_info.thread_id and thread_anonymous.user_id = comment_info.user_id
+                                left join child_comment
+                                on  child_comment.parent_id = comment_info.comment_id";
 
     const CHILD_COMMENT_EXIST_SQL = "SELECT count(*) from thread_comment, child_comment, thread
                                     where thread_comment.thread_id = :thread_id and thread_comment.comment_id = comment.parent_id
@@ -189,7 +191,8 @@ class CommentDao{
         $builder->setTotalDislike($result['total_dislike']);
         $builder->setCommentId($result['comment_id']);
         $builder->setChoiceText($result['choice_text']);
-        $builder->setTotalComment($this->getTotalComment($result['comment_id'], $builder));
+        // $builder->setTotalComment($this->getTotalComment($result['comment_id'], $builder));
+        $builder->setTotalComment($result['total_comment']);
         $builder->setChosenComment($this->getOneChildComment($comment_id, $user_id)->build());
         return $builder;
 

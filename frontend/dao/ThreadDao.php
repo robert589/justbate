@@ -33,7 +33,8 @@ class ThreadDao {
                   (viewed.comment_id is null) as not_viewed,
                   CASE when (user_vote.comment_id is not null) then user_vote.vote else null end as current_user_vote,
                   count(case when total_vote.vote = 1 then 1 else null end) as total_like,
-                  count(case when total_vote.vote = -1 then 1 else null end) as total_dislike  
+                  count(case when total_vote.vote = -1 then 1 else null end) as total_dislike,
+                  count(child_comment.comment_id) as total_comment  
             from (SELECT comment.*, 
                         thread_comment.thread_id, 
                         thread_vote.choice_text, 
@@ -53,6 +54,8 @@ class ThreadDao {
             on comment_info.comment_id = user_vote.comment_id and user_vote.user_id = :user_id
             left join comment_vote total_vote
             on total_vote.comment_id  = comment_info.comment_id
+            left join child_comment 
+            on child_comment.parent_id = comment_info.comment_id
             group by comment_info.comment_id
         ) chosen_comment
         order by chosen_comment.not_viewed desc, parameter desc
@@ -66,7 +69,8 @@ class ThreadDao {
                 (case comment_vote.user_id when :user_id then vote else null end) as vote,
                 COALESCE (count(case vote when 1 then 1 else null end),0)as total_like,
                 COALESCE (count(case vote when -1 then 1 else null end),0) as total_dislike,
-                (thread_anonymous.anonymous_id) as comment_anonymous
+                (thread_anonymous.anonymous_id) as comment_anonymous,
+                count(child_comment.comment_id) as total_comment
         FROM (
             SELECT  comment.* , thread_vote.choice_text , thread_comment.thread_id, user.first_name,
                                             user.last_name, user.username, user.photo_path
@@ -83,6 +87,8 @@ class ThreadDao {
         on comment_vote.comment_id = comments.comment_id
         left join thread_anonymous
         on thread_anonymous.thread_id = comments.thread_id and thread_anonymous.user_id  = comments.user_id
+        left join child_comment
+        on child_comment.parent_id = comments.comment_id
         group by
          comments.comment_id
         order by total_like desc";
@@ -248,7 +254,8 @@ class ThreadDao {
             $thread_comment_builder->setChosenComment($child_comment_builder->build());
             $thread_comment_builder->setTotalLike($result['total_like']);
             $thread_comment_builder->setTotalDislike($result['total_dislike']);
-            $thread_comment_builder->setTotalComment($this->comment_dao->getTotalComment($result['comment_id']));
+            // $thread_comment_builder->setTotalComment($this->comment_dao->getTotalComment($result['comment_id']));
+            $thread_comment_builder->setTotalComment((int)$result['total_comment']);
             $thread_comment_list[] =  $thread_comment_builder->build();
         }
 
